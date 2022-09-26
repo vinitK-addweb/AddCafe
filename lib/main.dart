@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './widgets/HomeBanner.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,14 +38,11 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
+      body: Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              'hi there',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            HomeBanner()
           ],
         ),
       ),
