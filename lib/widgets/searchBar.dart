@@ -10,7 +10,7 @@ class Mysearch extends StatelessWidget {
       child: TextField(
         decoration: InputDecoration(
             prefixIcon: const Icon(Icons.search),
-            hintText: 'Dish Name or type...',
+            hintText: 'Dish Name Or Type...',
             border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: const BorderSide(color: Colors.blue))),

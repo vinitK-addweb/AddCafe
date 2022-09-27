@@ -1,3 +1,4 @@
+import 'package:addcafe/widgets/splash.dart';
 import 'package:flutter/material.dart';
 import './widgets/HomeBanner.dart';
 import './widgets/HomeCategory.dart';
@@ -17,13 +18,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'cafe',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'cafe',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home:
+            //  MyHomePage(),
+            Splash());
   }
 }
 
@@ -63,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         elevation: 0,
         title: Image.asset(
-          'assets/images/addweb.png', height: 100, width: 225,
+          'assets/images/addweb.png', height: 100, width: 200,
           // ),
         ),
         actions: [
@@ -76,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // padding: const EdgeInsets.all(8.0),
         // child:
       ),
+
       body: SingleChildScrollView(
         child: Container(
           child: Column(
@@ -86,6 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
               CustomerReviews(),
             ],
           ),
+
         ),
       ),
 
