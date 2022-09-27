@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './widgets/HomeBanner.dart';
 import './widgets/HomeCategory.dart';
 import './widgets/CustomerReviews.dart';
+import './widgets/NewsLetter.dart';
 import 'Drower/drawerHeader.dart';
 import 'Drower/drawerList.dart';
 import 'widgets/searchBar.dart';
@@ -87,6 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
               HomeBanner(),
               HomeCategory(),
               CustomerReviews(),
+              NewsLetter(),
             ],
           ),
 
