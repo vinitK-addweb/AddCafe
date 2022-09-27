@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './widgets/HomeBanner.dart';
+import './widgets/HomeCategory.dart';
 import 'Drower/drawerHeader.dart';
 import 'Drower/drawerList.dart';
 import 'widgets/searchBar.dart';
@@ -38,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       drawer: Drawer(
         child: SingleChildScrollView(
           child: Column(
@@ -77,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Container(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[Mysearch(), HomeBanner()],
+          children: <Widget>[Mysearch(), HomeBanner(),HomeCategory()],
         ),
       ),
 
