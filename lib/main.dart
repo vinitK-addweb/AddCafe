@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'cafe',
         theme: ThemeData(
-          primarySwatch: Colors.red,
+          primarySwatch: Colors.blue,
         ),
         home:
             //  MyHomePage(),
@@ -43,62 +43,69 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: Drawer(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.red,
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+            image: NetworkImage('https://cdn.domestika.org/c_fit,dpr_auto,f_auto,t_base_params,w_820/v1616749426/content-items/007/482/585/DOMINOS%2520BEHANCE-05-original.jpg?1616749426'), fit: BoxFit.cover),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        drawer: Drawer(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                  ),
+                  child: Column(children: [
+                    DrowerHeader(),
+                  ]),
                 ),
-                child: Column(children: [
-                  DrowerHeader(),
-                ]),
-              ),
-              Container(
-                child: MyDrowerList(),
-              )
-            ],
+                Container(
+                  child: MyDrowerList(),
+                )
+              ],
+            ),
           ),
         ),
-      ),
 
-      bottomNavigationBar: theFooter(),
+        bottomNavigationBar: theFooter(),
 
-      appBar: AppBar(
-        elevation: 0,
-        title: Image.asset(
-          'assets/images/addweb.png', height: 100, width: 200,
-          // ),
+        appBar: AppBar(
+          elevation: 0,
+          title: Image.asset(
+            'assets/images/addweb.png', height: 100, width: 200,
+            // ),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.notifications),
+            )
+          ],
+          // Padding(
+          // padding: const EdgeInsets.all(8.0),
+          // child:
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications),
-          )
-        ],
-        // Padding(
-        // padding: const EdgeInsets.all(8.0),
-        // child:
-      ),
 
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Mysearch(),
-              HomeBanner(),
-              HomeCategory(),
-              CustomerReviews(),
-              NewsLetter(),
-            ],
+        body: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: <Widget>[
+                Mysearch(),
+                HomeBanner(),
+                HomeCategory(),
+                CustomerReviews(),
+                NewsLetter(),
+              ],
+            ),
           ),
         ),
-      ),
 
-      // This trailing comma makes auto-formatting nicer for build methods.
+        // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }

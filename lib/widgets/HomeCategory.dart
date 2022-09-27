@@ -24,17 +24,19 @@ class HomeCategory extends StatelessWidget {
               margin: EdgeInsets.only(left: 20),
               child: Text(
                 'Explore Menu',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
               )),
           Center(
             child: Wrap(
                 spacing: 10,
                 children: (CategoryImages as List).map((item) {
                   return Container(
+                    
                     margin: EdgeInsets.all(10),
                     width: 100,
                     child: InkWell(
                       child: Card(
+                        color: Colors.transparent,
                         elevation: 0,
                         child: Column(
                           children: [
@@ -46,7 +48,7 @@ class HomeCategory extends StatelessWidget {
                             Container(
                               margin: EdgeInsets.symmetric(vertical: 10),
                                 child: Text(
-                              item['imageText'], style: TextStyle(fontWeight: FontWeight.bold),
+                              item['imageText'], style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
                             ))
                           ],
                         ),

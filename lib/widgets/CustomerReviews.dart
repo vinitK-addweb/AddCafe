@@ -17,9 +17,10 @@ class CustomerReviews extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-        Text('Customer Reviews', style: TextStyle(fontWeight: FontWeight.bold),),
+        Text('Customer Reviews', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
         Column(children: customerReviews.map((e) {
           return Container(
+            decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(100))),
             margin: EdgeInsets.symmetric(vertical: 10),
             child: Card(
               child: Column(
