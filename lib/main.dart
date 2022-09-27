@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import './widgets/HomeBanner.dart';
+import 'Drower/drawerHeader.dart';
+import 'Drower/drawerList.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'cafe',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -44,6 +47,33 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             HomeBanner()
           ],
+        ),
+      ),
+      // drawer: Drawer(
+      //     child: Column(
+      //   crossAxisAlignment: CrossAxisAlignment.start,
+      //   children: [
+      //     Container(margin: EdgeInsets.only(top: 50), child: Text('hello')),
+      //   ],
+      // )),
+      drawer: Drawer(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                ),
+                child: Column(children: [
+                  DrowerHeader(),
+                ]),
+              ),
+              Container(
+                child: MyDrowerList(),
+              )
+            ],
+          ),
         ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
