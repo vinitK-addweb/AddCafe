@@ -46,7 +46,9 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-            image: NetworkImage('https://cdn.domestika.org/c_fit,dpr_auto,f_auto,t_base_params,w_820/v1616749426/content-items/007/482/585/DOMINOS%2520BEHANCE-05-original.jpg?1616749426'), fit: BoxFit.cover),
+            image: NetworkImage(
+                'https://cdn.domestika.org/c_fit,dpr_auto,f_auto,t_base_params,w_820/v1616749426/content-items/007/482/585/DOMINOS%2520BEHANCE-05-original.jpg?1616749426'),
+            fit: BoxFit.cover),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,

@@ -8,6 +8,7 @@ class NewsLetter extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(bottom: 20),
       child: Card(
+        color: Colors.transparent,
         child: Container(
           padding: EdgeInsets.only(left: 20, right: 20, bottom: 30),
           child: Column(children: [
@@ -16,15 +17,28 @@ class NewsLetter extends StatelessWidget {
                 margin: EdgeInsets.only(top: 5),
                 child: Text(
                   'Join Our NewsLetter',
-                  style: TextStyle(color: Colors.blue, fontSize: 17, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold),
                 )),
             TextField(
+              style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                  hintText: 'Email',
+                  prefixIcon: const Icon(
+                    Icons.mail,
+                    // color: Colors.white,
+                  ),
+                  labelStyle: new TextStyle(color: Colors.white),
+                  fillColor: Colors.white,
+                  hintText: 'Your Email',
                   border: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.white),
                       borderRadius: BorderRadius.all(Radius.circular(5)))),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             ElevatedButton(
               onPressed: () {},
               child: Text('Subscribe'),
