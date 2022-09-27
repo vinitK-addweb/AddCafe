@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './widgets/HomeBanner.dart';
+import './widgets/HomeCategory.dart';
 import 'Drower/drawerHeader.dart';
 import 'Drower/drawerList.dart';
 
@@ -43,19 +44,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Container(
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            HomeBanner()
+            HomeBanner(),
+            HomeCategory()
           ],
         ),
       ),
-      // drawer: Drawer(
-      //     child: Column(
-      //   crossAxisAlignment: CrossAxisAlignment.start,
-      //   children: [
-      //     Container(margin: EdgeInsets.only(top: 50), child: Text('hello')),
-      //   ],
-      // )),
+      
       drawer: Drawer(
         child: SingleChildScrollView(
           child: Column(
