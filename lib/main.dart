@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import './widgets/HomeBanner.dart';
 import 'Drower/drawerHeader.dart';
 import 'Drower/drawerList.dart';
-
+import 'widgets/searchBar.dart';
 
 void main() {
   runApp(const MyApp());
@@ -20,15 +20,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  // const MyHomePage({super.key, required this.title});
 
-  final String title;
+  // final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -38,24 +38,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Container(
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            HomeBanner()
-          ],
-        ),
-      ),
-      // drawer: Drawer(
-      //     child: Column(
-      //   crossAxisAlignment: CrossAxisAlignment.start,
-      //   children: [
-      //     Container(margin: EdgeInsets.only(top: 50), child: Text('hello')),
-      //   ],
-      // )),
       drawer: Drawer(
         child: SingleChildScrollView(
           child: Column(
@@ -76,6 +58,29 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+      appBar: AppBar(
+        elevation: 0,
+        title: Image.asset(
+          'assets/images/addweb.png', height: 100, width: 225,
+          // ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notifications),
+          )
+        ],
+        // Padding(
+        // padding: const EdgeInsets.all(8.0),
+        // child:
+      ),
+      body: Container(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[Mysearch(), HomeBanner()],
+        ),
+      ),
+
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
