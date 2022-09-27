@@ -17,8 +17,9 @@ class HomeBanner extends StatelessWidget {
       child: CarouselSlider(
         options: CarouselOptions(
           height: 150.0,
+
           autoPlay: true,
-          enlargeCenterPage: true,
+          // enlargeCenterPage: true,
         ),
         items: bannerImages.map((i) {
           return Builder(
@@ -27,7 +28,7 @@ class HomeBanner extends StatelessWidget {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         image: AssetImage(i), fit: BoxFit.cover),
-                    borderRadius: BorderRadius.circular(10.0)),
+                    borderRadius: BorderRadius.circular(5.0)),
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.symmetric(horizontal: 5.0),
               );
