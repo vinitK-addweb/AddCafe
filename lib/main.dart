@@ -7,6 +7,7 @@ import './widgets/NewsLetter.dart';
 import 'Drower/drawerHeader.dart';
 import 'Drower/drawerList.dart';
 import 'widgets/searchBar.dart';
+import 'footer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -63,6 +64,34 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
+
+      bottomNavigationBar: theFooter(),
+
+      // Container(
+      //   height: 60,
+      //   width: MediaQuery.of(context).size.width / 4,
+      //   child: Icon(Icons.home),
+      //   decoration: BoxDecoration(color: Colors.blue),
+      // ),
+      // Container(
+      //   height: 60,
+      //   width: MediaQuery.of(context).size.width / 4,
+      //   child: Icon(Icons.home),
+      //   decoration: BoxDecoration(color: Colors.blue),
+      // ),
+      // Container(
+      //   height: 60,
+      //   width: MediaQuery.of(context).size.width / 4,
+      //   child: Icon(Icons.home),
+      //   decoration: BoxDecoration(color: Colors.blue),
+      // ),
+      // Container(
+      //   height: 60,
+      //   width: MediaQuery.of(context).size.width / 4,
+      //   child: Icon(Icons.home),
+      //   decoration: BoxDecoration(color: Colors.blue),
+      // ),
+
       appBar: AppBar(
         elevation: 0,
         title: Image.asset(
@@ -91,7 +120,6 @@ class _MyHomePageState extends State<MyHomePage> {
               NewsLetter(),
             ],
           ),
-
         ),
       ),
 
