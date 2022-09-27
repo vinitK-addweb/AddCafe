@@ -2,6 +2,7 @@ import 'package:addcafe/widgets/splash.dart';
 import 'package:flutter/material.dart';
 import './widgets/HomeBanner.dart';
 import './widgets/HomeCategory.dart';
+import './widgets/CustomerReviews.dart';
 import 'Drower/drawerHeader.dart';
 import 'Drower/drawerList.dart';
 import 'widgets/searchBar.dart';
@@ -77,10 +78,18 @@ class _MyHomePageState extends State<MyHomePage> {
         // padding: const EdgeInsets.all(8.0),
         // child:
       ),
-      body: Container(
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[Mysearch(), HomeBanner(), HomeCategory()],
+
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Mysearch(),
+              HomeBanner(),
+              HomeCategory(),
+              CustomerReviews(),
+            ],
+          ),
+
         ),
       ),
 
