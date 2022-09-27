@@ -13,7 +13,7 @@ class _DrowerHeaderState extends State<DrowerHeader> {
       width: double.infinity,
       height: 200,
       padding: EdgeInsets.only(top: 20.0),
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         CircleAvatar(
             radius: 55,
             backgroundImage: NetworkImage(

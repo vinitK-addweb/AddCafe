@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               'hi there',
@@ -50,11 +50,29 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+      // drawer: Drawer(
+      //     child: Column(
+      //   crossAxisAlignment: CrossAxisAlignment.start,
+      //   children: [
+      //     Container(margin: EdgeInsets.only(top: 50), child: Text('hello')),
+      //   ],
+      // )),
       drawer: Drawer(
         child: SingleChildScrollView(
-          child: Container(
-            decoration: BoxDecoration(color: Colors.blue),
-            child: Column(children: [DrowerHeader(), MyDrowerList()]),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.blue, border: Border.all(width: 5)),
+                child: Column(children: [
+                  DrowerHeader(),
+                ]),
+              ),
+              Container(
+                child: MyDrowerList(),
+              )
+            ],
           ),
         ),
       ),
