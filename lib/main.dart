@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'cafe',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.red,
         ),
         home:
             //  MyHomePage(),
@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Colors.red,
                 ),
                 child: Column(children: [
                   DrowerHeader(),
@@ -66,31 +66,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       bottomNavigationBar: theFooter(),
-
-      // Container(
-      //   height: 60,
-      //   width: MediaQuery.of(context).size.width / 4,
-      //   child: Icon(Icons.home),
-      //   decoration: BoxDecoration(color: Colors.blue),
-      // ),
-      // Container(
-      //   height: 60,
-      //   width: MediaQuery.of(context).size.width / 4,
-      //   child: Icon(Icons.home),
-      //   decoration: BoxDecoration(color: Colors.blue),
-      // ),
-      // Container(
-      //   height: 60,
-      //   width: MediaQuery.of(context).size.width / 4,
-      //   child: Icon(Icons.home),
-      //   decoration: BoxDecoration(color: Colors.blue),
-      // ),
-      // Container(
-      //   height: 60,
-      //   width: MediaQuery.of(context).size.width / 4,
-      //   child: Icon(Icons.home),
-      //   decoration: BoxDecoration(color: Colors.blue),
-      // ),
 
       appBar: AppBar(
         elevation: 0,

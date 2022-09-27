@@ -17,7 +17,7 @@ class _DrowerHeaderState extends State<DrowerHeader> {
         CircleAvatar(
             radius: 55,
             backgroundImage: NetworkImage(
-              'https://bombyxplm.com/wp-content/uploads/2021/01/421-4213053_default-avatar-icon-hd-png-download.png',
+              'https://mir-s3-cdn-cf.behance.net/user/276/462829507061295.5f9717443f152.png',
             )),
         // Container(
         //   margin: EdgeInsets.only(bottom: 10),
