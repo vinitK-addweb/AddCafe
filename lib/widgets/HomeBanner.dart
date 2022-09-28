@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class HomeBanner extends StatelessWidget {
-  HomeBanner({Key? key}) : super(key: key);
+  // HomeBanner({Key? key}) : super(key: key);
 
-  final bannerImages = [
-    'assets/images/bannerImage1.jpg',
-    'assets/images/bannerImage2.jpg',
-    'assets/images/bannerImage3.jpg'
-  ];
+  final List bannerImages;
+
+  HomeBanner(this.bannerImages);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +25,7 @@ class HomeBanner extends StatelessWidget {
               return Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: AssetImage(i), fit: BoxFit.cover),
+                        image: NetworkImage(i['image']), fit: BoxFit.cover),
                     borderRadius: BorderRadius.circular(5.0)),
                 width: MediaQuery.of(context).size.width,
                 margin: EdgeInsets.symmetric(horizontal: 5.0),

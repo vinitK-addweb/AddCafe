@@ -14,7 +14,7 @@ class _theFooterState extends State<theFooter> {
         iconSize: 35,
         items: [
           BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.menu_open_outlined),
               label: 'Menu',
               backgroundColor: Colors.blue),
           BottomNavigationBarItem(

@@ -2,16 +2,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class HomeCategory extends StatelessWidget {
-  HomeCategory({Key? key}) : super(key: key);
+  HomeCategory(this.CategoryImages);
+  final List CategoryImages;
 
-  final List CategoryImages = <Map>[
-    {'imageName': 'cat_burger.jpg', 'imageText': 'Burger'},
-    {'imageName': 'cat_cake.jpg', 'imageText': 'Cake'},
-    {'imageName': 'cat_drinks.jpg', 'imageText': 'Drinks'},
-    {'imageName': 'cat_pizza.jpg', 'imageText': 'Pizza'},
-    {'imageName': 'cat_waffles.jpg', 'imageText': 'Waffles'},
-    {'imageName': 'cat_icecream.jpg', 'imageText': 'Icecream'}
-  ];
+  // final List CategoryImages = <Map>[
+  //   {'imageName': 'cat_burger.jpg', 'imageText': 'Burger'},
+  //   {'imageName': 'cat_cake.jpg', 'imageText': 'Cake'},
+  //   {'imageName': 'cat_drinks.jpg', 'imageText': 'Drinks'},
+  //   {'imageName': 'cat_pizza.jpg', 'imageText': 'Pizza'},
+  //   {'imageName': 'cat_waffles.jpg', 'imageText': 'Waffles'},
+  //   {'imageName': 'cat_icecream.jpg', 'imageText': 'Icecream'}
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -39,15 +40,15 @@ class HomeCategory extends StatelessWidget {
                         child: Column(
                           children: [
                             CircleAvatar(
-                              backgroundImage: AssetImage(
-                                  'assets/images/${item['imageName']}'),
+                              backgroundImage: NetworkImage(item['image']),
                               radius: 40,
                             ),
                             Container(
-                              margin: EdgeInsets.symmetric(vertical: 10),
+                                margin: EdgeInsets.symmetric(vertical: 10),
                                 child: Text(
-                              item['imageText'], style: TextStyle(fontWeight: FontWeight.bold),
-                            ))
+                                  item['name'],
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ))
                           ],
                         ),
                       ),
