@@ -59,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: Colors.blue,
                   ),
                   child: Column(children: [
                     DrowerHeader(),

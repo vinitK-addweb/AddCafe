@@ -16,7 +16,7 @@ class _SplashState extends State<Splash> {
   }
 
   _navigatetohome() async {
-    await Future.delayed(Duration(milliseconds: 2500), () {});
+    await Future.delayed(Duration(milliseconds: 5200), () {});
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => MyHomePage()));
   }
@@ -29,7 +29,7 @@ class _SplashState extends State<Splash> {
           Container(
               margin: EdgeInsets.fromLTRB(40, 200, 40, 100),
               child: Image.asset(
-                'assets/images/addweb.png',
+                'assets/images/addweb.gif',
               )),
           Container(
             child: Image.asset(
