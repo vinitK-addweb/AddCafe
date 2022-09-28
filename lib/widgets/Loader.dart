@@ -55,6 +55,27 @@ class MyLoader extends StatelessWidget {
             // ),
             title: Myshimmer.rectangular(height: 150),
           ),
+          ListTile(
+            leading: Myshimmer.Circular(
+              height: 74,
+              width: 74,
+            ),
+            title: Myshimmer.rectangular(
+              height: 10,
+              width: 10,
+            ),
+            subtitle: Myshimmer.rectangular(
+              height: 5,
+              width: 10,
+            ),
+          ),
+          ListTile(
+            // leading: Myshimmer.Circular(
+            //   height: 64,
+            //   width: 64,
+            // ),
+            title: Myshimmer.rectangular(height: 150),
+          ),
           // Container(
           //   child: Row(
           //     children: [
