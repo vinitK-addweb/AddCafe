@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:addcafe/widgets/splash.dart';
 import 'package:flutter/material.dart';
 import './widgets/HomeBanner.dart';
@@ -8,6 +10,7 @@ import 'Drower/drawerHeader.dart';
 import 'Drower/drawerList.dart';
 import 'widgets/searchBar.dart';
 import 'footer.dart';
+import 'widgets/Loader.dart';
 
 void main() {
   runApp(const MyApp());
@@ -41,6 +44,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool isLoading = false;
+
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  Future loadData() async {
+    setState(() => isLoading = true);
+    await Future.delayed(Duration(seconds: 2), () {});
+    setState(() => isLoading = false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,9 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-
       bottomNavigationBar: theFooter(),
-
       appBar: AppBar(
         elevation: 0,
         title: Image.asset(
@@ -83,20 +97,28 @@ class _MyHomePageState extends State<MyHomePage> {
         // padding: const EdgeInsets.all(8.0),
         // child:
       ),
+      body: isLoading == true
+          ? MyLoader()
+          :
+          // ListView.builder(
+          //     itemCount: 5,
+          //     itemBuilder: (context, index) {
+          //       return buildFoodShimmer();
+          //     })
 
-      body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: <Widget>[
-              Mysearch(),
-              HomeBanner(),
-              HomeCategory(),
-              CustomerReviews(),
-              NewsLetter(),
-            ],
-          ),
-        ),
-      ),
+          SingleChildScrollView(
+              child: Container(
+                child: Column(
+                  children: <Widget>[
+                    Mysearch(),
+                    HomeBanner(),
+                    HomeCategory(),
+                    CustomerReviews(),
+                    NewsLetter(),
+                  ],
+                ),
+              ),
+            ),
 
       // This trailing comma makes auto-formatting nicer for build methods.
     );
