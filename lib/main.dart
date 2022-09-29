@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
 
 late List homeBannerData = [];
 late List homeCategoryData = [];
+late List customerReviews = [];
 
 class MyHomePage extends StatefulWidget {
   // const MyHomePage({super.key, required this.title});
@@ -78,11 +79,23 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  Future getcustomerReviews() async {
+    http.Response response;
+    response = await http
+        .get(Uri.parse('https://vinit-api-data.herokuapp.com/customerReviews'));
+    if (response.statusCode == 200) {
+      setState(() {
+        customerReviews = json.decode(response.body);
+      });
+    }
+  }
+
   void initState() {
     super.initState();
     loadData();
     getHomeBanner();
     getHomeCategory();
+    getcustomerReviews();
   }
 
   Future loadData() async {
@@ -148,7 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Mysearch(),
                     HomeBanner(homeBannerData),
                     HomeCategory(homeCategoryData),
-                    CustomerReviews(),
+                    CustomerReviews(customerReviews),
                     NewsLetter(),
                     // Container(
                     //   child: Text(BannerData),
