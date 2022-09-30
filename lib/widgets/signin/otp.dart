@@ -1,14 +1,14 @@
 import 'package:addcafe/main.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import './otp.dart';
+import 'signin.dart';
 // import '../splash.dart';
 
 // void main() {
 //   runApp(Mylogin());
 // }
 
-class Mylogin extends StatelessWidget {
+class Otp extends StatelessWidget {
   final data = [
     {"id": "2", "image": "assets/images/facebook.png", "name": "Burger"},
     {"id": "3", "image": "assets/images/google.webp", "name": "Cake"},
@@ -19,34 +19,47 @@ class Mylogin extends StatelessWidget {
         body: Column(
       children: [
         Stack(children: <Widget>[
-          Container(
-            child: Image.asset('assets/images/onboard.png'),
-            height: 370,
-            width: double.infinity,
+          // Container(
+          //   width: 300,
+          //   height: 300,
+          //   color: Colors.red,
+          // ), //C
+          Row(
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 50),
+                child: MaterialButton(
+                    // color: Colors.transparent,
+                    minWidth: 30,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(55)),
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Mylogin()));
+                    },
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.black,
+                      size: 35,
+                    )),
+              ),
+              Container(
+                  margin: EdgeInsets.symmetric(vertical: 50),
+                  child: Text(
+                    'OTP Verification',
+                    style: TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ))
+            ],
           ),
-          Positioned(
-              top: 60,
-              right: 20,
-              child: MaterialButton(
-                color: Colors.black45,
-                minWidth: 30,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(55)),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyHomePage()));
-                },
-                child: Text(
-                  'Skip',
-                  style: TextStyle(color: Colors.white),
-                ),
-              )
-              // ElevatedButton(
-              //   onPressed: () {},
-              //   child: Text('Skip'),
-              // )
-              )
         ]),
+        Container(
+          child: Image.asset('assets/images/otp.png'),
+          height: 350,
+          width: double.infinity,
+        ),
         Container(
           margin: EdgeInsets.all(2),
           child: Text('#1 Food Devlivery App',
@@ -98,10 +111,7 @@ class Mylogin extends StatelessWidget {
               height: 50,
               minWidth: double.infinity,
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Otp()));
-              },
+              onPressed: () {},
               child: Text('Continue'),
               color: Colors.red,
               shape: RoundedRectangleBorder(
