@@ -6,6 +6,7 @@ import './widgets/HomeBanner.dart';
 import './widgets/HomeCategory.dart';
 import './widgets/CustomerReviews.dart';
 import './widgets/NewsLetter.dart';
+import 'widgets/category/CategoryItems.dart';
 import 'Drower/drawerHeader.dart';
 import 'Drower/drawerList.dart';
 import 'widgets/searchBar.dart';
@@ -140,19 +141,8 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: const Icon(Icons.notifications),
           )
         ],
-        // Padding(
-        // padding: const EdgeInsets.all(8.0),
-        // child:
       ),
-      body:
-
-          // ListView.builder(
-          //     itemCount: 5,
-          //     itemBuilder: (context, index) {
-          //       return buildFoodShimmer();
-          //     })
-
-          SingleChildScrollView(
+      body:SingleChildScrollView(
         child: homeBannerData.isEmpty || homeCategoryData.isEmpty
             ? MyLoader()
             : Container(
@@ -161,11 +151,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     Mysearch(),
                     HomeBanner(homeBannerData),
                     HomeCategory(homeCategoryData),
+                    CategoryItems(),
                     CustomerReviews(customerReviews),
                     NewsLetter(),
-                    // Container(
-                    //   child: Text(BannerData),
-                    // )
+                    
                   ],
                 ),
               ),
