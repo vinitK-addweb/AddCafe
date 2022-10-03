@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'package:addcafe/route_generator.dart';
 import 'package:http/http.dart' as http;
 import 'package:addcafe/widgets/splash.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import './widgets/HomeCategory.dart';
 import './widgets/CustomerReviews.dart';
 import './widgets/NewsLetter.dart';
 import 'widgets/category/CategoryItems.dart';
+import './widgets/cart/cart.dart';
 import 'Drower/drawerHeader.dart';
 import 'Drower/drawerList.dart';
 import 'widgets/searchBar.dart';
@@ -25,17 +27,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        // routes: {
-        //   '/': (context) => MyHomePage(),
-        // },
-        debugShowCheckedModeBanner: false,
-        title: 'cafe',
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-        ),
-        home:
-            //  MyHomePage(),
-            Splash());
+      initialRoute: '/splash',
+      onGenerateRoute: RouteGenerator.generateRoute,
+      // routes: {
+      //   '/': (context) => MyHomePage(),
+      // },
+      debugShowCheckedModeBanner: false,
+      title: 'cafe',
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+      ),
+      // home:
+      //     //  MyHomePage(),
+      //     Splash(),
+    );
   }
 }
 
@@ -145,7 +150,7 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      body:SingleChildScrollView(
+      body: SingleChildScrollView(
         child: homeBannerData.isEmpty || homeCategoryData.isEmpty
             ? MyLoader()
             : Container(
@@ -157,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     CategoryItems(),
                     CustomerReviews(customerReviews),
                     NewsLetter(),
-                    
+                    // Cart()
                   ],
                 ),
               ),
