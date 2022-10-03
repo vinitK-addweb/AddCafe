@@ -1,5 +1,6 @@
 import 'package:addcafe/main.dart';
 import 'package:flutter/material.dart';
+import './otp.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 // import '../splash.dart';
 
@@ -16,10 +17,11 @@ class Mylogin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-          child: Column(
-            
-      children: [
-            SizedBox(height: 50,),
+      child: Column(
+        children: [
+          SizedBox(
+            height: 60,
+          ),
 
           Stack(children: <Widget>[
             // Container(
@@ -33,8 +35,8 @@ class Mylogin extends StatelessWidget {
               width: 300,
             ),
             Positioned(
-                top: 60,
-                right: 20,
+                top: 20,
+                right: -2,
                 child: MaterialButton(
                   color: Colors.black45,
                   minWidth: 30,
@@ -48,8 +50,7 @@ class Mylogin extends StatelessWidget {
                     'Skip',
                     style: TextStyle(color: Colors.white),
                   ),
-                )
-                )
+                ))
           ]),
           Container(
             margin: EdgeInsets.all(2),
@@ -102,7 +103,10 @@ class Mylogin extends StatelessWidget {
                 height: 50,
                 minWidth: double.infinity,
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => Otp()));
+                },
                 child: Text('Continue'),
                 color: Colors.red,
                 shape: RoundedRectangleBorder(
@@ -147,9 +151,9 @@ class Mylogin extends StatelessWidget {
                   );
                 }).toList()),
           )
-      ],
-    ),
-        )
+        ],
+      ),
+    )
         // Container(
         //   decoration: const BoxDecoration(
         //     image: DecorationImage(
