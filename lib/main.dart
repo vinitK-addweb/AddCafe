@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'package:addcafe/route_generator.dart';
 import 'package:http/http.dart' as http;
 import 'package:addcafe/widgets/splash.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,8 @@ import './widgets/HomeBanner.dart';
 import './widgets/HomeCategory.dart';
 import './widgets/CustomerReviews.dart';
 import './widgets/NewsLetter.dart';
+import 'widgets/category/CategoryItems.dart';
+import './widgets/cart/cart.dart';
 import 'Drower/drawerHeader.dart';
 import 'Drower/drawerList.dart';
 import 'widgets/searchBar.dart';
@@ -24,19 +27,26 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'cafe',
-        theme: ThemeData(
-          primarySwatch: Colors.red,
-        ),
-        home:
-            //  MyHomePage(),
-            Splash());
+      initialRoute: '/splash',
+      onGenerateRoute: RouteGenerator.generateRoute,
+      // routes: {
+      //   '/': (context) => MyHomePage(),
+      // },
+      debugShowCheckedModeBanner: false,
+      title: 'cafe',
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+      ),
+      // home:
+      //     //  MyHomePage(),
+      //     Splash(),
+    );
   }
 }
 
 late List homeBannerData = [];
 late List homeCategoryData = [];
+late List customerReviews = [];
 
 class MyHomePage extends StatefulWidget {
   // const MyHomePage({super.key, required this.title});
@@ -67,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future getHomeBanner() async {
     http.Response response;
     response = await http
-        .get(Uri.parse('https://kindly-opposite-wishbone.glitch.me/products'));
+        .get(Uri.parse('https://vinit-api-data.herokuapp.com/homeBanner'));
     if (response.statusCode == 200) {
       setState(() {
         homeBannerData = json.decode(response.body);
@@ -78,11 +88,23 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  Future getcustomerReviews() async {
+    http.Response response;
+    response = await http
+        .get(Uri.parse('https://vinit-api-data.herokuapp.com/customerReviews'));
+    if (response.statusCode == 200) {
+      setState(() {
+        customerReviews = json.decode(response.body);
+      });
+    }
+  }
+
   void initState() {
     super.initState();
     loadData();
     getHomeBanner();
     getHomeCategory();
+    getcustomerReviews();
   }
 
   Future loadData() async {
@@ -127,19 +149,8 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: const Icon(Icons.notifications),
           )
         ],
-        // Padding(
-        // padding: const EdgeInsets.all(8.0),
-        // child:
       ),
-      body:
-
-          // ListView.builder(
-          //     itemCount: 5,
-          //     itemBuilder: (context, index) {
-          //       return buildFoodShimmer();
-          //     })
-
-          SingleChildScrollView(
+      body: SingleChildScrollView(
         child: homeBannerData.isEmpty || homeCategoryData.isEmpty
             ? MyLoader()
             : Container(
@@ -148,11 +159,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     Mysearch(),
                     HomeBanner(homeBannerData),
                     HomeCategory(homeCategoryData),
-                    CustomerReviews(),
+                    CategoryItems(),
+                    CustomerReviews(customerReviews),
                     NewsLetter(),
-                    // Container(
-                    //   child: Text(BannerData),
-                    // )
+                    // Cart()
                   ],
                 ),
               ),
