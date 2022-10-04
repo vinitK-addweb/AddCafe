@@ -119,7 +119,11 @@ class _AddonState extends State<Addon> {
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)))),
                     onPressed: (() {}),
-                    child: const Text('Add item - ₹50')),
+                    child: const Text(
+                      'Add item - ₹50',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    )),
               )
             ],
           ),
