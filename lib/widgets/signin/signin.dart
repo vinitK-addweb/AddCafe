@@ -2,6 +2,7 @@ import 'package:addcafe/main.dart';
 import 'package:flutter/material.dart';
 import './otp.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import './otp.dart';
 // import '../splash.dart';
 
 // void main() {

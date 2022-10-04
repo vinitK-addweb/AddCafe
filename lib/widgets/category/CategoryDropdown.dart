@@ -99,9 +99,14 @@ class CategoryDropdown extends StatelessWidget {
                         top: 120,
                         left: 45,
                         child: ElevatedButton(
-                            onPressed: () => showBottomSheet(
+                            onPressed: () => showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(20))),
                                 context: context,
-                                builder: (context) => Addon()),
+                                builder: (context) => Addon(categoryItems)),
                             child: Text('Add')),
                       ),
                     ],
