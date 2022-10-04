@@ -159,7 +159,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Mysearch(),
                     HomeBanner(homeBannerData),
                     HomeCategory(homeCategoryData),
-                    CategoryItems(),
+                    // CategoryItems(),
                     CustomerReviews(customerReviews),
                     NewsLetter(),
                     // Cart()

@@ -35,6 +35,10 @@ class HomeCategory extends StatelessWidget {
                     margin: EdgeInsets.all(10),
                     width: 100,
                     child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/category',
+                            arguments: item['name']);
+                      },
                       child: Card(
                         elevation: 0,
                         child: Column(

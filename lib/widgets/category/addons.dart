@@ -48,10 +48,11 @@ class _AddonState extends State<Addon> {
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Center(
                 child: SizedBox(
-                  width: 148,
+                  // width: 1,
                   height: 50,
                   child: Container(
                     decoration: BoxDecoration(
@@ -110,7 +111,7 @@ class _AddonState extends State<Addon> {
               ),
               Container(
                 height: 50,
-                width: 200,
+                // width: 100,
                 // decoration:
                 //     BoxDecoration(borderRadius: BorderRadius.circular(20)),
                 margin: EdgeInsets.symmetric(horizontal: 20),

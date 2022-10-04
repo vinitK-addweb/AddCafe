@@ -35,7 +35,7 @@ class _theFooterState extends State<theFooter> {
         onTap: (index) {
           setState(() {
             _currentIndex = index;
-            Navigator.of(context).pushNamed('/second');
+            if (index == 3) Navigator.of(context).pushNamed('/cart');
           });
         },
       );
