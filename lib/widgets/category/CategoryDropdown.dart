@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'rating.dart';
+import 'addons.dart';
 
 class CategoryDropdown extends StatelessWidget {
   CategoryDropdown(this.categoryItems);
@@ -79,7 +80,6 @@ class CategoryDropdown extends StatelessWidget {
                           children: [
                             Container(
                               width: 150,
-                              
                               height: 150,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8),
@@ -99,7 +99,15 @@ class CategoryDropdown extends StatelessWidget {
                         top: 120,
                         left: 45,
                         child: ElevatedButton(
-                            onPressed: () {}, child: Text('Add')),
+                            onPressed: () => showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(20))),
+                                context: context,
+                                builder: (context) => Addon(categoryItems)),
+                            child: Text('Add')),
                       ),
                     ],
                   )
