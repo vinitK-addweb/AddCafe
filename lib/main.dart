@@ -76,8 +76,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future getHomeBanner() async {
     http.Response response;
-    response = await http
-        .get(Uri.parse('https://vinit-api-data.herokuapp.com/homeBanner'));
+    response = await http.get(Uri.parse(
+        'https://cafe.addwebprojects.com/api/v1/promotion/active-banner/'));
     if (response.statusCode == 200) {
       setState(() {
         homeBannerData = json.decode(response.body);

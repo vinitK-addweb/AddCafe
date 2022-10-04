@@ -145,32 +145,36 @@ class _CategoryItemsState extends State<CategoryItems> {
             icon: Icon(Icons.arrow_back_ios),
           ),
           ...categories.map((e) {
-            return Card(
-              child: Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '${e['categoryName']}(${e['categoryItems'].length})',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            return InkWell(
+                onTap: () {
+                  changeCategory(e['categoryName']);
+                },
+                child: Card(
+                  child: Column(children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${e['categoryName']}(${e['categoryItems'].length})',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              changeCategory(e['categoryName']);
+                            },
+                            icon: Icon(currentCategory == e['categoryName']
+                                ? Icons.arrow_drop_up
+                                : Icons.arrow_drop_down))
+                      ],
                     ),
-                    IconButton(
-                        onPressed: () {
-                          changeCategory(e['categoryName']);
-                        },
-                        icon: Icon(currentCategory == e['categoryName']
-                            ? Icons.arrow_drop_up
-                            : Icons.arrow_drop_down))
-                  ],
-                ),
-                currentCategory == e['categoryName']
-                    ? CategoryDropdown(e['categoryItems'])
-                    : SizedBox(
-                        height: 0,
-                      ),
-              ]),
-            );
+                    currentCategory == e['categoryName']
+                        ? CategoryDropdown(e['categoryItems'])
+                        : SizedBox(
+                            height: 0,
+                          ),
+                  ]),
+                ));
           }).toList()
         ]),
       ),
