@@ -62,8 +62,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future getHomeCategory() async {
     http.Response response;
-    response = await http
-        .get(Uri.parse('https://vinit-api-data.herokuapp.com/category'));
+    response = await http.get(Uri.parse(
+        'https://cafe.addwebprojects.com/api/v1/catalogue/active-category/'));
     if (response.statusCode == 200) {
       setState(() {
         homeCategoryData = json.decode(response.body);
