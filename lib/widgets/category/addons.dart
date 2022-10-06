@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import './rating.dart';
 
 class Addon extends StatefulWidget {
@@ -161,8 +162,8 @@ class _AddonState extends State<Addon> {
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 child: Row(
                                   children: [
-                                    const Text(
-                                      'Gadren Delight Pizza ',
+                                    Text(
+                                      'Gadren Delight Pizza',
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),

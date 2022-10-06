@@ -1,5 +1,6 @@
 import 'dart:ffi';
 import 'package:addcafe/route_generator.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:addcafe/widgets/splash.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,8 @@ import 'footer.dart';
 import 'widgets/Loader.dart';
 import 'dart:convert';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load();
   runApp(const MyApp());
 }
 
@@ -76,8 +78,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future getHomeBanner() async {
     http.Response response;
-    response = await http.get(Uri.parse(
-        'https://cafe.addwebprojects.com/api/v1/promotion/active-banner/'));
+    response = await http
+        .get(Uri.parse('${dotenv.env['API_URL']}/promotion/active-banner/'));
     if (response.statusCode == 200) {
       setState(() {
         homeBannerData = json.decode(response.body);
