@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:addcafe/Providers/apis/CategoriesApi.dart';
 import 'package:flutter/material.dart';
 import 'CategoryDropdown.dart';
+import 'package:provider/provider.dart';
 
 class CategoryItems extends StatefulWidget {
   // CategoryItems({Key? key}) : super(key: key);
@@ -15,104 +17,6 @@ class CategoryItems extends StatefulWidget {
 
 class _CategoryItemsState extends State<CategoryItems> {
   _CategoryItemsState(this.currentCategory);
-  List categories = [
-    {
-      'categoryName': 'Pizza',
-      'categoryItems': [
-        {
-          'name': 'Chilly',
-          'rating': 5,
-          'reviewCount': 614,
-          'price': 55.00,
-          'image':
-              'https://images.unsplash.com/photo-1585238342024-78d387f4a707?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'
-        },
-        {
-          'name': 'Potato',
-          'rating': 4,
-          'reviewCount': 64,
-          'price': 45.00,
-          'image':
-              'https://images.unsplash.com/photo-1585828922344-85c9daa264b0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=640&q=80'
-        },
-        {
-          'name': 'Tomato',
-          'rating': 3,
-          'reviewCount': 6,
-          'price': 35.00,
-          'image':
-              'https://images.unsplash.com/photo-1632935254449-e777adc9addf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'
-        },
-      ],
-    },
-    {
-      'categoryName': 'Waffles',
-      'categoryItems': [
-        {
-          'name': 'Chilly',
-          'rating': 5,
-          'reviewCount': 614,
-          'price': 55.00,
-          'image':
-              'https://images.unsplash.com/photo-1585238342024-78d387f4a707?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'
-        },
-        {
-          'name': 'Potato',
-          'rating': 4,
-          'reviewCount': 64,
-          'price': 45.00,
-          'image':
-              'https://images.unsplash.com/photo-1585828922344-85c9daa264b0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=640&q=80'
-        },
-        {
-          'name': 'Tomato',
-          'rating': 3,
-          'reviewCount': 6,
-          'price': 35.00,
-          'image':
-              'https://images.unsplash.com/photo-1632935254449-e777adc9addf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'
-        },
-      ],
-    },
-    {
-      'categoryName': 'Drinks',
-      'categoryItems': [
-        {
-          'name': 'Chilly',
-          'rating': 5,
-          'reviewCount': 614,
-          'price': 55.00,
-          'image':
-              'https://images.unsplash.com/photo-1585238342024-78d387f4a707?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'
-        },
-        {
-          'name': 'Potato',
-          'rating': 4,
-          'reviewCount': 64,
-          'price': 45.00,
-          'image':
-              'https://images.unsplash.com/photo-1585828922344-85c9daa264b0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=640&q=80'
-        },
-        {
-          'name': 'Tomato',
-          'rating': 3,
-          'reviewCount': 6,
-          'price': 35.00,
-          'image':
-              'https://images.unsplash.com/photo-1632935254449-e777adc9addf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80'
-        },
-        {
-          'name': 'Potato',
-          'rating': 4,
-          'reviewCount': 64,
-          'price': 45.00,
-          'image':
-              'https://images.unsplash.com/photo-1585828922344-85c9daa264b0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=640&q=80'
-        },
-      ],
-    },
-  ];
-
   String currentCategory;
   changeCategory(String category) {
     if (currentCategory == category) {
@@ -128,6 +32,7 @@ class _CategoryItemsState extends State<CategoryItems> {
 
   @override
   Widget build(BuildContext context) {
+    final categoriesData = Provider.of<CategoriesApi>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -144,7 +49,7 @@ class _CategoryItemsState extends State<CategoryItems> {
             },
             icon: Icon(Icons.arrow_back_ios),
           ),
-          ...categories.map((e) {
+          ...categoriesData.categoriesData.map((e) {
             return InkWell(
                 onTap: () {
                   changeCategory(e['categoryName']);
