@@ -1,4 +1,5 @@
 import 'package:addcafe/route_generator.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:addcafe/Providers/apis/HomeBannerApi.dart';
@@ -15,7 +16,8 @@ import 'widgets/searchBar.dart';
 import 'footer.dart';
 import 'widgets/Loader.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => HomeBannerApi()),
     ChangeNotifierProvider(create: (_) => HomeCategoryApi()),
@@ -51,6 +53,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   bool isLoading = false;
+
 
   void initState() {
     super.initState();
