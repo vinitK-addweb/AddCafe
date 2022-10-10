@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 // import 'dart:html';
-
+import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:addcafe/main.dart';
@@ -12,6 +12,7 @@ import './otp.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:addcafe/Providers/apis/UserAuth.dart';
 // import '../splash.dart';
 
 // void main() {
@@ -40,7 +41,7 @@ class _SignupState extends State<Signup> {
     {"id": "3", "image": "assets/images/google.webp", "name": "Cake"},
   ];
 
-  var _isObscure = false;
+  var _isObscure = true;
 // _SignupState({required this.Name,this.phone,required this.email,required this.password})
   late String Name = '';
   late var phone = null;
@@ -50,6 +51,7 @@ class _SignupState extends State<Signup> {
 
   @override
   Widget build(BuildContext context) {
+    // final SignupApi = Provider.of<UserAuth>(context);
     return Scaffold(
         body: SingleChildScrollView(
       child: Form(
@@ -300,31 +302,21 @@ class _SignupState extends State<Signup> {
   }
 
   Future Registration() async {
-    var APIURL = "https://cafe.addwebprojects.com/api/v1/accounts/signup/";
+    print('object');
+    final SignupApi = Provider.of<UserAuth>(context, listen: false);
     Map mapedData = {
       "email": this.email,
       "password": this.password,
       "first_name": this.password,
       "mobile_number": this.phone.substring(2, 11)
     };
-    try {
-      final headers = {"Content-type": "multipart/form-data"};
-      print('Json map data : ${mapedData}');
-
-      http.Response response = await http.post(Uri.parse(APIURL),
-          headers: {"Content-Type": "application/json"},
-          body: jsonEncode(mapedData));
-      switch (response.statusCode) {
-        case 201:
-          final data = json.decode(response.body);
-          return Navigator.pushNamed(context, '/Otp', arguments: this.mobile);
-          ;
-      }
-      // print('Status code: ${response.statusCode}');
-      // print('Body: ${response.body}');
-
-    } on SocketException catch (_) {
-      rethrow;
-    }
+    SignupApi.signUp(mapedData)
+        .then((res) => {
+              print('DATA: ${res}'),
+              if (res.statusCode == 201)
+                {Navigator.pushNamed(context, '/Otp', arguments: this.mobile)}
+            })
+        .catchError((onError) => {print(onError)});
+    // var APIURL = "https://cafe.addwebprojects.com/api/v1/accounts/signup/";
   }
 }

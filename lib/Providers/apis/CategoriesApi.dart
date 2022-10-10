@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class CategoriesApi with ChangeNotifier {
   List _categoriesData = [];
@@ -26,8 +27,8 @@ class CategoriesApi with ChangeNotifier {
 
   Future getCategoryProducts(String category) async {
     http.Response response;
-    response = await http.get(Uri.parse(
-        'https://cafe.addwebprojects.com/api/v1/catalogue/active-product/?search=Pizza'));
+    response = await http
+        .get(Uri.parse('${dotenv.env}/catalogue/active-product/?search=Pizza'));
     if (response.statusCode == 200) {
       _allProducts = jsonDecode(response.body) as List;
     }
