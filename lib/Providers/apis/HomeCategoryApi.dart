@@ -5,6 +5,11 @@ import 'dart:convert';
 class HomeCategoryApi with ChangeNotifier {
   List _homeCategoryData = [];
 
+  List get homeCategoryData {
+    getHomeCategory();
+    return [..._homeCategoryData];
+  }
+
   Future getHomeCategory() async {
     http.Response response;
     response = await http.get(Uri.parse(
@@ -17,10 +22,5 @@ class HomeCategoryApi with ChangeNotifier {
     } else {
       print('not running');
     }
-  }
-
-  List get homeCategoryData {
-    getHomeCategory();
-    return [..._homeCategoryData];
   }
 }

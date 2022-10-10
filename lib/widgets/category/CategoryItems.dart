@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:addcafe/Providers/apis/CategoriesApi.dart';
+import 'package:addcafe/Providers/apis/HomeBannerApi.dart';
+import 'package:addcafe/Providers/apis/HomeCategoryApi.dart';
 import 'package:flutter/material.dart';
 import 'CategoryDropdown.dart';
 import 'package:provider/provider.dart';
+import '../HomeBanner.dart';
 
 class CategoryItems extends StatefulWidget {
   // CategoryItems({Key? key}) : super(key: key);
@@ -33,6 +36,8 @@ class _CategoryItemsState extends State<CategoryItems> {
   @override
   Widget build(BuildContext context) {
     final categoriesData = Provider.of<CategoriesApi>(context);
+    final homeCategoryApi = Provider.of<HomeCategoryApi>(context);
+    final homeBannerApi = Provider.of<HomeBannerApi>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -49,37 +54,42 @@ class _CategoryItemsState extends State<CategoryItems> {
             },
             icon: Icon(Icons.arrow_back_ios),
           ),
-          ...categoriesData.categoriesData.map((e) {
-            return InkWell(
-                onTap: () {
-                  changeCategory(e['categoryName']);
-                },
-                child: Card(
-                  child: Column(children: [
-                    Row(
+          HomeBanner(homeBannerApi.homeBannerData),
+          ...homeCategoryApi.homeCategoryData.map((e) {
+            categoriesData.getFilteredProducts(e['name']);
+            // print(categoriesData.allProducts);
+            return Card(
+                child: Column(
+              children: [
+                InkWell(
+                    onTap: () {
+                      changeCategory(e['name']);
+                    },
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${e['categoryName']}(${e['categoryItems'].length})',
+                          '${e['name']}(${categoriesData.categoryProduct.length})',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
                         IconButton(
                             onPressed: () {
-                              changeCategory(e['categoryName']);
+                              changeCategory(e['name']);
                             },
-                            icon: Icon(currentCategory == e['categoryName']
+                            icon: Icon(currentCategory == e['name']
                                 ? Icons.arrow_drop_up
                                 : Icons.arrow_drop_down))
                       ],
-                    ),
-                    currentCategory == e['categoryName']
-                        ? CategoryDropdown(e['categoryItems'])
-                        : SizedBox(
-                            height: 0,
-                          ),
-                  ]),
-                ));
+                    )),
+                currentCategory == e['name'] &&
+                        categoriesData.categoryProduct.isNotEmpty
+                    ? CategoryDropdown(categoriesData.categoryProduct)
+                    : SizedBox(
+                        height: 0,
+                      ),
+              ],
+            ));
           }).toList()
         ]),
       ),

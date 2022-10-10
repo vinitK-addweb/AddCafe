@@ -5,6 +5,11 @@ import 'dart:convert';
 class HomeBannerApi with ChangeNotifier {
   List _homeBannerData = [];
 
+  List get homeBannerData {
+    getHomeBanner();
+    return [..._homeBannerData];
+  }
+
   Future getHomeBanner() async {
     http.Response response;
     response = await http.get(Uri.parse(
@@ -17,10 +22,5 @@ class HomeBannerApi with ChangeNotifier {
     } else {
       print('not running');
     }
-  }
-
-  List get homeBannerData {
-    getHomeBanner();
-    return [..._homeBannerData];
   }
 }
