@@ -6,6 +6,7 @@ import './widgets/category/CategoryItems.dart';
 import './widgets/signin/signup.dart';
 import './widgets/signin/signin.dart';
 import './widgets/signin/otp.dart';
+import './widgets/signin/password.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -32,6 +33,8 @@ class RouteGenerator {
 
       case '/Otp':
         return MaterialPageRoute(builder: (_) => Otp(args as String));
+      case '/Password':
+        return MaterialPageRoute(builder: (_) => Password(args as String));
 
       default:
         return MaterialPageRoute(builder: (_) => MyHomePage());
