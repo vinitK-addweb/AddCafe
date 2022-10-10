@@ -7,7 +7,6 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:addcafe/main.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-// import 'package:http/http.dart';
 import './otp.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:http/http.dart' as http;
