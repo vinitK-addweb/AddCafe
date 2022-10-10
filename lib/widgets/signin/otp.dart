@@ -4,8 +4,9 @@ import 'package:flutter/services.dart';
 import './signin.dart';
 
 class Otp extends StatelessWidget {
-  const Otp({super.key});
+  Otp(this.mobile);
 
+  final mobile;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +53,7 @@ class Otp extends StatelessWidget {
                 ),
                 Container(
                   margin: EdgeInsets.only(bottom: 80),
-                  child: Text('+91-9876543211',
+                  child: Text('+91-${mobile}',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 ),
@@ -214,8 +215,10 @@ class Otp extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Otp()));
+                        Otpcheck();
+                        //   Navigator.push(context,
+                        //       MaterialPageRoute(builder: (context) => Otp()));
+                        //
                       },
                       child: Text('Continue'),
                       color: Colors.red,
@@ -230,8 +233,8 @@ class Otp extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                       onPressed: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => Otp()));
+                        // Navigator.push(context,
+                        //     MaterialPageRoute(builder: (context) => Otp()));
                       },
                       child: Text(
                         'Resend OTP',
@@ -252,5 +255,9 @@ class Otp extends StatelessWidget {
         ),
       ),
     ));
+  }
+
+  Future Otpcheck() async {
+    print(mobile);
   }
 }
