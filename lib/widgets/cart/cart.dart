@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:addcafe/Providers/apis/CartApi.dart';
 
 class Cart extends StatelessWidget {
   const Cart({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final cartApi = Provider.of<CartApi>(context);
+    cartApi.fetchCart();
     return Scaffold(
       bottomNavigationBar: Container(
         padding: EdgeInsets.all(10),
@@ -70,187 +74,105 @@ class Cart extends StatelessWidget {
                           Container(
                             child: Column(
                               children: [
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              margin:
-                                                  EdgeInsets.only(right: 10),
-                                              width: 20,
-                                              child: Image(
-                                                image: AssetImage(
-                                                    'assets/images/vegIcon.png'),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                            Container(
-                                              child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      'Tawa Butter Roti',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 7,
-                                                    ),
-                                                    Text(
-                                                      'Rs. 15',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    )
-                                                  ]),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Container(
-                                              width: 70,
-                                              padding: EdgeInsets.all(4),
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: Colors.red),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          (Radius.circular(
-                                                              8)))),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  Text(
-                                                    '-',
-                                                    style: TextStyle(
-                                                        color: Colors.red),
+                                ...cartApi.cartData.map(
+                                  (e) {
+                                    return Container(
+                                      padding: EdgeInsets.all(10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(
+                                            // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+                                            child: Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  margin: EdgeInsets.only(
+                                                      right: 10),
+                                                  width: 20,
+                                                  child: Image(
+                                                    image: AssetImage(
+                                                        'assets/images/vegIcon.png'),
+                                                    fit: BoxFit.cover,
                                                   ),
-                                                  Text('1'),
-                                                  Text(
-                                                    '+',
-                                                    style: TextStyle(
-                                                        color: Colors.red),
-                                                  )
-                                                ],
-                                              ),
+                                                ),
+                                                Container(
+                                                  child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          e['item_detail']
+                                                              ['item_name'],
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        ),
+                                                        SizedBox(
+                                                          height: 7,
+                                                        ),
+                                                        Text(
+                                                          'Rs. ${e['item_detail']['price']}',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                        )
+                                                      ]),
+                                                )
+                                              ],
                                             ),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Text('Rs. 15')
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-                                        child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Container(
-                                              margin:
-                                                  EdgeInsets.only(right: 10),
-                                              width: 20,
-                                              child: Image(
-                                                image: AssetImage(
-                                                    'assets/images/vegIcon.png'),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                            Container(
-                                              child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      'Tawa Butter Roti',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 7,
-                                                    ),
-                                                    Text(
-                                                      'Rs. 15',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    )
-                                                  ]),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.end,
-                                          children: [
-                                            Container(
-                                              width: 70,
-                                              padding: EdgeInsets.all(4),
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: Colors.red),
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          (Radius.circular(
-                                                              8)))),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceAround,
-                                                children: [
-                                                  Text(
-                                                    '-',
-                                                    style: TextStyle(
-                                                        color: Colors.red),
+                                          ),
+                                          Container(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                Container(
+                                                  width: 70,
+                                                  padding: EdgeInsets.all(4),
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: Colors.red),
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              (Radius.circular(
+                                                                  8)))),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceAround,
+                                                    children: [
+                                                      Text(
+                                                        '-',
+                                                        style: TextStyle(
+                                                            color: Colors.red),
+                                                      ),
+                                                      Text(
+                                                          '${e['item_count']}'),
+                                                      Text(
+                                                        '+',
+                                                        style: TextStyle(
+                                                            color: Colors.red),
+                                                      )
+                                                    ],
                                                   ),
-                                                  Text('1'),
-                                                  Text(
-                                                    '+',
-                                                    style: TextStyle(
-                                                        color: Colors.red),
-                                                  )
-                                                ],
-                                              ),
+                                                ),
+                                                SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Text('Rs. ${e['total_price']}')
+                                              ],
                                             ),
-                                            SizedBox(
-                                              height: 8,
-                                            ),
-                                            Text('Rs. 15')
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  },
                                 ),
                                 Container(
                                   padding: EdgeInsets.all(10),
@@ -317,7 +239,7 @@ class Cart extends StatelessWidget {
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             Text(
-                                              'Rs. 175.00',
+                                              'Rs. ${cartApi.cart['total_rate']}',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold),
                                             )
@@ -379,7 +301,7 @@ class Cart extends StatelessWidget {
                                                   fontSize: 18),
                                             ),
                                             Text(
-                                              'Rs. 184.75',
+                                              'Rs. ${cartApi.cart['total_rate']}',
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 18),

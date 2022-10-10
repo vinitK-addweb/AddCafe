@@ -7,6 +7,7 @@ import 'package:addcafe/Providers/apis/HomeCategoryApi.dart';
 import 'package:addcafe/Providers/apis/CustomerReviewsApi.dart';
 import 'package:addcafe/Providers/apis/CategoriesApi.dart';
 import 'package:addcafe/Providers/apis/UserAuth.dart';
+import 'package:addcafe/Providers/apis/CartApi.dart';
 import './widgets/HomeBanner.dart';
 import './widgets/HomeCategory.dart';
 import './widgets/CustomerReviews.dart';
@@ -25,6 +26,7 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (_) => CustomerReviewsApi()),
     ChangeNotifierProvider(create: (_) => CategoriesApi()),
     ChangeNotifierProvider(create: (_) => UserAuth()),
+    ChangeNotifierProvider(create: (_) => CartApi())
   ], child: const MyApp()));
 }
 
