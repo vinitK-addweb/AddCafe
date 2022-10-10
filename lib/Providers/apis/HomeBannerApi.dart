@@ -6,6 +6,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class HomeBannerApi with ChangeNotifier {
   List _homeBannerData = [];
 
+  List get homeBannerData {
+    getHomeBanner();
+    return [..._homeBannerData];
+  }
+
   Future getHomeBanner() async {
     http.Response response;
     response = await http
@@ -18,10 +23,5 @@ class HomeBannerApi with ChangeNotifier {
     } else {
       print('not running');
     }
-  }
-
-  List get homeBannerData {
-    getHomeBanner();
-    return [..._homeBannerData];
   }
 }

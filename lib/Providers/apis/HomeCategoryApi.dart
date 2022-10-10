@@ -6,6 +6,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class HomeCategoryApi with ChangeNotifier {
   List _homeCategoryData = [];
 
+  List get homeCategoryData {
+    getHomeCategory();
+    return [..._homeCategoryData];
+  }
+
   Future getHomeCategory() async {
     http.Response response;
     response = await http
@@ -18,10 +23,5 @@ class HomeCategoryApi with ChangeNotifier {
     } else {
       print('not running');
     }
-  }
-
-  List get homeCategoryData {
-    getHomeCategory();
-    return [..._homeCategoryData];
   }
 }

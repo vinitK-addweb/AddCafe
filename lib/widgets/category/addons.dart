@@ -3,14 +3,17 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import './rating.dart';
 
 class Addon extends StatefulWidget {
-  Addon(this.data);
-  final data;
+  Addon(this.productData);
+  final productData;
 
   @override
-  State<Addon> createState() => _AddonState();
+  State<Addon> createState() => _AddonState(productData);
 }
 
 class _AddonState extends State<Addon> {
+  _AddonState(this.productData);
+  final productData;
+
   final values = {
     'value1': false,
     'value2': false,
@@ -154,7 +157,7 @@ class _AddonState extends State<Addon> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(15),
                                     child: Image.network(
-                                        'https://res.cloudinary.com/swiggy/image/upload/f_auto,q_auto,fl_lossy/xheysiet81o1h8zofhdm'),
+                                        productData['featured_image']),
                                   )),
                               // -------------------------------product title----------------------------
                               Container(
@@ -163,7 +166,7 @@ class _AddonState extends State<Addon> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      'Gadren Delight Pizza',
+                                      productData['item_name'],
                                       style: TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),
@@ -232,8 +235,7 @@ class _AddonState extends State<Addon> {
                               Container(
                                 margin: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
-                                child: const Text(
-                                    'A clasic Veg Pizza That Combines The Zing And Freshness of Oninos, Tomatoes and Capsicum '),
+                                child: Text(productData['description']),
                               )
                             ])),
                             Card(
@@ -254,92 +256,44 @@ class _AddonState extends State<Addon> {
                                         width: double.infinity,
                                         child: const Text(
                                             'Select up to 2 options')),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        // SizedBox(
-                                        //   width: 10,
-                                        // ),
-                                        const Text(
-                                          'Library Implementation  ',
-                                          style: TextStyle(fontSize: 17.0),
-                                        ), //Text
-                                        const SizedBox(width: 10), //SizedBox
-                                        /** Checkbox Widget **/
-                                        Row(
-                                          children: [
-                                            const Text('₹50'),
-                                            Checkbox(
-                                              value: this.values['value1'],
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  this.values['value1'] =
-                                                      value!;
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        ), ////Checkbox
-                                      ], //<Widget>[]
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        // SizedBox(
-                                        //   width: 10,
-                                        // ),
-                                        const Text(
-                                          'Library Implementation  ',
-                                          style: TextStyle(fontSize: 17.0),
-                                        ), //Text
-                                        const SizedBox(width: 10), //SizedBox
-                                        /** Checkbox Widget **/
-                                        Row(
-                                          children: [
-                                            const Text('₹50'),
-                                            Checkbox(
-                                              value: this.values['value2'],
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  this.values['value2'] =
-                                                      value!;
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        ), ////Checkbox
-                                      ], //<Widget>[]
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        // SizedBox(
-                                        //   width: 10,
-                                        // ),
-                                        const Text(
-                                          'Library Implementation',
-                                          style: TextStyle(fontSize: 17.0),
-                                        ), //Text
-                                        //SizedBox
-                                        /** Checkbox Widget **/
-                                        Row(
-                                          children: [
-                                            const Text('₹50'),
-                                            Checkbox(
-                                              value: this.values['value3'],
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  this.values['value3'] =
-                                                      value!;
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        ), //Checkbox
-                                      ], //<Widget>[]
+                                    Column(
+                                      children: [
+                                        ...(productData['add_on_data'])
+                                            .map((e) {
+                                          return Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+                                              // SizedBox(
+                                              //   width: 10,
+                                              // ),
+                                              Text(
+                                                e['addon_name'],
+                                                style:
+                                                    TextStyle(fontSize: 17.0),
+                                              ), //Text
+                                              const SizedBox(
+                                                  width: 10), //SizedBox
+                                              /** Checkbox Widget **/
+                                              Row(
+                                                children: [
+                                                  Text('₹${e['addon_price']}'),
+                                                  Checkbox(
+                                                    value:
+                                                        this.values['value1'],
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        this.values['value1'] =
+                                                            value!;
+                                                      });
+                                                    },
+                                                  ),
+                                                ],
+                                              ), ////Checkbox
+                                            ], //<Widget>[]
+                                          );
+                                        })
+                                      ],
                                     ),
                                   ],
                                 ),

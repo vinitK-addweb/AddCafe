@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:addcafe/Providers/apis/CategoriesApi.dart';
+import 'package:provider/provider.dart';
 
 class HomeCategory extends StatelessWidget {
   HomeCategory(this.CategoryImages);
@@ -16,6 +18,7 @@ class HomeCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final categoriesApi = Provider.of<CategoriesApi>(context);
     return Container(
       width: double.infinity,
       child: Column(
@@ -36,6 +39,8 @@ class HomeCategory extends StatelessWidget {
                     width: 100,
                     child: InkWell(
                       onTap: () {
+                        categoriesApi.fetchAllProducts();
+                        categoriesApi.getFilteredProducts(item['name']);
                         Navigator.pushNamed(context, '/category',
                             arguments: item['name']);
                       },

@@ -6,10 +6,14 @@ import 'dart:convert';
 class CustomerReviewsApi with ChangeNotifier {
   List _customerReviewsData = [];
 
+  //getters
+
   List get customerReviewsData {
     getcustomerReviews();
     return [..._customerReviewsData];
   }
+
+  //actions
 
   Future getcustomerReviews() async {
     http.Response response;
