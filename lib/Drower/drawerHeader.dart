@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_if_null_operators, prefer_const_constructors, avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
 import 'package:addcafe/Providers/apis/UserAuth.dart';
 import 'package:provider/provider.dart';
@@ -21,34 +23,43 @@ class _DrowerHeaderState extends State<DrowerHeader> {
         CircleAvatar(
             radius: 55,
             backgroundImage: NetworkImage(
-              userAuth.userData['payload']['email'] == null
+              userAuth.userProfile == null
                   ? 'https://mir-s3-cdn-cf.behance.net/user/276/462829507061295.5f9717443f152.png'
-                  : '${dotenv.env['IMG_URL']}${userAuth.userData['payload']['profile_picture']}'
-                      as String,
+                  : '${dotenv.env['IMG_URL']}${userAuth.userProfile['profile_picture']}'
+                      ,
             )),
-        Container(
-          margin: EdgeInsets.only(top: 8),
-          child: Text(
-            // 'Vinit Singh'
-            userAuth.userData['payload']['first_name'] == null
-                ? ''
-                : userAuth.userData['payload']['first_name'] as String,
-            style: TextStyle(
-                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-        ),
-        Container(
+
+            userAuth.userProfile == null? Container(margin: EdgeInsets.symmetric(vertical: 8), 
+            child: ElevatedButton( style:ElevatedButton.styleFrom( primary: Colors.black, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),padding: EdgeInsets.symmetric(horizontal: 32)), onPressed: ()=>Navigator.pushNamed(context, '/signin'), child: Text('Login'))):
+
+        Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 8),
+              child: Text(
+                // 'Vinit Singh'
+                userAuth.userProfile['first_name']== null
+                    ? ''
+                    : userAuth.userProfile['first_name'],
+                style: TextStyle(
+                    color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
+              Container(
+
           // margin: EdgeInsets.only(top: 8),
-          child: Text(
-            userAuth.userData['payload']['email'] == null
+          child: Text(userAuth.userProfile== null
                 ? ''
-                : userAuth.userData['payload']['email'] as String,
+                : userAuth.userProfile['email'] == null?'':userAuth.userProfile['email'] ,
             style: TextStyle(
-              color: Colors.black,
+              color: Colors.black87,
               fontSize: 20,
             ),
           ),
         )
+          ],
+        ),
+      
       ]),
     );
   }

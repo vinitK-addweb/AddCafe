@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class UserAuth with ChangeNotifier {
-  List _UserData = [];
+  var _userProfile = null;
 
   Map _UserLogin = {};
 
@@ -33,7 +33,8 @@ class UserAuth with ChangeNotifier {
     if (response.statusCode == 200) {
       _UserLogin = jsonDecode(response.body);
       _token = _UserLogin['access'];
-      print('token data: ${_token}');
+      _userProfile = _UserLogin['payload'];
+      print('_userProfile: ${_userProfile}');
       notifyListeners();
 
       Navigator.pushNamed(context, '/');
@@ -43,6 +44,10 @@ class UserAuth with ChangeNotifier {
 
   String get token {
     return _token;
+  }
+
+   get userProfile{
+    return _userProfile;
   }
 
   Map get userData {
