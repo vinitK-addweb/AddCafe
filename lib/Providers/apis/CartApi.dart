@@ -36,4 +36,19 @@ class CartApi with ChangeNotifier {
     _cartData = _cart['payload'];
     notifyListeners();
   }
+
+  Future addToCart(payload) async{
+    http.Response response;
+    response = await http.post(Uri.parse('https://cafe.addwebprojects.com/api/v1/cart/add-cart-items/'), 
+    headers: {
+          "Content-Type": "application/json",
+          "Authorization":
+              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
+        },
+        body:jsonEncode(payload));
+    if(response.statusCode == 200){
+      print(response.body);
+      notifyListeners();
+    }
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:addcafe/Providers/apis/CartApi.dart';
+import 'package:provider/provider.dart';
 import 'rating.dart';
 import 'addons.dart';
 
@@ -10,6 +12,7 @@ class CategoryDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartApi = Provider.of<CartApi>(context);
     return Container(
       child: Column(
         children: categoryItems.isNotEmpty
@@ -126,6 +129,12 @@ class CategoryDropdown extends StatelessWidget {
                                                 context: context,
                                                 builder: (context) => Addon(e),
                                               )
+                                            }else{
+                                             cartApi.addToCart({
+                                               'item': e['id'],
+                                               "addon": []
+                                             })
+
                                             }
                                         },
                                     child: Text('Add')),
