@@ -26,7 +26,7 @@ class CategoriesApi with ChangeNotifier {
 
     if (response.statusCode == 200) {
       _allProducts = jsonDecode(response.body);
-      // print(_allProducts);
+      print('fetchAllProducts called');
       notifyListeners();
     }
   }
