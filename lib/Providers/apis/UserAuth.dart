@@ -19,7 +19,6 @@ class UserAuth with ChangeNotifier {
         Uri.parse('${dotenv.env['API_URL']}/accounts/signup/'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(demo));
-    print(response.body);
   }
 
   Future signIn(login, context) async {
@@ -33,7 +32,6 @@ class UserAuth with ChangeNotifier {
     if (response.statusCode == 200) {
       _UserLogin = jsonDecode(response.body);
       _token = _UserLogin['access'];
-      print('token data: ${_token}');
       notifyListeners();
 
       Navigator.pushNamed(context, '/');

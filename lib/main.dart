@@ -36,6 +36,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final cartApi = Provider.of<CartApi>(context, listen: false);
+    final categoriesApiData =
+        Provider.of<CategoriesApi>(context, listen: false);
+    categoriesApiData.fetchAllProducts();
+    final customerReviewsApi =
+        Provider.of<CustomerReviewsApi>(context, listen: false);
+    customerReviewsApi.fetchCustomerReviews();
+    final homeBannerApi = Provider.of<HomeBannerApi>(context, listen: false);
+    homeBannerApi.fetchHomeBanner();
+    final homeCategoryApi =
+        Provider.of<HomeCategoryApi>(context, listen: false);
+    homeCategoryApi.fetchHomeCategory();
+    cartApi.fetchCart();
     return MaterialApp(
       initialRoute: '/splash',
       onGenerateRoute: RouteGenerator.generateRoute,
@@ -71,9 +84,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final homeBannerData = Provider.of<HomeBannerApi>(context);
-    final homeCategoryData = Provider.of<HomeCategoryApi>(context);
-    final customerReviewsData = Provider.of<CustomerReviewsApi>(context);
+    final homeBannerData = Provider.of<HomeBannerApi>(context, listen: false);
+    final homeCategoryData =
+        Provider.of<HomeCategoryApi>(context, listen: false);
+    final customerReviewsData =
+        Provider.of<CustomerReviewsApi>(context, listen: false);
     return Scaffold(
       drawer: Drawer(
         child: SingleChildScrollView(

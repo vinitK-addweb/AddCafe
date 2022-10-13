@@ -3,6 +3,7 @@
 import 'package:addcafe/Providers/apis/CategoriesApi.dart';
 import 'package:addcafe/Providers/apis/HomeBannerApi.dart';
 import 'package:addcafe/Providers/apis/HomeCategoryApi.dart';
+import 'package:addcafe/Providers/apis/CartApi.dart';
 import 'package:flutter/material.dart';
 import 'CategoryDropdown.dart';
 import 'package:provider/provider.dart';
@@ -38,22 +39,47 @@ class _CategoryItemsState extends State<CategoryItems> {
     final categoriesData = Provider.of<CategoriesApi>(context);
     final homeCategoryApi = Provider.of<HomeCategoryApi>(context);
     final homeBannerApi = Provider.of<HomeBannerApi>(context);
+    final cartApi = Provider.of<CartApi>(context);
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Categories'),
+        centerTitle: true,
+      ),
+      bottomNavigationBar: cartApi.cart['count'] > 0
+          ? Container(
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/cart');
+                },
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('${cartApi.cart['count']} ITEM'),
+                          Text('Rs. ${cartApi.cart['total_rate']}')
+                        ],
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Next  >',
+                            style: TextStyle(fontSize: 20),
+                          )
+                        ],
+                      )
+                    ]),
+              ),
+            )
+          : SizedBox(
+              height: 0,
+            ),
       body: SingleChildScrollView(
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SizedBox(
-            height: 60,
-          ),
-          IconButton(
-            style: ElevatedButton.styleFrom(
-                shape: StadiumBorder(),
-                backgroundColor: Colors.white,
-                foregroundColor: Colors.black),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: Icon(Icons.arrow_back_ios),
-          ),
           HomeBanner(homeBannerApi.homeBannerData),
           ...homeCategoryApi.homeCategoryData.map((e) {
             categoriesData.getFilteredProducts(e['name']);

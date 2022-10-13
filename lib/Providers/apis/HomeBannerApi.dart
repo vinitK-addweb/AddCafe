@@ -7,11 +7,10 @@ class HomeBannerApi with ChangeNotifier {
   List _homeBannerData = [];
 
   List get homeBannerData {
-    getHomeBanner();
     return [..._homeBannerData];
   }
 
-  Future getHomeBanner() async {
+  Future fetchHomeBanner() async {
     http.Response response;
     response = await http
         .get(Uri.parse('${dotenv.env['API_URL']}/promotion/active-banner/'));
@@ -19,9 +18,7 @@ class HomeBannerApi with ChangeNotifier {
       // setState(() {
       _homeBannerData = json.decode(response.body);
       // });
-      print('runnnnn');
-    } else {
-      print('not running');
-    }
+      print('fetchHomeBanner called');
+    } else {}
   }
 }

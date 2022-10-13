@@ -8,7 +8,6 @@ class Cart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartApi = Provider.of<CartApi>(context);
-    cartApi.fetchCart();
     return Scaffold(
       bottomNavigationBar: Container(
         padding: EdgeInsets.all(10),
@@ -147,18 +146,52 @@ class Cart extends StatelessWidget {
                                                         MainAxisAlignment
                                                             .spaceAround,
                                                     children: [
-                                                      Text(
-                                                        '-',
-                                                        style: TextStyle(
-                                                            color: Colors.red),
+                                                      InkWell(
+                                                        onTap: () {
+                                                          if (e['item_count'] ==
+                                                              1) {
+                                                            cartApi.delete(
+                                                                e['id']);
+                                                            return;
+                                                          }
+                                                          cartApi
+                                                              .updateQuantity(
+                                                                  'minus',
+                                                                  e['id']);
+                                                        },
+                                                        child: Container(
+                                                          width: 20,
+                                                          child: Center(
+                                                            child: Text(
+                                                              '-',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .red),
+                                                            ),
+                                                          ),
+                                                        ),
                                                       ),
                                                       Text(
                                                           '${e['item_count']}'),
-                                                      Text(
-                                                        '+',
-                                                        style: TextStyle(
-                                                            color: Colors.red),
-                                                      )
+                                                      InkWell(
+                                                        onTap: () {
+                                                          cartApi
+                                                              .updateQuantity(
+                                                                  'plus',
+                                                                  e['id']);
+                                                        },
+                                                        child: Container(
+                                                          width: 20,
+                                                          child: Center(
+                                                            child: Text(
+                                                              '+',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .red),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
