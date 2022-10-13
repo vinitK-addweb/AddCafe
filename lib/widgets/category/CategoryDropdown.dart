@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:addcafe/Providers/apis/CartApi.dart';
+import 'package:provider/provider.dart';
 import 'rating.dart';
 import 'addons.dart';
 
@@ -10,11 +12,13 @@ class CategoryDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartApi = Provider.of<CartApi>(context);
     return Container(
       child: Column(
         children: categoryItems.isNotEmpty
             ? categoryItems.map((e) {
                 if (e != null) {
+                  List thisCartData = cartApi.isInCart(e['id']);
                   return Container(
                     margin: EdgeInsets.symmetric(vertical: 10),
                     child: Card(
@@ -108,8 +112,9 @@ class CategoryDropdown extends StatelessWidget {
                               Positioned(
                                 top: 120,
                                 left: 45,
-                                child: ElevatedButton(
-                                    onPressed: () => {
+                                child: thisCartData.isEmpty
+                                    ? ElevatedButton(
+                                        onPressed: () => {
                                           if ((e['add_on_data'] as List)
                                               .isNotEmpty)
                                             {
@@ -127,8 +132,73 @@ class CategoryDropdown extends StatelessWidget {
                                                 builder: (context) => Addon(e),
                                               )
                                             }
+                                          else
+                                            {
+                                              cartApi.addToCart({
+                                                'item': e['id'],
+                                                "addon": []
+                                              })
+                                            }
                                         },
-                                    child: Text('Add')),
+                                        child: Text('Add'),
+                                      )
+                                    : Container(
+                                        width: 70,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8, vertical: 8),
+                                        decoration: BoxDecoration(
+                                            color: Colors.red,
+                                            border:
+                                                Border.all(color: Colors.red),
+                                            borderRadius: BorderRadius.all(
+                                                (Radius.circular(4)))),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                if (e['item_count'] == 1) {
+                                                  cartApi.delete(e['id']);
+                                                  return;
+                                                }
+                                                cartApi.updateQuantity('minus',
+                                                    thisCartData[0]['id']);
+                                              },
+                                              child: Container(
+                                                width: 20,
+                                                child: Center(
+                                                  child: Text(
+                                                    '-',
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Text(
+                                                '${thisCartData[0]['item_count']}',
+                                                style: TextStyle(
+                                                    color: Colors.white)),
+                                            InkWell(
+                                              onTap: () {
+                                                cartApi.updateQuantity('plus',
+                                                    thisCartData[0]['id']);
+                                              },
+                                              child: Container(
+                                                width: 20,
+                                                child: Center(
+                                                  child: Text(
+                                                    '+',
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                               ),
                             ],
                           )

@@ -9,18 +9,18 @@ class CustomerReviewsApi with ChangeNotifier {
   //getters
 
   List get customerReviewsData {
-    getcustomerReviews();
     return [..._customerReviewsData];
   }
 
   //actions
 
-  Future getcustomerReviews() async {
+  Future fetchCustomerReviews() async {
     http.Response response;
     response = await http
         .get(Uri.parse('https://vinit-api-data.herokuapp.com/customerReviews'));
     if (response.statusCode == 200) {
       _customerReviewsData = json.decode(response.body);
+      print('fetchCUstomerReviews called');
     }
   }
 }

@@ -7,11 +7,10 @@ class HomeCategoryApi with ChangeNotifier {
   List _homeCategoryData = [];
 
   List get homeCategoryData {
-    getHomeCategory();
     return [..._homeCategoryData];
   }
 
-  Future getHomeCategory() async {
+  Future fetchHomeCategory() async {
     http.Response response;
     response = await http
         .get(Uri.parse('${dotenv.env['API_URL']}/catalogue/active-category/'));
@@ -19,9 +18,7 @@ class HomeCategoryApi with ChangeNotifier {
       // setState(() {
       _homeCategoryData = json.decode(response.body);
       // });
-      print('runnnnn');
-    } else {
-      print('not running');
-    }
+      print('fetchHomeCategory called');
+    } else {}
   }
 }
