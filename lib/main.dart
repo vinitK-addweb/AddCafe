@@ -1,4 +1,5 @@
 import 'package:addcafe/route_generator.dart';
+import 'package:addcafe/widgets/myfavourits.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,8 @@ import 'package:addcafe/Providers/apis/CustomerReviewsApi.dart';
 import 'package:addcafe/Providers/apis/CategoriesApi.dart';
 import 'package:addcafe/Providers/apis/UserAuth.dart';
 import 'package:addcafe/Providers/apis/CartApi.dart';
+import 'package:addcafe/Providers/apis/MyfavouritesApi.dart';
+
 import './widgets/HomeBanner.dart';
 import './widgets/HomeCategory.dart';
 import './widgets/CustomerReviews.dart';
@@ -26,7 +29,8 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (_) => CustomerReviewsApi()),
     ChangeNotifierProvider(create: (_) => CategoriesApi()),
     ChangeNotifierProvider(create: (_) => UserAuth()),
-    ChangeNotifierProvider(create: (_) => CartApi())
+    ChangeNotifierProvider(create: (_) => CartApi()),
+    ChangeNotifierProvider(create: (_) => MyFavouritesApi()),
   ], child: const MyApp()));
 }
 
@@ -36,6 +40,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final myFavourites = Provider.of<MyFavouritesApi>(context, listen: false);
+    myFavourites.fetchMyFavourites();
+
     return MaterialApp(
       initialRoute: '/splash',
       onGenerateRoute: RouteGenerator.generateRoute,
