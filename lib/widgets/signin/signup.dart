@@ -309,13 +309,13 @@ class _SignupState extends State<Signup> {
       "first_name": this.password,
       "mobile_number": this.phone.substring(2, 11)
     };
-    SignupApi.signUp(mapedData)
-        .then((res) => {
-              print('DATA: ${res}'),
-              if (res.statusCode == 201)
-                {Navigator.pushNamed(context, '/Otp', arguments: this.mobile)}
-            })
-        .catchError((onError) => {print(onError)});
+    SignupApi.signUp(mapedData, context);
+    // .then((res) => {
+    //       print('DATA: ${res}'),
+    //       if (res.statusCode == 201)
+    //         {Navigator.pushNamed(context, '/Otp', arguments: this.mobile)}
+    //     })
+    // .catchError((onError) => {print(onError)});
     // var APIURL = "https://cafe.addwebprojects.com/api/v1/accounts/signup/";
   }
 }
