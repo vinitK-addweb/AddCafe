@@ -12,14 +12,23 @@ class UserAuth with ChangeNotifier {
 
   String _token = '';
 
-  Future signUp(demo) async {
+  Future signUp(demo, context) async {
     final headers = {"Content-type": "multipart/form-data"};
 
     http.Response response = await http.post(
         Uri.parse('${dotenv.env['API_URL']}/accounts/signup/'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(demo));
-    print(response.body);
+    print(response);
+    if (response.statusCode == 201) {
+      _UserLogin = await jsonDecode(response.body);
+      // _token = await _UserLogin['access'];
+      _userProfile = await _UserLogin['payload'];
+      print('_userProfile: ${_userProfile}');
+      notifyListeners();
+
+      Navigator.pushNamed(context, '/signin');
+    }
   }
 
   Future signIn(login, context) async {
@@ -29,11 +38,11 @@ class UserAuth with ChangeNotifier {
         Uri.parse('${dotenv.env['API_URL']}/accounts/login/'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(login));
-
+    print(response.body);
     if (response.statusCode == 200) {
-      _UserLogin = jsonDecode(response.body);
-      _token = _UserLogin['access'];
-      _userProfile = _UserLogin['payload'];
+      _UserLogin = await jsonDecode(response.body);
+      _token = await _UserLogin['access'];
+      _userProfile = await _UserLogin['payload'];
       print('_userProfile: ${_userProfile}');
       notifyListeners();
 
@@ -46,7 +55,7 @@ class UserAuth with ChangeNotifier {
     return _token;
   }
 
-   get userProfile{
+  get userProfile {
     return _userProfile;
   }
 
