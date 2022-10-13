@@ -20,7 +20,7 @@ class _MyfavouritsState extends State<Myfavourits> {
   @override
   Widget build(BuildContext context) {
     // <--------------------Initialized the provider ------------------>
-    final myFavourites = Provider.of<MyFavouritesApi>(context, listen: false);
+    final myFavourites = Provider.of<MyFavouritesApi>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -86,8 +86,7 @@ class _MyfavouritsState extends State<Myfavourits> {
                               // <----------- Remove from wishlist ----------------->
                               InkWell(
                                 onTap: () {
-                                  myFavourites.deleteMyFavourites(
-                                      e['product_data']['id']);
+                                  myFavourites.deleteMyFavourites(e['id']);
                                 },
                                 child: Container(
                                   margin: EdgeInsets.symmetric(vertical: 10),
