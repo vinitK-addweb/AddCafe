@@ -9,7 +9,6 @@ import './widgets/signin/signin.dart';
 import './widgets/signin/otp.dart';
 import './widgets/signin/password.dart';
 
-
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
@@ -38,7 +37,7 @@ class RouteGenerator {
       case '/Password':
         return MaterialPageRoute(builder: (_) => Password(args as String));
       case '/Myfavrourits':
-        return MaterialPageRoute(builder: (_) => Myfavourits(args as String));  
+        return MaterialPageRoute(builder: (_) => Myfavourits());
 
       default:
         return MaterialPageRoute(builder: (_) => MyHomePage());

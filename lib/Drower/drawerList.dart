@@ -58,10 +58,10 @@ class MyDrowerList extends StatelessWidget {
                   color: Colors.grey,
                 ),
                 Container(
-                  margin: EdgeInsets.only(left: 40),
+                  margin: EdgeInsets.only(left: 20),
                   child: InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, '/Myfavourites');
+                      Navigator.pushNamed(context, '/Myfavrourits');
                     },
                     child: Text(
                       'My Favourites',
