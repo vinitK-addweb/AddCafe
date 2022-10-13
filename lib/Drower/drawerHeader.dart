@@ -25,41 +25,54 @@ class _DrowerHeaderState extends State<DrowerHeader> {
             backgroundImage: NetworkImage(
               userAuth.userProfile == null
                   ? 'https://mir-s3-cdn-cf.behance.net/user/276/462829507061295.5f9717443f152.png'
-                  : '${dotenv.env['IMG_URL']}${userAuth.userProfile['profile_picture']}'
-                      ,
+                  : userAuth.userProfile['profile_picture'] == null
+                      ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi6mIqR-61xHjJUEMUfzQvP_ZeVtRZ-Hh_B9OQIh5hLjVH1ZO5U23ZehKJMmIsZkMF5Ew&usqp=CAU'
+                      : '${dotenv.env['IMG_URL']}${userAuth.userProfile['profile_picture']}',
             )),
+        userAuth.userProfile == null
+            ? Container(
+                margin: EdgeInsets.symmetric(vertical: 8),
 
-            userAuth.userProfile == null? Container(margin: EdgeInsets.symmetric(vertical: 8), 
-            child: ElevatedButton( style:ElevatedButton.styleFrom( primary: Colors.black, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),padding: EdgeInsets.symmetric(horizontal: 32)), onPressed: ()=>Navigator.pushNamed(context, '/signin'), child: Text('Login'))):
-
-        Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 8),
-              child: Text(
-                // 'Vinit Singh'
-                userAuth.userProfile['first_name']== null
-                    ? ''
-                    : userAuth.userProfile['first_name'],
-                style: TextStyle(
-                    color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+                //  <------------------login button ----------------------------->
+                child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.black,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(4)),
+                        padding: EdgeInsets.symmetric(horizontal: 32)),
+                    onPressed: () => Navigator.pushNamed(context, '/signin'),
+                    child: Text('Login')))
+            :
+          // <-------------------user profile details -------------------->
+            Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: 7),
+                    child: Text(
+                      userAuth.userProfile['first_name'] == null
+                          ? ''
+                          : userAuth.userProfile['first_name'],
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Container(
+                    child: Text(
+                      userAuth.userProfile == null
+                          ? ''
+                          : userAuth.userProfile['email'] == null
+                              ? ''
+                              : userAuth.userProfile['email'],
+                      style: TextStyle(
+                        color: Colors.black87,
+                        fontSize: 20,
+                      ),
+                    ),
+                  )
+                ],
               ),
-            ),
-              Container(
-
-          // margin: EdgeInsets.only(top: 8),
-          child: Text(userAuth.userProfile== null
-                ? ''
-                : userAuth.userProfile['email'] == null?'':userAuth.userProfile['email'] ,
-            style: TextStyle(
-              color: Colors.black87,
-              fontSize: 20,
-            ),
-          ),
-        )
-          ],
-        ),
-      
       ]),
     );
   }

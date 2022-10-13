@@ -3,11 +3,7 @@ import 'package:flutter/material.dart';
 class MyDrowerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(child: menuItem());
-  }
-}
-
-Widget menuItem() {
+    
   return Container(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
     Card(
@@ -164,9 +160,13 @@ Widget menuItem() {
               ),
               Container(
                 margin: EdgeInsets.only(left: 40),
-                child: Text(
-                  'My Favourites',
-                  style: TextStyle(color: Colors.grey, fontSize: 20),
+                child:  InkWell(onTap:(){
+                  Navigator.pushNamed(context, '/Myfavourites');
+                } ,
+                  child: Text(
+                    'My Favourites',
+                    style: TextStyle(color: Colors.grey, fontSize: 20),
+                  ),
                 ),
               ),
             ]),
@@ -258,3 +258,7 @@ Widget menuItem() {
     )),
   ]));
 }
+
+  }
+
+
