@@ -19,6 +19,7 @@ class UserAuth with ChangeNotifier {
         Uri.parse('${dotenv.env['API_URL']}/accounts/signup/'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(demo));
+
     print(response);
     if (response.statusCode == 201) {
       _UserLogin = await jsonDecode(response.body);

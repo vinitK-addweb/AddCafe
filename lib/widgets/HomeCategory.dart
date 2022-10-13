@@ -39,7 +39,6 @@ class HomeCategory extends StatelessWidget {
                     width: 100,
                     child: InkWell(
                       onTap: () {
-                        categoriesApi.fetchAllProducts();
                         categoriesApi.getFilteredProducts(item['name']);
                         Navigator.pushNamed(context, '/category',
                             arguments: item['name']);
