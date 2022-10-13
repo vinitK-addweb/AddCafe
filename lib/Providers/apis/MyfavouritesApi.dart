@@ -35,7 +35,7 @@ class MyFavouritesApi with ChangeNotifier {
   }
 
   Future deleteMyFavourites(id) async {
-    print('delete');
+    // print('delete');
     http.Response response;
     response = await http.delete(
         Uri.parse('${dotenv.env['API_URL']}/catalogue/wishlist/${id}/'),
@@ -44,17 +44,16 @@ class MyFavouritesApi with ChangeNotifier {
           "Authorization":
               'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
         });
-    if (response.statusCode == 204) {
+    if (response.statusCode == 200) {
       // setState(() {
       // _myFavourites = json.decode(response.body);
+      fetchMyFavourites();
 
-      notifyListeners();
-      print(response.body);
-      print('fetchMyFavourites called ');
+      print('delete called ');
       // });
       // print('runnnnn');
     } else {
-      // print('not running');
+      print('not running');
     }
   }
 }
