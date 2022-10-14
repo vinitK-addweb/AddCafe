@@ -10,6 +10,9 @@ class MyDrowerList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, '/');
+            },
             child: Container(
               padding: EdgeInsets.all(20.0),
               child:
@@ -49,6 +52,9 @@ class MyDrowerList extends StatelessWidget {
             ),
           ),
           InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, '/Myfavrourits');
+            },
             child: Padding(
               padding: EdgeInsets.all(20.0),
               child: Row(children: [
@@ -60,9 +66,6 @@ class MyDrowerList extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(left: 20),
                   child: InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, '/Myfavrourits');
-                    },
                     child: Text(
                       'My Favourites',
                       style: TextStyle(color: Colors.grey, fontSize: 20),
