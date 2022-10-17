@@ -9,6 +9,10 @@ class Cart extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartApi = Provider.of<CartApi>(context);
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Cart'),
+        centerTitle: true,
+      ),
       bottomNavigationBar: Container(
         padding: EdgeInsets.all(10),
         child: Row(
@@ -29,19 +33,6 @@ class Cart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 60,
-              ),
-              IconButton(
-                style: ElevatedButton.styleFrom(
-                    shape: StadiumBorder(),
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.arrow_back_ios),
-              ),
               Column(
                 children: [
                   Container(
@@ -207,17 +198,23 @@ class Cart extends StatelessWidget {
                                     );
                                   },
                                 ),
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        'Add more items',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ],
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed('/category',
+                                        arguments: 'Burger');
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          'Add more items',
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 )
                               ],
