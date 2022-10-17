@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:addcafe/Providers/apis/CartApi.dart';
+import 'package:addcafe/Providers/apis/MyfavouritesApi.dart';
 import 'package:provider/provider.dart';
 import 'rating.dart';
 import 'addons.dart';
@@ -13,6 +14,7 @@ class CategoryDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cartApi = Provider.of<CartApi>(context);
+    final myFavouritesApi = Provider.of<MyFavouritesApi>(context);
     return Container(
       child: Column(
         children: categoryItems.isNotEmpty
@@ -69,10 +71,32 @@ class CategoryDropdown extends StatelessWidget {
                               ),
                               Row(
                                 children: [
-                                  Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.red,
-                                  ),
+                                  myFavouritesApi
+                                          .isInMyFavorites(e['id'])
+                                          .isNotEmpty
+                                      ? IconButton(
+                                          onPressed: () {
+                                            myFavouritesApi.deleteMyFavourites(
+                                                myFavouritesApi.isInMyFavorites(
+                                                    e['id'])[0]['id']);
+                                          },
+                                          icon: Icon(
+                                            Icons.favorite,
+                                            color: Colors.red,
+                                          ),
+                                        )
+                                      : IconButton(
+                                          onPressed: () {
+                                            myFavouritesApi.addToMyFavorites({
+                                              "user": 1,
+                                              "product": e['id']
+                                            });
+                                          },
+                                          icon: Icon(
+                                            Icons.favorite_border,
+                                            color: Colors.red,
+                                          ),
+                                        ),
                                   Container(
                                     margin:
                                         EdgeInsets.symmetric(horizontal: 10),

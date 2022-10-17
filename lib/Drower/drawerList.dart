@@ -80,7 +80,7 @@ class MyDrowerList extends StatelessWidget {
               padding: EdgeInsets.all(20.0),
               child: Row(children: [
                 Icon(
-                  Icons.discount_sharp,
+                  Icons.discount_outlined,
                   size: 30,
                   color: Colors.grey,
                 ),
@@ -99,7 +99,7 @@ class MyDrowerList extends StatelessWidget {
               padding: EdgeInsets.all(20.0),
               child: Row(children: [
                 Icon(
-                  Icons.question_answer_rounded,
+                  Icons.question_answer_outlined,
                   size: 30,
                   color: Colors.grey,
                 ),

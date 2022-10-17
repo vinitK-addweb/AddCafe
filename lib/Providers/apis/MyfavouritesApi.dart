@@ -25,6 +25,7 @@ class MyFavouritesApi with ChangeNotifier {
       _myFavourites = json.decode(response.body);
 
       notifyListeners();
+
       print('fetchMyFavourites called ');
       // });
       // print('runnnnn');
@@ -48,11 +49,34 @@ class MyFavouritesApi with ChangeNotifier {
       // _myFavourites = json.decode(response.body);
       fetchMyFavourites();
 
-      print('delete called ');
+      print('deleteMyFavourites called');
       // });
       // print('runnnnn');
     } else {
       print('not running');
     }
+  }
+
+  Future addToMyFavorites(productData) async {
+    http.Response response;
+    response = await http.post(
+        Uri.parse('https://cafe.addwebprojects.com/api/v1/catalogue/wishlist/'),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization":
+              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
+        },
+        body: jsonEncode(productData));
+    if (response.statusCode == 200) {
+      print('addToMyFavorites called');
+      fetchMyFavourites();
+    }
+  }
+
+  List isInMyFavorites(productId) {
+    var a = myFavouritesData
+        .where((element) => element['product'] == productId)
+        .toList();
+    return a;
   }
 }
