@@ -8,7 +8,7 @@ class MyFavouritesApi with ChangeNotifier {
 
   List get myFavouritesData {
     // getMyFavourites();
-    return [..._myFavourites];
+    return _myFavourites;
   }
 
   Future fetchMyFavourites() async {
@@ -25,7 +25,7 @@ class MyFavouritesApi with ChangeNotifier {
       _myFavourites = json.decode(response.body);
 
       notifyListeners();
-
+      print(response.body);
       print('fetchMyFavourites called ');
       // });
       // print('runnnnn');
