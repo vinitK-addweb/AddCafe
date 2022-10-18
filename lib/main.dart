@@ -83,11 +83,14 @@ class _MyHomePageState extends State<MyHomePage> {
     loadData();
   }
 
+// <--------------------Loader Function Starts from here---------------------->
   Future loadData() async {
     setState(() => isLoading = true);
     await Future.delayed(Duration(seconds: 2), () {});
     setState(() => isLoading = false);
   }
+
+  // <--------------------Loader Function ends from here---------------------->
 
   @override
   Widget build(BuildContext context) {

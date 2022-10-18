@@ -50,6 +50,7 @@ class CartApi with ChangeNotifier {
       fetchCart();
     }
   }
+  // <------------------- update item from cart ----------------->
 
   Future updateQuantity(status, id) async {
     http.Response response;
@@ -67,6 +68,7 @@ class CartApi with ChangeNotifier {
     } else {}
   }
 
+  // <------------------- Delete item from cart ----------------->
   Future delete(id) async {
     http.Response response;
     response = await http.delete(

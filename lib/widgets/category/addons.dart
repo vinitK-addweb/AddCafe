@@ -78,20 +78,6 @@ class _AddonState extends State<Addon> {
                             size: 30,
                           ),
                         ),
-                        //       Container(
-                        //     width: 60.0,
-                        //     padding: const EdgeInsets.only(left: 1.0, right: 1.0),
-                        //     child: Center(
-                        //       child: TextField(
-                        //         textAlign: TextAlign.center,
-                        //         decoration: new InputDecoration(
-                        //           hintText: "1",
-                        //         ),
-                        //         keyboardType: TextInputType.number,
-                        //         controller: _quantityController[index],
-                        //       ),
-                        //     )
-                        // ),
 
                         Text(
                           '${quantity}',
@@ -157,7 +143,7 @@ class _AddonState extends State<Addon> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(15),
                                     child: Image.network(
-                                        productData['featured_image']),
+                                        '${dotenv.env['IMG_URL']}/${productData["featured_image"]}'),
                                   )),
                               // -------------------------------product title----------------------------
                               Container(
