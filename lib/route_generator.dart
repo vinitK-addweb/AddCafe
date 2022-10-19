@@ -4,6 +4,7 @@ import './widgets/myfavourits.dart';
 import './widgets/cart/cart.dart';
 import './widgets/splash.dart';
 import './widgets/category/CategoryItems.dart';
+import './widgets/addAddress/addAddress.dart';
 import 'widgets/auth/signup.dart';
 import 'widgets/auth/signin.dart';
 import 'widgets/auth/otp.dart';
@@ -39,6 +40,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => Password(args as String));
       case '/Myfavrourits':
         return MaterialPageRoute(builder: (_) => Myfavourits());
+
+      case '/addAddress':
+        return MaterialPageRoute(builder: (_) => AddAddress());
+
       case '/Faq':
         return MaterialPageRoute(builder: (_) => Faq());
       default:

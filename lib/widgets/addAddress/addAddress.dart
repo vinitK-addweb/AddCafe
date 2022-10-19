@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:addcafe/Providers/apis/CartApi.dart';
-import './emptyCart.dart';
+import 'package:addcafe/Providers/apis/addAddressApi.dart';
+import '../cart/emptyCart.dart';
 
-class Cart extends StatelessWidget {
-  const Cart({Key? key}) : super(key: key);
+class AddAddress extends StatelessWidget {
+  const AddAddress({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final cartApi = Provider.of<CartApi>(context);
+    final addaddressApi = Provider.of<AddaddressApi>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart'),
+        title: Text('Checkout'),
         centerTitle: true,
       ),
       bottomNavigationBar: Container(
@@ -21,16 +23,10 @@ class Cart extends StatelessWidget {
             Expanded(
                 child: ElevatedButton(
               child: Text(
-                cartApi.cartData.isNotEmpty
-                    ? 'Proceed to checkout'
-                    : 'Add Items',
+                'proceed to payment',
                 style: TextStyle(fontSize: 20),
               ),
-              onPressed: () {
-                cartApi.cartData.isNotEmpty
-                    ? Navigator.of(context).pushNamed('/addAddress')
-                    : Navigator.of(context).pushNamed('/');
-              },
+              onPressed: addaddressApi.selectedAddress == 0 ? null : () {},
             ))
           ],
         ),
@@ -145,12 +141,12 @@ class Cart extends StatelessWidget {
                                                         width: 70,
                                                         padding:
                                                             EdgeInsets.all(4),
-                                                        decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                                color:
-                                                                    Colors.red),
-                                                            borderRadius:
-                                                                BorderRadius
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                // border: Border.all(
+                                                                //     color:
+                                                                //         Colors.red,),
+                                                                borderRadius: BorderRadius
                                                                     .all((Radius
                                                                         .circular(
                                                                             8)))),
@@ -159,52 +155,8 @@ class Cart extends StatelessWidget {
                                                               MainAxisAlignment
                                                                   .spaceAround,
                                                           children: [
-                                                            InkWell(
-                                                              onTap: () {
-                                                                if (e['item_count'] ==
-                                                                    1) {
-                                                                  cartApi.delete(
-                                                                      e['id']);
-                                                                  return;
-                                                                }
-                                                                cartApi
-                                                                    .updateQuantity(
-                                                                        'minus',
-                                                                        e['id']);
-                                                              },
-                                                              child: Container(
-                                                                width: 20,
-                                                                child: Center(
-                                                                  child: Text(
-                                                                    '-',
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .red),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
                                                             Text(
                                                                 '${e['item_count']}'),
-                                                            InkWell(
-                                                              onTap: () {
-                                                                cartApi
-                                                                    .updateQuantity(
-                                                                        'plus',
-                                                                        e['id']);
-                                                              },
-                                                              child: Container(
-                                                                width: 20,
-                                                                child: Center(
-                                                                  child: Text(
-                                                                    '+',
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .red),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
                                                           ],
                                                         ),
                                                       ),
@@ -250,6 +202,7 @@ class Cart extends StatelessWidget {
                         Container(
                           // margin: EdgeInsets.symmetric(vertical: 5),
                           child: Card(
+                            elevation: 0,
                             child: Container(
                               padding: EdgeInsets.symmetric(vertical: 10),
                               decoration: BoxDecoration(
@@ -268,7 +221,7 @@ class Cart extends StatelessWidget {
                                         margin: EdgeInsets.symmetric(
                                             horizontal: 10),
                                         child: Text(
-                                          'Bill Summary',
+                                          'Add Address',
                                           style: TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold),
@@ -278,107 +231,123 @@ class Cart extends StatelessWidget {
                                 Container(
                                   child: Column(
                                     children: [
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              padding: EdgeInsets.all(5),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                      ...addaddressApi.savedAddressData.map(
+                                        (e) {
+                                          return Container(
+                                            padding: EdgeInsets.all(10),
+                                            child: Card(
+                                              elevation: addaddressApi
+                                                          .selectedAddress ==
+                                                      e['id']
+                                                  ? 10
+                                                  : 1,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(
-                                                    'Item Total',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
+                                                  Container(
+                                                    padding: EdgeInsets.all(5),
+                                                    child: Row(
+                                                      children: [
+                                                        Icon(
+                                                          e['address_type'] ==
+                                                                  'home'
+                                                              ? Icons.home
+                                                              : Icons.work,
+                                                          size: 50,
+                                                          color: Colors.green,
+                                                        ),
+                                                        Text(
+                                                          e['address_type'] ==
+                                                                  'home'
+                                                              ? 'Home'
+                                                              : 'Work',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 18,
+                                                              color:
+                                                                  Colors.green),
+                                                        )
+                                                      ],
+                                                    ),
                                                   ),
-                                                  Text(
-                                                    'Rs. ${cartApi.cart['total_rate']}',
-                                                    style: TextStyle(
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 15,
+                                                            vertical: 5),
+                                                    child: Text(
+                                                      e['building_num_name'],
+                                                      style: TextStyle(
                                                         fontWeight:
-                                                            FontWeight.bold),
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 15,
+                                                            vertical: 5),
+                                                    child: Text(
+                                                      e['area_colony'],
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 15,
+                                                            vertical: 5),
+                                                    child: Text(
+                                                      '${e['city']}( ${e['pincode']} )',
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 15,
+                                                            vertical: 5),
+                                                    child: Text(
+                                                      e['state'],
+                                                      style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 15),
+                                                    child: ElevatedButton(
+                                                        onPressed: () {
+                                                          addaddressApi
+                                                              .setAddress(
+                                                                  e['id']);
+                                                        },
+                                                        child: Text(
+                                                            'Deliver Here')),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 10,
                                                   )
                                                 ],
                                               ),
                                             ),
-                                            Container(
-                                              padding: EdgeInsets.all(5),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Delivery Charge',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.blue),
-                                                  ),
-                                                  Text(
-                                                    'FREE',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.blue),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.all(5),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Govt. taxes',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.grey),
-                                                  ),
-                                                  Text(
-                                                    'Rs. 8.75',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.grey),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.only(top: 10),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Grand Total',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 18),
-                                                  ),
-                                                  Text(
-                                                    'Rs. ${cartApi.cart['total_rate']}',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 18),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                          );
+                                        },
                                       ),
+                                      //address containers...........................
                                     ],
                                   ),
                                 )
