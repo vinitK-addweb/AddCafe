@@ -164,46 +164,57 @@ class _PasswordState extends State<Password> {
             ),
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                   child: MaterialButton(
-                    // height: 50,
-                    minWidth: 180,
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                    onPressed: () {
-                      logIn();
-                      //   Navigator.push(context,
-                      //       MaterialPageRoute(builder: (context) => Otp()));
-                      //
-                    },
-                    child: Text('Continue'),
-                    color: Colors.red,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                  )),
-              Container(
-                  margin: EdgeInsets.symmetric(vertical: 32),
-                  child: MaterialButton(
-                    // height: 50,
-                    minWidth: 110,
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    onPressed: () {
-                      // Navigator.push(context,
-                      //     MaterialPageRoute(builder: (context) => Otp()));
-                    },
-                    child: Text(
-                      'Resend OTP',
-                      style: TextStyle(color: Colors.green, fontSize: 20),
-                    ),
-                    // color: Colors.red,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                  )),
+                minWidth: 110,
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                onPressed: () {
+                  // Navigator.push(context,
+                  //     MaterialPageRoute(builder: (context) => Otp()));
+                },
+                child: Text(
+                  'Forget Password ?',
+                  style: TextStyle(color: Colors.green, fontSize: 20),
+                ),
+                // color: Colors.red,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
+              )),
             ],
           ),
+          SizedBox(
+              width: MediaQuery.of(context).size.width / 1.2,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          //to set border radius to button
+                          borderRadius: BorderRadius.circular(12)),
+                      padding: EdgeInsets.all(20)),
+                  onPressed: () {
+                    logIn();
+                    ;
+                  },
+                  child: Text(
+                    'Continue',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  ))),
+          // Container(
+          //     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          //     child: MaterialButton(
+          //       minWidth: 180,
+          //       // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          //       onPressed: () {
+          //         logIn();
+          //       },
+          //       child: Text('Continue'),
+          //       color: Colors.red,
+          //       shape: RoundedRectangleBorder(
+          //           borderRadius: BorderRadius.circular(5)),
+          //     )),
           Container(
+            margin: EdgeInsets.only(top: 30),
             child: Image.asset('assets/images/otp.png'),
             // height: 370,
             width: 300,

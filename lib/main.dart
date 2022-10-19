@@ -1,3 +1,4 @@
+import 'package:addcafe/Providers/apis/FaqApi.dart';
 import 'package:addcafe/route_generator.dart';
 import 'package:addcafe/widgets/myfavourits.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -33,6 +34,7 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (_) => CartApi()),
     ChangeNotifierProvider(create: (_) => MyFavouritesApi()),
     ChangeNotifierProvider(create: (_) => AddaddressApi()),
+    ChangeNotifierProvider(create: (_) => FaqApi()),
   ], child: const MyApp()));
 }
 
@@ -44,6 +46,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final myFavourites = Provider.of<MyFavouritesApi>(context, listen: false);
     myFavourites.fetchMyFavourites();
+
+    final Faqdata = Provider.of<FaqApi>(context, listen: false);
+    Faqdata.fetchFaqData();
     final cartApi = Provider.of<CartApi>(context, listen: false);
     cartApi.fetchCart();
     final categoriesApiData =
@@ -87,11 +92,14 @@ class _MyHomePageState extends State<MyHomePage> {
     loadData();
   }
 
+// <--------------------Loader Function Starts from here---------------------->
   Future loadData() async {
     setState(() => isLoading = true);
     await Future.delayed(Duration(seconds: 2), () {});
     setState(() => isLoading = false);
   }
+
+  // <--------------------Loader Function ends from here---------------------->
 
   @override
   Widget build(BuildContext context) {

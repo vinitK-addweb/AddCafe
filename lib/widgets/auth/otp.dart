@@ -251,6 +251,7 @@ class Otp extends StatelessWidget {
               // height: 370,
               width: 300,
             ),
+            Text(mobile)
           ],
         ),
       ),

@@ -65,11 +65,9 @@ class MyDrowerList extends StatelessWidget {
                 ),
                 Container(
                   margin: EdgeInsets.only(left: 20),
-                  child: InkWell(
-                    child: Text(
-                      'My Favourites',
-                      style: TextStyle(color: Colors.grey, fontSize: 20),
-                    ),
+                  child: Text(
+                    'My Favourites',
+                    style: TextStyle(color: Colors.grey, fontSize: 20),
                   ),
                 ),
               ]),
@@ -95,6 +93,7 @@ class MyDrowerList extends StatelessWidget {
             ),
           ),
           InkWell(
+            onTap: () => Navigator.pushNamed(context, '/Faq'),
             child: Padding(
               padding: EdgeInsets.all(20.0),
               child: Row(children: [
