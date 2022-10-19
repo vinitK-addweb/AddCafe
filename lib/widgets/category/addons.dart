@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:addcafe/Providers/apis/CartApi.dart';
+import 'package:provider/provider.dart';
 import './rating.dart';
 
 class Addon extends StatefulWidget {
@@ -13,11 +15,21 @@ class Addon extends StatefulWidget {
 class _AddonState extends State<Addon> {
   _AddonState(this.productData);
   final productData;
+  // get product {
+  //   return productData;
+  // }
+  // List checkboxValues = product['add_on_data'].map(e => {
+
+  // });
+  List productAddOn = [];
+  double total = 0;
 
   final values = {
     'value1': false,
     'value2': false,
     'value3': false,
+    'value4': false,
+    'value5': false,
   };
   var quantity = 1;
 // decrease the item from cart
@@ -28,6 +40,22 @@ class _AddonState extends State<Addon> {
       //  _quantityController[index].text = '$quantity';
     });
   }
+
+//productdat price
+  // get total {
+  //   var price = 0;
+  //   var count = 0;
+  //   values.forEach((key, value) {
+  //     (values as List).indexOf(value);
+  //     if(value){
+  //       price += productData['']
+  //     }
+  //   });
+  // }
+
+  // addAddon(){
+
+  // }
 
 // add the item in cart
   void _removeQuantity(int index) {
@@ -43,6 +71,7 @@ class _AddonState extends State<Addon> {
 
   @override
   Widget build(BuildContext context) {
+    final cartApi = Provider.of<CartApi>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.transparent,
       // ----------bottom bar---------------------
@@ -59,6 +88,7 @@ class _AddonState extends State<Addon> {
                   // width: 1,
                   height: 50,
                   child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.red),
                         borderRadius: const BorderRadius.all(
@@ -67,47 +97,11 @@ class _AddonState extends State<Addon> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        // ignore: prefer_const_constructors
-                        IconButton(
-                          onPressed: () {
-                            _removeQuantity(quantity);
-                          },
-                          icon: Icon(
-                            Icons.remove,
-                            color: Colors.red,
-                            size: 30,
-                          ),
-                        ),
-                        //       Container(
-                        //     width: 60.0,
-                        //     padding: const EdgeInsets.only(left: 1.0, right: 1.0),
-                        //     child: Center(
-                        //       child: TextField(
-                        //         textAlign: TextAlign.center,
-                        //         decoration: new InputDecoration(
-                        //           hintText: "1",
-                        //         ),
-                        //         keyboardType: TextInputType.number,
-                        //         controller: _quantityController[index],
-                        //       ),
-                        //     )
-                        // ),
-
                         Text(
-                          '${quantity}',
+                          'Rs.${total != 0 ? total : productData['price']}',
                           style: TextStyle(
                               fontSize: 25, fontWeight: FontWeight.bold),
                         ),
-                        IconButton(
-                          onPressed: () {
-                            _addQuantity(quantity);
-                          },
-                          icon: Icon(
-                            Icons.add,
-                            color: Colors.red,
-                            size: 30,
-                          ),
-                        )
                       ],
                     ),
                   ),
@@ -115,17 +109,18 @@ class _AddonState extends State<Addon> {
               ),
               Container(
                 height: 50,
-                // width: 100,
-                // decoration:
-                //     BoxDecoration(borderRadius: BorderRadius.circular(20)),
                 margin: EdgeInsets.symmetric(horizontal: 20),
                 child: ElevatedButton(
                     style: ButtonStyle(
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)))),
-                    onPressed: (() {}),
+                    onPressed: (() {
+                      cartApi.addToCart(
+                          {'item': productData['id'], "addon": productAddOn});
+                      Navigator.pop(context);
+                    }),
                     child: const Text(
-                      'Add item - ₹50',
+                      'Add item',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     )),
@@ -260,13 +255,12 @@ class _AddonState extends State<Addon> {
                                       children: [
                                         ...(productData['add_on_data'])
                                             .map((e) {
+                                          var i = productData['add_on_data']
+                                              .indexOf(e);
                                           return Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: <Widget>[
-                                              // SizedBox(
-                                              //   width: 10,
-                                              // ),
                                               Text(
                                                 e['addon_name'],
                                                 style:
@@ -279,12 +273,31 @@ class _AddonState extends State<Addon> {
                                                 children: [
                                                   Text('₹${e['addon_price']}'),
                                                   Checkbox(
-                                                    value:
-                                                        this.values['value1'],
+                                                    value: values[
+                                                        'value${(i + 1)}'],
                                                     onChanged: (value) {
                                                       setState(() {
-                                                        this.values['value1'] =
-                                                            value!;
+                                                        if (value == true) {
+                                                          values['value${(i + 1)}'] =
+                                                              true;
+                                                          productAddOn
+                                                              .add(e['id']);
+                                                          if (total == 0) {
+                                                            total = productData[
+                                                                    'price'] +
+                                                                e['addon_price'];
+                                                          } else {
+                                                            total = total +
+                                                                e['addon_price'];
+                                                          }
+                                                        } else {
+                                                          values['value${(i + 1)}'] =
+                                                              false;
+                                                          productAddOn
+                                                              .remove(e['id']);
+                                                          total = total -
+                                                              e['addon_price'];
+                                                        }
                                                       });
                                                     },
                                                   ),
@@ -306,13 +319,4 @@ class _AddonState extends State<Addon> {
                   ))))),
     );
   }
-
-  // radius(int i) {}
 }
-
-// Widget Addon() => Column(
-//       children: [
-//         Text(
-//             'Views Filter Object is a Drupal module which allows content creators to configure a view via the standard editing interface for any entity. It works particularly well with Paragraphs.')
-//       ],
-//     );
