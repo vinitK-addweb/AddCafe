@@ -97,7 +97,6 @@ class _AddonState extends State<Addon> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-
                         Text(
                           'Rs.${total != 0 ? total : productData['price']}',
                           style: TextStyle(
@@ -153,7 +152,7 @@ class _AddonState extends State<Addon> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(15),
                                     child: Image.network(
-                                        '${dotenv.env['IMG_URL']}/${productData["featured_image"]}'),
+                                        '${productData["featured_image"]}'),
                                   )),
                               // -------------------------------product title----------------------------
                               Container(
