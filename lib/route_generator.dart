@@ -4,10 +4,10 @@ import './widgets/myfavourits.dart';
 import './widgets/cart/cart.dart';
 import './widgets/splash.dart';
 import './widgets/category/CategoryItems.dart';
-import './widgets/signin/signup.dart';
-import './widgets/signin/signin.dart';
-import './widgets/signin/otp.dart';
-import './widgets/signin/password.dart';
+import 'widgets/auth/signup.dart';
+import 'widgets/auth/signin.dart';
+import 'widgets/auth/otp.dart';
+import 'widgets/auth/password.dart';
 import './widgets/faq.dart';
 
 class RouteGenerator {
