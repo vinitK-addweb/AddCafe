@@ -13,7 +13,10 @@ class AddAddress extends StatelessWidget {
     final addaddressApi = Provider.of<AddaddressApi>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Checkout'),
+        title: Text(
+          'Checkout',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+        ),
         centerTitle: true,
       ),
       bottomNavigationBar: Container(
