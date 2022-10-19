@@ -1,3 +1,4 @@
+import 'package:addcafe/Providers/apis/FaqApi.dart';
 import 'package:addcafe/route_generator.dart';
 import 'package:addcafe/widgets/myfavourits.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -31,6 +32,7 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (_) => UserAuth()),
     ChangeNotifierProvider(create: (_) => CartApi()),
     ChangeNotifierProvider(create: (_) => MyFavouritesApi()),
+    ChangeNotifierProvider(create: (_) => FaqApi()),
   ], child: const MyApp()));
 }
 
@@ -42,6 +44,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final myFavourites = Provider.of<MyFavouritesApi>(context, listen: false);
     myFavourites.fetchMyFavourites();
+
+    final Faqdata = Provider.of<FaqApi>(context, listen: false);
+    Faqdata.fetchFaqData();
     final cartApi = Provider.of<CartApi>(context, listen: false);
     final categoriesApiData =
         Provider.of<CategoriesApi>(context, listen: false);

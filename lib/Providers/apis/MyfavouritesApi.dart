@@ -25,13 +25,14 @@ class MyFavouritesApi with ChangeNotifier {
       _myFavourites = json.decode(response.body);
 
       notifyListeners();
-      print(response.body);
+      // print(response.body);
       print('fetchMyFavourites called ');
       // });
       // print('runnnnn');
-    } else {
-      // print('not running');
     }
+    // else {
+    //   print('not running');
+    // }
   }
 
   Future deleteMyFavourites(id) async {

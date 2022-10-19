@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './signin//signin.dart';
+import 'auth/signin.dart';
 import '../main.dart';
 
 class Splash extends StatefulWidget {
