@@ -12,6 +12,7 @@ class UserAuth with ChangeNotifier {
 
   String _token = '';
 
+// <--------------------- User Sign Up Functionality --------------------->
   Future signUp(demo, context) async {
     final headers = {"Content-type": "multipart/form-data"};
 
@@ -32,6 +33,7 @@ class UserAuth with ChangeNotifier {
     }
   }
 
+// <-----------------  User SignIn Functionality ------------------>
   Future signIn(login, context) async {
     // final headers = {"Content-type": "multipart/form-data"};
 
@@ -39,18 +41,27 @@ class UserAuth with ChangeNotifier {
         Uri.parse('${dotenv.env['API_URL']}/accounts/login/'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(login));
-    print(response.body);
+    // print('workingggggggggggggggggg${login}');
     if (response.statusCode == 200) {
       _UserLogin = await jsonDecode(response.body);
-      _token = await _UserLogin['access'];
-      _userProfile = await _UserLogin['payload'];
-      print('_userProfile: ${_userProfile}');
-      notifyListeners();
 
-      Navigator.pushNamed(context, '/');
+      if (await _UserLogin.containsKey("access")) {
+        _token = await _UserLogin['access'];
+        _userProfile = await _UserLogin['payload'];
+        Navigator.pushNamed(context, '/');
+        print("tokennnnnnnnnnnn");
+      } else
+        print('no token${_UserLogin}');
+
+      // print(response.body);
+
+      notifyListeners();
     }
     // print(response.body);
   }
+
+  //  <-----------------  User Otp verification Functionality ------------------>
+  Future MobileVerification() async {}
 
   String get token {
     return _token;

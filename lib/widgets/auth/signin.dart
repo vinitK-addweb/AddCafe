@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import './otp.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:provider/provider.dart';
+import 'package:addcafe/Providers/apis/UserAuth.dart';
 // import '../splash.dart';
 
 // void main() {
@@ -27,6 +29,43 @@ class _MyloginState extends State<Mylogin> {
 
   @override
   Widget build(BuildContext context) {
+    final userAuth = Provider.of<UserAuth>(context);
+    Future _singin() async {
+      Map mapedData = {
+        "mobile_number": this.mobile,
+      };
+      if (mobile != '') {
+        userAuth.signIn(mapedData, context);
+        Navigator.pushNamed(context, '/Otp', arguments: this.mobile);
+      } else
+        Navigator.pushNamed(context, '/Password', arguments: this.email);
+
+      final isValid = _formKey.currentState?.validate();
+
+      if (!isValid!) {
+        return;
+      }
+      _formKey.currentState!.save();
+      print(await this.mobile);
+      // await Navigator.pushNamed(context, '/Otp', arguments: this.mobile);
+      await Navigator.pushNamed(context, mobile == '' ? '/Password' : '/Otp',
+          arguments: mobile == '' ? this.email : this.mobile);
+    }
+
+    Future logIn() async {
+      print('object');
+
+      // final SignupApi = Provider.of<UserAuth>(context);
+
+      // .then((res) => {
+      //       print('DATA: ${userAuth.userData}'),
+      //       if (res.status == 200)
+      //         {
+      //           print('login')
+      //           // Navigator.pushNamed(context, '/Otp', arguments: this.mobile)
+      //         }
+    }
+
     return Scaffold(
         body: SingleChildScrollView(
       child: Form(
@@ -38,11 +77,6 @@ class _MyloginState extends State<Mylogin> {
               ),
 
               Stack(children: <Widget>[
-                // Container(
-                //   width: 300,
-                //   height: 300,
-                //   color: Colors.red,
-                // ), //C
                 Container(
                   child: Image.asset('assets/images/onboard.png'),
                   // height: 370,
@@ -70,7 +104,7 @@ class _MyloginState extends State<Mylogin> {
               ]),
               Container(
                 margin: EdgeInsets.all(2),
-                child: Text('#1 Food Devlivery App',
+                child: Text('#1 Food Delivery App',
                     style:
                         TextStyle(fontWeight: FontWeight.w900, fontSize: 30)),
                 // color: Colors.white,
@@ -85,62 +119,6 @@ class _MyloginState extends State<Mylogin> {
                 // color: Colors.white,
               ),
 
-              // <-------------------Mobile number Input feild------------------------------>
-              // Container(
-              //   margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              //   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-              //   decoration: BoxDecoration(
-              //       color: Colors.white,
-              //       boxShadow: [
-              //         BoxShadow(
-              //             color: Color(0xffeeeeee),
-              //             blurRadius: 10,
-              //             offset: Offset(0, 4))
-              //       ],
-              //       borderRadius: BorderRadius.circular(8),
-              //       border: Border.all(color: Colors.black.withOpacity(0.13))),
-              //   child: Stack(children: [
-              //     InternationalPhoneNumberInput(
-              //       onFieldSubmitted: ((value) {}),
-              //       validator: (value) {
-              //         if (value!.isEmpty ||
-              //             !RegExp(r"^([0|+[0-9]{1,5})?([7-9][0-9]{9})$")
-              //                 .hasMatch(value)) {
-              //           return 'Enter a valid Mobile!';
-              //         }
-              //         return null;
-              //       },
-              //       errorMessage: 'Invalid phone number',
-              //       selectorTextStyle: TextStyle(color: Colors.black),
-              //       selectorConfig: SelectorConfig(
-              //           selectorType: PhoneInputSelectorType.BOTTOM_SHEET),
-              //       keyboardType: TextInputType.phone,
-              //       inputBorder: InputBorder.none,
-              //       onInputChanged: (PhoneNumber number) {
-              //         setState(() {
-              //           mobile = number.phoneNumber.toString().substring(3);
-              //         });
-
-              //         print(this.mobile);
-              //       },
-              //       onInputValidated: (bool value) {
-              //         print(value);
-              //       },
-              //     )
-              //   ]),
-              // ),
-              // ---------------Or text -----------------------
-              // Container(
-              //   margin: EdgeInsets.symmetric(
-              //     horizontal: 10,
-              //     // vertical: 10,
-              //   ),
-              //   child: Text(
-              //     'Or',
-              //     style: TextStyle(fontSize: 20, color: Colors.grey),
-              //   ),
-              // ),
-              // .....................Email field ..........................
               Container(
                   margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                   padding: EdgeInsets.symmetric(),
@@ -156,9 +134,6 @@ class _MyloginState extends State<Mylogin> {
                       border:
                           Border.all(color: Colors.black.withOpacity(0.13))),
                   child: TextFormField(
-                    // readOnly: mobile == '' ? false : true,
-                    // validator:
-                    //     EmailValidator(errorText: 'Please Enter a valid Email'),
                     onChanged: (text) {
                       setState(() {
                         if (double.tryParse(text) != null) {
@@ -234,17 +209,5 @@ class _MyloginState extends State<Mylogin> {
             ],
           )),
     ));
-  }
-
-  Future _singin() async {
-    final isValid = _formKey.currentState?.validate();
-    if (!isValid!) {
-      return;
-    }
-    _formKey.currentState!.save();
-    print(await this.mobile);
-    // await Navigator.pushNamed(context, '/Otp', arguments: this.mobile);
-    await Navigator.pushNamed(context, mobile == '' ? '/Password' : '/Otp',
-        arguments: mobile == '' ? this.email : this.mobile);
   }
 }
