@@ -1,16 +1,22 @@
 import 'dart:io';
-
+// import 'package:localstorage/localstorage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
+import 'package:addcafe/Providers/apis/MyfavouritesApi.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserAuth with ChangeNotifier {
-  var _userProfile = null;
+  // final LocalStorage storage = new LocalStorage('token_access');
+  //  SharedPreferences  prefs = await SharedPreferences.getInstance();
+  // late var userprofile = null;
+  Map<String, dynamic> userprofile = {};
 
-  Map _UserLogin = {};
+  Map<String, dynamic> _UserLogin = {};
 
-  String _token = '';
+  // late final _token;
 
 // <--------------------- User Sign Up Functionality --------------------->
   Future signUp(demo, context) async {
@@ -25,8 +31,8 @@ class UserAuth with ChangeNotifier {
     if (response.statusCode == 201) {
       _UserLogin = await jsonDecode(response.body);
       // _token = await _UserLogin['access'];
-      _userProfile = await _UserLogin['payload'];
-      print('_userProfile: ${_userProfile}');
+      userprofile = await _UserLogin['payload'];
+      print('_userProfile: ${userprofile}');
       notifyListeners();
 
       Navigator.pushNamed(context, '/signin');
@@ -35,7 +41,7 @@ class UserAuth with ChangeNotifier {
 
 // <-----------------  User SignIn Functionality ------------------>
   Future signIn(login, context) async {
-    // final headers = {"Content-type": "multipart/form-data"};
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     http.Response response = await http.post(
         Uri.parse('${dotenv.env['API_URL']}/accounts/login/'),
@@ -43,15 +49,21 @@ class UserAuth with ChangeNotifier {
         body: jsonEncode(login));
     // print('workingggggggggggggggggg${login}');
     if (response.statusCode == 200) {
-      _UserLogin = await jsonDecode(response.body);
+      _UserLogin = Map<String, dynamic>.from(jsonDecode(response.body));
+      print(_UserLogin);
+
+// prefs.setStringList(key, ['', '', '',]]);
+      prefs.setString('userData', _UserLogin['payload'].toString());
 
       if (await _UserLogin.containsKey("access")) {
-        _token = await _UserLogin['access'];
-        _userProfile = await _UserLogin['payload'];
-        Navigator.pushNamed(context, '/');
-        print("tokennnnnnnnnnnn");
+        // print('_userProfile: ${prefs.get('userData')}');
+
+        prefs.setString('token', await _UserLogin['access']);
+        print('sharedpreferences--------> ${prefs.getString('userData')}');
+        await Navigator.pushNamed(context, '/');
+        // print("tokennnnnnnnnnnn");
       } else
-        print('no token${_UserLogin}');
+        print('no token${userprofile}');
 
       // print(response.body);
 
@@ -60,15 +72,22 @@ class UserAuth with ChangeNotifier {
     // print(response.body);
   }
 
+  Future logOut(context) async {
+    // await storage.deleteItem('userData');
+    // userprofile = null;
+    notifyListeners();
+    await Navigator.pushNamed(context, '/signin');
+  }
+
   //  <-----------------  User Otp verification Functionality ------------------>
   Future MobileVerification() async {}
 
-  String get token {
-    return _token;
-  }
+  // String get token {
+  //   return _token;
+  // }
 
   get userProfile {
-    return _userProfile;
+    return userprofile;
   }
 
   Map get userData {

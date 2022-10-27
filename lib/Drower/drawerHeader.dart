@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_if_null_operators, prefer_const_constructors, avoid_unnecessary_containers
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:addcafe/Providers/apis/UserAuth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DrowerHeader extends StatefulWidget {
   @override
@@ -11,9 +14,37 @@ class DrowerHeader extends StatefulWidget {
 }
 
 class _DrowerHeaderState extends State<DrowerHeader> {
+  Map<String, dynamic> userProfile = {};
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getlocaStorage();
+  }
+
+  getlocaStorage() async {
+    Future.delayed(Duration(milliseconds: 5500), () async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      var userDataPref = prefs.getString('userData');
+
+      if (userDataPref != 'null') {
+        final dictUserDataPref = jsonDecode(userDataPref!);
+
+        print('profile data ===========>' + dictUserDataPref.toString());
+        print(dictUserDataPref['email']);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final userAuth = Provider.of<UserAuth>(context);
+    // final userAuth = Provider.of<UserAuth>(context);
+    // var _data = userAuth.userprofile;
+    // // print(''+ _data.runtimeType);
+
     return Container(
       margin: EdgeInsets.only(top: 35),
       width: double.infinity,
@@ -23,13 +54,13 @@ class _DrowerHeaderState extends State<DrowerHeader> {
         CircleAvatar(
             radius: 55,
             backgroundImage: NetworkImage(
-              userAuth.userProfile == null
+              userProfile == null
                   ? 'https://mir-s3-cdn-cf.behance.net/user/276/462829507061295.5f9717443f152.png'
-                  : userAuth.userProfile['profile_picture'] == null
+                  : userProfile['profile_picture'] == null
                       ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi6mIqR-61xHjJUEMUfzQvP_ZeVtRZ-Hh_B9OQIh5hLjVH1ZO5U23ZehKJMmIsZkMF5Ew&usqp=CAU'
-                      : '${dotenv.env['IMG_URL']}${userAuth.userProfile['profile_picture']}',
+                      : '${dotenv.env['IMG_URL']}${userProfile['profile_picture']}',
             )),
-        userAuth.userProfile == null
+        userProfile == null
             ? Container(
                 margin: EdgeInsets.symmetric(vertical: 8),
 
@@ -43,15 +74,15 @@ class _DrowerHeaderState extends State<DrowerHeader> {
                     onPressed: () => Navigator.pushNamed(context, '/signin'),
                     child: Text('Login')))
             :
-          // <-------------------user profile details -------------------->
+            // <-------------------user profile details -------------------->
             Column(
                 children: [
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 7),
                     child: Text(
-                      userAuth.userProfile['first_name'] == null
+                      userProfile['first_name'] == null
                           ? ''
-                          : userAuth.userProfile['first_name'],
+                          : userProfile['first_name'],
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -60,11 +91,11 @@ class _DrowerHeaderState extends State<DrowerHeader> {
                   ),
                   Container(
                     child: Text(
-                      userAuth.userProfile == null
+                      userProfile == null
                           ? ''
-                          : userAuth.userProfile['email'] == null
+                          : userProfile['email'] == null
                               ? ''
-                              : userAuth.userProfile['email'],
+                              : userProfile['email'],
                       style: TextStyle(
                         color: Colors.black87,
                         fontSize: 20,

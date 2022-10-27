@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:addcafe/widgets/category/rating.dart';
 import 'package:addcafe/widgets/category/addons.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:addcafe/Providers/apis/UserAuth.dart';
 
 class Myfavourits extends StatelessWidget {
   // Myfavourits(this.categoryItems);
@@ -14,8 +16,16 @@ class Myfavourits extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cartApi = Provider.of<CartApi>(context);
+    // final myFavourites = Provider.of<MyFavouritesApi>(context);
+    final userAuth = Provider.of<UserAuth>(context);
     final myFavouritesApi = Provider.of<MyFavouritesApi>(context);
+    // final myFavouritesApi2 =
+    //     Provider.of<MyFavouritesApi>(context, listen: false);
+    // myFavouritesApi2.fetchMyFavourites(context);
+    //  SharedPreferences prefs = await SharedPreferences.getInstance();
+    // late final _token = storage.getItem('token');
+    final cartApi = Provider.of<CartApi>(context);
+
     return Scaffold(
       appBar: AppBar(
           title: Text(
@@ -83,8 +93,8 @@ class Myfavourits extends StatelessWidget {
                                       // <----------- Remove from wishlist ----------------->
                                       InkWell(
                                         onTap: () {
-                                          myFavouritesApi
-                                              .deleteMyFavourites(e['id']);
+                                          myFavouritesApi.deleteMyFavourites(
+                                              e['id'], context);
                                         },
                                         child: Container(
                                           margin: EdgeInsets.symmetric(
@@ -281,7 +291,7 @@ class Myfavourits extends StatelessWidget {
                       height: 0,
                     );
                   }).toList()
-                : [Text('no items')],
+                : [Text('no data')],
           ),
         ),
       ),

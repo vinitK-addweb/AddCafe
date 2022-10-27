@@ -12,7 +12,7 @@ import 'package:addcafe/Providers/apis/UserAuth.dart';
 import 'package:addcafe/Providers/apis/CartApi.dart';
 import 'package:addcafe/Providers/apis/MyfavouritesApi.dart';
 import 'package:addcafe/Providers/apis/addAddressApi.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import './widgets/HomeBanner.dart';
 import './widgets/HomeCategory.dart';
 import './widgets/CustomerReviews.dart';
@@ -22,6 +22,7 @@ import 'Drower/drawerList.dart';
 import 'widgets/searchBar.dart';
 import 'footer.dart';
 import 'widgets/Loader.dart';
+import 'dart:convert';
 
 Future<void> main() async {
   await dotenv.load();
@@ -44,8 +45,35 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final myFavourites = Provider.of<MyFavouritesApi>(context, listen: false);
-    myFavourites.fetchMyFavourites();
+    final userAuth = Provider.of<UserAuth>(context);
+
+    // userAuth.= as prefs.get('userData');
+
+    // getlocaStorage() async {
+    //   SharedPreferences prefs = await SharedPreferences.getInstance();
+    //   // var data = prefs.get(('userData')).toString();
+    //   // userAuth.userprofile = prefs.get(('userData')).toString();
+
+    //   final userDataPref = prefs.get(('userData')).toString();
+
+    //   debugPrint(userDataPref);
+
+    //   if (userDataPref != 'null') {
+    //     final dictUserDataPref =
+    //         Map<String, dynamic>.from(jsonDecode(userDataPref));
+    //     print(dictUserDataPref);
+    //     userAuth.userprofile = dictUserDataPref;
+
+    //     print(
+    //         'profile data ===========>${userAuth.userprofile.runtimeType}');
+    //   }
+    // }
+
+    // if (userAuth.userData.isEmpty) {
+    //   getlocaStorage();
+    //   final myFavourites = Provider.of<MyFavouritesApi>(context, listen: false);
+    //   myFavourites.fetchMyFavourites(context);
+    // }
 
     final Faqdata = Provider.of<FaqApi>(context, listen: false);
     Faqdata.fetchFaqData();
@@ -103,6 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final userAuth = Provider.of<UserAuth>(context);
     final homeBannerData = Provider.of<HomeBannerApi>(context, listen: false);
     final homeCategoryData =
         Provider.of<HomeCategoryApi>(context, listen: false);
@@ -124,7 +153,17 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               Container(
                 child: MyDrowerList(),
-              )
+              ),
+              userAuth.userProfile != null
+                  ? Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.symmetric(horizontal: 30),
+                      child: ElevatedButton(
+                          onPressed: () => userAuth.logOut(context),
+                          child: Text('Log Out')))
+                  : SizedBox(
+                      height: 0,
+                    )
             ],
           ),
         ),
