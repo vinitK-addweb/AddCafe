@@ -130,193 +130,189 @@ class _AddonState extends State<Addon> {
         ),
       ),
       body: DraggableScrollableSheet(
-          initialChildSize: 0.7,
-          maxChildSize: 0.9,
-          minChildSize: 0.5,
-          builder: (_, controller) => ClipRRect(
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20)),
-              child: Container(
-                  width: double.infinity,
-                  color: Colors.white,
-                  child: Container(
-                      child: ListView(
-                    children: [
-                      Column(mainAxisSize: MainAxisSize.min, children: [
-                        Column(
-                          children: [
-                            Card(
-                                child: Column(children: [
-                              Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: Image.network(
-                                        '${productData["featured_image"]}'),
-                                  )),
-                              // -------------------------------product title----------------------------
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      productData['item_name'],
+        initialChildSize: 0.7,
+        maxChildSize: 0.9,
+        minChildSize: 0.5,
+        builder: (_, controller) => ClipRRect(
+          borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+          child: Container(
+            width: double.infinity,
+            color: Colors.white,
+            child: Container(
+              child: ListView(
+                children: [
+                  Column(mainAxisSize: MainAxisSize.min, children: [
+                    Column(
+                      children: [
+                        Card(
+                            child: Column(children: [
+                          Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(15),
+                                child: Image.network(
+                                    '${productData["featured_image"]}'),
+                              )),
+                          // -------------------------------product title----------------------------
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              children: [
+                                Text(
+                                  productData['item_name'],
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                      ),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(5.0),
+                                    child: Icon(
+                                      Icons.favorite_border_outlined,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.grey,
+                                      ),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(20))),
+                                  child: const Padding(
+                                    padding: EdgeInsets.all(5.0),
+                                    child: Icon(
+                                      Icons.share_outlined,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          //------------- product reatings--------------------
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Row(
+                              children: [
+                                Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.red,
+                                        ),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(8))),
+                                    child: Rating(4)),
+                                const Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Text(
+                                    '56 reviews',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            child: Text(productData['description']),
+                          )
+                        ])),
+                        Card(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            child: Column(
+                              children: [
+                                Container(
+                                    width: double.infinity,
+                                    child: const Text(
+                                      'Add On',
                                       style: TextStyle(
-                                          fontSize: 20,
+                                          fontSize: 22,
                                           fontWeight: FontWeight.bold),
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Colors.grey,
-                                          ),
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(20))),
-                                      child: const Padding(
-                                        padding: EdgeInsets.all(5.0),
-                                        child: Icon(
-                                          Icons.favorite_border_outlined,
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Colors.grey,
-                                          ),
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(20))),
-                                      child: const Padding(
-                                        padding: EdgeInsets.all(5.0),
-                                        child: Icon(
-                                          Icons.share_outlined,
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              //------------- product reatings--------------------
-                              Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Row(
+                                    )),
+                                Container(
+                                    width: double.infinity,
+                                    child:
+                                        const Text('Select up to 2 options')),
+                                Column(
                                   children: [
-                                    Container(
-                                        decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: Colors.red,
-                                            ),
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(8))),
-                                        child: Rating(4)),
-                                    const Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Text(
-                                        '56 reviews',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
+                                    ...(productData['add_on_data']).map((e) {
+                                      var i =
+                                          productData['add_on_data'].indexOf(e);
+                                      return Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Text(
+                                            e['addon_name'],
+                                            style: TextStyle(fontSize: 17.0),
+                                          ), //Text
+                                          const SizedBox(width: 10), //SizedBox
+                                          /** Checkbox Widget **/
+                                          Row(
+                                            children: [
+                                              Text('₹${e['addon_price']}'),
+                                              Checkbox(
+                                                value:
+                                                    values['value${(i + 1)}'],
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    if (value == true) {
+                                                      values['value${(i + 1)}'] =
+                                                          true;
+                                                      productAddOn.add(e['id']);
+                                                      if (total == 0) {
+                                                        total = productData[
+                                                                'price'] +
+                                                            e['addon_price'];
+                                                      } else {
+                                                        total = total +
+                                                            e['addon_price'];
+                                                      }
+                                                    } else {
+                                                      values['value${(i + 1)}'] =
+                                                          false;
+                                                      productAddOn
+                                                          .remove(e['id']);
+                                                      total = total -
+                                                          e['addon_price'];
+                                                    }
+                                                  });
+                                                },
+                                              ),
+                                            ],
+                                          ), ////Checkbox
+                                        ], //<Widget>[]
+                                      );
+                                    })
                                   ],
                                 ),
-                              ),
-                              Container(
-                                margin: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
-                                child: Text(productData['description']),
-                              )
-                            ])),
-                            Card(
-                              child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                        width: double.infinity,
-                                        child: const Text(
-                                          'Add On',
-                                          style: TextStyle(
-                                              fontSize: 22,
-                                              fontWeight: FontWeight.bold),
-                                        )),
-                                    Container(
-                                        width: double.infinity,
-                                        child: const Text(
-                                            'Select up to 2 options')),
-                                    Column(
-                                      children: [
-                                        ...(productData['add_on_data'])
-                                            .map((e) {
-                                          var i = productData['add_on_data']
-                                              .indexOf(e);
-                                          return Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              Text(
-                                                e['addon_name'],
-                                                style:
-                                                    TextStyle(fontSize: 17.0),
-                                              ), //Text
-                                              const SizedBox(
-                                                  width: 10), //SizedBox
-                                              /** Checkbox Widget **/
-                                              Row(
-                                                children: [
-                                                  Text('₹${e['addon_price']}'),
-                                                  Checkbox(
-                                                    value: values[
-                                                        'value${(i + 1)}'],
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        if (value == true) {
-                                                          values['value${(i + 1)}'] =
-                                                              true;
-                                                          productAddOn
-                                                              .add(e['id']);
-                                                          if (total == 0) {
-                                                            total = productData[
-                                                                    'price'] +
-                                                                e['addon_price'];
-                                                          } else {
-                                                            total = total +
-                                                                e['addon_price'];
-                                                          }
-                                                        } else {
-                                                          values['value${(i + 1)}'] =
-                                                              false;
-                                                          productAddOn
-                                                              .remove(e['id']);
-                                                          total = total -
-                                                              e['addon_price'];
-                                                        }
-                                                      });
-                                                    },
-                                                  ),
-                                                ],
-                                              ), ////Checkbox
-                                            ], //<Widget>[]
-                                          );
-                                        })
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
+                              ],
+                            ),
+                          ),
                         )
-                      ]),
-                    ],
-                  ))))),
+                      ],
+                    )
+                  ]),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -33,6 +33,9 @@ class MyDrowerList extends StatelessWidget {
             ),
           ),
           InkWell(
+            onTap: () {
+              Navigator.pushNamed(context, '/myProfile');
+            },
             child: Container(
               padding: EdgeInsets.all(20.0),
               child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [

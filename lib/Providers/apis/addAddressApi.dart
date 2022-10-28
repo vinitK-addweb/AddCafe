@@ -37,6 +37,42 @@ class AddaddressApi with ChangeNotifier {
     }
   }
 
+  //adding new address
+  Future addNewAddress(payload) async {
+    http.Response response;
+    response = await http.post(
+        Uri.parse('https://cafe.addwebprojects.com/api/v1/order/address/'),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization":
+              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
+        },
+        body: jsonEncode(payload));
+
+    print('addNewAddress called');
+    print(response.statusCode);
+    print(response.body);
+    fetchSavedAddress();
+    // if (response.statusCode == 200) {
+    //   notifyListeners();
+    // } else {
+    //   print(response.body);
+    // }
+  }
+
+  Future deleteAddress(id) async {
+    http.Response response;
+    response = await http.delete(
+        Uri.parse(
+            'https://cafe.addwebprojects.com/api/v1/order/address/${id}/'),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization":
+              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
+        });
+    fetchSavedAddress();
+  }
+
   //selecting an address on addadderss page
   setAddress(addressId) {
     _selectedAddress = addressId;
