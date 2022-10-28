@@ -12,7 +12,7 @@ class MyFavouritesApi with ChangeNotifier {
     return _myFavourites;
   }
 
-  Future fetchMyFavourites(context) async {
+  Future fetchMyFavourites() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (prefs.get('token') != null) {
@@ -33,10 +33,11 @@ class MyFavouritesApi with ChangeNotifier {
 
         print('fetchMyFavourites called ');
       }
-    } else {
-      Navigator.pushNamed(context, '/signin');
-      ;
     }
+    // else {
+    //   Navigator.pushNamed(context, '/signin');
+    //   ;
+    // }
   }
 
   Future deleteMyFavourites(id, context) async {
@@ -49,8 +50,8 @@ class MyFavouritesApi with ChangeNotifier {
           "Authorization": 'Bearer ${prefs.get('token')}'
         });
     if (response.statusCode == 200) {
-      fetchMyFavourites(context);
-
+      fetchMyFavourites();
+      print(_myFavourites);
       print('deleteMyFavourites called');
       // });
       // print('runnnnn');
@@ -71,7 +72,7 @@ class MyFavouritesApi with ChangeNotifier {
         body: jsonEncode(productData));
     if (response.statusCode == 200) {
       print('addToMyFavorites called');
-      fetchMyFavourites(context);
+      fetchMyFavourites();
     } else {
       print('addToMyFavorites not called');
     }

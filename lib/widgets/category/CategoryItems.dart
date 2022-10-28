@@ -42,7 +42,9 @@ class _CategoryItemsState extends State<CategoryItems> {
     final cartApi = Provider.of<CartApi>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Categories'),
+        title: Text(
+          'Categories',
+        ),
         centerTitle: true,
       ),
       bottomNavigationBar: cartApi.cart['count'] > 0
