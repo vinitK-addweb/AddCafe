@@ -14,34 +14,19 @@ class DrowerHeader extends StatefulWidget {
 }
 
 class _DrowerHeaderState extends State<DrowerHeader> {
-  Map<String, dynamic> userProfile = {};
+  // Map<String, dynamic> userProfile = {};
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
 
-    getlocaStorage();
-  }
-
-  getlocaStorage() async {
-    Future.delayed(Duration(milliseconds: 5500), () async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      var userDataPref = prefs.getString('userData');
-
-      if (userDataPref != 'null') {
-        final dictUserDataPref = jsonDecode(userDataPref!);
-
-        print('profile data ===========>' + dictUserDataPref.toString());
-        print(dictUserDataPref['email']);
-      }
-    });
-  }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    // final userAuth = Provider.of<UserAuth>(context);
+    final userAuth = Provider.of<UserAuth>(context);
+    // userAuth.getlocaStorage();
     // var _data = userAuth.userprofile;
     // // print(''+ _data.runtimeType);
 
@@ -54,13 +39,13 @@ class _DrowerHeaderState extends State<DrowerHeader> {
         CircleAvatar(
             radius: 55,
             backgroundImage: NetworkImage(
-              userProfile == null
+              userAuth.userprofile.isEmpty
                   ? 'https://mir-s3-cdn-cf.behance.net/user/276/462829507061295.5f9717443f152.png'
-                  : userProfile['profile_picture'] == null
+                  : userAuth.userprofile['profile_picture'] == null
                       ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi6mIqR-61xHjJUEMUfzQvP_ZeVtRZ-Hh_B9OQIh5hLjVH1ZO5U23ZehKJMmIsZkMF5Ew&usqp=CAU'
-                      : '${dotenv.env['IMG_URL']}${userProfile['profile_picture']}',
+                      : '${dotenv.env['IMG_URL']}${userAuth.userprofile['profile_picture']}',
             )),
-        userProfile == null
+        userAuth.userprofile.isEmpty
             ? Container(
                 margin: EdgeInsets.symmetric(vertical: 8),
 
@@ -80,9 +65,9 @@ class _DrowerHeaderState extends State<DrowerHeader> {
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 7),
                     child: Text(
-                      userProfile['first_name'] == null
+                      userAuth.userprofile['first_name'] == null
                           ? ''
-                          : userProfile['first_name'],
+                          : userAuth.userprofile['first_name'],
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20,
@@ -91,13 +76,13 @@ class _DrowerHeaderState extends State<DrowerHeader> {
                   ),
                   Container(
                     child: Text(
-                      userProfile == null
+                      userAuth.userprofile == null
                           ? ''
-                          : userProfile['email'] == null
+                          : userAuth.userprofile['email'] == null
                               ? ''
-                              : userProfile['email'],
+                              : userAuth.userprofile['email'],
                       style: TextStyle(
-                        color: Colors.black87,
+                        color: Colors.white,
                         fontSize: 20,
                       ),
                     ),

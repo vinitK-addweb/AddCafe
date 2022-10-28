@@ -50,16 +50,21 @@ class UserAuth with ChangeNotifier {
     // print('workingggggggggggggggggg${login}');
     if (response.statusCode == 200) {
       _UserLogin = Map<String, dynamic>.from(jsonDecode(response.body));
-      print(_UserLogin);
+      Map<String, dynamic> dictPayload = _UserLogin['payload'];
 
-// prefs.setStringList(key, ['', '', '',]]);
-      prefs.setString('userData', _UserLogin['payload'].toString());
+      // print(dictPayload['password']);
+      // dictPayload['password'] = '';
+
+      //  This is the issue
+      final strPayLoad = jsonEncode(_UserLogin['payload']);
+      prefs.setString('userData', strPayLoad);
 
       if (await _UserLogin.containsKey("access")) {
         // print('_userProfile: ${prefs.get('userData')}');
 
         prefs.setString('token', await _UserLogin['access']);
         print('sharedpreferences--------> ${prefs.getString('userData')}');
+        getlocaStorage();
         await Navigator.pushNamed(context, '/');
         // print("tokennnnnnnnnnnn");
       } else
@@ -72,10 +77,36 @@ class UserAuth with ChangeNotifier {
     // print(response.body);
   }
 
+  getlocaStorage() async {
+    Future.delayed(Duration(milliseconds: 1), () async {
+      print('user auth========> ${userProfile} ');
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      var userDataPref = prefs.getString('userData');
+
+      if (userDataPref != null) {
+        try {
+          userprofile =
+              await Map<String, dynamic>.from(jsonDecode(userDataPref));
+        } catch (error) {
+          print(error);
+        }
+      } else {
+        userprofile = {};
+      }
+    });
+  }
+
   Future logOut(context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     // await storage.deleteItem('userData');
     // userprofile = null;
+    userprofile = {};
+    prefs.remove('userData');
+    prefs.remove('token');
     notifyListeners();
+
     await Navigator.pushNamed(context, '/signin');
   }
 

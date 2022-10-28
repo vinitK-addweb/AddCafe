@@ -16,64 +16,51 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
-    _navigatetohome();
     getlocaStorage();
+    // _navigatetohome();
   }
 
-  _navigatetohome() async {
-    await Future.delayed(Duration(milliseconds: 5500), () {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Mylogin()));
-    });
-    // Navigator.pushReplacement(
-    //     context, MaterialPageRoute(builder: (context) => Mylogin()));
-  }
+  Map<String, dynamic> userprofile = {};
 
   getlocaStorage() async {
     Future.delayed(Duration(milliseconds: 5500), () async {
+      print('user auth========> ${userprofile} ');
+
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       var userDataPref = prefs.getString('userData');
 
       if (userDataPref != null) {
-        // Map<String, dynamic> user = {
-        //   "id": 1,
-        //   "email": "addweb@addweb.com",
-        //   "password":
-        //       "pbkdf2_sha256320000Ny9b6DLCeJXmJhJ0FwKv0T9drX7eDaIagn+pwFzEaPUtjC8JBFopOauuhdrS/L5sc=",
-        //   "first_name": null,
-        //   "last_name": null,
-        //   "mobile_number": null,
-        //   "profile_picture":
-        //       "/media/profile/batman_car_night-wallpaper-3840x2160.webp",
-        //   "auth_provider": "email",
-        //   "is_active": true,
-        //   "is_verify": true,
-        //   "is_staff": true,
-        //   "is_email_verify": true,
-        //   "groups": [],
-        //   "group_data": [],
-        //   "date_joined": "2022-09-01T18:33:31+05:30",
-        //   "last_login": "2022-10-27T14:01:02.333768+05:30"
-        // };
-
-        // prefs.setString('userData', jsonEncode(user));
-
-        // final userDataPref = prefs.get(('userData'));
-
-        // debugPrint(userDataPref.toString());
-
-        final dictUserDataPref = json.decoder(userDataPref);
-
-        // final dictUserDataPref = jsonDecode(userDataPref);
-        print(dictUserDataPref);
-        print('profile data ===========>' + dictUserDataPref.toString());
-
-        // userAuth.userprofile = dictUserDataPref;
-        // print('profile data ===========>${userAuth.userprofile.runtimeType}');
+        print("if runsssss");
+        try {
+          userprofile =
+              await Map<String, dynamic>.from(jsonDecode(userDataPref));
+          // await Future.delayed(Duration(milliseconds: 5500), () {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => MyHomePage()));
+          // });
+        } catch (error) {
+          print(error);
+        }
+      } else {
+        userprofile = {};
+        print('else');
+        // await Future.delayed(Duration(milliseconds: 5500), () {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => Mylogin()));
+        // });
       }
     });
   }
+
+  // _navigatetohome() async {
+  //   await Future.delayed(Duration(milliseconds: 5500), () {
+  //     Navigator.pushReplacement(
+  //         context, MaterialPageRoute(builder: (context) => Mylogin()));
+  //   });
+  // Navigator.pushReplacement(
+  //     context, MaterialPageRoute(builder: (context) => Mylogin()));
+  // }
 
   @override
   Widget build(BuildContext context) {

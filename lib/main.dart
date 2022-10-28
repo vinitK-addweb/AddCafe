@@ -45,36 +45,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final userAuth = Provider.of<UserAuth>(context);
-
-    // userAuth.= as prefs.get('userData');
-
-    // getlocaStorage() async {
-    //   SharedPreferences prefs = await SharedPreferences.getInstance();
-    //   // var data = prefs.get(('userData')).toString();
-    //   // userAuth.userprofile = prefs.get(('userData')).toString();
-
-    //   final userDataPref = prefs.get(('userData')).toString();
-
-    //   debugPrint(userDataPref);
-
-    //   if (userDataPref != 'null') {
-    //     final dictUserDataPref =
-    //         Map<String, dynamic>.from(jsonDecode(userDataPref));
-    //     print(dictUserDataPref);
-    //     userAuth.userprofile = dictUserDataPref;
-
-    //     print(
-    //         'profile data ===========>${userAuth.userprofile.runtimeType}');
-    //   }
-    // }
-
-    // if (userAuth.userData.isEmpty) {
-    //   getlocaStorage();
-    //   final myFavourites = Provider.of<MyFavouritesApi>(context, listen: false);
-    //   myFavourites.fetchMyFavourites(context);
-    // }
-
+    final userAuth = Provider.of<UserAuth>(
+      context,
+    );
+    userAuth.getlocaStorage();
     final Faqdata = Provider.of<FaqApi>(context, listen: false);
     Faqdata.fetchFaqData();
     final cartApi = Provider.of<CartApi>(context, listen: false);
@@ -154,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                 child: MyDrowerList(),
               ),
-              userAuth.userProfile != null
+              userAuth.userprofile.isNotEmpty
                   ? Container(
                       width: MediaQuery.of(context).size.width,
                       margin: EdgeInsets.symmetric(horizontal: 30),
@@ -163,6 +137,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Text('Log Out')))
                   : SizedBox(
                       height: 0,
+                      child: Text(
+                          userAuth.userprofile.isNotEmpty ? 'true' : 'false'),
                     )
             ],
           ),
