@@ -1,17 +1,24 @@
 import 'dart:io';
-
+// import 'package:localstorage/localstorage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
+import 'package:addcafe/Providers/apis/MyfavouritesApi.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserAuth with ChangeNotifier {
-  var _userProfile = null;
+  // final LocalStorage storage = new LocalStorage('token_access');
+  //  SharedPreferences  prefs = await SharedPreferences.getInstance();
+  // late var userprofile = null;
+  Map<String, dynamic> userprofile = {};
 
-  Map _UserLogin = {};
+  Map<String, dynamic> _UserLogin = {};
 
-  String _token = '';
+  // late final _token;
 
+// <--------------------- User Sign Up Functionality --------------------->
   Future signUp(demo, context) async {
     final headers = {"Content-type": "multipart/form-data"};
 
@@ -24,40 +31,94 @@ class UserAuth with ChangeNotifier {
     if (response.statusCode == 201) {
       _UserLogin = await jsonDecode(response.body);
       // _token = await _UserLogin['access'];
-      _userProfile = await _UserLogin['payload'];
-      print('_userProfile: ${_userProfile}');
+      userprofile = await _UserLogin['payload'];
+      print('_userProfile: ${userprofile}');
       notifyListeners();
 
       Navigator.pushNamed(context, '/signin');
     }
   }
 
+// <-----------------  User SignIn Functionality ------------------>
   Future signIn(login, context) async {
-    // final headers = {"Content-type": "multipart/form-data"};
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     http.Response response = await http.post(
         Uri.parse('${dotenv.env['API_URL']}/accounts/login/'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(login));
-    print(response.body);
+    // print('workingggggggggggggggggg${login}');
     if (response.statusCode == 200) {
-      _UserLogin = await jsonDecode(response.body);
-      _token = await _UserLogin['access'];
-      _userProfile = await _UserLogin['payload'];
-      print('_userProfile: ${_userProfile}');
-      notifyListeners();
+      _UserLogin = Map<String, dynamic>.from(jsonDecode(response.body));
+      Map<String, dynamic> dictPayload = _UserLogin['payload'];
 
-      Navigator.pushNamed(context, '/');
+      // print(dictPayload['password']);
+      // dictPayload['password'] = '';
+
+      //  This is the issue
+      final strPayLoad = jsonEncode(_UserLogin['payload']);
+      prefs.setString('userData', strPayLoad);
+
+      if (await _UserLogin.containsKey("access")) {
+        // print('_userProfile: ${prefs.get('userData')}');
+
+        prefs.setString('token', await _UserLogin['access']);
+        print('sharedpreferences--------> ${prefs.getString('userData')}');
+        getlocaStorage();
+        await Navigator.pushNamed(context, '/');
+        // print("tokennnnnnnnnnnn");
+      } else
+        print('no token${userprofile}');
+
+      // print(response.body);
+
+      notifyListeners();
     }
     // print(response.body);
   }
 
-  String get token {
-    return _token;
+  getlocaStorage() async {
+    Future.delayed(Duration(milliseconds: 1), () async {
+      print('user auth========> ${userProfile} ');
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      var userDataPref = prefs.getString('userData');
+
+      if (userDataPref != null) {
+        try {
+          userprofile =
+              await Map<String, dynamic>.from(jsonDecode(userDataPref));
+        } catch (error) {
+          print(error);
+        }
+      } else {
+        userprofile = {};
+      }
+    });
   }
 
+  Future logOut(context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // await storage.deleteItem('userData');
+    // userprofile = null;
+    userprofile = {};
+    prefs.remove('userData');
+    prefs.remove('token');
+    notifyListeners();
+
+    await Navigator.pushNamed(context, '/signin');
+  }
+
+  //  <-----------------  User Otp verification Functionality ------------------>
+  Future MobileVerification() async {}
+
+  // String get token {
+  //   return _token;
+  // }
+
   get userProfile {
-    return _userProfile;
+    return userprofile;
   }
 
   Map get userData {
