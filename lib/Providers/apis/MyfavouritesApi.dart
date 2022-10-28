@@ -2,40 +2,49 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:localstorage/localstorage.dart';
 
 class MyFavouritesApi with ChangeNotifier {
   List _myFavourites = [];
+
+  // final LocalStorage storage = LocalStorage('token_acces');
 
   List get myFavouritesData {
     // getMyFavourites();
     return _myFavourites;
   }
 
-  Future fetchMyFavourites() async {
+  Future fetchMyFavourites(context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // late var token = prefs.get('token');
+    // print('token ${token}');
     http.Response response;
     response = await http.get(
         Uri.parse('${dotenv.env['API_URL']}/catalogue/wishlist/'),
         headers: {
           "Content-Type": "application/json",
-          "Authorization":
-              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
+          "Authorization": 'Bearer ${prefs.get('token')}'
+          // eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
         });
     if (response.statusCode == 200) {
-      // setState(() {
-      _myFavourites = json.decode(response.body);
+      if (_myFavourites != json.decode(response.body)) {
+        _myFavourites = await json.decode(response.body);
+        print('hi mukesh');
+        notifyListeners();
+      }
 
-      notifyListeners();
-      // print(response.body);
+      // print('my fav token ${token}');
+      // notifyListeners();
+
       print('fetchMyFavourites called ');
-      // });
-      // print('runnnnn');
+    } else {
+      Navigator.pushNamed(context, '/signin');
+      ;
     }
-    // else {
-    //   print('not running');
-    // }
   }
 
-  Future deleteMyFavourites(id) async {
+  Future deleteMyFavourites(id, context) async {
     // print('delete');
     http.Response response;
     response = await http.delete(
@@ -48,7 +57,7 @@ class MyFavouritesApi with ChangeNotifier {
     if (response.statusCode == 200) {
       // setState(() {
       // _myFavourites = json.decode(response.body);
-      fetchMyFavourites();
+      fetchMyFavourites(context);
 
       print('deleteMyFavourites called');
       // });
@@ -58,7 +67,7 @@ class MyFavouritesApi with ChangeNotifier {
     }
   }
 
-  Future addToMyFavorites(productData) async {
+  Future addToMyFavorites(productData, context) async {
     http.Response response;
     response = await http.post(
         Uri.parse('https://cafe.addwebprojects.com/api/v1/catalogue/wishlist/'),
@@ -70,7 +79,9 @@ class MyFavouritesApi with ChangeNotifier {
         body: jsonEncode(productData));
     if (response.statusCode == 200) {
       print('addToMyFavorites called');
-      fetchMyFavourites();
+      fetchMyFavourites(context);
+    } else {
+      print('addToMyFavorites not called');
     }
   }
 
