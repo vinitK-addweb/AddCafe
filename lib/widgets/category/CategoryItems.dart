@@ -47,7 +47,7 @@ class _CategoryItemsState extends State<CategoryItems> {
       ),
       bottomNavigationBar: cartApi.cart['count'] > 0
           ? Container(
-              height: 50,
+              height: MediaQuery.of(context).size.width / 5.4,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed('/cart');
@@ -59,17 +59,22 @@ class _CategoryItemsState extends State<CategoryItems> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('${cartApi.cart['count']} ITEM'),
-                          Text('Rs. ${cartApi.cart['total_rate']}')
+                          Text(
+                            '${cartApi.cart['count']} ITEM',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20),
+                          ),
+                          Text('Rs. ${cartApi.cart['total_rate']}',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18))
                         ],
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'Next  >',
-                            style: TextStyle(fontSize: 20),
-                          )
+                          Text('Next  >',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 28))
                         ],
                       )
                     ]),

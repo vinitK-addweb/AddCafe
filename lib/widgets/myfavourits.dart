@@ -19,9 +19,8 @@ class Myfavourits extends StatelessWidget {
     // final myFavourites = Provider.of<MyFavouritesApi>(context);
     final userAuth = Provider.of<UserAuth>(context);
     final myFavouritesApi = Provider.of<MyFavouritesApi>(context);
-    // final myFavouritesApi2 =
-    //     Provider.of<MyFavouritesApi>(context, listen: false);
-    // myFavouritesApi2.fetchMyFavourites(context);
+
+    myFavouritesApi.fetchMyFavourites(context);
     //  SharedPreferences prefs = await SharedPreferences.getInstance();
     // late final _token = storage.getItem('token');
     final cartApi = Provider.of<CartApi>(context);
@@ -114,36 +113,7 @@ class Myfavourits extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      // myFavouritesApi
-                                      //         .isInMyFavorites(e['id'])
-                                      //         .isNotEmpty
-                                      //     ? IconButton(
-                                      //         onPressed: () {
-                                      //           myFavouritesApi
-                                      //               .deleteMyFavourites(
-                                      //                   myFavouritesApi
-                                      //                           .isInMyFavorites(
-                                      //                               e['id'])[0]
-                                      //                       ['id']);
-                                      //         },
-                                      //         icon: Icon(
-                                      //           Icons.favorite,
-                                      //           color: Colors.red,
-                                      //         ),
-                                      //       )
-                                      // : IconButton(
-                                      //     onPressed: () {
-                                      //       myFavouritesApi
-                                      //           .addToMyFavorites({
-                                      //         "user": 1,
-                                      //         "product": e['id']
-                                      //       });
-                                      //     },
-                                      //     icon: Icon(
-                                      //       Icons.favorite_border,
-                                      //       color: Colors.red,
-                                      //     ),
-                                      //   ),
+
                                       Container(
                                         margin: EdgeInsets.symmetric(
                                             horizontal: 10),
