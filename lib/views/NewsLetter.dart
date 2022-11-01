@@ -16,7 +16,10 @@ class NewsLetter extends StatelessWidget {
                 margin: EdgeInsets.only(top: 5),
                 child: Text(
                   'Join Our NewsLetter',
-                  style: TextStyle(color: Colors.blue, fontSize: 17, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold),
                 )),
             TextField(
               decoration: InputDecoration(
@@ -24,7 +27,9 @@ class NewsLetter extends StatelessWidget {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(5)))),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             ElevatedButton(
               onPressed: () {},
               child: Text('Subscribe'),
