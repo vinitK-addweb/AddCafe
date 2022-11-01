@@ -18,7 +18,12 @@ class UserAuth with ChangeNotifier {
 
   // late final _token;
 
+
+  String _isPasswordUpdated = '';
+
+
 // <--------------------- User Sign Up Functionality --------------------->
+
   Future signUp(demo, context) async {
     final headers = {"Content-type": "multipart/form-data"};
 
@@ -77,6 +82,29 @@ class UserAuth with ChangeNotifier {
     // print(response.body);
   }
 
+
+  Future changePassword(payload) async {
+    http.Response response;
+    response = await http.post(
+        Uri.parse(
+            'https://cafe.addwebprojects.com/api/v1/accounts/change-password/'),
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization":
+              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
+        },
+        body: jsonEncode(payload));
+
+    print(response.statusCode);
+    // print(response.body);
+    var data = jsonDecode(response.body);
+    _isPasswordUpdated = data['message'];
+    notifyListeners();
+  }
+
+  String get token {
+    return _token;
+
   getlocaStorage() async {
     Future.delayed(Duration(milliseconds: 1), () async {
       print('user auth========> ${userProfile} ');
@@ -108,6 +136,7 @@ class UserAuth with ChangeNotifier {
     notifyListeners();
 
     await Navigator.pushNamed(context, '/signin');
+
   }
 
   //  <-----------------  User Otp verification Functionality ------------------>
@@ -124,5 +153,9 @@ class UserAuth with ChangeNotifier {
   Map get userData {
     // signIn();
     return _UserLogin;
+  }
+
+  String get isPasswordUpdated {
+    return _isPasswordUpdated;
   }
 }

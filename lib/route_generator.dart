@@ -10,6 +10,7 @@ import 'widgets/auth/signin.dart';
 import 'widgets/auth/otp.dart';
 import 'widgets/auth/password.dart';
 import './widgets/faq.dart';
+import './widgets/MyProfile.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -46,6 +47,10 @@ class RouteGenerator {
 
       case '/Faq':
         return MaterialPageRoute(builder: (_) => Faq());
+
+      case '/myProfile':
+        return MaterialPageRoute(builder: (_) => MyProfile());
+
       default:
         return MaterialPageRoute(builder: (_) => MyHomePage());
     }

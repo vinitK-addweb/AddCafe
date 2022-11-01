@@ -12,6 +12,7 @@ import 'package:addcafe/Providers/apis/UserAuth.dart';
 import 'package:addcafe/Providers/apis/CartApi.dart';
 import 'package:addcafe/Providers/apis/MyfavouritesApi.dart';
 import 'package:addcafe/Providers/apis/addAddressApi.dart';
+import 'package:addcafe/Providers/apis/UserOrderApi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import './widgets/HomeBanner.dart';
 import './widgets/HomeCategory.dart';
@@ -36,6 +37,7 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (_) => MyFavouritesApi()),
     ChangeNotifierProvider(create: (_) => AddaddressApi()),
     ChangeNotifierProvider(create: (_) => FaqApi()),
+    ChangeNotifierProvider(create: (_) => UserOrderApi()),
   ], child: const MyApp()));
 }
 
@@ -51,21 +53,30 @@ class MyApp extends StatelessWidget {
     userAuth.getlocaStorage();
     final Faqdata = Provider.of<FaqApi>(context, listen: false);
     Faqdata.fetchFaqData();
+
     final cartApi = Provider.of<CartApi>(context, listen: false);
     cartApi.fetchCart();
+
     final categoriesApiData =
         Provider.of<CategoriesApi>(context, listen: false);
     categoriesApiData.fetchAllProducts();
+
     final customerReviewsApi =
         Provider.of<CustomerReviewsApi>(context, listen: false);
     customerReviewsApi.fetchCustomerReviews();
+
     final homeBannerApi = Provider.of<HomeBannerApi>(context, listen: false);
     homeBannerApi.fetchHomeBanner();
+
     final homeCategoryApi =
         Provider.of<HomeCategoryApi>(context, listen: false);
     homeCategoryApi.fetchHomeCategory();
+
     final addaddressApi = Provider.of<AddaddressApi>(context, listen: false);
     addaddressApi.fetchSavedAddress();
+
+    final userOrderApi = Provider.of<UserOrderApi>(context, listen: false);
+    userOrderApi.fetchUserOrder();
 
     return MaterialApp(
       initialRoute: '/splash',
