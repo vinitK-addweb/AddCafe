@@ -2,54 +2,56 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:localstorage/localstorage.dart';
 
 class MyFavouritesApi with ChangeNotifier {
   List _myFavourites = [];
 
   List get myFavouritesData {
-    // getMyFavourites();
     return _myFavourites;
   }
 
   Future fetchMyFavourites() async {
-    http.Response response;
-    response = await http.get(
-        Uri.parse('${dotenv.env['API_URL']}/catalogue/wishlist/'),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization":
-              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
-        });
-    if (response.statusCode == 200) {
-      // setState(() {
-      _myFavourites = json.decode(response.body);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      notifyListeners();
-      // print(response.body);
-      print('fetchMyFavourites called ');
-      // });
-      // print('runnnnn');
+    if (prefs.get('token') != null) {
+      http.Response response;
+      response = await http.get(
+          Uri.parse('${dotenv.env['API_URL']}/catalogue/wishlist/'),
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": 'Bearer ${prefs.get('token')}'
+          });
+
+      if (response.statusCode == 200) {
+        if (_myFavourites != json.decode(response.body)) {
+          _myFavourites = await json.decode(response.body);
+          print('hi mukesh');
+          notifyListeners();
+        }
+
+        print('fetchMyFavourites called ');
+      }
     }
     // else {
-    //   print('not running');
+    //   Navigator.pushNamed(context, '/signin');
+    //   ;
     // }
   }
 
-  Future deleteMyFavourites(id) async {
-    // print('delete');
+  Future deleteMyFavourites(id, context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     http.Response response;
     response = await http.delete(
         Uri.parse('${dotenv.env['API_URL']}/catalogue/wishlist/${id}/'),
         headers: {
           "Content-Type": "application/json",
-          "Authorization":
-              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
+          "Authorization": 'Bearer ${prefs.get('token')}'
         });
     if (response.statusCode == 200) {
-      // setState(() {
-      // _myFavourites = json.decode(response.body);
       fetchMyFavourites();
-
+      print(_myFavourites);
       print('deleteMyFavourites called');
       // });
       // print('runnnnn');
@@ -58,19 +60,21 @@ class MyFavouritesApi with ChangeNotifier {
     }
   }
 
-  Future addToMyFavorites(productData) async {
+  Future addToMyFavorites(productData, context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     http.Response response;
     response = await http.post(
         Uri.parse('https://cafe.addwebprojects.com/api/v1/catalogue/wishlist/'),
         headers: {
           "Content-Type": "application/json",
-          "Authorization":
-              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
+          "Authorization": 'Bearer ${prefs.get('token')}'
         },
         body: jsonEncode(productData));
     if (response.statusCode == 200) {
       print('addToMyFavorites called');
       fetchMyFavourites();
+    } else {
+      print('addToMyFavorites not called');
     }
   }
 

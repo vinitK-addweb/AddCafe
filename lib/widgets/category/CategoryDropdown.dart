@@ -78,7 +78,8 @@ class CategoryDropdown extends StatelessWidget {
                                           onPressed: () {
                                             myFavouritesApi.deleteMyFavourites(
                                                 myFavouritesApi.isInMyFavorites(
-                                                    e['id'])[0]['id']);
+                                                    e['id'])[0]['id'],
+                                                context);
                                           },
                                           icon: Icon(
                                             Icons.favorite,
@@ -87,10 +88,9 @@ class CategoryDropdown extends StatelessWidget {
                                         )
                                       : IconButton(
                                           onPressed: () {
-                                            myFavouritesApi.addToMyFavorites({
-                                              "user": 1,
-                                              "product": e['id']
-                                            });
+                                            myFavouritesApi.addToMyFavorites(
+                                                {"user": 1, "product": e['id']},
+                                                context);
                                           },
                                           icon: Icon(
                                             Icons.favorite_border,

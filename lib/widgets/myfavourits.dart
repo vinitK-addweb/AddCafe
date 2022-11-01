@@ -6,22 +6,54 @@ import 'package:provider/provider.dart';
 import 'package:addcafe/widgets/category/rating.dart';
 import 'package:addcafe/widgets/category/addons.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:addcafe/Providers/apis/UserAuth.dart';
+import 'package:addcafe/widgets/emptyMyfav.dart';
 
 class Myfavourits extends StatelessWidget {
-  // Myfavourits(this.categoryItems);
-
-  // final List myfavourits;
-
   @override
   Widget build(BuildContext context) {
-    final cartApi = Provider.of<CartApi>(context);
+    final userAuth = Provider.of<UserAuth>(context);
     final myFavouritesApi = Provider.of<MyFavouritesApi>(context);
+
+    final cartApi = Provider.of<CartApi>(context);
+
     return Scaffold(
       appBar: AppBar(
           title: Text(
-        'My Wishlist',
+        'My Favourits',
         style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
       )),
+      bottomNavigationBar: Container(
+        padding: EdgeInsets.all(25),
+        child: Row(
+          children: [
+            Expanded(
+                child: MaterialButton(
+              height: 55,
+              minWidth: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              color: Colors.red,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              child: Text(
+                myFavouritesApi.myFavouritesData.isNotEmpty
+                    ? 'Proceed to cart'
+                    : 'Add Items',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              onPressed: () {
+                myFavouritesApi.myFavouritesData.isNotEmpty
+                    ? Navigator.of(context).pushNamed('/cart')
+                    : Navigator.of(context).pushNamed('/');
+              },
+            ))
+          ],
+        ),
+      ),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
@@ -83,8 +115,8 @@ class Myfavourits extends StatelessWidget {
                                       // <----------- Remove from wishlist ----------------->
                                       InkWell(
                                         onTap: () {
-                                          myFavouritesApi
-                                              .deleteMyFavourites(e['id']);
+                                          myFavouritesApi.deleteMyFavourites(
+                                              e['id'], context);
                                         },
                                         child: Container(
                                           margin: EdgeInsets.symmetric(
@@ -104,36 +136,7 @@ class Myfavourits extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      // myFavouritesApi
-                                      //         .isInMyFavorites(e['id'])
-                                      //         .isNotEmpty
-                                      //     ? IconButton(
-                                      //         onPressed: () {
-                                      //           myFavouritesApi
-                                      //               .deleteMyFavourites(
-                                      //                   myFavouritesApi
-                                      //                           .isInMyFavorites(
-                                      //                               e['id'])[0]
-                                      //                       ['id']);
-                                      //         },
-                                      //         icon: Icon(
-                                      //           Icons.favorite,
-                                      //           color: Colors.red,
-                                      //         ),
-                                      //       )
-                                      // : IconButton(
-                                      //     onPressed: () {
-                                      //       myFavouritesApi
-                                      //           .addToMyFavorites({
-                                      //         "user": 1,
-                                      //         "product": e['id']
-                                      //       });
-                                      //     },
-                                      //     icon: Icon(
-                                      //       Icons.favorite_border,
-                                      //       color: Colors.red,
-                                      //     ),
-                                      //   ),
+
                                       Container(
                                         margin: EdgeInsets.symmetric(
                                             horizontal: 10),
@@ -281,7 +284,7 @@ class Myfavourits extends StatelessWidget {
                       height: 0,
                     );
                   }).toList()
-                : [Text('no items')],
+                : [EmptyMyfav()],
           ),
         ),
       ),

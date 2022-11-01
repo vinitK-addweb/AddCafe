@@ -15,16 +15,25 @@ class Cart extends StatelessWidget {
         centerTitle: true,
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(20),
         child: Row(
           children: [
             Expanded(
-                child: ElevatedButton(
+                child: MaterialButton(
+              height: 55,
+              minWidth: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              color: Colors.red,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
               child: Text(
                 cartApi.cartData.isNotEmpty
                     ? 'Proceed to checkout'
                     : 'Add Items',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
               onPressed: () {
                 cartApi.cartData.isNotEmpty

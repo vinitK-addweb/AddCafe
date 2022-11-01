@@ -2,13 +2,48 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/services.dart';
 import './signin.dart';
+import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+import 'package:provider/provider.dart';
+import 'package:addcafe/Providers/apis/UserAuth.dart';
 
-class Otp extends StatelessWidget {
+class Otp extends StatefulWidget {
   Otp(this.mobile);
 
   final mobile;
+
+  @override
+  State<Otp> createState() => _OtpState(mobile);
+}
+
+class _OtpState extends State<Otp> {
+  String otpcode = '';
+
+  _OtpState(this.mobile);
+  final mobile;
   @override
   Widget build(BuildContext context) {
+    final userAuth = Provider.of<UserAuth>(context);
+
+    Future logIn() async {
+      print('object');
+
+      // final SignupApi = Provider.of<UserAuth>(context);
+      Map mapedData = {
+        "mobile_number": this.mobile,
+        "password": this.otpcode,
+      };
+
+      userAuth.signIn(mapedData, context);
+
+      // .then((res) => {
+      //       print('DATA: ${userAuth.userData}'),
+      //       if (res.status == 200)
+      //         {
+      //           print('login')
+      //           // Navigator.pushNamed(context, '/Otp', arguments: this.mobile)
+      //         }
+    }
+
     return Scaffold(
         body: SingleChildScrollView(
       child: Container(
@@ -53,155 +88,35 @@ class Otp extends StatelessWidget {
                 ),
                 Container(
                   margin: EdgeInsets.only(bottom: 80),
-                  child: Text('+91-${mobile}',
+                  child: Text('+91-${widget.mobile}',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 ),
               ],
             ),
             Form(
-              child: Row(
+              child: OtpTextField(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    height: 55,
-                    width: 50,
-                    child: TextFormField(
-                      onSaved: (pin1) {},
-                      decoration: const InputDecoration(
-                        hintText: '0',
-                        border: OutlineInputBorder(),
-                      ),
-                      onChanged: (value) {
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      style: Theme.of(context).textTheme.headline6,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.name,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 55,
-                    width: 50,
-                    child: TextFormField(
-                      onSaved: (pin1) {},
-                      decoration: const InputDecoration(
-                        hintText: '0',
-                        border: OutlineInputBorder(),
-                      ),
-                      onChanged: (value) {
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      style: Theme.of(context).textTheme.headline6,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.name,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 55,
-                    width: 50,
-                    child: TextFormField(
-                      onSaved: (pin1) {},
-                      decoration: const InputDecoration(
-                        hintText: '0',
-                        border: OutlineInputBorder(),
-                      ),
-                      onChanged: (value) {
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      style: Theme.of(context).textTheme.headline6,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.name,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 55,
-                    width: 50,
-                    child: TextFormField(
-                      onSaved: (pin1) {},
-                      decoration: const InputDecoration(
-                        hintText: '0',
-                        border: OutlineInputBorder(),
-                      ),
-                      onChanged: (value) {
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      style: Theme.of(context).textTheme.headline6,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.name,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 55,
-                    width: 50,
-                    child: TextFormField(
-                      onSaved: (pin1) {},
-                      decoration: const InputDecoration(
-                        hintText: '0',
-                        border: OutlineInputBorder(),
-                      ),
-                      onChanged: (value) {
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      style: Theme.of(context).textTheme.headline6,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 55,
-                    width: 50,
-                    child: TextFormField(
-                      onSaved: (pin1) {},
-                      decoration: const InputDecoration(
-                        hintText: '0',
-                        border: OutlineInputBorder(),
-                      ),
-                      onChanged: (value) {
-                        if (value.length == 1) {
-                          FocusScope.of(context).nextFocus();
-                        }
-                      },
-                      style: Theme.of(context).textTheme.headline6,
-                      textAlign: TextAlign.center,
-                      keyboardType: TextInputType.name,
-                      inputFormatters: [
-                        LengthLimitingTextInputFormatter(1),
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                    ),
-                  ),
-                ],
+                numberOfFields: 6,
+                borderColor: Color.fromARGB(255, 207, 34, 34),
+                //set to true to show as box or false to show as dash
+                showFieldAsBox: true,
+                //runs when a code is typed in
+                onCodeChanged: (String code) {
+                  //handle validation or checks here
+                },
+                //runs when every textfield is filled
+                onSubmit: (String verificationCode) {
+                  otpcode = verificationCode;
+                  // showDialog(
+                  //     context: context,
+                  //     builder: (context) {
+                  //       return AlertDialog(
+                  //         title: Text("Verification Code"),
+                  //         content: Text('Code entered is $verificationCode'),
+                  //       );
+                  //     });
+                }, // end onSubmit
               ),
             ),
             Row(
@@ -251,7 +166,7 @@ class Otp extends StatelessWidget {
               // height: 370,
               width: 300,
             ),
-            Text(mobile)
+            Text('code -- > ${otpcode}')
           ],
         ),
       ),
@@ -259,6 +174,6 @@ class Otp extends StatelessWidget {
   }
 
   Future Otpcheck() async {
-    print(mobile);
+    print(widget.mobile);
   }
 }
