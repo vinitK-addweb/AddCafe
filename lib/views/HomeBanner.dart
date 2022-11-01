@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import '../GetxController/MyHomePage_controller.dart';
+import 'package:get/get.dart';
 
 class HomeBanner extends StatelessWidget {
   // HomeBanner({Key? key}) : super(key: key);
 
   final List bannerImages;
+
+  // final HomeBannerController controller = Get.put(HomeBannerController());
 
   HomeBanner(this.bannerImages);
 
@@ -15,7 +19,6 @@ class HomeBanner extends StatelessWidget {
       child: CarouselSlider(
         options: CarouselOptions(
           height: 150.0,
-
           autoPlay: true,
           // enlargeCenterPage: true,
         ),
