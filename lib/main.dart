@@ -6,12 +6,13 @@ import './widgets/HomeBanner.dart';
 import './widgets/HomeCategory.dart';
 import './widgets/CustomerReviews.dart';
 import './widgets/NewsLetter.dart';
-import 'Drower/drawerHeader.dart';
-import 'Drower/drawerList.dart';
+import 'Drawer/drawerHeader.dart';
+import 'Drawer/drawerList.dart';
 import 'widgets/searchBar.dart';
 import 'footer.dart';
 import 'widgets/Loader.dart';
 import 'dart:convert';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
