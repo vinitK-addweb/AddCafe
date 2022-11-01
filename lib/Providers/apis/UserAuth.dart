@@ -18,9 +18,7 @@ class UserAuth with ChangeNotifier {
 
   // late final _token;
 
-
   String _isPasswordUpdated = '';
-
 
 // <--------------------- User Sign Up Functionality --------------------->
 
@@ -82,7 +80,6 @@ class UserAuth with ChangeNotifier {
     // print(response.body);
   }
 
-
   Future changePassword(payload) async {
     http.Response response;
     response = await http.post(
@@ -102,8 +99,9 @@ class UserAuth with ChangeNotifier {
     notifyListeners();
   }
 
-  String get token {
-    return _token;
+  // String get token {
+  //   return _token;
+  // }
 
   getlocaStorage() async {
     Future.delayed(Duration(milliseconds: 1), () async {
@@ -136,7 +134,6 @@ class UserAuth with ChangeNotifier {
     notifyListeners();
 
     await Navigator.pushNamed(context, '/signin');
-
   }
 
   //  <-----------------  User Otp verification Functionality ------------------>
