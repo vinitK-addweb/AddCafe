@@ -56,7 +56,7 @@ class Otp extends StatelessWidget {
                 ),
                 Container(
                   margin: EdgeInsets.only(bottom: 80),
-                  child: Text('+91- ${controller.mobile}',
+                  child: Text('+91- ${controller.textController.value.text}',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 ),

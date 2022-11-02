@@ -50,7 +50,7 @@ class Password extends StatelessWidget {
                           margin: EdgeInsets.symmetric(
                               vertical: 20, horizontal: 30),
                           child: Text(
-                              'Please Sign In to your account ${controller.email}',
+                              'Please Sign In to your account ${controller.textController}',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
                         ),
@@ -80,7 +80,7 @@ class Password extends StatelessWidget {
                               //     this.password = text;
                               //   });
                               // },
-                              controller: controller.password,
+                              controller: controller.password.value,
                               decoration: InputDecoration(
                                   suffixIcon: IconButton(
                                     icon: Icon(
@@ -90,7 +90,7 @@ class Password extends StatelessWidget {
                                     ),
                                     onPressed: () {
                                       print('here the password' +
-                                          controller.password.text);
+                                          controller.password.value.text);
                                       // setState(() {
                                       //   _isObscure = !_isObscure;
                                       // });

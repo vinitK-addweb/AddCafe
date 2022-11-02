@@ -3,16 +3,7 @@ import 'package:flutter/material.dart';
 import './Signup.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
-// import './otp.dart';
-// import 'package:form_field_validator/form_field_validator.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-// import 'package:provider/provider.dart';
-// import 'package:addcafe/Providers/apis/UserAuth.dart';
-// import '../splash.dart';
-
-// void main() {
-//   runApp(Mylogin());
-// }
 
 class Mylogin extends StatefulWidget {
   @override
@@ -22,10 +13,7 @@ class Mylogin extends StatefulWidget {
 class _MyloginState extends State<Mylogin> {
   final controller = Get.put(UserAuth());
   var _formKey = GlobalKey<FormState>();
-  final data = [
-    {"id": "2", "image": "assets/images/facebook.png", "name": "Burger"},
-    {"id": "3", "image": "assets/images/google.webp", "name": "Cake"},
-  ];
+
   var email = '';
   late var phone = null;
 
@@ -33,7 +21,6 @@ class _MyloginState extends State<Mylogin> {
 
   @override
   Widget build(BuildContext context) {
-    // final userAuth = Provider.of<UserAuth>(context);
     Future _singin(text) async {
       setState(() {
         if (double.tryParse(text) != null) {
@@ -65,20 +52,6 @@ class _MyloginState extends State<Mylogin> {
       // // await Navigator.pushNamed(context, '/Otp', arguments: this.mobile);
       // await Navigator.pushNamed(context, mobile == '' ? '/Password' : '/Otp',
       //     arguments: mobile == '' ? this.email : this.mobile);
-    }
-
-    Future logIn() async {
-      print('object');
-
-      // final SignupApi = Provider.of<UserAuth>(context);
-
-      // .then((res) => {
-      //       print('DATA: ${userAuth.userData}'),
-      //       if (res.status == 200)
-      //         {
-      //           print('login')
-      //           // Navigator.pushNamed(context, '/Otp', arguments: this.mobile)
-      //         }
     }
 
     return Scaffold(
@@ -122,7 +95,6 @@ class _MyloginState extends State<Mylogin> {
                 child: Text('#1 Food Delivery App',
                     style:
                         TextStyle(fontWeight: FontWeight.w900, fontSize: 30)),
-                // color: Colors.white,
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20),
@@ -131,7 +103,6 @@ class _MyloginState extends State<Mylogin> {
                         fontWeight: FontWeight.w900,
                         fontSize: 20,
                         color: Colors.grey)),
-                // color: Colors.white,
               ),
 
               Container(
@@ -149,7 +120,7 @@ class _MyloginState extends State<Mylogin> {
                       border:
                           Border.all(color: Colors.black.withOpacity(0.13))),
                   child: TextFormField(
-                    controller: controller.textController,
+                    controller: controller.textController.value,
                     onChanged: (text) {},
                     decoration: InputDecoration(
                         fillColor: Colors.black,
@@ -168,10 +139,6 @@ class _MyloginState extends State<Mylogin> {
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     onPressed: () {
                       controller.continueToPasswordOrOtp();
-                      print('hello');
-                      print('yo ${controller.textController.text}');
-                      // Navigator.push(
-                      //     context, MaterialPageRoute(builder: (context) => Otp()));
                     },
                     child: Text('Continue'),
                     color: Colors.red,
@@ -186,7 +153,7 @@ class _MyloginState extends State<Mylogin> {
               Center(
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: (data as List).map((item) {
+                    children: (controller.data as List).map((item) {
                       return Container(
                         margin: EdgeInsets.all(10),
                         width: 50,

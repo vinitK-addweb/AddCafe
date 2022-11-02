@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:addcafe/views/Auth/Signin.dart';
+
 import '../views/Auth/Password.dart';
 import 'package:addcafe/views/MyHomePage.dart';
 import 'package:flutter/material.dart';
@@ -8,34 +10,43 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/views/Auth/Otp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:addcafe/Utils/Global.dart';
 
 class UserAuth extends GetxController {
-  final textController = TextEditingController();
-  final otp = TextEditingController();
-  final password = TextEditingController();
+  Rx<TextEditingController> textController = TextEditingController().obs;
+  Rx<TextEditingController> otp = TextEditingController().obs;
+  Rx<TextEditingController> password = TextEditingController().obs;
+  Rx<TextEditingController> fullName = TextEditingController().obs;
+  Rx<TextEditingController> email = TextEditingController().obs;
+  Rx<TextEditingController> cPassword = TextEditingController().obs;
+  Rx<TextEditingController> phone = TextEditingController().obs;
+
+  bool isObscure = true;
+  Map<String, dynamic> userprofile = {};
+
+  Map<String, dynamic> _UserLogin = {};
   final data = [
     {"id": "2", "image": "assets/images/facebook.png", "name": "Burger"},
     {"id": "3", "image": "assets/images/google.webp", "name": "Cake"},
   ];
-  var email = '';
-  late var phone = null;
-
-  late var mobile = '';
-
-  Map<String, dynamic> userprofile = {};
-
-  Map<String, dynamic> _UserLogin = {};
 
   // late final _token;
 
 // <--------------------- User Sign Up Functionality --------------------->
-  Future signUp(demo, context) async {
+
+  Future signUp() async {
     final headers = {"Content-type": "multipart/form-data"};
+    Map mapedData = {
+      "email": email.value.text,
+      "password": password.value.text,
+      "first_name": fullName.value.text,
+      "mobile_number": phone.value.text.substring(2, 11)
+    };
 
     http.Response response = await http.post(
         Uri.parse('${dotenv.env['API_URL']}/accounts/signup/'),
         headers: {"Content-Type": "application/json"},
-        body: jsonEncode(demo));
+        body: jsonEncode(mapedData));
 
     print(response);
     if (response.statusCode == 201) {
@@ -43,33 +54,68 @@ class UserAuth extends GetxController {
       // _token = await _UserLogin['access'];
       userprofile = await _UserLogin['payload'];
       print('_userProfile: ${userprofile}');
-
-      Navigator.pushNamed(context, '/signin');
+      Get.to(() => Mylogin());
     }
   }
 
-  // ................................................
+  // ---------------------------------Form Validation-------------------------------
+  SignUpValidation() {
+    Get.focusScope!.unfocus();
+    print('fullName ');
+    print(password.value.text);
+    RegExp regex =
+        RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    if (email.value.text.isEmpty ||
+        phone.value.text.isEmpty ||
+        fullName.value.text.isEmpty ||
+        password.value.text.isEmpty ||
+        cPassword.value.text.isEmpty)
+      'All Fields are Required'.showError();
+    else if (password.value.text.length < 8)
+      'Password should have atleast 8 characters'.showError();
+    else if (!regex.hasMatch(password.value.text))
+      'Enter a stronger password'.showError();
+    else if (!GetUtils.isEmail(email.value.text))
+      'Enter a Valid Email Address'.showError();
+    else if (password.value.text != cPassword.value.text)
+      'Confimation password does not match the entered password'.showError();
+    else if (phone.value.text.length < 10)
+      'Plase Enter a Valid Mobile Number'.showError();
+    else
+      'Done'.showSuccess();
+  }
 
+  // -------------------Continue to otp or password screen----------------------------------
   continueToPasswordOrOtp() {
-    if (double.tryParse(textController.text) != null) {
-      this.mobile = textController.text;
-      Get.to(Otp());
-      print("number");
-    } else {
-      this.email = textController.text;
-      Get.to(Password());
-      print("string");
-    }
-  }
+    Get.focusScope!.unfocus();
 
+    if (textController.value.text.isNotEmpty) {
+      if (double.tryParse(textController.value.text) != null) {
+        // this.mobile = textController.text;
+        if (textController.value.text.length != 10)
+          'Enter a Valid Mobile No.'.showError();
+        else
+          Get.to(Otp());
+      } else {
+        if (!GetUtils.isEmail(textController.value.text))
+          'Enter a Valid Email Address'.showError();
+        else {
+          // this.email = textController.text;
+          Get.to(Password());
+          print("string");
+        }
+      }
+    } else
+      'Please Enter mobile No. Or Email'.showError();
+  }
 // <-----------------  User SignIn Functionality ------------------>
 
   Future signIn(login, context) async {
-    if (double.tryParse(textController.text) != null) {
-      this.mobile = textController.text;
+    if (double.tryParse(textController.value.text) != null) {
+      // this.mobile = textController.text;
       print("number");
     } else {
-      this.email = textController.text;
+      // this.email = textController.text;
       print("string");
     }
     ;
