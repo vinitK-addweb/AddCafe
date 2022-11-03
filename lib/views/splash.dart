@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 import '../views/MyHomePage.dart';
 import '../views/Auth/Signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,8 +25,6 @@ class _SplashState extends State<Splash> {
 
   getlocaStorage() async {
     Future.delayed(Duration(milliseconds: 5500), () async {
-      print('user auth========> ${userprofile} ');
-
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       var userDataPref = prefs.getString('userData');
@@ -36,20 +34,16 @@ class _SplashState extends State<Splash> {
         try {
           userprofile =
               await Map<String, dynamic>.from(jsonDecode(userDataPref));
-          // await Future.delayed(Duration(milliseconds: 5500), () {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => MyHomePage()));
+
+          Get.to(() => Mylogin());
           // });
         } catch (error) {
           print(error);
         }
       } else {
         userprofile = {};
-        print('else');
-        // await Future.delayed(Duration(milliseconds: 5500), () {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => Mylogin()));
-        // });
+
+        Get.to(() => Mylogin());
       }
     });
   }

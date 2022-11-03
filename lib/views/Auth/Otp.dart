@@ -23,7 +23,7 @@ class Otp extends StatelessWidget {
         "password": this.otpcode,
       };
 
-      controller.signIn(mapedData, context);
+      controller.signIn();
 
       // .then((res) => {
       //       print('DATA: ${userAuth.userData}'),

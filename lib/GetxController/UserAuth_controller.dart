@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:addcafe/views/Auth/Signin.dart';
-
+import 'package:addcafe/Utils/API.dart';
 import '../views/Auth/Password.dart';
 import 'package:addcafe/views/MyHomePage.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 import 'package:addcafe/views/Auth/Otp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:addcafe/Utils/Global.dart';
+import 'package:addcafe/Utils/Constant.dart';
 
 class UserAuth extends GetxController {
   Rx<TextEditingController> textController = TextEditingController().obs;
@@ -21,8 +22,7 @@ class UserAuth extends GetxController {
   Rx<TextEditingController> cPassword = TextEditingController().obs;
   Rx<TextEditingController> phone = TextEditingController().obs;
 
-  bool isObscure = true;
-  Map<String, dynamic> userprofile = {};
+  RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
 
   Map<String, dynamic> _UserLogin = {};
   final data = [
@@ -31,32 +31,6 @@ class UserAuth extends GetxController {
   ];
 
   // late final _token;
-
-// <--------------------- User Sign Up Functionality --------------------->
-
-  Future signUp() async {
-    final headers = {"Content-type": "multipart/form-data"};
-    Map mapedData = {
-      "email": email.value.text,
-      "password": password.value.text,
-      "first_name": fullName.value.text,
-      "mobile_number": phone.value.text.substring(2, 11)
-    };
-
-    http.Response response = await http.post(
-        Uri.parse('${dotenv.env['API_URL']}/accounts/signup/'),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(mapedData));
-
-    print(response);
-    if (response.statusCode == 201) {
-      _UserLogin = await jsonDecode(response.body);
-      // _token = await _UserLogin['access'];
-      userprofile = await _UserLogin['payload'];
-      print('_userProfile: ${userprofile}');
-      Get.to(() => Mylogin());
-    }
-  }
 
   // ---------------------------------Form Validation-------------------------------
   SignUpValidation() {
@@ -81,8 +55,10 @@ class UserAuth extends GetxController {
       'Confimation password does not match the entered password'.showError();
     else if (phone.value.text.length < 10)
       'Plase Enter a Valid Mobile Number'.showError();
-    else
-      'Done'.showSuccess();
+    else {
+      'You Registered Successfully'.showSuccess();
+      signUp();
+    }
   }
 
   // -------------------Continue to otp or password screen----------------------------------
@@ -108,99 +84,104 @@ class UserAuth extends GetxController {
     } else
       'Please Enter mobile No. Or Email'.showError();
   }
-// <-----------------  User SignIn Functionality ------------------>
 
-  Future signIn(login, context) async {
-    if (double.tryParse(textController.value.text) != null) {
-      // this.mobile = textController.text;
-      print("number");
-    } else {
-      // this.email = textController.text;
-      print("string");
-    }
-    ;
+// <--------------------- User Sign Up Functionality --------------------->
 
-    // Map mapedData = {
-    //   "mobile_number": this.mobile,
-    // };
-    // if (mobile != '') {
-    //   // userAuth.signIn(mapedData, context);
-    //   Navigator.pushNamed(context, '/Otp', arguments: this.mobile);
-    // } else
-    //   Navigator.pushNamed(context, '/Password', arguments: this.email);
+  Future signUp() async {
+    final headers = {"Content-type": "multipart/form-data"};
+    final mapedData = {
+      "email": email.value.text,
+      "password": password.value.text,
+      "first_name": fullName.value.text,
+      "mobile_number": phone.value.text
+    };
 
-    // final isValid = _formKey.currentState?.validate();
+    _UserLogin = await API.instance.post(
+        endPoint: APIEndPoints.instance.kSignup,
+        params: mapedData,
+        isHeader: false) as Map<String, dynamic>;
 
-    // if (!isValid!) {
-    //   return;
+    if (_UserLogin['status'] == 401)
+      '${_UserLogin['message']}'.showError();
+    else
+      Get.to(Mylogin());
+    print('dataaaaaaaaaaa=================>    ${_UserLogin}');
+    // http.Response response = await http.post(
+    //     Uri.parse('${dotenv.env['API_URL']}/accounts/signup/'),
+    //     headers: {"Content-Type": "application/json"},
+    //     body: jsonEncode(mapedData));
+
+    // print(response);
+    // if (response.statusCode == 201) {
+    //   _UserLogin = await jsonDecode(response.body);
+    //   // _token = await _UserLogin['access'];
+    //   userprofile = await _UserLogin['payload'];
+    //   print('_userProfile: ${userprofile}');
+    //   Get.to(() => Mylogin());
     // }
-    // _formKey.currentState!.save();
-    // print(await this.mobile);
-    // // await Navigator.pushNamed(context, '/Otp', arguments: this.mobile);
-    // await Navigator.pushNamed(context, mobile == '' ? '/Password' : '/Otp',
-    //     arguments: mobile == '' ? this.email : this.mobile);
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    http.Response response = await http.post(
-        Uri.parse('${dotenv.env['API_URL']}/accounts/login/'),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(login));
-
-    if (response.statusCode == 200) {
-      _UserLogin = Map<String, dynamic>.from(jsonDecode(response.body));
-      Map<String, dynamic> dictPayload = _UserLogin['payload'];
-
-      //  This is the issue
-      final strPayLoad = jsonEncode(_UserLogin['payload']);
-      prefs.setString('userData', strPayLoad);
-
-      if (await _UserLogin.containsKey("access")) {
-        // print('_userProfile: ${prefs.get('userData')}');
-
-        prefs.setString('token', await _UserLogin['access']);
-        print('sharedpreferences--------> ${prefs.getString('userData')}');
-        getlocaStorage();
-        await Navigator.pushNamed(context, '/');
-      } else
-        print('no token${userprofile}');
-
-      // print(response.body);
-
-    }
-    // print(response.body);
   }
 
+// <-----------------  User SignIn Functionality ------------------>
+
+  Future signIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final mapedData = {
+      "email": textController.value.text,
+      "password": password.value.text,
+    };
+
+    _UserLogin = await API.instance.post(
+        endPoint: APIEndPoints.instance.kLogin,
+        params: mapedData,
+        isHeader: false) as Map<String, dynamic>;
+
+    if (_UserLogin['status'] == 401)
+      '${_UserLogin['message']}'.showError();
+    else {
+      // -------------------- Save data to the local storage------------------------
+
+      final strPayLoad = jsonEncode(_UserLogin['payload']);
+      prefs.setString('userData', strPayLoad);
+      prefs.setString('token', await _UserLogin['access']);
+      getlocaStorage();
+      Get.to(MyHomePage());
+    }
+  }
+
+  // ---------------------- get data from local storage function---------------------
   getlocaStorage() async {
     Future.delayed(Duration(milliseconds: 1), () async {
-      print('user auth========> ${userProfile} ');
-
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       var userDataPref = prefs.getString('userData');
 
       if (userDataPref != null) {
         try {
+          kTOKENSAVED = prefs.getString('token') as String;
+
           userprofile =
-              await Map<String, dynamic>.from(jsonDecode(userDataPref));
+              await RxMap<dynamic, dynamic>.from(jsonDecode(userDataPref));
         } catch (error) {
           print(error);
         }
       } else {
-        userprofile = {};
+        userprofile = {}.obs;
       }
     });
   }
 
-  Future logOut(context) async {
+// ------------------------ User Logout Function --------------------------->
+
+  Future logOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // await storage.deleteItem('userData');
     // userprofile = null;
-    userprofile = {};
+    userprofile = {}.obs;
     prefs.remove('userData');
     prefs.remove('token');
 
-    await Navigator.pushNamed(context, '/signin');
+    await Get.to(Mylogin());
   }
 
   //  <-----------------  User Otp verification Functionality ------------------>

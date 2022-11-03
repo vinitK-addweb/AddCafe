@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:addcafe/GetxController/UserAuth_controller.dart';
+import 'package:get/get.dart';
 
-class PasswordFieldBase extends StatelessWidget {
+class PasswordFieldBase extends StatefulWidget {
   final TextEditingController? textcontroller;
   final TextInputType? keyboardType;
   final EdgeInsets? padding;
@@ -35,43 +37,49 @@ class PasswordFieldBase extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<PasswordFieldBase> createState() => _PasswordFieldBaseState();
+}
+
+class _PasswordFieldBaseState extends State<PasswordFieldBase> {
+  bool _isObscure = true;
+  @override
   Widget build(BuildContext context) {
     return Container(
-      margin: margin,
+      margin: widget.margin,
       decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
             BoxShadow(
                 color: Color(0xffeeeeee),
-                blurRadius: radiusBorder!,
+                blurRadius: widget.radiusBorder!,
                 offset: Offset(0, 4))
           ],
-          borderRadius: BorderRadius.circular(radiusBorder!),
+          borderRadius: BorderRadius.circular(widget.radiusBorder!),
           border: Border.all(color: Colors.black.withOpacity(0.13))),
       child: TextFormField(
-        controller: textcontroller,
+        controller: widget.textcontroller,
+        obscureText: _isObscure,
         decoration: InputDecoration(
             suffixIcon: IconButton(
               icon: Icon(
-                // _isObscure ? Icons.visibility :
-                Icons.visibility_off,
+                _isObscure ? Icons.visibility : Icons.visibility_off,
               ),
               onPressed: () {
-                // setState(() {
-                //   _isObscure = !_isObscure;
-                // });
+                setState(() {
+                  _isObscure = !_isObscure;
+                });
               },
             ),
-            hintText: hintText,
+            hintText: widget.hintText,
             border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(radiusBorder!)),
+                borderRadius: BorderRadius.circular(widget.radiusBorder!)),
             focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(radiusBorder!),
+                borderRadius: BorderRadius.circular(widget.radiusBorder!),
                 borderSide: BorderSide(
-                  color: colorBoder!,
+                  color: widget.colorBoder!,
                 )),
-            labelText: labelText,
-            labelStyle: TextStyle(color: labelStyle)),
+            labelText: widget.labelText,
+            labelStyle: TextStyle(color: widget.labelStyle)),
       ),
     );
   }

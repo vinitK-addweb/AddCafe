@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:provider/provider.dart';
 import 'dart:io';
-// import 'package:form_field_validator/form_field_validator.dart';
+import 'package:addcafe/Components/PasswordFieldCustom.dart';
 import './Signin.dart';
 import 'package:get/get.dart';
 import '../../GetxController/UserAuth_controller.dart';
@@ -50,62 +50,61 @@ class Password extends StatelessWidget {
                           margin: EdgeInsets.symmetric(
                               vertical: 20, horizontal: 30),
                           child: Text(
-                              'Please Sign In to your account ${controller.textController}',
+                              'Please Sign In to your account ${controller.textController.value.text}',
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
                         ),
-
                         Form(
-                          child:
-                              // .....................Password field ..........................
-                              Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 30, vertical: 10),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                      color: Color(0xffeeeeee),
-                                      blurRadius: 10,
-                                      offset: Offset(0, 4))
-                                ],
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(
-                                    color: Colors.black.withOpacity(0.13))),
-                            child: TextFormField(
-                              // keyboardType: TextInputType.pas,
+                            child: PasswordFieldBase(
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 25, vertical: 20),
+                          hintText: '***********',
+                          labelText: 'Password',
+                          textcontroller: controller.password.value,
+                        )
+                            // .....................Password field ..........................
 
-                              // onChanged: (text) {
-                              //   setState(() {
-                              //     this.password = text;
-                              //   });
-                              // },
-                              controller: controller.password.value,
-                              decoration: InputDecoration(
-                                  suffixIcon: IconButton(
-                                    icon: Icon(
-                                      _isObscure
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                    ),
-                                    onPressed: () {
-                                      print('here the password' +
-                                          controller.password.value.text);
-                                      // setState(() {
-                                      //   _isObscure = !_isObscure;
-                                      // });
-                                    },
-                                  ),
-                                  hintText: '*************',
-                                  fillColor: Colors.black,
-                                  focusColor: Colors.black,
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  labelText: 'Password',
-                                  labelStyle: TextStyle(color: Colors.black)),
+                            //     Container(
+                            //   margin: EdgeInsets.symmetric(
+                            //       horizontal: 30, vertical: 10),
+                            //   decoration: BoxDecoration(
+                            //       color: Colors.white,
+                            //       boxShadow: [
+                            //         BoxShadow(
+                            //             color: Color(0xffeeeeee),
+                            //             blurRadius: 10,
+                            //             offset: Offset(0, 4))
+                            //       ],
+                            //       borderRadius: BorderRadius.circular(8),
+                            //       border: Border.all(
+                            //           color: Colors.black.withOpacity(0.13))),
+                            //   child: TextFormField(
+                            //     controller: controller.password.value,
+                            //     decoration: InputDecoration(
+                            //         suffixIcon: IconButton(
+                            //           icon: Icon(
+                            //             _isObscure
+                            //                 ? Icons.visibility
+                            //                 : Icons.visibility_off,
+                            //           ),
+                            //           onPressed: () {
+                            //             print('here the password' +
+                            //                 controller.password.value.text);
+                            //             // setState(() {
+                            //             //   _isObscure = !_isObscure;
+                            //             // });
+                            //           },
+                            //         ),
+                            //         hintText: '*************',
+                            //         fillColor: Colors.black,
+                            //         focusColor: Colors.black,
+                            //         border: OutlineInputBorder(
+                            //             borderRadius: BorderRadius.circular(10)),
+                            //         labelText: 'Password',
+                            //         labelStyle: TextStyle(color: Colors.black)),
+                            //   ),
+                            // ),
                             ),
-                          ),
-                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -122,7 +121,6 @@ class Password extends StatelessWidget {
                                 style: TextStyle(
                                     color: Colors.green, fontSize: 20),
                               ),
-                              // color: Colors.red,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5)),
                             )),
@@ -137,30 +135,16 @@ class Password extends StatelessWidget {
                                         borderRadius:
                                             BorderRadius.circular(12)),
                                     padding: EdgeInsets.all(20)),
-                                onPressed: () {},
+                                onPressed: () => controller.signIn(),
                                 child: Text(
                                   'Continue',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ))),
-                        // Container(
-                        //     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                        //     child: MaterialButton(
-                        //       minWidth: 180,
-                        //       // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        //       onPressed: () {
-                        //         logIn();
-                        //       },
-                        //       child: Text('Continue'),
-                        //       color: Colors.red,
-                        //       shape: RoundedRectangleBorder(
-                        //           borderRadius: BorderRadius.circular(5)),
-                        //     )),
                         Container(
                           margin: EdgeInsets.only(top: 30),
                           child: Image.asset('assets/images/otp.png'),
-                          // height: 370,
                           width: 300,
                         ),
                       ],

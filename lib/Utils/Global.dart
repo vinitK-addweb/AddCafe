@@ -29,7 +29,7 @@ showLoaderGetX() {
               Container(
                 width: 16,
               ),
-              Text("Loading ...", style: TextStyle(color: Colors.pink)),
+              Text("Loading ...", style: TextStyle(color: Colors.white)),
             ],
           ),
         ),
