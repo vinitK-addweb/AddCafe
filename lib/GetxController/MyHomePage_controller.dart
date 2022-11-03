@@ -16,45 +16,50 @@ class HomeBannerController extends GetxController {
   initMethodGetX() {
     print("initMethodGetXinitMethodGetXinitMethodGetX");
 
-    fetchHomeBanner();
-    fetchHomeCategory();
-    fetchCustomerReviews();
+    Future.delayed(Duration(seconds: 5), () {
+      fetchHomeBanner();
+      fetchHomeCategory();
+      fetchCustomerReviews();
+    });
   }
 
   Future fetchHomeBanner() async {
-    final response = await API.instance.get(endPoint: 'https://kindly-opposite-wishbone.glitch.me/products');
-    if(response != null){
-      if (response.statusCode == 200) {
+    final response = await API.instance
+        .get(endPoint: 'https://kindly-opposite-wishbone.glitch.me/products');
+    if (response != null) {
+      // if (response['statusCode'] == 200) {
       homeBannerData.value = List<ModelHomeBanner>.from(
-          json.decode(response.body).map((x) => ModelHomeBanner.fromJson(x)));
+          response.map((x) => ModelHomeBanner.fromJson(x)));
       debugPrint('fetchHomeBanner called');
+      // }
     } else {
       response!['message'].toString().showError();
     }
-    }
-    
   }
 
   Future fetchHomeCategory() async {
-    http.Response response;
-    response = await http.get(Uri.parse(
-        'https://cafe.addwebprojects.com/api/v1/catalogue/active-category/'));
-    if (response.statusCode == 200) {
+    final response = await API.instance.get(
+        endPoint:
+            'https://cafe.addwebprojects.com/api/v1/catalogue/active-category/');
+    if (response != null) {
+      // debugPrint(json.encode(response));
       homeCategoryData.value = List<ModelHomeCategory>.from(
-          json.decode(response.body).map((x) => ModelHomeCategory.fromJson(x)));
+          response.map((x) => ModelHomeCategory.fromJson(x)));
       print('fetchHomeCategory called');
-    } else {}
+    } else {
+      response['message'].toString().showError();
+    }
   }
 
   Future fetchCustomerReviews() async {
-    http.Response response;
-    response = await http
-        .get(Uri.parse('https://vinit-api-data.herokuapp.com/customerReviews'));
-    if (response.statusCode == 200) {
-      customerReviewsData.value = List<ModelCustomerReviews>.from(json
-          .decode(response.body)
-          .map((x) => ModelCustomerReviews.fromJson(x)));
+    final response = await API.instance
+        .get(endPoint: 'https://vinit-api-data.herokuapp.com/customerReviews');
+    if (response != null) {
+      customerReviewsData.value = List<ModelCustomerReviews>.from(
+          response.map((x) => ModelCustomerReviews.fromJson(x)));
       print('fetchCUstomerReviews called');
+    } else {
+      response['message'].toString().showError();
     }
   }
 

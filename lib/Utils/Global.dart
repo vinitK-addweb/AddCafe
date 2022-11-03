@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 showLoaderGetX() {
   Get.dialog(
     Material(
@@ -26,13 +25,8 @@ showLoaderGetX() {
               Container(
                 width: 16,
               ),
-              Text(
-                  "Loading ...",
-                  style: TextStyle(
-                      
-                      fontWeight: FontWeight.bold
-                  )
-              ),
+              Text("Loading ...",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
             ],
           ),
         ),
@@ -42,20 +36,27 @@ showLoaderGetX() {
   );
 }
 
-hideLoader(){
+hideLoader() {
   Navigator.pop(Get.context!);
 }
 
-extension SnackBar on String{
-  showSuccess(){
-    // Get.snackbar('Success', this, backgroundColor: Colors.green, colorText: Colors.white);
+extension SnackBar on String {
+  showSuccess() {
+    Get.snackbar('Success', this,
+        backgroundColor: Colors.green, colorText: Colors.white);
   }
-  showError(){
-    // Get.snackbar('Error!', this, backgroundColor: Colors.red, colorText: Colors.white);
+
+  showError() {
+    Get.snackbar('Error!', this,
+        backgroundColor: Colors.red, colorText: Colors.white);
   }
 }
 
-goToAnotherScreen(Widget page){
-  GetPage(name: '/second', page: () => page, transition: Transition.rightToLeft,
-  transitionDuration: Duration(milliseconds: 500), curve: Curves.fastOutSlowIn); 
+goToAnotherScreen(Widget page) {
+  GetPage(
+      name: '/second',
+      page: () => page,
+      transition: Transition.rightToLeft,
+      transitionDuration: Duration(milliseconds: 500),
+      curve: Curves.fastOutSlowIn);
 }
