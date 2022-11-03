@@ -1,7 +1,10 @@
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../Models/Model_MyHomePage.dart';
+import '../Utils/API.dart';
+import '../Utils/Global.dart';
 
 class HomeBannerController extends GetxController {
   RxList<ModelHomeBanner> homeBannerData = <ModelHomeBanner>[].obs;
@@ -19,16 +22,17 @@ class HomeBannerController extends GetxController {
   }
 
   Future fetchHomeBanner() async {
-    http.Response response;
-    response = await http
-        .get(Uri.parse('https://kindly-opposite-wishbone.glitch.me/products'));
-    if (response.statusCode == 200) {
-      // setState(() {
+    final response = await API.instance.get(endPoint: 'https://kindly-opposite-wishbone.glitch.me/products');
+    if(response != null){
+      if (response.statusCode == 200) {
       homeBannerData.value = List<ModelHomeBanner>.from(
           json.decode(response.body).map((x) => ModelHomeBanner.fromJson(x)));
-      // });
-      print('fetchHomeBanner called');
-    } else {}
+      debugPrint('fetchHomeBanner called');
+    } else {
+      response!['message'].toString().showError();
+    }
+    }
+    
   }
 
   Future fetchHomeCategory() async {
