@@ -1,16 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'dart:ffi';
 import 'package:addcafe/views/splash.dart';
 import 'package:flutter/material.dart';
-
-import 'views/HomeCategory.dart';
-import 'views/CustomerReviews.dart';
-import 'views/NewsLetter.dart';
-
-import 'views/searchBar.dart';
-import 'BottomNavBar.dart';
-import 'views/Loader.dart';
-import 'dart:convert';
 import 'package:get/get.dart';
 
 void main() {
@@ -29,11 +21,6 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.red,
         ),
-        home:
-            //  MyHomePage(),
-            Splash());
+        home: Splash());
   }
 }
-
-late List homeBannerData = [];
-late List homeCategoryData = [];

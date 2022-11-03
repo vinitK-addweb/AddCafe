@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 import 'package:addcafe/views/Auth/Otp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:addcafe/Utils/Global.dart';
-import 'package:addcafe/Utils/Constant.dart';
+import 'package:addcafe/Utils/Constants.dart';
 
 class UserAuth extends GetxController {
   Rx<TextEditingController> textController = TextEditingController().obs;

@@ -6,7 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/Utils/API.dart';
-import 'package:addcafe/Utils/Constant.dart';
+import 'package:addcafe/Utils/Constants.dart';
 
 class MyFavouritesApi extends GetxController {
   List<dynamic> myFavourites = [];

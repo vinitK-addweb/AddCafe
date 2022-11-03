@@ -1,18 +1,10 @@
+import '../Models/Model_MyHomePage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class HomeCategory extends StatelessWidget {
   HomeCategory(this.CategoryImages);
-  final List CategoryImages;
-
-  // final List CategoryImages = <Map>[
-  //   {'imageName': 'cat_burger.jpg', 'imageText': 'Burger'},
-  //   {'imageName': 'cat_cake.jpg', 'imageText': 'Cake'},
-  //   {'imageName': 'cat_drinks.jpg', 'imageText': 'Drinks'},
-  //   {'imageName': 'cat_pizza.jpg', 'imageText': 'Pizza'},
-  //   {'imageName': 'cat_waffles.jpg', 'imageText': 'Waffles'},
-  //   {'imageName': 'cat_icecream.jpg', 'imageText': 'Icecream'}
-  // ];
+  final List<ModelHomeCategory> CategoryImages;
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +22,9 @@ class HomeCategory extends StatelessWidget {
           Center(
             child: Wrap(
                 spacing: 10,
-                children: (CategoryImages as List).map((item) {
+                children: CategoryImages.map((item) {
                   return Container(
-                    margin: EdgeInsets.all(10),
+                    margin: const EdgeInsets.all(10),
                     width: 100,
                     child: InkWell(
                       child: Card(
@@ -40,14 +32,16 @@ class HomeCategory extends StatelessWidget {
                         child: Column(
                           children: [
                             CircleAvatar(
-                              backgroundImage: NetworkImage(item['image']),
+                              backgroundImage: NetworkImage(item.image!),
                               radius: 40,
                             ),
                             Container(
-                                margin: EdgeInsets.symmetric(vertical: 10),
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 10),
                                 child: Text(
-                                  item['name'],
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  item.name!,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
                                 ))
                           ],
                         ),

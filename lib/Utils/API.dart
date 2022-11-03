@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:connectivity/connectivity.dart';
-import '../Utils/Constant.dart';
+import '../Utils/Constants.dart';
 import '../Utils/Global.dart';
 import 'dart:typed_data';
 
@@ -67,8 +67,8 @@ class API {
 
   Future<Map<String, dynamic>?> post(
       {required String endPoint,
-      required Map<String, dynamic> params,
-      required bool isHeader}) async {
+        required Map<String, dynamic> params,
+        required bool isHeader}) async {
     if (!await _checkInternet()) {
       return null;
     }

@@ -1,73 +1,17 @@
 import 'package:flutter/material.dart';
 import '../views/HomeBanner.dart';
+import '../views/HomeCategory.dart';
 import '../Drawer/drawerHeader.dart';
 import '../Drawer/drawerList.dart';
 import '../BottomNavBar.dart';
+import 'MyLoader.dart';
+import 'MySearch.dart';
+import 'CustomerReviews.dart';
+import 'NewsLetter.dart';
 import 'package:get/get.dart';
 import '../GetxController/MyHomePage_controller.dart';
 
-class MyWidget extends StatelessWidget {
-  const MyWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  // const MyHomePage({super.key, required this.title});
-
-  // final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  bool isLoading = false;
-
-  // Future getHomeCategory() async {
-  //   http.Response response;
-  //   response = await http
-  //       .get(Uri.parse('https://vinit-api-data.herokuapp.com/category'));
-  //   if (response.statusCode == 200) {
-  //     setState(() {
-  //       homeCategoryData = json.decode(response.body);
-  //     });
-  //     print('runnnnn');
-  //   } else {
-  //     print('not running');
-  //   }
-  // }
-
-  // Future getHomeBanner() async {
-  //   http.Response response;
-  //   response = await http
-  //       .get(Uri.parse('https://kindly-opposite-wishbone.glitch.me/products'));
-  //   if (response.statusCode == 200) {
-  //     setState(() {
-  //       homeBannerData = json.decode(response.body);
-  //     });
-  //     print('runnnnn');
-  //   } else {
-  //     print('not running');
-  //   }
-  // }
-
-  void initState() {
-    super.initState();
-    loadData();
-    // getHomeBanner();
-    // getHomeCategory();
-  }
-
-  Future loadData() async {
-    setState(() => isLoading = true);
-    await Future.delayed(Duration(seconds: 2), () {});
-    setState(() => isLoading = false);
-  }
-
+class MyHomePage extends StatelessWidget {
   final HomeBannerController controller = Get.put(HomeBannerController());
 
   @override
@@ -94,7 +38,20 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       Container(
                         child: MyDrowerList(),
-                      )
+                      ),
+                      // userAuth.userprofile.isNotEmpty
+                      true
+                          ? Container(
+                              width: MediaQuery.of(context).size.width,
+                              margin: EdgeInsets.symmetric(horizontal: 30),
+                              child: ElevatedButton(
+                                  onPressed: () => {}, child: Text('Log Out')))
+                          : SizedBox(
+                              height: 0,
+                              child: Text(''
+                                  // userAuth.userprofile.isNotEmpty ? 'true' : 'false'
+                                  ),
+                            )
                     ],
                   ),
                 ),
@@ -112,32 +69,29 @@ class _MyHomePageState extends State<MyHomePage> {
                     icon: const Icon(Icons.notifications),
                   )
                 ],
-                // Padding(
-                // padding: const EdgeInsets.all(8.0),
-                // child:
               ),
               body: SingleChildScrollView(
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      // Mysearch(),
-                      HomeBanner(controller.homeBannerData.value),
-                      // HomeCategory(homeCategoryData),
-                      // CustomerReviews(),
-                      // NewsLetter(),
-                      // Container(
-                      //   child: Text(BannerData),
-                      // )
-                    ],
-                  ),
-                ),
+                child: !(controller.homeBannerData.value.isNotEmpty ||
+                        controller.homeCategoryData.value.isNotEmpty)
+                    ? MyLoader()
+                    : Container(
+                        child: Column(
+                          children: <Widget>[
+                            Mysearch(),
+                            HomeBanner(controller.homeBannerData.value),
+                            HomeCategory(controller.homeCategoryData.value),
+                            // CategoryItems(),
+                            CustomerReviews(
+                                controller.customerReviewsData.value),
+                            NewsLetter(),
+                          ],
+                        ),
+                      ),
               ),
 
               // This trailing comma makes auto-formatting nicer for build methods.
             )));
       },
     );
-
-    ;
   }
 }
