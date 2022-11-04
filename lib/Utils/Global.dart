@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get.dart';
+
+// import '../Styles/ColorStyle.dart';
+// import '../Styles/TextStyles.dart';
 
 showLoaderGetX() {
   Get.dialog(
@@ -10,7 +14,7 @@ showLoaderGetX() {
           height: 60,
           margin: EdgeInsets.only(left: 40, right: 40),
           decoration: BoxDecoration(
-              color: Colors.blue, borderRadius: BorderRadius.circular(4)),
+              color: Colors.red, borderRadius: BorderRadius.circular(4)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -19,14 +23,13 @@ showLoaderGetX() {
                 width: 30,
                 child: CircularProgressIndicator(
                   strokeWidth: 3,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow),
                 ),
               ),
               Container(
                 width: 16,
               ),
-              Text("Loading ...",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Text("Loading ...", style: TextStyle(color: Colors.white)),
             ],
           ),
         ),
@@ -41,22 +44,31 @@ hideLoader() {
 }
 
 extension SnackBar on String {
-  showSuccess() {
-    Get.snackbar('Success', this,
-        backgroundColor: Colors.green, colorText: Colors.white);
+  showError() {
+    Get.snackbar(
+      "Error!",
+      this,
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+    );
   }
 
-  showError() {
-    Get.snackbar('Error!', this,
-        backgroundColor: Colors.red, colorText: Colors.white);
+  showSuccess() {
+    Get.snackbar(
+      "Success!",
+      this,
+      backgroundColor: Colors.green,
+      colorText: Colors.white,
+    );
   }
 }
 
 goToAnotherScreen(Widget page) {
   GetPage(
-      name: '/second',
-      page: () => page,
-      transition: Transition.rightToLeft,
-      transitionDuration: Duration(milliseconds: 500),
-      curve: Curves.fastOutSlowIn);
+    name: "/second",
+    page: () => page,
+    transition: Transition.rightToLeft,
+    transitionDuration: Duration(milliseconds: 400),
+    curve: Curves.fastOutSlowIn,
+  );
 }
