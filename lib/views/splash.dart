@@ -30,7 +30,6 @@ class _SplashState extends State<Splash> {
       var userDataPref = prefs.getString('userData');
 
       if (userDataPref != null) {
-        print("if runsssss");
         try {
           userprofile =
               await Map<String, dynamic>.from(jsonDecode(userDataPref));

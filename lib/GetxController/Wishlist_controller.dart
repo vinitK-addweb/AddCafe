@@ -31,7 +31,6 @@ class MyFavouritesApi extends GetxController {
     if (kTOKENSAVED != null) {
       final wishlist =
           await API.instance.get(endPoint: APIEndPoints.instance.KWishlist);
-      print('wishlist ${wishlist}');
 
       myFavourites.value =
           List<Wishlist>.from(wishlist.map((x) => Wishlist.fromJson(x)));
@@ -45,26 +44,7 @@ class MyFavouritesApi extends GetxController {
       await API.instance.delete(
           endPoint: '${APIEndPoints.instance.KWishlist}${id}/', isHeader: true);
       fetchMyFavourites();
-      print('data is deleted==============>>>>1212132131312');
     }
-
-    //   SharedPreferences prefs = await SharedPreferences.getInstance();
-    //   http.Response response;
-    //   response = await http.delete(
-    //       Uri.parse('${kBaseUrl}/${APIEndPoints.instance.KWishlist}/${id}/'),
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "Authorization": 'Bearer ${prefs.get('token')}'
-    //       });
-    //   if (response.statusCode == 200) {
-    //     fetchMyFavourites();
-    //     // print(myFavourites);
-    //     print('deleteMyFavourites called');
-    //     // });
-    //     // print('runnnnn');
-    //   } else {
-    //     print('not running');
-    //   }
   }
 
   Future addToMyFavorites(productData, context) async {

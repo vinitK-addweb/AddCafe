@@ -1,4 +1,5 @@
 import '../Models/Model_MyHomePage.dart';
+import '../Models/Model_Banner.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../GetxController/MyHomePage_controller.dart';
@@ -7,11 +8,13 @@ import 'package:get/get.dart';
 class HomeBanner extends StatelessWidget {
   // HomeBanner({Key? key}) : super(key: key);
 
-  final List<ModelHomeBanner> bannerImages;
+  // final List<ModelHomeBanner> bannerImages;
+  final List<ModelBanner> bannerData;
 
   // final HomeBannerController controller = Get.put(HomeBannerController());
 
-  HomeBanner(this.bannerImages);
+  // HomeBanner(this.bannerImages);
+  HomeBanner(this.bannerData);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class HomeBanner extends StatelessWidget {
           autoPlay: true,
           // enlargeCenterPage: true,
         ),
-        items: bannerImages.map((i) {
+        items: bannerData.map((i) {
           return Builder(
             builder: (BuildContext context) {
               return Container(

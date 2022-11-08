@@ -1,12 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../Models/Model_MyHomePage.dart';
+import '../Models/Model_Banner.dart';
 import '../Utils/API.dart';
 import '../Utils/Global.dart';
 
 class HomeBannerController extends GetxController {
+  RxList<ModelBanner> bannerData = <ModelBanner>[].obs;
   RxList<ModelHomeBanner> homeBannerData = <ModelHomeBanner>[].obs;
   RxList<ModelHomeCategory> homeCategoryData = <ModelHomeCategory>[].obs;
   RxList<ModelCustomerReviews> customerReviewsData =
@@ -14,8 +17,6 @@ class HomeBannerController extends GetxController {
   RxInt currentIndex = 0.obs;
 
   initMethodGetX() {
-    print("initMethodGetXinitMethodGetXinitMethodGetX");
-
     Future.delayed(Duration(seconds: 5), () {
       fetchHomeBanner();
       fetchHomeCategory();
@@ -24,12 +25,15 @@ class HomeBannerController extends GetxController {
   }
 
   Future fetchHomeBanner() async {
-    final response = await API.instance
-        .get(endPoint: 'https://kindly-opposite-wishbone.glitch.me/products');
+    final response =
+        await API.instance.get(endPoint: 'promotion/active-banner/');
     if (response != null) {
       // if (response['statusCode'] == 200) {
-      homeBannerData.value = List<ModelHomeBanner>.from(
-          response.map((x) => ModelHomeBanner.fromJson(x)));
+      // homeBannerData.value =
+      // List<ModelHomeBanner>.from(
+      //     response.map((x) => ModelHomeBanner.fromJson(x)));
+      bannerData.value =
+          List<ModelBanner>.from(response.map((x) => ModelBanner.fromJson(x)));
       debugPrint('fetchHomeBanner called');
       // }
     } else {

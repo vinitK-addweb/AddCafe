@@ -35,8 +35,7 @@ class UserAuth extends GetxController {
   // ---------------------------------Form Validation-------------------------------
   SignUpValidation() {
     Get.focusScope!.unfocus();
-    print('fullName ');
-    print(password.value.text);
+
     RegExp regex =
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     if (email.value.text.isEmpty ||
@@ -105,7 +104,7 @@ class UserAuth extends GetxController {
       '${_UserLogin['message']}'.showError();
     else
       Get.to(Mylogin());
-    print('dataaaaaaaaaaa=================>    ${_UserLogin}');
+
     // http.Response response = await http.post(
     //     Uri.parse('${dotenv.env['API_URL']}/accounts/signup/'),
     //     headers: {"Content-Type": "application/json"},
@@ -159,7 +158,7 @@ class UserAuth extends GetxController {
       if (userDataPref != null) {
         try {
           kTOKENSAVED = prefs.getString('token') as String;
-          print('token ${kTOKENSAVED}');
+
           userprofile =
               await RxMap<dynamic, dynamic>.from(jsonDecode(userDataPref));
         } catch (error) {

@@ -10,16 +10,18 @@ import 'CustomerReviews.dart';
 import 'NewsLetter.dart';
 import 'package:get/get.dart';
 import '../GetxController/MyHomePage_controller.dart';
+import '../GetxController/UserAuth_controller.dart';
 
 class MyHomePage extends StatelessWidget {
   final HomeBannerController controller = Get.put(HomeBannerController());
-
+  final userAuth = UserAuth();
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
       init: HomeBannerController(),
       initState: (state) {
         controller.initMethodGetX();
+        userAuth.getlocaStorage();
       },
       builder: (controller) {
         return Obx((() => Scaffold(
@@ -40,18 +42,6 @@ class MyHomePage extends StatelessWidget {
                         child: MyDrowerList(),
                       ),
                       // userAuth.userprofile.isNotEmpty
-                      true
-                          ? Container(
-                              width: MediaQuery.of(context).size.width,
-                              margin: EdgeInsets.symmetric(horizontal: 30),
-                              child: ElevatedButton(
-                                  onPressed: () => {}, child: Text('Log Out')))
-                          : SizedBox(
-                              height: 0,
-                              child: Text(''
-                                  // userAuth.userprofile.isNotEmpty ? 'true' : 'false'
-                                  ),
-                            )
                     ],
                   ),
                 ),
@@ -80,7 +70,8 @@ class MyHomePage extends StatelessWidget {
                   child: Column(
                     children: <Widget>[
                       Mysearch(),
-                      HomeBanner(controller.homeBannerData.value),
+                      // HomeBanner(controller.homeBannerData.value),
+                      HomeBanner(controller.bannerData.value),
                       // HomeCategory(controller.homeCategoryData.value),
                       // CategoryItems(),
                       // CustomerReviews(

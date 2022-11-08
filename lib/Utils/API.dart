@@ -47,12 +47,11 @@ class API {
     final url = Uri.parse('${_kBaseURL}${endPoint}');
 
     final headers = {'Authorization': 'Bearer $kTOKENSAVED'};
-
+    ;
     try {
       showLoaderGetX();
       final response = await http.get(url, headers: headers);
       hideLoader();
-      print('rsponse data========= from api${response.statusCode}');
       List parsed = jsonDecode(response.body);
 
       return parsed;
@@ -121,7 +120,7 @@ class API {
       hideLoader();
       debugPrint('Response status: ${response.statusCode}');
 
-      final Map parsed = json.decode(response.body);
+      final Map<String, dynamic> parsed = json.decode(response.body);
       return parsed as Map<String, dynamic>;
     } on Exception catch (exception) {
       // hideLoader();
@@ -162,9 +161,6 @@ class API {
 
       hideLoader();
 
-      // print(response.stream);
-      // print(response.statusCode);
-
       final res = await http.Response.fromStream(response);
       print(res.body);
 
@@ -198,9 +194,7 @@ class API {
       final response = await request.send();
 
       hideLoader();
-
-      // print(response.stream);
-      // print(response.statusCode);
+      ;
 
       final res = await http.Response.fromStream(response);
       print(res.body);
