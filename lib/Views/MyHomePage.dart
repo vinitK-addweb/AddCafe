@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../views/HomeBanner.dart';
-import '../views/HomeCategory.dart';
+import 'HomeBanner.dart';
+import 'HomeCategory.dart';
 import '../Drawer/drawerHeader.dart';
 import '../Drawer/drawerList.dart';
 import '../BottomNavBar.dart';

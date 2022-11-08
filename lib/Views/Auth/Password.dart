@@ -88,7 +88,7 @@ class Password extends StatelessWidget {
                             //                 : Icons.visibility_off,
                             //           ),
                             //           onPressed: () {
-                            //             print('here the password' +
+                            //             s('here the password' +
                             //                 controller.password.value.text);
                             //             // setState(() {
                             //             //   _isObscure = !_isObscure;

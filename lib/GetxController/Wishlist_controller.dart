@@ -1,5 +1,5 @@
-import 'package:addcafe/views/Auth/Signin.dart';
-import 'package:addcafe/views/Wishlist.dart';
+import 'package:addcafe/Views/Auth/Signin.dart';
+import 'package:addcafe/Views/Wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:http/http.dart' as http;

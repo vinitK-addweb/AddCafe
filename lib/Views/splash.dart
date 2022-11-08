@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../views/MyHomePage.dart';
-import '../views/Auth/Signin.dart';
+import 'MyHomePage.dart';
+import 'Auth/Signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:addcafe/Providers/apis/UserAuth.dart';
 import 'dart:convert';

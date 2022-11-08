@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
-import 'package:addcafe/views/Wishlist.dart';
+import 'package:addcafe/Views/Wishlist.dart';
 
 class MyDrowerList extends StatelessWidget {
   final userAuth = Get.put(UserAuth());

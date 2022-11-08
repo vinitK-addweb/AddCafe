@@ -1,4 +1,4 @@
-import 'package:addcafe/views/MyHomePage.dart';
+import 'package:addcafe/Views/MyHomePage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:addcafe/Providers/apis/CartApi.dart';
@@ -10,7 +10,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
-import 'package:addcafe/views/EmptyWishlist.dart';
+import 'package:addcafe/Views/EmptyWishlist.dart';
 import 'package:addcafe/GetxController/Wishlist_controller.dart';
 import '../Models/Model_MyWishList.dart';
 import '../Utils/Constant.dart';

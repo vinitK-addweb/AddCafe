@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:addcafe/views/Auth/Signin.dart';
+import 'package:addcafe/Views/Auth/Signin.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
@@ -30,7 +30,7 @@ class _DrowerHeaderState extends State<DrowerHeader> {
     // userAuth.getlocaStorage();
     // userAuth.getlocaStorage();
     // var _data = userAuth.userprofile;
-    print('user profile data================>${userAuth.userprofile}');
+
     return GetBuilder(
         init: UserAuth(),
         initState: ((_) => userAuth.getlocaStorage()),

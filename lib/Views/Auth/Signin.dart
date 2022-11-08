@@ -1,4 +1,4 @@
-import 'package:addcafe/views/MyHomePage.dart';
+import 'package:addcafe/Views/MyHomePage.dart';
 import 'package:flutter/material.dart';
 import './Signup.dart';
 import 'package:get/get.dart';

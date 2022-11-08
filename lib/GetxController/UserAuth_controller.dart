@@ -1,14 +1,14 @@
 import 'dart:io';
-import 'package:addcafe/views/Auth/Signin.dart';
+import 'package:addcafe/Views/Auth/Signin.dart';
 import 'package:addcafe/Utils/API.dart';
-import '../views/Auth/Password.dart';
-import 'package:addcafe/views/MyHomePage.dart';
+import '../Views/Auth/Password.dart';
+import 'package:addcafe/Views/MyHomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:addcafe/views/Auth/Otp.dart';
+import 'package:addcafe/Views/Auth/Otp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:addcafe/Utils/Global.dart';
 import 'package:addcafe/Utils/Constant.dart';
