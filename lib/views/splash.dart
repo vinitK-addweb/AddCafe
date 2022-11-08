@@ -35,7 +35,7 @@ class _SplashState extends State<Splash> {
           userprofile =
               await Map<String, dynamic>.from(jsonDecode(userDataPref));
 
-          Get.to(() => Mylogin());
+          Get.to(() => MyHomePage());
           // });
         } catch (error) {
           print(error);

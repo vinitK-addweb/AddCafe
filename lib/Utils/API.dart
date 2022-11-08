@@ -38,7 +38,8 @@ class API {
     }
   }
 
-  Future<Map<String, dynamic>?> get({required String endPoint}) async {
+// ---------------------------- Get request ---------------
+  Future<dynamic> get({required String endPoint}) async {
     if (!await _checkInternet()) {
       return null;
     }
@@ -51,9 +52,10 @@ class API {
       showLoaderGetX();
       final response = await http.get(url, headers: headers);
       hideLoader();
+      print('rsponse data========= from api${response.statusCode}');
+      List parsed = jsonDecode(response.body);
 
-      final Map parsed = json.decode(response.body);
-      return parsed as Map<String, dynamic>;
+      return parsed;
     } on Exception catch (exception) {
       // hideLoader();
       // debugPrint('Exception is:-' + exception.toString());
@@ -64,6 +66,41 @@ class API {
       return null;
     }
   }
+
+  // --------------------- Delete request -------------------->
+
+  Future<Map<String, dynamic>?> delete(
+      {required String endPoint, required bool isHeader}) async {
+    if (!await _checkInternet()) {
+      return null;
+    }
+
+    final url = Uri.parse('${_kBaseURL}${endPoint}');
+
+    Map<String, String> header = {};
+    if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
+
+    try {
+      showLoaderGetX();
+      final response = await http.delete(url, headers: header);
+      hideLoader();
+      debugPrint('Response status: ${response.statusCode}');
+      debugPrint('Deleted .====================>${url}');
+      final Map parsed = json.decode(response.body);
+      return parsed as Map<String, dynamic>;
+    } on Exception catch (exception) {
+      // hideLoader();
+      // debugPrint('Exception is:-' + exception.toString());
+      // return null;
+    } catch (error) {
+      hideLoader();
+
+      debugPrint('Error is:-' + error.toString());
+      return null;
+    }
+  }
+
+  // ----------------------- Post Request-------------------------
 
   Future<Map<String, dynamic>?> post(
       {required String endPoint,

@@ -159,7 +159,7 @@ class UserAuth extends GetxController {
       if (userDataPref != null) {
         try {
           kTOKENSAVED = prefs.getString('token') as String;
-
+          print('token ${kTOKENSAVED}');
           userprofile =
               await RxMap<dynamic, dynamic>.from(jsonDecode(userDataPref));
         } catch (error) {

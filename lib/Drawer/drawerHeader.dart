@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Utils/Constant.dart';
 
 class DrowerHeader extends StatefulWidget {
   @override
@@ -29,7 +30,6 @@ class _DrowerHeaderState extends State<DrowerHeader> {
     // userAuth.getlocaStorage();
     // userAuth.getlocaStorage();
     // var _data = userAuth.userprofile;
-    print(userAuth.userprofile);
 
     return GetBuilder(
         init: UserAuth(),
@@ -53,7 +53,7 @@ class _DrowerHeaderState extends State<DrowerHeader> {
                                 : userAuth.userprofile['profile_picture'] ==
                                         null
                                     ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi6mIqR-61xHjJUEMUfzQvP_ZeVtRZ-Hh_B9OQIh5hLjVH1ZO5U23ZehKJMmIsZkMF5Ew&usqp=CAU'
-                                    : '${dotenv.env['IMG_URL']}${userAuth.userprofile['profile_picture']}',
+                                    : '${kImgUrl}/${userAuth.userprofile['profile_picture']}',
                           )),
                       userAuth.userprofile.isEmpty
                           ? Container(
