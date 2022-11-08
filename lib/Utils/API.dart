@@ -39,18 +39,20 @@ class API {
   }
 
 // ---------------------------- Get request ---------------
-  Future<dynamic> get({required String endPoint}) async {
+  Future<dynamic> get({required String endPoint, required isHeader}) async {
     if (!await _checkInternet()) {
       return null;
     }
 
     final url = Uri.parse('${_kBaseURL}${endPoint}');
 
-    final headers = {'Authorization': 'Bearer $kTOKENSAVED'};
+    // final headers = {'Authorization': 'Bearer $kTOKENSAVED'};
+    Map<String, String> header = {};
+    if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
     ;
     try {
       showLoaderGetX();
-      final response = await http.get(url, headers: headers);
+      final response = await http.get(url, headers: header);
       hideLoader();
       List parsed = jsonDecode(response.body);
 

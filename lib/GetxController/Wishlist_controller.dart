@@ -29,8 +29,8 @@ class MyFavouritesApi extends GetxController {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (kTOKENSAVED != null) {
-      final wishlist =
-          await API.instance.get(endPoint: APIEndPoints.instance.KWishlist);
+      final wishlist = await API.instance
+          .get(endPoint: APIEndPoints.instance.KWishlist, isHeader: true);
 
       myFavourites.value =
           List<Wishlist>.from(wishlist.map((x) => Wishlist.fromJson(x)));

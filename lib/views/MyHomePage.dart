@@ -72,7 +72,7 @@ class MyHomePage extends StatelessWidget {
                       Mysearch(),
                       // HomeBanner(controller.homeBannerData.value),
                       HomeBanner(controller.bannerData.value),
-                      // HomeCategory(controller.homeCategoryData.value),
+                      HomeCategory(controller.categoriesData.value),
                       // CategoryItems(),
                       // CustomerReviews(
                       //     controller.customerReviewsData.value),

@@ -30,11 +30,11 @@ class _DrowerHeaderState extends State<DrowerHeader> {
     // userAuth.getlocaStorage();
     // userAuth.getlocaStorage();
     // var _data = userAuth.userprofile;
-
+    print('user profile data================>${userAuth.userprofile}');
     return GetBuilder(
         init: UserAuth(),
         initState: ((_) => userAuth.getlocaStorage()),
-        builder: (controller) {
+        builder: (userAuth) {
           return SingleChildScrollView(
             child: Container(
               margin: EdgeInsets.only(top: 35),

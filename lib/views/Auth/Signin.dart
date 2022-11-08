@@ -79,10 +79,7 @@ class _MyloginState extends State<Mylogin> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(55)),
                       onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MyHomePage()));
+                        Get.to(MyHomePage());
                       },
                       child: Text(
                         'Skip',

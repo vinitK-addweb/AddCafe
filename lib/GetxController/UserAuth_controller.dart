@@ -144,7 +144,7 @@ class UserAuth extends GetxController {
       prefs.setString('userData', strPayLoad);
       prefs.setString('token', await _UserLogin['access']);
       getlocaStorage();
-      Get.to(MyHomePage());
+      await Get.to(MyHomePage());
     }
   }
 
@@ -176,10 +176,11 @@ class UserAuth extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // await storage.deleteItem('userData');
     // userprofile = null;
+    kTOKENSAVED = '';
     userprofile = {}.obs;
     prefs.remove('userData');
     prefs.remove('token');
-
+    getlocaStorage();
     await Get.to(Mylogin());
   }
 
