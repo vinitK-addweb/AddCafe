@@ -11,6 +11,7 @@ import 'package:addcafe/Utils/API.dart';
 import 'package:addcafe/Utils/Constant.dart';
 import 'package:addcafe/Models/Model_MyWishList.dart';
 import '../Utils/Constant.dart';
+import '../Utils/Global.dart';
 
 class MyFavouritesApi extends GetxController {
   RxList<Wishlist> myFavourites = <Wishlist>[].obs;
@@ -28,12 +29,14 @@ class MyFavouritesApi extends GetxController {
   Future fetchMyFavourites() async {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    if (kTOKENSAVED != null) {
+    if (kTOKENSAVED != '') {
       final wishlist = await API.instance
           .get(endPoint: APIEndPoints.instance.KWishlist, isHeader: true);
 
       myFavourites.value =
           List<Wishlist>.from(wishlist.map((x) => Wishlist.fromJson(x)));
+
+      Get.to(() => Wishlist());
     } else {
       Get.to(() => Mylogin());
     }

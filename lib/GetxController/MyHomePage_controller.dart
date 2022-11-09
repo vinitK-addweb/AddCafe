@@ -13,7 +13,7 @@ class HomeBannerController extends GetxController {
   RxList<ModelBanner> bannerData = <ModelBanner>[].obs;
   // RxList<ModelHomeBanner> homeBannerData = <ModelHomeBanner>[].obs;
   RxList<ModelCategories> categoriesData = <ModelCategories>[].obs;
-  RxList<ModelHomeCategory> homeCategoryData = <ModelHomeCategory>[].obs;
+  // RxList<ModelHomeCategory> homeCategoryData = <ModelHomeCategory>[].obs;
   RxList<ModelCustomerReviews> customerReviewsData =
       <ModelCustomerReviews>[].obs;
   RxInt currentIndex = 0.obs;

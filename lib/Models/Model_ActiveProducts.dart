@@ -4,11 +4,11 @@
 
 import 'dart:convert';
 
-ModelActiveProducts modelActiveProductsFromJson(String str) =>
-    ModelActiveProducts.fromJson(json.decode(str));
+// ModelActiveProducts modelActiveProductsFromJson(String str) =>
+//     ModelActiveProducts.fromJson(json.decode(str));
 
-String modelActiveProductsToJson(ModelActiveProducts data) =>
-    json.encode(data.toJson());
+// String modelActiveProductsToJson(ModelActiveProducts data) =>
+//     json.encode(data.toJson());
 
 class ModelActiveProducts {
   ModelActiveProducts({

@@ -7,9 +7,10 @@ import '../Utils/Global.dart';
 import '../Models/Model_ActiveProducts.dart';
 
 class CategoriesApi with ChangeNotifier {
-  RxList<ModelActiveProducts> allProducts = <ModelActiveProducts>[].obs;
+  RxSet<ModelActiveProducts> allProducts = <ModelActiveProducts>{}.obs;
   List _allProducts = [];
-  List _categoryProduct = [];
+  RxList categoryProduct = [].obs;
+  RxString currentCategory = ''.obs;
 
   // gettters
 
@@ -29,15 +30,19 @@ class CategoriesApi with ChangeNotifier {
         'https://cafe.addwebprojects.com/api/v1/catalogue/active-product/'));
 
     if (response.statusCode == 200) {
-      _allProducts = jsonDecode(response.body);
+      allProducts.value =
+          ModelActiveProducts.fromJson(json.decode(response.body))
+              as Set<ModelActiveProducts>;
       print('fetchAllProducts called');
       notifyListeners();
     }
   }
 
-  // getFilteredProducts(categoryName) {
-  //   _categoryProduct = allProducts
-  //       .where((item) => item["category_name"] == categoryName)
-  //       .toList();
-  // }
+  getFilteredProducts(categoryName) async {
+    await fetchAllProducts();
+    // categoryProduct.value = allProducts
+    //     .where((item) => item["category_name"] == categoryName)
+    //     .toList();
+    // allProducts;
+  }
 }

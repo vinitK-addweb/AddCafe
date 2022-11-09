@@ -2,6 +2,8 @@ import '../Models/Model_MyHomePage.dart';
 import '../Models/Model_Categories.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import '../Views/Categories/categoryItems.dart';
 
 class HomeCategory extends StatelessWidget {
   HomeCategory(this.categoriesImage);
@@ -28,6 +30,9 @@ class HomeCategory extends StatelessWidget {
                     margin: const EdgeInsets.all(10),
                     width: 100,
                     child: InkWell(
+                      onTap: (() {
+                        Get.to(CategoryItems('pizza'));
+                      }),
                       child: Card(
                         elevation: 0,
                         child: Column(

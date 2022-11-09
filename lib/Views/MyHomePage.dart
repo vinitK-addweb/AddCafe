@@ -61,25 +61,23 @@ class MyHomePage extends StatelessWidget {
                 ],
               ),
               body: SingleChildScrollView(
-                child:
-                    //  !(controller.homeBannerData.value.isNotEmpty ||
-                    //         controller.homeCategoryData.value.isNotEmpty)
-                    //     ? MyLoader()
-                    //     :
-                    Container(
-                  child: Column(
-                    children: <Widget>[
-                      Mysearch(),
-                      // HomeBanner(controller.homeBannerData.value),
-                      HomeBanner(controller.bannerData.value),
-                      HomeCategory(controller.categoriesData.value),
-                      // CategoryItems(),
-                      // CustomerReviews(
-                      //     controller.customerReviewsData.value),
-                      NewsLetter(),
-                    ],
-                  ),
-                ),
+                child: !(controller.bannerData.value.isNotEmpty ||
+                        controller.categoriesData.value.isNotEmpty)
+                    ? MyLoader()
+                    : Container(
+                        child: Column(
+                          children: <Widget>[
+                            Mysearch(),
+                            // HomeBanner(controller.homeBannerData.value),
+                            HomeBanner(controller.bannerData.value),
+                            HomeCategory(controller.categoriesData.value),
+                            // CategoryItems(),
+                            // CustomerReviews(
+                            //     controller.customerReviewsData.value),
+                            NewsLetter(),
+                          ],
+                        ),
+                      ),
               ),
 
               // This trailing comma makes auto-formatting nicer for build methods.

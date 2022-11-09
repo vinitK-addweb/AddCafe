@@ -104,20 +104,6 @@ class UserAuth extends GetxController {
       '${_UserLogin['message']}'.showError();
     else
       Get.to(Mylogin());
-
-    // http.Response response = await http.post(
-    //     Uri.parse('${dotenv.env['API_URL']}/accounts/signup/'),
-    //     headers: {"Content-Type": "application/json"},
-    //     body: jsonEncode(mapedData));
-
-    // print(response);
-    // if (response.statusCode == 201) {
-    //   _UserLogin = await jsonDecode(response.body);
-    //   // _token = await _UserLogin['access'];
-    //   userprofile = await _UserLogin['payload'];
-    //   print('_userProfile: ${userprofile}');
-    //   Get.to(() => Mylogin());
-    // }
   }
 
 // <-----------------  User SignIn Functionality ------------------>
