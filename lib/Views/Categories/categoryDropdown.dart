@@ -5,14 +5,16 @@ import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 import 'rating.dart';
 import 'addons.dart';
+import '../../Models/Model_ActiveProducts.dart';
 
 class CategoryDropdown extends StatelessWidget {
   CategoryDropdown(this.categoryItems);
 
-  final List categoryItems;
+  final List<ModelActiveProducts> categoryItems;
 
   @override
   Widget build(BuildContext context) {
+    print('category##%#%#${categoryItems}');
     // final cartApi = Provider.of<CartApi>(context);
     // final myFavouritesApi = Provider.of<MyFavouritesApi>(context);
     return Container(
@@ -43,7 +45,7 @@ class CategoryDropdown extends StatelessWidget {
                               Container(
                                 width: MediaQuery.of(context).size.width * 0.5,
                                 child: Text(
-                                  e['item_name'],
+                                  '${e.itemName}',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 18),
@@ -65,7 +67,7 @@ class CategoryDropdown extends StatelessWidget {
                               SizedBox(
                                 height: 10,
                               ),
-                              Text('Rs. ${e['price']}'),
+                              Text('Rs. ${e.price}'),
                               SizedBox(
                                 height: 10,
                               ),
@@ -121,8 +123,8 @@ class CategoryDropdown extends StatelessWidget {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
                                         child: Image(
-                                          image:
-                                              NetworkImage(e['featured_image']),
+                                          image: NetworkImage(
+                                              '${e.featuredImage}'),
                                           fit: BoxFit.fill,
                                         ),
                                       ),

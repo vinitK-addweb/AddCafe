@@ -45,7 +45,7 @@ class API {
     }
 
     final url = Uri.parse('${_kBaseURL}${endPoint}');
-
+    print(url);
     // final headers = {'Authorization': 'Bearer $kTOKENSAVED'};
     Map<String, String> header = {};
     if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};

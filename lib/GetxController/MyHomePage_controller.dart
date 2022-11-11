@@ -22,7 +22,7 @@ class HomeBannerController extends GetxController {
     Future.delayed(Duration(milliseconds: 1), () {
       fetchHomeBanner();
       fetchHomeCategory();
-      fetchCustomerReviews();
+      // fetchCustomerReviews();
     });
   }
 
@@ -52,18 +52,18 @@ class HomeBannerController extends GetxController {
     }
   }
 
-  Future fetchCustomerReviews() async {
-    final response = await API.instance.get(
-        endPoint: 'https://vinit-api-data.herokuapp.com/customerReviews',
-        isHeader: false);
-    if (response != null) {
-      customerReviewsData.value = List<ModelCustomerReviews>.from(
-          response.map((x) => ModelCustomerReviews.fromJson(x)));
-      print('fetchCUstomerReviews called');
-    } else {
-      response['message'].toString().showError();
-    }
-  }
+  // Future fetchCustomerReviews() async {
+  //   final response = await API.instance.get(
+  //       endPoint: 'https://vinit-api-data.herokuapp.com/customerReviews',
+  //       isHeader: false);
+  //   if (response != null) {
+  //     customerReviewsData.value = List<ModelCustomerReviews>.from(
+  //         response.map((x) => ModelCustomerReviews.fromJson(x)));
+  //     print('fetchCUstomerReviews called');
+  //   } else {
+  //     response['message'].toString().showError();
+  //   }
+  // }
 
   setCurrentIndex(index) {
     currentIndex.value = index;

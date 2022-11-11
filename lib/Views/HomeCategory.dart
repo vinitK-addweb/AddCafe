@@ -31,7 +31,7 @@ class HomeCategory extends StatelessWidget {
                     width: 100,
                     child: InkWell(
                       onTap: (() {
-                        Get.to(CategoryItems('pizza'));
+                        Get.to(CategoryItems('${item.name}'));
                       }),
                       child: Card(
                         elevation: 0,

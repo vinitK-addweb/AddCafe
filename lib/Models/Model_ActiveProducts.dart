@@ -4,44 +4,15 @@
 
 import 'dart:convert';
 
-// ModelActiveProducts modelActiveProductsFromJson(String str) =>
-//     ModelActiveProducts.fromJson(json.decode(str));
+List<ModelActiveProducts> modelActiveProductsFromJson(String str) =>
+    List<ModelActiveProducts>.from(
+        json.decode(str).map((x) => ModelActiveProducts.fromJson(x)));
 
-// String modelActiveProductsToJson(ModelActiveProducts data) =>
-//     json.encode(data.toJson());
+String modelActiveProductsToJson(List<ModelActiveProducts> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ModelActiveProducts {
   ModelActiveProducts({
-    this.count,
-    this.next,
-    this.previous,
-    this.results,
-  });
-
-  int? count;
-  dynamic next;
-  dynamic previous;
-  List<Result>? results;
-
-  factory ModelActiveProducts.fromJson(Map<String, dynamic> json) =>
-      ModelActiveProducts(
-        count: json["count"],
-        next: json["next"],
-        previous: json["previous"],
-        results:
-            List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "count": count,
-        "next": next,
-        "previous": previous,
-        "results": List<dynamic>.from(results!.map((x) => x.toJson())),
-      };
-}
-
-class Result {
-  Result({
     this.id,
     this.category,
     this.categoryName,
@@ -61,7 +32,7 @@ class Result {
   String? categoryName;
   String? itemName;
   String? featuredImage;
-  int? price;
+  double? price;
   String? description;
   List<int>? addon;
   List<AddOnDatum>? addOnData;
@@ -69,7 +40,8 @@ class Result {
   bool? isActive;
   int? orderCompleted;
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory ModelActiveProducts.fromJson(Map<String, dynamic> json) =>
+      ModelActiveProducts(
         id: json["id"],
         category: json["category"],
         categoryName: json["category_name"],
@@ -110,7 +82,7 @@ class AddOnDatum {
 
   int? id;
   String? addonName;
-  int? addonPrice;
+  double? addonPrice;
 
   factory AddOnDatum.fromJson(Map<String, dynamic> json) => AddOnDatum(
         id: json["id"],
