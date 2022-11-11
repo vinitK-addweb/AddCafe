@@ -1,3 +1,4 @@
+import 'package:addcafe/Views/Faq.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
@@ -112,7 +113,9 @@ class MyDrowerList extends StatelessWidget {
                       ),
                     ),
                     InkWell(
-                      onTap: () => Navigator.pushNamed(context, '/Faq'),
+                      onTap: () =>
+                          // Navigator.pushNamed(context, '/Faq'),
+                          Get.to(Faq()),
                       child: Padding(
                         padding: EdgeInsets.all(20.0),
                         child: Row(children: [

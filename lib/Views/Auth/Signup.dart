@@ -6,12 +6,12 @@ import 'package:addcafe/main.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:addcafe/Components/TextFieldCustom.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:addcafe/Components/PasswordFieldCustom.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class Signup extends StatelessWidget {
   final controller = Get.put(UserAuth());
@@ -69,35 +69,22 @@ class Signup extends StatelessWidget {
               labelText: 'Email'),
 
           // .....................Mobile field ..........................
+
           Container(
               margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-              padding: EdgeInsets.symmetric(horizontal: 3, vertical: 5),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        color: Color(0xffeeeeee),
-                        blurRadius: 10,
-                        offset: Offset(0, 4))
-                  ],
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey)),
-              child: InternationalPhoneNumberInput(
-                textFieldController: controller.phone.value,
-                errorMessage: 'Invalid phone number',
-                selectorTextStyle: TextStyle(color: Colors.black),
-                selectorConfig: SelectorConfig(
-                    selectorType: PhoneInputSelectorType.BOTTOM_SHEET),
-                keyboardType: TextInputType.phone,
-                inputBorder: InputBorder.none,
-                onInputChanged: (PhoneNumber number) {
-                  // var mob = number.phoneNumber;
-                  // controller.phone.value.text = mob.toString();
-
-                  // print(controller.phone.value.text);
-                },
-                onInputValidated: (bool value) {
-                  print(value);
+              child: IntlPhoneField(
+                decoration: InputDecoration(
+                  labelText: 'Phone Number',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(),
+                  ),
+                ),
+                initialCountryCode: 'IN',
+                onChanged: (phone) {
+                  var mob = phone.completeNumber;
+                  controller.phone.value.text = mob.toString();
+                  print(phone.completeNumber);
                 },
               )),
           // .....................Password field ..........................

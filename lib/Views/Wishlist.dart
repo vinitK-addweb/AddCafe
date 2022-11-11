@@ -33,10 +33,12 @@ class Myfavourits extends StatelessWidget {
           return Obx(() {
             return Scaffold(
                 appBar: AppBar(
+                    centerTitle: true,
                     title: Text(
-                  'My Favourits',
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                )),
+                      'My Favourits',
+                      style:
+                          TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                    )),
                 bottomNavigationBar: Container(
                   padding: EdgeInsets.all(25),
                   child: Row(
