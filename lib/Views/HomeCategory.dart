@@ -4,11 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../Views/Categories/categoryItems.dart';
+import '../Models/Model_Banner.dart';
+import '../Models/Model_Categories.dart';
 
 class HomeCategory extends StatelessWidget {
-  HomeCategory(this.categoriesImage);
+  HomeCategory(this.categoriesImage, this.bannerData);
   // final List<ModelHomeCategory> CategoryImages;
   final List<ModelCategories> categoriesImage;
+  final List<ModelBanner> bannerData;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -31,7 +35,7 @@ class HomeCategory extends StatelessWidget {
                     width: 100,
                     child: InkWell(
                       onTap: (() {
-                        Get.to(CategoryItems('${item.name}'));
+                        Get.to(CategoryItems(item.name!, bannerData, categoriesImage));
                       }),
                       child: Card(
                         elevation: 0,

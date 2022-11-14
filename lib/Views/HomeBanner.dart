@@ -6,14 +6,8 @@ import '../GetxController/MyHomePage_controller.dart';
 import 'package:get/get.dart';
 
 class HomeBanner extends StatelessWidget {
-  // HomeBanner({Key? key}) : super(key: key);
-
-  // final List<ModelHomeBanner> bannerImages;
   final List<ModelBanner> bannerData;
 
-  // final HomeBannerController controller = Get.put(HomeBannerController());
-
-  // HomeBanner(this.bannerImages);
   HomeBanner(this.bannerData);
 
   @override
@@ -32,10 +26,10 @@ class HomeBanner extends StatelessWidget {
               return Container(
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: NetworkImage(i.image!), fit: BoxFit.cover),
+                        image: NetworkImage(i.image!), fit: BoxFit.contain),
                     borderRadius: BorderRadius.circular(5.0)),
                 width: MediaQuery.of(context).size.width,
-                margin: EdgeInsets.symmetric(horizontal: 5.0),
+                margin: const EdgeInsets.symmetric(horizontal: 5.0),
               );
             },
           );
