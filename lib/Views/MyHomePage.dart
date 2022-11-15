@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import '../GetxController/MyHomePage_controller.dart';
 import '../GetxController/UserAuth_controller.dart';
 import '../Styles/ColorStyle.dart';
+import '../Components/logoCustom.dart';
 
 class MyHomePage extends StatelessWidget {
   final HomeBannerController controller = Get.put(HomeBannerController());
@@ -51,10 +52,11 @@ class MyHomePage extends StatelessWidget {
               appBar: AppBar(
                 // backgroundColor: ColorStyle.primaryColorRed,
                 elevation: 0,
-                title: Image.asset(
-                  'assets/images/addweb.png', height: 100, width: 200,
-                  // ),
-                ),
+                title: LogoCustomWhite(),
+                // Image.asset(
+                //   'assets/images/addweb.png', height: 100, width: 200,
+                //   // ),
+                // ),
                 actions: [
                   IconButton(
                     onPressed: () {},

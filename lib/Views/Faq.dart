@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import '../GetxController/Faq_Controller.dart';
 import '../Styles/TextStyles.dart';
 import '../Styles/ColorStyle.dart';
+import '../Components/AppBarStyle.dart';
 
 class Faq extends StatelessWidget {
   @override
@@ -21,15 +22,18 @@ class Faq extends StatelessWidget {
           return Obx(() {
             return Scaffold(
               // <------------------------------ Main App bar starts --------------------->
-              appBar: AppBar(
-                  centerTitle: true,
-                  title: Text(
-                    'FAQ',
-                    textAlign: TextAlign.center,
-                    style: TextStylesCustom.textStyles_24.apply(
-                      color: Colors.white,
-                    ),
-                  )),
+              appBar: AppBarStyle(
+                backgroundColor: ColorStyle.primaryColorRed,
+                leading: IconButton(
+                  onPressed: () => Get.back(),
+                  icon: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                  ),
+                ),
+                styleTitle: TextStylesCustom.textStyles_24,
+                title: 'Faq',
+              ),
 
               body: SingleChildScrollView(
                 child: Column(

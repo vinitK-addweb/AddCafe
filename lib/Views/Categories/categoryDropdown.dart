@@ -1,3 +1,4 @@
+import 'package:addcafe/Styles/ColorStyle.dart';
 import 'package:addcafe/Styles/TextStyles.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -30,93 +31,98 @@ class CategoryDropdown extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                  width: 20,
-                                  child: Image(
-                                    image:
-                                        AssetImage('assets/images/vegIcon.png'),
-                                    fit: BoxFit.fill,
-                                  )),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                child: Text(
-                                  '${e.itemName}',
-                                  style: TextStylesCustom.textStyles_18
-                                      .apply(fontWeightDelta: 3),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                    width: 20,
+                                    child: Image(
+                                      image: AssetImage(
+                                          'assets/images/vegIcon.png'),
+                                      fit: BoxFit.fill,
+                                    )),
+                                SizedBox(
+                                  height: 10,
                                 ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Rating(3),
-                                  Text(
-                                    '345 reviews',
-                                    style: TextStylesCustom.textStyles_15
-                                        .apply(fontWeightDelta: 2),
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.5,
+                                  child: Text(
+                                    '${e.itemName}',
+                                    style: TextStylesCustom.textStyles_18
+                                        .apply(fontWeightDelta: 3),
                                   ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Text('₹ ${e.price}',
-                                  style: TextStylesCustom.textStyles_16),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              // Row(
-                              //   children: [
-                              //     myFavouritesApi
-                              //             .isInMyFavorites(e['id'])
-                              //             .isNotEmpty
-                              //         ? IconButton(
-                              //             onPressed: () {
-                              //               myFavouritesApi.deleteMyFavourites(
-                              //                   myFavouritesApi.isInMyFavorites(
-                              //                       e['id'])[0]['id'],
-                              //                   context);
-                              //             },
-                              //             icon: Icon(
-                              //               Icons.favorite,
-                              //               color: Colors.red,
-                              //             ),
-                              //           )
-                              //         : IconButton(
-                              //             onPressed: () {
-                              //               myFavouritesApi.addToMyFavorites(
-                              //                   {"user": 1, "product": e['id']},
-                              //                   context);
-                              //             },
-                              //             icon: Icon(
-                              //               Icons.favorite_border,
-                              //               color: Colors.red,
-                              //             ),
-                              //           ),
-                              //     Container(
-                              //       margin:
-                              //           EdgeInsets.symmetric(horizontal: 10),
-                              //       child: Icon(
-                              //         Icons.share,
-                              //         color: Colors.blueAccent,
-                              //       ),
-                              //     ),
-                              //   ],
-                              // )
-                            ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Rating(3),
+                                    Text(
+                                      '345 reviews',
+                                      style: TextStylesCustom.textStyles_15
+                                          .apply(fontWeightDelta: 2),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Text('₹ ${e.price}',
+                                    style: TextStylesCustom.textStyles_16),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                // Row(
+                                //   children: [
+                                //     myFavouritesApi
+                                //             .isInMyFavorites(e['id'])
+                                //             .isNotEmpty
+                                //         ? IconButton(
+                                //             onPressed: () {
+                                //               myFavouritesApi.deleteMyFavourites(
+                                //                   myFavouritesApi.isInMyFavorites(
+                                //                       e['id'])[0]['id'],
+                                //                   context);
+                                //             },
+                                //             icon: Icon(
+                                //               Icons.favorite,
+                                //               color: Colors.red,
+                                //             ),
+                                //           )
+                                //         : IconButton(
+                                //             onPressed: () {
+                                //               myFavouritesApi.addToMyFavorites(
+                                //                   {"user": 1, "product": e['id']},
+                                //                   context);
+                                //             },
+                                //             icon: Icon(
+                                //               Icons.favorite_border,
+                                //               color: Colors.red,
+                                //             ),
+                                //           ),
+                                //     Container(
+                                //       margin:
+                                //           EdgeInsets.symmetric(horizontal: 10),
+                                //       child: Icon(
+                                //         Icons.share,
+                                //         color: Colors.blueAccent,
+                                //       ),
+                                //     ),
+                                //   ],
+                                // )
+                              ],
+                            ),
                           ),
                           Stack(
                             children: [
                               Container(
                                 width: 150,
                                 child: Column(
+                                  // mainAxisAlignment: MainAxisAlignment.center,
+                                  // crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
                                       width: 150,
@@ -138,7 +144,8 @@ class CategoryDropdown extends StatelessWidget {
                               ),
                               Positioned(
                                 top: 120,
-                                left: 45,
+                                left: 0,
+                                right: 0,
                                 child:
                                     // thisCartData.isEmpty
                                     // ? ElevatedButton(
@@ -171,62 +178,104 @@ class CategoryDropdown extends StatelessWidget {
                                     //     child: Text('Add'),
                                     //   )
                                     // :
-                                    Container(
-                                  width: 70,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 8),
-                                  decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      border: Border.all(color: Colors.red),
-                                      borderRadius: BorderRadius.all(
-                                          (Radius.circular(4)))),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          // if (e['item_count'] == 1) {
-                                          //   cartApi.delete(e['id']);
-                                          //   return;
-                                          // }
-                                          // cartApi.updateQuantity('minus',
-                                          //     thisCartData[0]['id']);
-                                        },
-                                        child: Container(
-                                          width: 20,
-                                          child: Center(
-                                            child: Text(
-                                              '-',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      // Text(
-                                      //     '${thisCartData[0]['item_count']}',
-                                      //     style: TextStyle(
-                                      //         color: Colors.white)),
-                                      InkWell(
-                                        onTap: () {
-                                          // cartApi.updateQuantity('plus',
-                                          //     thisCartData[0]['id']);
-                                        },
-                                        child: Container(
-                                          width: 20,
-                                          child: Center(
-                                            child: Text(
-                                              '+',
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                    //   Container(
+                                    // height: 50,
+                                    // width: 70,
+                                    // padding: EdgeInsets.symmetric(
+                                    //     horizontal: 8, vertical: 8),
+                                    // decoration: BoxDecoration(
+                                    //     color: Colors.red,
+                                    //     border: Border.all(color: Colors.red),
+                                    //     borderRadius: BorderRadius.all(
+                                    //         (Radius.circular(4)))),
+                                    // child:
+                                    Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    // if (e['item_count'] == 1) {
+                                    //   cartApi.delete(e['id']);
+                                    //   return;
+                                    // }
+                                    // cartApi.updateQuantity('minus',
+                                    //     thisCartData[0]['id']);
+
+                                    // child: Container(
+                                    //   width: 20,
+                                    // child: Center(
+
+                                    IconButton(
+                                      style: IconButton.styleFrom(
+                                          backgroundColor:
+                                              ColorStyle.primaryColorRed),
+                                      // iconSize: 26,
+                                      color: Colors.white,
+                                      icon: CircleAvatar(
+                                          radius: 14,
+                                          child: Icon(
+                                            Icons.remove,
+                                            size: 20,
+                                          )),
+                                      onPressed: () {},
+                                    ),
+
+                                    //  Text(
+                                    //   '-',
+                                    //   style: TextStyle(
+                                    //       color: Colors.white),
+                                    // ),
+                                    //       ),
+                                    // ),
+
+                                    Text(
+                                        // '${thisCartData[0]['item_count']}',
+                                        '2',
+                                        style: TextStylesCustom.textStyles_22
+                                            .apply(
+                                                color: ColorStyle
+                                                    .secondryColorBlack,
+                                                fontWeightDelta: 4)),
+                                    IconButton(
+                                      style: IconButton.styleFrom(
+                                          backgroundColor:
+                                              ColorStyle.primaryColorRed),
+                                      // iconSize: 26,
+                                      color: Colors.white,
+                                      icon: CircleAvatar(
+                                          radius: 14,
+                                          child: Icon(
+                                            Icons.add,
+                                            size: 20,
+                                          )),
+                                      onPressed: () {},
+                                    ),
+                                    // InkWell(
+                                    //     onTap: () {
+                                    //       // cartApi.updateQuantity('plus',
+                                    //       //     thisCartData[0]['id']);
+                                    //     },
+                                    //     // child: Container(
+                                    //     //   width: 20,
+                                    //     //   child: Center(
+                                    //     child: SizedBox(
+                                    //       width: 20,
+                                    //       child: IconButton(
+                                    //         iconSize: 12,
+                                    //         color: Colors.white,
+                                    //         icon: Icon(Icons.add),
+                                    //         onPressed: () {},
+                                    //       ),
+                                    //     )
+                                    //     // Text(
+                                    //     //   '+',
+                                    //     //   style: TextStyle(
+                                    //     //       color: Colors.white),
+                                    //     // ),
+                                    //     //       ),
+                                    //     // ),
+                                    //     ),
+                                  ],
                                 ),
+                                // ),
                               ),
                             ],
                           )

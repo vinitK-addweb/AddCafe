@@ -15,6 +15,8 @@ import 'package:addcafe/Views/EmptyWishlist.dart';
 import 'package:addcafe/GetxController/Wishlist_controller.dart';
 import '../Models/Model_MyWishList.dart';
 import '../Utils/Constant.dart';
+import '../Styles/ColorStyle.dart';
+import '../Components/AppBarStyle.dart';
 
 class Myfavourits extends StatelessWidget {
   @override
@@ -33,13 +35,18 @@ class Myfavourits extends StatelessWidget {
         builder: (myfavapi) {
           return Obx(() {
             return Scaffold(
-                appBar: AppBar(
-                    centerTitle: true,
-                    title: Text(
-                      'My Favourits',
-                      style: TextStylesCustom.textStyles_24
-                          .apply(fontWeightDelta: 2),
-                    )),
+                appBar: AppBarStyle(
+                  backgroundColor: ColorStyle.primaryColorRed,
+                  leading: IconButton(
+                    onPressed: () => Get.back(),
+                    icon: Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                    ),
+                  ),
+                  styleTitle: TextStylesCustom.textStyles_24,
+                  title: 'Wishlist',
+                ),
                 bottomNavigationBar: Container(
                   padding: EdgeInsets.all(25),
                   child: Row(

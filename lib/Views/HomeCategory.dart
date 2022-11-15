@@ -18,8 +18,8 @@ class HomeCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = ActiveProductsController();
-    controller.fetchAllProducts();
+    // final controller = ActiveProductsController();
+    // controller.fetchAllProducts();
     return Container(
       width: double.infinity,
       child: Column(

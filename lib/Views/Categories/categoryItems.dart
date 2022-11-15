@@ -19,6 +19,7 @@ import '../../Models/Model_Banner.dart';
 import '../../Models/Model_Categories.dart';
 import '../../Styles/TextStyles.dart';
 import '../../Styles/ColorStyle.dart';
+import '../../Components/AppBarStyle.dart';
 
 class CategoryItems extends StatefulWidget {
   // CategoryItems({Key? key}) : super(key: key);
@@ -39,13 +40,25 @@ class _CategoryItemsState extends State<CategoryItems> {
         Get.put(ActiveProductsController());
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Categories',
-          style: TextStylesCustom.textStyles_24,
+      appBar: AppBarStyle(
+        backgroundColor: ColorStyle.primaryColorRed,
+        leading: IconButton(
+          onPressed: () => Get.back(),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
         ),
-        centerTitle: true,
+        styleTitle: TextStylesCustom.textStyles_24,
+        title: 'Categories',
       ),
+      // AppBar(
+      //   title: Text(
+      //     'Categories',
+      //     style: TextStylesCustom.textStyles_24,
+      //   ),
+      //   centerTitle: true,
+      // ),
       bottomNavigationBar:
           // cartApi.cart['count'] > 0
           //     ? Container(
@@ -93,7 +106,7 @@ class _CategoryItemsState extends State<CategoryItems> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        controller.checkingObx.value,
+                        '',
                         style: TextStylesCustom.textStyles_10,
                       ),
                       HomeBanner(widget.bannerData),

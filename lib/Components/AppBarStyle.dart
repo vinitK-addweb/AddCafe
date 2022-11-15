@@ -16,7 +16,7 @@ class AppBarStyle extends StatelessWidget implements PreferredSizeWidget {
     this.overlayStyle,
     this.backgroundColor = Colors.white,
     this.title = 'Title ... ',
-    this.styleTitle = const TextStyle(color: Colors.black),
+    this.styleTitle = const TextStyle(color: Colors.white),
     this.leading = const SizedBox(
       width: 0,
     ),

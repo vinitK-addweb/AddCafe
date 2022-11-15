@@ -139,11 +139,15 @@ class MyDrowerList extends StatelessWidget {
                     ),
                     userAuth.userprofile.isNotEmpty
                         ? Column(children: [
-                            ElevatedButtonCustom(
-                              BgColor: ColorStyle.primaryColorRed,
-                              size: Size(MediaQuery.of(context).size.width, 50),
-                              onTap: () => userAuth.logOut(),
-                              text: 'LogOut',
+                            Center(
+                              child: ElevatedButtonCustom(
+                                BgColor: ColorStyle.primaryColorRed,
+                                size: Size(
+                                    MediaQuery.of(context).size.width / 1.5,
+                                    50),
+                                onTap: () => userAuth.logOut(),
+                                text: 'LogOut',
+                              ),
                             ),
                             const SizedBox(
                               height: 20,
