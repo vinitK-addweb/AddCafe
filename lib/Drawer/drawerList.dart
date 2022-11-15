@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
 import 'package:addcafe/Views/Wishlist.dart';
+import '../Styles/TextStyles.dart';
+import '../Styles/ColorStyle.dart';
+import '../Components/ElevatedButtonCustom.dart';
 
 class MyDrowerList extends StatelessWidget {
   final userAuth = Get.put(UserAuth());
@@ -34,15 +37,14 @@ class MyDrowerList extends StatelessWidget {
                               Icon(
                                 Icons.home_outlined,
                                 size: 30,
-                                color: Colors.grey,
+                                color: ColorStyle.secondaryColorgrey,
                               ),
                               Container(
                                 margin: EdgeInsets.only(left: 20),
-                                child: Text(
-                                  'Home',
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 20),
-                                ),
+                                child: Text('Home',
+                                    style: TextStylesCustom.textStyles_20.apply(
+                                      color: ColorStyle.secondaryColorgrey,
+                                    )),
                               ),
                             ]),
                       ),
@@ -62,8 +64,8 @@ class MyDrowerList extends StatelessWidget {
                                 margin: EdgeInsets.only(left: 20),
                                 child: Text(
                                   'Profile',
-                                  style: TextStyle(
-                                      color: Colors.grey, fontSize: 20),
+                                  style: TextStylesCustom.textStyles_20.apply(
+                                      color: ColorStyle.secondaryColorgrey),
                                 ),
                               ),
                             ]),
@@ -85,8 +87,8 @@ class MyDrowerList extends StatelessWidget {
                             margin: EdgeInsets.only(left: 20),
                             child: Text(
                               'My Favourites',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 20),
+                              style: TextStylesCustom.textStyles_20
+                                  .apply(color: ColorStyle.secondaryColorgrey),
                             ),
                           ),
                         ]),
@@ -105,17 +107,16 @@ class MyDrowerList extends StatelessWidget {
                             margin: EdgeInsets.only(left: 20),
                             child: Text(
                               'Offers',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 20),
+                              style: TextStylesCustom.textStyles_20.apply(
+                                color: ColorStyle.secondaryColorgrey,
+                              ),
                             ),
                           ),
                         ]),
                       ),
                     ),
                     InkWell(
-                      onTap: () =>
-                          // Navigator.pushNamed(context, '/Faq'),
-                          Get.to(Faq()),
+                      onTap: () => Get.to(Faq()),
                       child: Padding(
                         padding: EdgeInsets.all(20.0),
                         child: Row(children: [
@@ -128,20 +129,32 @@ class MyDrowerList extends StatelessWidget {
                             margin: EdgeInsets.only(left: 20),
                             child: Text(
                               'Faqs',
-                              style:
-                                  TextStyle(color: Colors.grey, fontSize: 20),
+                              style: TextStylesCustom.textStyles_20.apply(
+                                color: ColorStyle.secondaryColorgrey,
+                              ),
                             ),
                           ),
                         ]),
                       ),
                     ),
                     userAuth.userprofile.isNotEmpty
-                        ? Container(
-                            width: MediaQuery.of(context).size.width,
-                            margin: EdgeInsets.symmetric(horizontal: 30),
-                            child: ElevatedButton(
-                                onPressed: () => userAuth.logOut(),
-                                child: Text('Log Out')))
+                        ? Column(children: [
+                            ElevatedButtonCustom(
+                              size: Size(MediaQuery.of(context).size.width, 50),
+                              onTap: () => userAuth.logOut(),
+                              text: 'LogOut',
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            )
+                          ]
+                            //  ElevatedButton(
+                            //     onPressed: () => userAuth.logOut(),
+                            //     child: Text('Log Out',
+                            //         style: TextStylesCustom.textStyles_20.apply(
+                            //           color: ColorStyle.secondryColorBlack,
+                            //         )))
+                            )
                         : SizedBox(
                             height: 0,
                             child: Text(userAuth.userprofile.isNotEmpty

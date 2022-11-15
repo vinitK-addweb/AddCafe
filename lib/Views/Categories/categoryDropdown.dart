@@ -1,3 +1,4 @@
+import 'package:addcafe/Styles/TextStyles.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:addcafe/Providers/apis/CartApi.dart';
@@ -46,9 +47,8 @@ class CategoryDropdown extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width * 0.5,
                                 child: Text(
                                   '${e.itemName}',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
+                                  style: TextStylesCustom.textStyles_18
+                                      .apply(fontWeightDelta: 3),
                                 ),
                               ),
                               SizedBox(
@@ -59,15 +59,16 @@ class CategoryDropdown extends StatelessWidget {
                                   Rating(3),
                                   Text(
                                     '345 reviews',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
+                                    style: TextStylesCustom.textStyles_15
+                                        .apply(fontWeightDelta: 2),
                                   ),
                                 ],
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text('Rs. ${e.price}'),
+                              Text('₹ ${e.price}',
+                                  style: TextStylesCustom.textStyles_16),
                               SizedBox(
                                 height: 10,
                               ),

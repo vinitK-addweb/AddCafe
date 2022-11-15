@@ -46,7 +46,7 @@ class MyHomePage extends StatelessWidget {
                   ),
                 ),
               ),
-              bottomNavigationBar: theFooter(),
+              // bottomNavigationBar: TheFooter(),
               appBar: AppBar(
                 elevation: 0,
                 title: Image.asset(
@@ -67,14 +67,24 @@ class MyHomePage extends StatelessWidget {
                     : Container(
                         child: Column(
                           children: <Widget>[
+                            const SizedBox(
+                              height: 20,
+                            ),
                             Mysearch(),
+                            const SizedBox(
+                              height: 20,
+                            ),
                             // HomeBanner(controller.homeBannerData.value),
                             HomeBanner(controller.bannerData.value),
-                            HomeCategory(controller.categoriesData.value, controller.bannerData.value),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            HomeCategory(controller.categoriesData.value,
+                                controller.bannerData.value),
                             // CategoryItems(),
                             // CustomerReviews(
                             //     controller.customerReviewsData.value),
-                            NewsLetter(),
+                            // NewsLetter(),
                           ],
                         ),
                       ),

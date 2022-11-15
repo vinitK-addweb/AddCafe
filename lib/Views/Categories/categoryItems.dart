@@ -17,7 +17,8 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import '../../Models/Model_Banner.dart';
 import '../../Models/Model_Categories.dart';
-
+import '../../Styles/TextStyles.dart';
+import '../../Styles/ColorStyle.dart';
 
 class CategoryItems extends StatefulWidget {
   // CategoryItems({Key? key}) : super(key: key);
@@ -32,50 +33,52 @@ class CategoryItems extends StatefulWidget {
 }
 
 class _CategoryItemsState extends State<CategoryItems> {
-
   @override
   Widget build(BuildContext context) {
-
-    final ActiveProductsController controller = Get.put(ActiveProductsController());
+    final ActiveProductsController controller =
+        Get.put(ActiveProductsController());
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Categories'),
+        title: Text(
+          'Categories',
+          style: TextStylesCustom.textStyles_24,
+        ),
         centerTitle: true,
       ),
       bottomNavigationBar:
-      // cartApi.cart['count'] > 0
-      //     ? Container(
-      //         height: 50,
-      //         child: ElevatedButton(
-      //           onPressed: () {
-      //             Navigator.of(context).pushNamed('/cart');
-      //           },
-      //           child: Row(
-      //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //               children: [
-      //                 Column(
-      //                   mainAxisAlignment: MainAxisAlignment.center,
-      //                   crossAxisAlignment: CrossAxisAlignment.start,
-      //                   children: [
-      //                     Text('${cartApi.cart['count']} ITEM'),
-      //                     Text('Rs. ${cartApi.cart['total_rate']}')
-      //                   ],
-      //                 ),
-      //                 Column(
-      //                   mainAxisAlignment: MainAxisAlignment.center,
-      //                   children: [
-      //                     Text(
-      //                       'Next  >',
-      //                       style: TextStyle(fontSize: 20),
-      //                     )
-      //                   ],
-      //                 )
-      //               ]),
-      //         ),
-      //       )
-      //     :
-      SizedBox(
+          // cartApi.cart['count'] > 0
+          //     ? Container(
+          //         height: 50,
+          //         child: ElevatedButton(
+          //           onPressed: () {
+          //             Navigator.of(context).pushNamed('/cart');
+          //           },
+          //           child: Row(
+          //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //               children: [
+          //                 Column(
+          //                   mainAxisAlignment: MainAxisAlignment.center,
+          //                   crossAxisAlignment: CrossAxisAlignment.start,
+          //                   children: [
+          //                     Text('${cartApi.cart['count']} ITEM'),
+          //                     Text('Rs. ${cartApi.cart['total_rate']}')
+          //                   ],
+          //                 ),
+          //                 Column(
+          //                   mainAxisAlignment: MainAxisAlignment.center,
+          //                   children: [
+          //                     Text(
+          //                       'Next  >',
+          //                       style: TextStyle(fontSize: 20),
+          //                     )
+          //                   ],
+          //                 )
+          //               ]),
+          //         ),
+          //       )
+          //     :
+          SizedBox(
         height: 0,
       ),
       body: GetBuilder(
@@ -86,63 +89,60 @@ class _CategoryItemsState extends State<CategoryItems> {
         },
         builder: (_) {
           return Obx(() => SingleChildScrollView(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    controller.checkingObx.value
-                  ),
-                  HomeBanner(widget.bannerData),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        controller.checkingObx.value,
+                        style: TextStylesCustom.textStyles_10,
+                      ),
+                      HomeBanner(widget.bannerData),
+                      ListView.builder(
+                        itemCount: widget.categoriesData.length,
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final e = widget.categoriesData[index];
 
-                  ListView.builder(
-                    itemCount: widget.categoriesData.length,
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      final e = widget.categoriesData[index];
-
-                      return Card(
-                          child: Column(
+                          return Card(
+                              child: Column(
                             children: [
                               InkWell(
                                   onTap: () {
-                                    controller
-                                        .changeCategory('${e.name}');
+                                    controller.changeCategory('${e.name}');
                                   },
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
                                         '${e.name}(${controller.categoryProduct.length})',
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
+                                        style: TextStylesCustom.textStyles_20
+                                            .apply(fontWeightDelta: 3),
                                       ),
                                       IconButton(
                                           onPressed: () {
                                             controller
                                                 .changeCategory('${e.name}');
                                           },
-                                          icon: Icon(widget.selectedMenu == e.name
-                                              ? Icons.arrow_drop_up
-                                              : Icons.arrow_drop_down))
+                                          icon: Icon(
+                                              widget.selectedMenu == e.name
+                                                  ? Icons.arrow_drop_up
+                                                  : Icons.arrow_drop_down))
                                     ],
                                   )),
                               widget.selectedMenu == e.name &&
-                                  controller
-                                      .categoryProduct.isNotEmpty
-                                  ? CategoryDropdown(
-                                  controller.categoryProduct)
+                                      controller.categoryProduct.isNotEmpty
+                                  ? CategoryDropdown(controller.categoryProduct)
                                   : SizedBox(
-                                height: 0,
-                              ),
+                                      height: 0,
+                                    ),
                             ],
                           ));
-                    },
-                  ),
-                ]),
-          ));
+                        },
+                      ),
+                    ]),
+              ));
         },
       ),
     );

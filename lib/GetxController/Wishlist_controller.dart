@@ -12,6 +12,9 @@ import 'package:addcafe/Utils/Constant.dart';
 import 'package:addcafe/Models/Model_MyWishList.dart';
 import '../Utils/Constant.dart';
 import '../Utils/Global.dart';
+import '../Styles/TextStyles.dart';
+import '../Styles/ColorStyle.dart';
+import '../Components/ElevatedButtonCustom.dart';
 
 class MyFavouritesApi extends GetxController {
   RxList<Wishlist> myFavourites = <Wishlist>[].obs;
@@ -53,6 +56,7 @@ class MyFavouritesApi extends GetxController {
   Future addToMyFavorites(productData, context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     http.Response response;
+
     response = await http.post(
         Uri.parse('https://cafe.addwebprojects.com/api/v1/catalogue/wishlist/'),
         headers: {

@@ -6,6 +6,9 @@ import 'package:get/get.dart';
 import '../Views/Categories/categoryItems.dart';
 import '../Models/Model_Banner.dart';
 import '../Models/Model_Categories.dart';
+import '../Styles/TextStyles.dart';
+import '../Styles/ColorStyle.dart';
+import '../GetxController/ActiveProducts_controller.dart';
 
 class HomeCategory extends StatelessWidget {
   HomeCategory(this.categoriesImage, this.bannerData);
@@ -15,6 +18,8 @@ class HomeCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = ActiveProductsController();
+    controller.fetchAllProducts();
     return Container(
       width: double.infinity,
       child: Column(
@@ -24,7 +29,7 @@ class HomeCategory extends StatelessWidget {
               margin: EdgeInsets.only(left: 20),
               child: Text(
                 'Explore Menu',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStylesCustom.textStyles_20.apply(fontWeightDelta: 4),
               )),
           Center(
             child: Wrap(
@@ -35,27 +40,29 @@ class HomeCategory extends StatelessWidget {
                     width: 100,
                     child: InkWell(
                       onTap: (() {
-                        Get.to(CategoryItems(item.name!, bannerData, categoriesImage));
+                        Get.to(CategoryItems(
+                            item.name!, bannerData, categoriesImage));
                       }),
-                      child: Card(
-                        elevation: 0,
-                        child: Column(
-                          children: [
-                            CircleAvatar(
-                              backgroundImage: NetworkImage(item.image!),
-                              radius: 40,
-                            ),
-                            Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: Text(
-                                  item.name!,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ))
-                          ],
-                        ),
+                      child:
+                          //  Card(
+                          //   elevation: 0,
+                          //   child:
+                          Column(
+                        children: [
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(item.image!),
+                            radius: 40,
+                          ),
+                          Container(
+                              margin: const EdgeInsets.symmetric(vertical: 10),
+                              child: Text(
+                                item.name!,
+                                style: TextStylesCustom.textStyles_18
+                                    .apply(fontWeightDelta: 2),
+                              ))
+                        ],
                       ),
+                      // ),
                     ),
                   );
                 }).toList()),

@@ -6,32 +6,12 @@ import 'package:flutter/src/widgets/framework.dart';
 import '../BottomNavBar.dart';
 import 'package:get/get.dart';
 import '../GetxController/Faq_Controller.dart';
-// import 'package:addcafe/Providers/apis/FaqApi.dart';
-// import 'package:addcafe/Drower/drawerHeader.dart';
-// import 'package:addcafe/Drower/drawerList.dart';
-// import 'package:addcafe/appBar.dart';
+import '../Styles/TextStyles.dart';
+import '../Styles/ColorStyle.dart';
 
 class Faq extends StatelessWidget {
-//   const MyWidget({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
-
-// class Faq extends StatefulWidget {
-//   const Faq({super.key});
-
-//   @override
-//   State<Faq> createState() => _FaqState();
-// }
-
-// class _FaqState extends State<Faq> {
-
   @override
   Widget build(BuildContext context) {
-    // final Faqdata = Provider.of<FaqApi>(context);
     final faq = Get.put(FaqController());
 
     return GetBuilder(
@@ -46,9 +26,8 @@ class Faq extends StatelessWidget {
                   title: Text(
                     'FAQ',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 28,
+                    style: TextStylesCustom.textStyles_24.apply(
+                      color: Colors.white,
                     ),
                   )),
 
@@ -90,9 +69,13 @@ class Faq extends StatelessWidget {
                                           padding: const EdgeInsets.all(10.0),
                                           child: Text(
                                             '${e.question}',
-                                            style: TextStyle(
-                                                fontSize: 19,
-                                                fontWeight: FontWeight.bold),
+                                            style: TextStylesCustom
+                                                .textStyles_20
+                                                .apply(
+                                              fontWeightDelta: 3,
+                                              color:
+                                                  ColorStyle.secondryColorBlack,
+                                            ),
                                           ),
                                         ),
                                         // arrow
@@ -104,10 +87,13 @@ class Faq extends StatelessWidget {
                                             child: Text(
                                               '${e.answer}',
                                               textAlign: TextAlign.justify,
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.blueGrey,
-                                                  fontWeight: FontWeight.w600),
+                                              style: TextStylesCustom
+                                                  .textStyles_16
+                                                  .apply(
+                                                fontWeightDelta: 2,
+                                                color: ColorStyle
+                                                    .secondaryColorgrey,
+                                              ),
                                             ),
                                           ),
                                         )
@@ -128,7 +114,7 @@ class Faq extends StatelessWidget {
                                         : Icons.arrow_drop_down,
                                     size: 40,
                                   ),
-                                  onPressed: () => faq.currentid.value))
+                                  onPressed: () => faq.currentid.value = e.id!))
                         ]);
                       }).toList()),
                     ),
@@ -153,16 +139,20 @@ class Faq extends StatelessWidget {
                                 margin: EdgeInsets.only(top: 10),
                                 child: Text(
                                   'Do you have more questions?',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
+                                  style: TextStylesCustom.textStyles_20.apply(
+                                    fontWeightDelta: 3,
+                                    color: ColorStyle.secondryColorBlack,
+                                  ),
                                 )),
                             Container(
                                 margin: EdgeInsets.only(top: 8, bottom: 20),
                                 child: Text(
                                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                  style: TextStylesCustom.textStyles_15.apply(
+                                    fontWeightDelta: 3,
+                                    color: ColorStyle.secondaryColorgrey,
+                                  ),
                                 )),
                             SizedBox(
                                 width: MediaQuery.of(context).size.width,
@@ -173,14 +163,14 @@ class Faq extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(12)),
                                         padding: EdgeInsets.all(20)),
-                                    onPressed: () {
-                                      print('email button clicked');
-                                    },
+                                    onPressed: () {},
                                     child: Text(
                                       'Send Us A Direct Mail',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20),
+                                      style:
+                                          TextStylesCustom.textStyles_20.apply(
+                                        fontWeightDelta: 3,
+                                        color: Colors.white,
+                                      ),
                                     )))
                           ],
                         ))

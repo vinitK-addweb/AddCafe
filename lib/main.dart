@@ -4,8 +4,17 @@ import 'package:http/http.dart' as http;
 import 'package:addcafe/Views/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import './Components/IndicatorSlider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+  ));
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(const MyApp());
 }
 

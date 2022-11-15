@@ -14,26 +14,26 @@ class ActiveProductsController extends GetxController {
   String selectedCategory = '';
   RxString checkingObx = "Checking OBX ...".obs;
 
-
   Future fetchAllProducts() async {
-
     http.Response response;
     response = await http.get(Uri.parse(
         'https://cafe.addwebprojects.com/api/v1/catalogue/active-product/'));
 
     if (response.statusCode == 200) {
-      List<ModelActiveProducts> allProducts = List<ModelActiveProducts>.from(jsonDecode(response.body).map((x) => ModelActiveProducts.fromJson(x)));
+      List<ModelActiveProducts> allProducts = List<ModelActiveProducts>.from(
+          jsonDecode(response.body)
+              .map((x) => ModelActiveProducts.fromJson(x)));
 
-      print('fetch all product here=========>>>${selectedCategory}');
-
-      categoryProduct.value = allProducts.where((item) => item.categoryName == selectedCategory).toList();
-
+      categoryProduct.value = allProducts
+          .where((item) => item.categoryName == selectedCategory)
+          .toList();
+      print('fetch all product here=========>>>${categoryProduct.value}');
       update();
     }
-
   }
 
   changeCategory(String category) {
+    debugPrint(category);
     if (selectedCategory == category) {
       selectedCategory = '';
       ;
@@ -41,5 +41,4 @@ class ActiveProductsController extends GetxController {
       selectedCategory = category;
     }
   }
-
 }

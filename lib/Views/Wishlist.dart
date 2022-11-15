@@ -1,3 +1,4 @@
+import 'package:addcafe/Styles/TextStyles.dart';
 import 'package:addcafe/Views/MyHomePage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -36,8 +37,8 @@ class Myfavourits extends StatelessWidget {
                     centerTitle: true,
                     title: Text(
                       'My Favourits',
-                      style:
-                          TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                      style: TextStylesCustom.textStyles_24
+                          .apply(fontWeightDelta: 2),
                     )),
                 bottomNavigationBar: Container(
                   padding: EdgeInsets.all(25),
@@ -56,10 +57,8 @@ class Myfavourits extends StatelessWidget {
                           myfavapi.myFavourites.value.isNotEmpty
                               ? 'Proceed to cart'
                               : 'Add Items',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
+                          style: TextStylesCustom.textStyles_20
+                              .apply(color: Colors.white),
                         ),
                         onPressed: () {
                           myfavapi.myFavourites.isNotEmpty
@@ -109,10 +108,11 @@ class Myfavourits extends StatelessWidget {
                                                             0.5,
                                                     child: Text(
                                                       '${e.productData?.itemName}',
-                                                      style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontSize: 18),
+                                                      style: TextStylesCustom
+                                                          .textStyles_18
+                                                          .apply(
+                                                              fontWeightDelta:
+                                                                  2),
                                                     ),
                                                   ),
                                                   SizedBox(
@@ -123,10 +123,11 @@ class Myfavourits extends StatelessWidget {
                                                       // Rating(3),
                                                       Text(
                                                         '345 reviews',
-                                                        style: TextStyle(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                        style: TextStylesCustom
+                                                            .textStyles_16
+                                                            .apply(
+                                                                fontWeightDelta:
+                                                                    2),
                                                       ),
                                                     ],
                                                   ),
@@ -134,7 +135,9 @@ class Myfavourits extends StatelessWidget {
                                                     height: 10,
                                                   ),
                                                   Text(
-                                                      'Rs. ${e.productData?.price}'),
+                                                      '₹ ${e.productData?.price}',
+                                                      style: TextStylesCustom
+                                                          .textStyles_16),
                                                   SizedBox(
                                                     height: 10,
                                                   ),

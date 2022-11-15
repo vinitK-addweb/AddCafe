@@ -13,11 +13,10 @@ class HomeBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 20),
+      // margin: EdgeInsets.symmetric(vertical: 20),
       child: CarouselSlider(
         options: CarouselOptions(
-          height: 150.0,
-          autoPlay: true,
+          height: 150.0, autoPlay: true,
           // enlargeCenterPage: true,
         ),
         items: bannerData.map((i) {

@@ -8,6 +8,9 @@ import 'package:addcafe/GetxController/UserAuth_controller.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Utils/Constant.dart';
+import '../Styles/TextStyles.dart';
+import '../Styles/ColorStyle.dart';
+import '../Components/ElevatedButtonCustom.dart';
 
 class DrowerHeader extends StatefulWidget {
   @override
@@ -27,9 +30,6 @@ class _DrowerHeaderState extends State<DrowerHeader> {
   @override
   Widget build(BuildContext context) {
     final userAuth = Get.put(UserAuth());
-    // userAuth.getlocaStorage();
-    // userAuth.getlocaStorage();
-    // var _data = userAuth.userprofile;
 
     return GetBuilder(
         init: UserAuth(),
@@ -60,16 +60,24 @@ class _DrowerHeaderState extends State<DrowerHeader> {
                               margin: EdgeInsets.symmetric(vertical: 8),
 
                               //  <------------------login button ----------------------------->
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Colors.black,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(4)),
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 32)),
-                                  onPressed: () => Get.to(Mylogin()),
-                                  child: Text('Login')))
+                              child: ElevatedButtonCustom(
+                                onTap: () => Get.to(Mylogin()),
+                                text: 'Login',
+                              ),
+                              //  ElevatedButton(
+                              //     style: ElevatedButton.styleFrom(
+                              //         primary: Colors.black,
+                              //         shape: RoundedRectangleBorder(
+                              //             borderRadius:
+                              //                 BorderRadius.circular(4)),
+                              //         padding:
+                              //             EdgeInsets.symmetric(horizontal: 32)),
+                              //     onPressed: () => Get.to(Mylogin()),
+                              //     child: Text(
+                              //       'Login',
+                              //       style: TextStylesCustom.textStyles_20,
+                              //     ))
+                            )
                           :
                           // <-------------------user profile details -------------------->
                           Column(
@@ -80,25 +88,22 @@ class _DrowerHeaderState extends State<DrowerHeader> {
                                     userAuth.userprofile['first_name'] == null
                                         ? ''
                                         : userAuth.userprofile['first_name'],
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
+                                    style: TextStylesCustom.textStyles_26
+                                        .apply(color: Colors.white),
                                   ),
                                 ),
                                 Container(
                                   child: //Text('${userAuth.userprofile}')
                                       Text(
-                                    userAuth.userprofile.isEmpty
-                                        ? '${userAuth.userprofile}'
-                                        : userAuth.userprofile['email'] == null
-                                            ? ''
-                                            : userAuth.userprofile['email'],
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                    ),
-                                  ),
+                                          userAuth.userprofile.isEmpty
+                                              ? '${userAuth.userprofile}'
+                                              : userAuth.userprofile['email'] ==
+                                                      null
+                                                  ? ''
+                                                  : userAuth
+                                                      .userprofile['email'],
+                                          style: TextStylesCustom.textStyles_22
+                                              .apply(color: Colors.white)),
                                 ),
                               ],
                             ),
