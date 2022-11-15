@@ -18,15 +18,7 @@ class DrowerHeader extends StatefulWidget {
 }
 
 class _DrowerHeaderState extends State<DrowerHeader> {
-  // Map<String, dynamic> userProfile = {};
-
   @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-
-  // }
-
   @override
   Widget build(BuildContext context) {
     final userAuth = Get.put(UserAuth());
@@ -57,10 +49,12 @@ class _DrowerHeaderState extends State<DrowerHeader> {
                           )),
                       userAuth.userprofile.isEmpty
                           ? Container(
-                              margin: EdgeInsets.symmetric(vertical: 8),
+                              margin: const EdgeInsets.symmetric(vertical: 8),
 
                               //  <------------------login button ----------------------------->
                               child: ElevatedButtonCustom(
+                                size: const Size(100, 20),
+                                BgColor: ColorStyle.secondryColorBlack,
                                 onTap: () => Get.to(Mylogin()),
                                 text: 'Login',
                               ),

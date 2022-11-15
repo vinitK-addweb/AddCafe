@@ -7,14 +7,13 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
-import 'package:addcafe/Utils/API.dart';
-import 'package:addcafe/Utils/Constant.dart';
-import 'package:addcafe/Models/Model_MyWishList.dart';
+import '../Utils/API.dart';
+
+import '../Models/Model_MyWishList.dart';
 import '../Utils/Constant.dart';
 import '../Utils/Global.dart';
 import '../Styles/TextStyles.dart';
 import '../Styles/ColorStyle.dart';
-import '../Components/ElevatedButtonCustom.dart';
 
 class MyFavouritesApi extends GetxController {
   RxList<Wishlist> myFavourites = <Wishlist>[].obs;

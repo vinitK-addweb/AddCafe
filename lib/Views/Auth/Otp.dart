@@ -114,6 +114,7 @@ class Otp extends StatelessWidget {
                   // <-----------------------Submit Button ------------------------------>
 
                   ElevatedButtonCustom(
+                    BgColor: ColorStyle.primaryColorRed,
                     text: 'Continue',
                     size: Size(MediaQuery.of(context).size.width, 50),
                     onTap: (() {

@@ -9,18 +9,20 @@ class ElevatedButtonCustom extends StatelessWidget {
   final Function()? onTap;
   final String? text;
   final Size size;
+  final Color? BgColor;
   const ElevatedButtonCustom(
       {Key? key,
       this.onTap,
       this.text = "Elevated Button",
-      this.size = const Size(100, 50)})
+      this.size = const Size(100, 50),
+      this.BgColor = Colors.red})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: ColorStyle.primaryColorRed,
+        backgroundColor: BgColor,
         elevation: 0,
         padding: const EdgeInsets.only(
           left: 20,

@@ -57,7 +57,7 @@ class HomeCategory extends StatelessWidget {
                               margin: const EdgeInsets.symmetric(vertical: 10),
                               child: Text(
                                 item.name!,
-                                style: TextStylesCustom.textStyles_18
+                                style: TextStylesCustom.textStyles_12
                                     .apply(fontWeightDelta: 2),
                               ))
                         ],

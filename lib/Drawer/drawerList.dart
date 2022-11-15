@@ -56,9 +56,9 @@ class MyDrowerList extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Icon(
-                                Icons.wallet_giftcard,
+                                Icons.person_outline,
                                 size: 30,
-                                color: Colors.grey,
+                                color: ColorStyle.secondaryColorgrey,
                               ),
                               Container(
                                 margin: EdgeInsets.only(left: 20),
@@ -81,7 +81,7 @@ class MyDrowerList extends StatelessWidget {
                           Icon(
                             Icons.favorite_border_outlined,
                             size: 30,
-                            color: Colors.grey,
+                            color: ColorStyle.secondaryColorgrey,
                           ),
                           Container(
                             margin: EdgeInsets.only(left: 20),
@@ -101,7 +101,7 @@ class MyDrowerList extends StatelessWidget {
                           Icon(
                             Icons.discount_outlined,
                             size: 30,
-                            color: Colors.grey,
+                            color: ColorStyle.secondaryColorgrey,
                           ),
                           Container(
                             margin: EdgeInsets.only(left: 20),
@@ -123,7 +123,7 @@ class MyDrowerList extends StatelessWidget {
                           Icon(
                             Icons.question_answer_outlined,
                             size: 30,
-                            color: Colors.grey,
+                            color: ColorStyle.secondaryColorgrey,
                           ),
                           Container(
                             margin: EdgeInsets.only(left: 20),
@@ -140,6 +140,7 @@ class MyDrowerList extends StatelessWidget {
                     userAuth.userprofile.isNotEmpty
                         ? Column(children: [
                             ElevatedButtonCustom(
+                              BgColor: ColorStyle.primaryColorRed,
                               size: Size(MediaQuery.of(context).size.width, 50),
                               onTap: () => userAuth.logOut(),
                               text: 'LogOut',
@@ -174,13 +175,13 @@ class MyDrowerList extends StatelessWidget {
                 //           Icon(
                 //             Icons.map_sharp,
                 //             size: 30,
-                //             color: Colors.grey,
+                //             color: ColorStyle.secondaryColorgrey,
                 //           ),
                 //           Container(
                 //             margin: EdgeInsets.only(left: 40),
                 //             child: Text(
                 //               'Track Order',
-                //               style: TextStyle(color: Colors.grey, fontSize: 20),
+                //               style: TextStyle(color: ColorStyle.secondaryColorgrey, fontSize: 20),
                 //             ),
                 //           ),
                 //         ]),

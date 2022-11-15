@@ -11,6 +11,7 @@ import 'NewsLetter.dart';
 import 'package:get/get.dart';
 import '../GetxController/MyHomePage_controller.dart';
 import '../GetxController/UserAuth_controller.dart';
+import '../Styles/ColorStyle.dart';
 
 class MyHomePage extends StatelessWidget {
   final HomeBannerController controller = Get.put(HomeBannerController());
@@ -32,7 +33,7 @@ class MyHomePage extends StatelessWidget {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.red,
+                          color: ColorStyle.primaryColorRed,
                         ),
                         child: Column(children: [
                           DrowerHeader(),
@@ -48,6 +49,7 @@ class MyHomePage extends StatelessWidget {
               ),
               // bottomNavigationBar: TheFooter(),
               appBar: AppBar(
+                // backgroundColor: ColorStyle.primaryColorRed,
                 elevation: 0,
                 title: Image.asset(
                   'assets/images/addweb.png', height: 100, width: 200,

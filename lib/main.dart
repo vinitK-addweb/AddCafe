@@ -5,6 +5,7 @@ import 'package:addcafe/Views/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import './Components/IndicatorSlider.dart';
+import './Styles/ColorStyle.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'cafe',
         theme: ThemeData(
-          primarySwatch: Colors.red,
+          primarySwatch: ColorStyle.primaryColorRed.toMaterialColor(),
         ),
         home: Splash());
   }
