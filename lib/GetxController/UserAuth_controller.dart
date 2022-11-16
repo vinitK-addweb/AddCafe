@@ -35,7 +35,6 @@ class UserAuth extends GetxController {
 
   // ---------------------------------Form Validation-------------------------------
   SignUpValidation() {
-    print('hello');
     Get.focusScope!.unfocus();
 
     RegExp regex =
@@ -90,7 +89,7 @@ class UserAuth extends GetxController {
 // <--------------------- User Sign Up Functionality --------------------->
 
   Future signUp() async {
-    final headers = {"Content-type": "multipart/form-data"};
+    // final headers = {"Content-type": "multipart/form-data"};
     final mapedData = {
       "email": email.value.text,
       "password": password.value.text,
@@ -114,7 +113,6 @@ class UserAuth extends GetxController {
 
   Future signIn() async {
     if (password.value.text.isNotEmpty) {
-      print('sign in ---------------object');
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       final mapedData = {

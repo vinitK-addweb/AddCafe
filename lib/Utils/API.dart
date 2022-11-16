@@ -56,6 +56,9 @@ class API {
       hideLoader();
       final parsed = jsonDecode(response.body);
 
+      if (response.statusCode == 403) {
+        '${parsed['message']}'.showError();
+      }
       return parsed;
     } on Exception catch (exception) {
       // hideLoader();
@@ -123,6 +126,7 @@ class API {
       debugPrint('Response status: ${response.statusCode}');
 
       final Map<String, dynamic> parsed = json.decode(response.body);
+      print('userprofile===========$kTOKENSAVED ${parsed}');
       return parsed as Map<String, dynamic>;
     } on Exception catch (exception) {
       // hideLoader();

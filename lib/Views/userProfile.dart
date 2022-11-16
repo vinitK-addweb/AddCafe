@@ -33,7 +33,10 @@ class UserProfile extends StatelessWidget {
             title: 'Profile'),
         body: GetBuilder(
             init: UserAuth(),
-            initState: ((_) => userAuth.getlocaStorage()),
+            initState: ((_) {
+              userAuth.getlocaStorage();
+              controller.initFunction();
+            }),
             builder: (userAuth) {
               return SingleChildScrollView(
                 child: Container(
@@ -180,6 +183,7 @@ class UserProfile extends StatelessWidget {
                           height: 30,
                         ),
                         PasswordFieldUnderline(
+                          controller: controller.currentPassword.value,
                           padding: EdgeInsets.all(10),
                           labelText: 'Enter Current Password',
                           // controller: controller.textController.value,
@@ -190,6 +194,7 @@ class UserProfile extends StatelessWidget {
                           height: 10,
                         ),
                         PasswordFieldUnderline(
+                          controller: controller.newPassword.value,
                           padding: EdgeInsets.all(10),
                           labelText: 'Enter New Password',
                           // controller: controller.textController.value,
@@ -206,7 +211,7 @@ class UserProfile extends StatelessWidget {
                           size:
                               Size(MediaQuery.of(context).size.width / 2.5, 40),
                           onTap: (() {
-                            // controller.continueToPasswordOrOtp();
+                            controller.changePasswordValidation();
                           }),
                         ),
                         SizedBox(
