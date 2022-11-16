@@ -10,13 +10,15 @@ class ElevatedButtonCustom extends StatelessWidget {
   final String? text;
   final Size size;
   final Color? BgColor;
-  const ElevatedButtonCustom(
-      {Key? key,
-      this.onTap,
-      this.text = "Elevated Button",
-      this.size = const Size(100, 50),
-      this.BgColor = Colors.red})
-      : super(key: key);
+  final double? radiusBorder;
+  const ElevatedButtonCustom({
+    Key? key,
+    this.onTap,
+    this.text = "Elevated Button",
+    this.size = const Size(100, 50),
+    this.BgColor = Colors.red,
+    this.radiusBorder = 20,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class ElevatedButtonCustom extends StatelessWidget {
         fixedSize: size,
         // fixedSize: Size(MediaQuery.of(context).size.width - 30, 50),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(radiusBorder!),
         ),
       ),
       child: Text(

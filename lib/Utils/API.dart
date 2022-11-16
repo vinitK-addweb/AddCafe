@@ -54,7 +54,7 @@ class API {
       showLoaderGetX();
       final response = await http.get(url, headers: header);
       hideLoader();
-      List parsed = jsonDecode(response.body);
+      final parsed = jsonDecode(response.body);
 
       return parsed;
     } on Exception catch (exception) {

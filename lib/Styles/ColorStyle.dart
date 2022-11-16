@@ -10,6 +10,7 @@ class ColorStyle {
   static final Color secondryColorGreen = hex("#008000");
   static final Color secondryColorRed = hex("#D40000");
   static final Color secondaryColorgrey = hex('#545454');
+  static final Color Background = hex('#FAFAFA');
 
   static Color hex(String hexString) {
     final buffer = StringBuffer();

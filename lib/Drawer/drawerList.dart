@@ -2,7 +2,8 @@ import 'package:addcafe/Views/Faq.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
-import 'package:addcafe/Views/Wishlist.dart';
+import '../Views/Wishlist.dart';
+import '../Views/userProfile.dart';
 import '../Styles/TextStyles.dart';
 import '../Styles/ColorStyle.dart';
 import '../Components/ElevatedButtonCustom.dart';
@@ -50,6 +51,7 @@ class MyDrowerList extends StatelessWidget {
                       ),
                     ),
                     InkWell(
+                      onTap: (() => Get.to(UserProfile())),
                       child: Container(
                         padding: EdgeInsets.all(20.0),
                         child: Row(

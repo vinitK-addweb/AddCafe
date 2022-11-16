@@ -5,20 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Utils/Constant.dart';
 import '../Styles/TextStyles.dart';
 import '../Styles/ColorStyle.dart';
 import '../Components/ElevatedButtonCustom.dart';
 
-class DrowerHeader extends StatefulWidget {
-  @override
-  State<DrowerHeader> createState() => _DrowerHeaderState();
-}
-
-class _DrowerHeaderState extends State<DrowerHeader> {
-  @override
+class DrowerHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userAuth = Get.put(UserAuth());

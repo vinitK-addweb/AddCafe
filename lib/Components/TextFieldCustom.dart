@@ -1,6 +1,9 @@
 import '../Styles/ColorStyle.dart';
 import '../Styles/TextStyles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'dart:async';
 
 class TextFieldUnderline extends StatelessWidget {
   final TextEditingController? controller;
@@ -40,6 +43,137 @@ class TextFieldUnderline extends StatelessWidget {
       maxLines: maxLines,
       minLines: 1,
       decoration: InputDecoration(
+          labelText: labelText,
+          fillColor: colorFill,
+          contentPadding: padding,
+          border: UnderlineInputBorder(
+              borderRadius: BorderRadius.circular(radiusBorder!),
+              borderSide: BorderSide(color: colorBoder!, width: 1)),
+          focusedBorder: UnderlineInputBorder(
+              borderRadius: BorderRadius.circular(radiusBorder!),
+              borderSide: BorderSide(color: colorBoder!, width: 1)),
+          hintText: hintText,
+          hintStyle: textStyle!.apply(color: colorHint)),
+      style: textStyle!,
+    );
+  }
+}
+
+class TextFormFieldUnderline extends StatelessWidget {
+  final TextEditingController? controller;
+  final TextInputType? keyboardType;
+  final EdgeInsets? padding;
+  final String? hintText;
+  final Color? colorFill;
+  final Color? colorBoder;
+  final Color? colorText;
+  final Color? colorHint;
+  final TextStyle? textStyle;
+  final double? radiusBorder;
+  final int? maxLines;
+  final String? labelText;
+  final FutureOr<String?> Function()? validator;
+
+  TextFormFieldUnderline(
+      {Key? key,
+      this.controller,
+      this.padding = EdgeInsets.zero,
+      this.hintText,
+      this.keyboardType = TextInputType.text,
+      this.colorFill = Colors.white,
+      this.colorBoder = Colors.black,
+      this.colorHint = Colors.grey,
+      this.colorText = Colors.black,
+      this.textStyle = const TextStyle(),
+      this.radiusBorder = 8.0,
+      this.maxLines = 1,
+      this.labelText,
+      this.validator})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      obscureText: true,
+      decoration: InputDecoration(labelText: labelText),
+      // validator: (value) {
+      //   if (value == null || value.isEmpty) {
+      //     return 'Please enter some text';
+      //   } else {
+      //     return null;
+      //   }
+      // },
+    );
+    // TextField(
+    //   controller: controller,
+    //   keyboardType: keyboardType,
+    //   maxLines: maxLines,
+    //   minLines: 1,
+    //   decoration: InputDecoration(
+    //       labelText: labelText,
+    //       fillColor: colorFill,
+    //       contentPadding: padding,
+    //       border: UnderlineInputBorder(
+    //           borderRadius: BorderRadius.circular(radiusBorder!),
+    //           borderSide: BorderSide(color: colorBoder!, width: 1)),
+    //       focusedBorder: UnderlineInputBorder(
+    //           borderRadius: BorderRadius.circular(radiusBorder!),
+    //           borderSide: BorderSide(color: colorBoder!, width: 1)),
+    //       hintText: hintText,
+    //       hintStyle: textStyle!.apply(color: colorHint)),
+    //   style: textStyle!,
+    // );
+  }
+}
+
+class PasswordFieldUnderline extends StatelessWidget {
+  final TextEditingController? controller;
+  final TextInputType? keyboardType;
+  final EdgeInsets? padding;
+  final String? hintText;
+  final Color? colorFill;
+  final Color? colorBoder;
+  final Color? colorText;
+  final Color? colorHint;
+  final TextStyle? textStyle;
+  final double? radiusBorder;
+  final int? maxLines;
+  final String? labelText;
+
+  PasswordFieldUnderline({
+    Key? key,
+    this.controller,
+    this.padding = EdgeInsets.zero,
+    this.hintText,
+    this.keyboardType = TextInputType.text,
+    this.colorFill = Colors.white,
+    this.colorBoder = Colors.black,
+    this.colorHint = Colors.grey,
+    this.colorText = Colors.black,
+    this.textStyle = const TextStyle(),
+    this.radiusBorder = 8.0,
+    this.maxLines = 1,
+    this.labelText,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    bool _isObscure = true;
+    return TextField(
+      controller: controller,
+      keyboardType: keyboardType,
+      maxLines: maxLines,
+      minLines: 1,
+      decoration: InputDecoration(
+          suffixIcon: IconButton(
+            icon: Icon(
+              _isObscure ? Icons.visibility : Icons.visibility_off,
+            ),
+            onPressed: () {
+              _isObscure = !_isObscure;
+            },
+          ),
           labelText: labelText,
           fillColor: colorFill,
           contentPadding: padding,
