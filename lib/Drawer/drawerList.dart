@@ -1,4 +1,5 @@
 import 'package:addcafe/Views/Faq.dart';
+import 'package:addcafe/Views/MyHomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
@@ -7,6 +8,7 @@ import '../Views/userProfile.dart';
 import '../Styles/TextStyles.dart';
 import '../Styles/ColorStyle.dart';
 import '../Components/ElevatedButtonCustom.dart';
+import '../Views/Offers.dart';
 
 class MyDrowerList extends StatelessWidget {
   final userAuth = Get.put(UserAuth());
@@ -26,30 +28,30 @@ class MyDrowerList extends StatelessWidget {
                     child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, '/');
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(20.0),
-                        child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Icon(
-                                Icons.home_outlined,
-                                size: 30,
-                                color: ColorStyle.secondaryColorgrey,
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(left: 20),
-                                child: Text('Home',
-                                    style: TextStylesCustom.textStyles_20.apply(
-                                      color: ColorStyle.secondaryColorgrey,
-                                    )),
-                              ),
-                            ]),
-                      ),
-                    ),
+                    // InkWell(
+                    //   onTap: () {
+                    //     Get.to(MyHomePage());
+                    //   },
+                    //   child: Container(
+                    //     padding: EdgeInsets.all(20.0),
+                    //     child: Row(
+                    //         crossAxisAlignment: CrossAxisAlignment.start,
+                    //         children: [
+                    //           Icon(
+                    //             Icons.home_outlined,
+                    //             size: 30,
+                    //             color: ColorStyle.secondaryColorgrey,
+                    //           ),
+                    //           Container(
+                    //             margin: EdgeInsets.only(left: 20),
+                    //             child: Text('Home',
+                    //                 style: TextStylesCustom.textStyles_20.apply(
+                    //                   color: ColorStyle.secondaryColorgrey,
+                    //                 )),
+                    //           ),
+                    //         ]),
+                    //   ),
+                    // ),
                     InkWell(
                       onTap: (() => Get.to(UserProfile())),
                       child: Container(
@@ -97,6 +99,7 @@ class MyDrowerList extends StatelessWidget {
                       ),
                     ),
                     InkWell(
+                      onTap: () => Get.to(Offers()),
                       child: Padding(
                         padding: EdgeInsets.all(20.0),
                         child: Row(children: [

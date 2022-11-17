@@ -2,7 +2,7 @@ import '../Styles/ColorStyle.dart';
 import '../Styles/TextStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import '../GetxController/UserAuth_controller.dart';
 import 'dart:async';
 
 class TextFieldUnderline extends StatelessWidget {
@@ -159,7 +159,8 @@ class PasswordFieldUnderline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool _isObscure = true;
+    final userAuth = UserAuth();
+    // bool _isObscure = true;
     return TextField(
       controller: controller,
       keyboardType: keyboardType,
@@ -168,10 +169,12 @@ class PasswordFieldUnderline extends StatelessWidget {
       decoration: InputDecoration(
           suffixIcon: IconButton(
             icon: Icon(
-              _isObscure ? Icons.visibility : Icons.visibility_off,
+              userAuth.isObscure.value
+                  ? Icons.visibility
+                  : Icons.visibility_off,
             ),
             onPressed: () {
-              _isObscure = !_isObscure;
+              userAuth.obscure();
             },
           ),
           labelText: labelText,

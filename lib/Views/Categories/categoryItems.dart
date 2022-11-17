@@ -106,7 +106,7 @@ class _CategoryItemsState extends State<CategoryItems> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '',
+                        controller.checkingObx.value,
                         style: TextStylesCustom.textStyles_10,
                       ),
                       HomeBanner(widget.bannerData),

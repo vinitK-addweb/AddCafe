@@ -52,19 +52,6 @@ class DrowerHeader extends StatelessWidget {
                                 onTap: () => Get.to(Mylogin()),
                                 text: 'Login',
                               ),
-                              //  ElevatedButton(
-                              //     style: ElevatedButton.styleFrom(
-                              //         primary: Colors.black,
-                              //         shape: RoundedRectangleBorder(
-                              //             borderRadius:
-                              //                 BorderRadius.circular(4)),
-                              //         padding:
-                              //             EdgeInsets.symmetric(horizontal: 32)),
-                              //     onPressed: () => Get.to(Mylogin()),
-                              //     child: Text(
-                              //       'Login',
-                              //       style: TextStylesCustom.textStyles_20,
-                              //     ))
                             )
                           :
                           // <-------------------user profile details -------------------->

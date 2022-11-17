@@ -4,40 +4,15 @@
 
 import 'dart:convert';
 
-UserAddressModel userAddressModelFromJson(String str) =>
-    UserAddressModel.fromJson(json.decode(str));
+List<UserAddressModel> userAddressModelFromJson(String str) =>
+    List<UserAddressModel>.from(
+        json.decode(str).map((x) => UserAddressModel.fromJson(x)));
 
-String userAddressModelToJson(UserAddressModel data) =>
-    json.encode(data.toJson());
+String userAddressModelToJson(List<UserAddressModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class UserAddressModel {
   UserAddressModel({
-    this.status,
-    this.count,
-    this.payload,
-  });
-
-  int? status;
-  int? count;
-  List<Payload>? payload;
-
-  factory UserAddressModel.fromJson(Map<String, dynamic> json) =>
-      UserAddressModel(
-        status: json["status"],
-        count: json["count"],
-        payload:
-            List<Payload>.from(json["payload"].map((x) => Payload.fromJson(x))),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "status": status,
-        "count": count,
-        "payload": List<dynamic>.from(payload!.map((x) => x.toJson())),
-      };
-}
-
-class Payload {
-  Payload({
     this.id,
     this.createdAt,
     this.updatedAt,
@@ -69,7 +44,8 @@ class Payload {
   String? addressType;
   int? user;
 
-  factory Payload.fromJson(Map<String, dynamic> json) => Payload(
+  factory UserAddressModel.fromJson(Map<String, dynamic> json) =>
+      UserAddressModel(
         id: json["id"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),

@@ -10,42 +10,89 @@ import '../Utils/API.dart';
 import '../Utils/Global.dart';
 import '../Models/Model_UserDetails.dart';
 import '../Models/Model_AddAddress.dart';
+import '../Utils/Global.dart';
 
 class UserProfileController extends GetxController {
-  // Map<String, dynamic> userdetail = {};
+  Rx<UserDetailsModel> userdetails = UserDetailsModel().obs;
+  RxList<UserAddressModel> addAddress = <UserAddressModel>[].obs;
   Rx<TextEditingController> currentPassword = TextEditingController().obs;
   Rx<TextEditingController> newPassword = TextEditingController().obs;
-  Rx<UserDetailsModel> userdetails = UserDetailsModel().obs;
+  Rx<TextEditingController> phoneNumber = TextEditingController().obs;
+  Rx<TextEditingController> buildingNameNo = TextEditingController().obs;
+  Rx<TextEditingController> area = TextEditingController().obs;
+  Rx<TextEditingController> landMark = TextEditingController().obs;
+  Rx<TextEditingController> city = TextEditingController().obs;
+  Rx<TextEditingController> state = TextEditingController().obs;
+  Rx<TextEditingController> pinCode = TextEditingController().obs;
+  Rx<TextEditingController> addressType = TextEditingController().obs;
+
   Map<String, dynamic> _changePass = {};
-  Rx<UserAddressModel> addAddress = UserAddressModel().obs;
+
+  RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
   File? image;
 
   final picker = ImagePicker();
 
-  initFunction() {
-    getUserDetails();
-    // getAddress();
-  }
-
-  // RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
+  //  ----------------- Get User details from local storage --------------------->
   getUserDetails() async {
     Future.delayed(Duration(milliseconds: 1), () async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      var userprofile = RxMap<dynamic, dynamic>.from(
+      userprofile.value = RxMap<dynamic, dynamic>.from(
           jsonDecode(prefs.getString('userData').toString()));
-
-      final response = await API.instance.get(
-          endPoint: 'accounts/user/${userprofile['id']}/',
-          isHeader: true) as Map<String, dynamic>;
-
-      userdetails.value = UserDetailsModel.fromJson(response);
-
-      //   } else {
-      //     userprofile = {}.obs;
-      //   }
+      getAddress();
+      update();
     });
   }
+
+  // --------------------- fetch user saved address--------------------------->
+  getAddress() async {
+    final response = await API.instance
+        .get(endPoint: 'order/saved-address/', isHeader: true);
+
+    addAddress.value = List<UserAddressModel>.from(
+        response['payload'].map((x) => UserAddressModel.fromJson(x)));
+  }
+  // --------------------------- Add New Address ------------------------->
+
+  addNewAddress() {
+    final addressData = {
+      "phone_num": phoneNumber.value.text,
+      "building_num_name": buildingNameNo.value.text,
+      "area_colony": area.value.text,
+      "landmark": landMark.value.text,
+      "pincode": pinCode.value.text,
+      "city": city.value.text,
+      "state": state.value.text,
+      "address_type": addressType.value.text
+    };
+    debugPrint(addressData.toString());
+    var response = API.instance
+        .post(endPoint: 'order/address/', params: addressData, isHeader: true);
+  }
+
+  addresTypeFunction(value) {
+    addressType.value = value;
+  }
+
+  // --------------------------- update User Address ------------------------->
+
+  updateAddress() {
+    // phoneNumber.value =
+  }
+
+  // --------------------------- Delete User Address ------------------------->
+  deleteAddress(id) async {
+    final response = await API.instance
+        .delete(endPoint: 'order/address/${id}/', isHeader: true);
+    await getUserDetails();
+
+    if (response!['status'] == 204) {
+      '${response['message']}'.showSuccess();
+    }
+  }
+
+  // --------------------------- change password  ------------------------->
 
   changePasswordValidation() {
     RegExp regex =
@@ -74,23 +121,14 @@ class UserProfileController extends GetxController {
     if (_changePass['status'] == 202) {
       '${_changePass['message']}'.showSuccess();
     }
-    // 'password Change Sucessfully'.showSuccess();
+
     if (_changePass != null) {
       currentPassword.value.text = '';
       newPassword.value.text = '';
     }
   }
 
-  getAddress() async {
-    final response =
-        await API.instance.get(endPoint: 'order/saved-address/', isHeader: true)
-            as Map<String, dynamic>;
-    addAddress.value = UserAddressModel.fromJson(response);
-    print('${addAddress.value.payload![0].city}');
-  }
-
   Future getImage() async {
-    // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
     image = File(pickedFile!.path);

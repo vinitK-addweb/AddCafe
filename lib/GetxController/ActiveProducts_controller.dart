@@ -12,7 +12,7 @@ class ActiveProductsController extends GetxController {
   RxList<ModelActiveProducts> categoryProduct = <ModelActiveProducts>[].obs;
 
   String selectedCategory = '';
-  RxString checkingObx = "Checking OBX ...".obs;
+  RxString checkingObx = " ".obs;
 
   Future fetchAllProducts() async {
     http.Response response;

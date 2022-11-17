@@ -26,6 +26,7 @@ class UserAuth extends GetxController {
   RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
 
   Map<String, dynamic> _UserLogin = {};
+  RxBool isObscure = true.obs;
   final data = [
     {"id": "2", "image": "assets/images/facebook.png", "name": "Burger"},
     {"id": "3", "image": "assets/images/google.webp", "name": "Cake"},
@@ -179,6 +180,10 @@ class UserAuth extends GetxController {
 
   //  <-----------------  User Otp verification Functionality ------------------>
   Future MobileVerification() async {}
+
+  obscure() {
+    isObscure.value = !isObscure.value;
+  }
 
   // String get token {
   //   return _token;
