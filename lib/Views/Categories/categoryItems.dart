@@ -109,7 +109,7 @@ class _CategoryItemsState extends State<CategoryItems> {
                         controller.checkingObx.value,
                         style: TextStylesCustom.textStyles_10,
                       ),
-                      HomeBanner(widget.bannerData),
+                      HomeBanner(bannerData: widget.bannerData),
                       ListView.builder(
                         itemCount: widget.categoriesData.length,
                         physics: NeverScrollableScrollPhysics(),

@@ -6,9 +6,9 @@ import '../GetxController/MyHomePage_controller.dart';
 import 'package:get/get.dart';
 
 class HomeBanner extends StatelessWidget {
+  HomeBanner({required this.bannerData, this.autoplay = true});
   final List<ModelBanner> bannerData;
-
-  HomeBanner(this.bannerData);
+  final bool autoplay;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class HomeBanner extends StatelessWidget {
       // margin: EdgeInsets.symmetric(vertical: 20),
       child: CarouselSlider(
         options: CarouselOptions(
-          height: 150.0, autoPlay: true,
+          height: 150.0, autoPlay: autoplay,
           // enlargeCenterPage: true,
         ),
         items: bannerData.map((i) {

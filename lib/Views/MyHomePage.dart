@@ -79,7 +79,7 @@ class MyHomePage extends StatelessWidget {
                               height: 20,
                             ),
                             // HomeBanner(controller.homeBannerData.value),
-                            HomeBanner(controller.bannerData.value),
+                            HomeBanner(bannerData: controller.bannerData.value),
                             const SizedBox(
                               height: 20,
                             ),

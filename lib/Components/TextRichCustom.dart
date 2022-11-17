@@ -6,12 +6,14 @@ import '../Styles/TextStyles.dart';
 class TextRichCustom extends StatelessWidget {
   final String? textFirst;
   final String? textSecond;
+  final Color? color;
   final Function()? onTap;
 
   const TextRichCustom(
       {Key? key,
       this.textFirst = 'Text First',
       this.textSecond = 'Text Second',
+      this.color = Colors.red,
       this.onTap})
       : super(key: key);
 
@@ -27,8 +29,7 @@ class TextRichCustom extends StatelessWidget {
           ),
           TextSpan(
             text: textSecond,
-            style: TextStylesCustom.textStyles_14
-                .apply(color: ColorStyle.primaryColorRed),
+            style: TextStylesCustom.textStyles_14.apply(color: color),
             recognizer: TapGestureRecognizer()..onTap = onTap,
           ),
         ],
