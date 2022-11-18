@@ -56,7 +56,7 @@ class API {
       final response = await http.get(url, headers: header);
       hideLoader();
       final parsed = jsonDecode(response.body);
-
+      debugPrint('data=============>${parsed}');
       if (response.statusCode == 403) {
         '${parsed['message']}'.showError();
       }
@@ -124,7 +124,7 @@ class API {
       showLoaderGetX();
       final response = await http.post(url, headers: header, body: params);
       hideLoader();
-      debugPrint('Response status: ${response.statusCode}');
+      debugPrint('Response status: ${response.body}');
 
       final Map<String, dynamic> parsed = json.decode(response.body);
       // print('userprofile===========$kTOKENSAVED ${parsed}');

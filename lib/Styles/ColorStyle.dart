@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ColorStyle {
   static final Color scaffold = hex("#004383");
-
+  static final Color white = Colors.white;
   static final Color primaryColorRed = hex("#D9042B");
   static final Color primaryColorGreen = hex("#158C03");
   static final Color secondryColorBlack = hex("#111111");

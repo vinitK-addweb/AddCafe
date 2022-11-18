@@ -14,6 +14,7 @@ import '../Components/ElevatedButtonCustom.dart';
 import '../Styles/EffectStyle.dart';
 import '../Components/TextFieldCustom.dart';
 import '../Components/ElevatedButtonCustom.dart';
+import '../Components/PickerCustom.dart';
 
 class UserProfile extends StatelessWidget {
   @override
@@ -56,38 +57,71 @@ class UserProfile extends StatelessWidget {
                             decoration: boxDecorationAuthBox(),
                             child: Column(
                               children: [
-                                Stack(children: [
-                                  CircleAvatar(
-                                    child: CircleAvatar(
-                                        radius: 65,
-                                        backgroundImage: NetworkImage(
-                                          userAuth.userprofile.isEmpty
-                                              ? 'https://mir-s3-cdn-cf.behance.net/user/276/462829507061295.5f9717443f152.png'
-                                              : userAuth.userprofile[
-                                                          'profile_picture'] ==
-                                                      null
-                                                  ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi6mIqR-61xHjJUEMUfzQvP_ZeVtRZ-Hh_B9OQIh5hLjVH1ZO5U23ZehKJMmIsZkMF5Ew&usqp=CAU'
-                                                  : '${kImgUrl}/${userAuth.userprofile['profile_picture']}',
+                                InkWell(
+                                  onTap: () {
+                                    PickerCustom.imagePicker(
+                                      (file) {
+                                        controller.image.value = file;
+                                        controller.updateProfileImage();
+                                      },
+                                    );
+                                  },
+                                  child: Stack(children: [
+                                    CircleAvatar(
+                                      child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(60),
+                                          child: CircleAvatar(
+                                            radius: 65,
+                                            child: controller
+                                                    .image.value.path.isNotEmpty
+                                                ? Image.file(
+                                                    controller.image.value,
+                                                    fit: BoxFit.cover,
+                                                    height: 65 * 2,
+                                                    width: 65 * 2,
+                                                  )
+                                                : Image.network(
+                                                    userAuth.userprofile.isEmpty
+                                                        ? 'https://mir-s3-cdn-cf.behance.net/user/276/462829507061295.5f9717443f152.png'
+                                                        : userAuth.userprofile[
+                                                                    'profile_picture'] ==
+                                                                null
+                                                            ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi6mIqR-61xHjJUEMUfzQvP_ZeVtRZ-Hh_B9OQIh5hLjVH1ZO5U23ZehKJMmIsZkMF5Ew&usqp=CAU'
+                                                            : '${kImgUrl}${userAuth.userprofile['profile_picture']}',
+                                                  ),
+                                          )),
+                                      backgroundColor:
+                                          ColorStyle.primaryColorGreen,
+                                      radius: 72,
+                                    ),
+                                    Positioned(
+                                        bottom: 0,
+                                        right: -25,
+                                        child: RawMaterialButton(
+                                          onPressed: () {
+                                            PickerCustom.imagePicker(
+                                              (file) {
+                                                controller.image.value = file;
+                                                controller.updateProfileImage();
+                                              },
+                                            );
+                                          },
+                                          // controller.getImage(),
+                                          elevation: 2,
+                                          fillColor: Color(0xFFF5F6F9),
+                                          child: Icon(
+                                            Icons.camera_alt_outlined,
+                                            color: ColorStyle.primaryColorRed,
+                                          ),
+                                          padding: const EdgeInsets.all(8.0),
+                                          shape: CircleBorder(),
                                         )),
-                                    backgroundColor:
-                                        ColorStyle.primaryColorGreen,
-                                    radius: 70,
-                                  ),
-                                  Positioned(
-                                      bottom: 0,
-                                      right: -25,
-                                      child: RawMaterialButton(
-                                        onPressed: () => controller.getImage(),
-                                        elevation: 2,
-                                        fillColor: Color(0xFFF5F6F9),
-                                        child: Icon(
-                                          Icons.camera_alt_outlined,
-                                          color: ColorStyle.primaryColorRed,
-                                        ),
-                                        padding: const EdgeInsets.all(8.0),
-                                        shape: CircleBorder(),
-                                      )),
-                                ]),
+                                  ]),
+                                ),
+                                Text(
+                                    'img=====>${kImgUrl}${userAuth.userprofile['profile_picture']}'),
+
                                 const SizedBox(
                                   height: 10,
                                 ),

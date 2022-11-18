@@ -5,6 +5,7 @@ import 'Auth/Signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:addcafe/Providers/apis/UserAuth.dart';
 import 'dart:convert';
+import '../BottomNavBar.dart';
 // import 'package:provider/provider.dart';
 
 class Splash extends StatefulWidget {
@@ -34,7 +35,10 @@ class _SplashState extends State<Splash> {
           userprofile =
               await Map<String, dynamic>.from(jsonDecode(userDataPref));
 
-          Get.to(() => MyHomePage());
+          Get.to(() => TheFooter()
+              // MyHomePage()
+
+              );
           // });
         } catch (error) {
           print(error);

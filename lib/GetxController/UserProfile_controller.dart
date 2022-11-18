@@ -29,17 +29,34 @@ class UserProfileController extends GetxController {
   Map<String, dynamic> _changePass = {};
 
   RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
-  File? image;
+  Rx<File> image = File("").obs;
 
   final picker = ImagePicker();
+
+  // ------------------ Update Profile image ------------------------------------>
+
+  updateProfileImage() async {
+    // final params = {'profile_picture': image.value};
+
+    var response = await API.instance.postImage(
+        endPoint: 'accounts/customer-profile/',
+        params: {},
+        fileParams: 'profile_picture',
+        file: image.value);
+    debugPrint('image path===============> ');
+    getUserDetails();
+  }
 
   //  ----------------- Get User details from local storage --------------------->
   getUserDetails() async {
     Future.delayed(Duration(milliseconds: 1), () async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      userprofile.value = RxMap<dynamic, dynamic>.from(
-          jsonDecode(prefs.getString('userData').toString()));
+      userprofile.value = await API.instance
+          .get(endPoint: 'accounts/customer-profile/', isHeader: true);
+
+      //  RxMap<dynamic, dynamic>.from(
+      //     jsonDecode(prefs.getString('userData').toString()));
       getAddress();
       update();
     });
@@ -127,12 +144,6 @@ class UserProfileController extends GetxController {
       currentPassword.value.text = '';
       newPassword.value.text = '';
     }
-  }
-
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    image = File(pickedFile!.path);
   }
 
   addAddressValidation(value) {

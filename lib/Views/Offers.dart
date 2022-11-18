@@ -139,6 +139,7 @@ class Offers extends StatelessWidget {
                               height: 20,
                             ),
                             ElevatedButtonCustom(
+                              BgColor: ColorStyle.primaryColorRed,
                               radiusBorder: 50,
                               onTap: () {
                                 controller.fetchOffers();

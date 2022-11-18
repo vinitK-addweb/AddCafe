@@ -8,11 +8,18 @@ import '../Models/Model_ActiveProducts.dart';
 
 class ActiveProductsController extends GetxController {
   // List<ModelActiveProducts> allProducts = <ModelActiveProducts>[];
-
+  RxList<ModelActiveProducts> allProducts = <ModelActiveProducts>[].obs;
   RxList<ModelActiveProducts> categoryProduct = <ModelActiveProducts>[].obs;
 
   String selectedCategory = '';
   RxString checkingObx = " ".obs;
+
+  initCustom() {
+    Future.delayed(Duration(milliseconds: 2), () {
+      fetchAllProducts();
+      categoryProductFilter();
+    });
+  }
 
   Future fetchAllProducts() async {
     http.Response response;
@@ -23,20 +30,24 @@ class ActiveProductsController extends GetxController {
       List<ModelActiveProducts> allProducts = List<ModelActiveProducts>.from(
           jsonDecode(response.body)
               .map((x) => ModelActiveProducts.fromJson(x)));
-
-      categoryProduct.value = allProducts
-          .where((item) => item.categoryName == selectedCategory)
-          .toList();
-      print('fetch all product here=========>>>${categoryProduct.value}');
-      update();
+      Future.delayed(Duration(milliseconds: 2), () {
+        categoryProductFilter();
+      });
     }
   }
 
+  categoryProductFilter() {
+    categoryProduct.value = allProducts
+        .where((item) => item.categoryName == selectedCategory)
+        .toList();
+    print('fetch all product here=========>>>${categoryProduct.value}');
+    update();
+  }
+
   changeCategory(String category) {
-    debugPrint(category);
+    debugPrint(' category data=========${category}');
     if (selectedCategory == category) {
       selectedCategory = '';
-      ;
     } else {
       selectedCategory = category;
     }
