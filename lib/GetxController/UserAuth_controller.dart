@@ -34,6 +34,12 @@ class UserAuth extends GetxController {
 
   // late final _token;
 
+  initCustom() {
+    Future.delayed(Duration(microseconds: 3), () {
+      getlocaStorage();
+    });
+  }
+
   // ---------------------------------Form Validation-------------------------------
   SignUpValidation() {
     Get.focusScope!.unfocus();

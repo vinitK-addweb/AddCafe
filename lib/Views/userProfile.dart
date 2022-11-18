@@ -120,10 +120,16 @@ class UserProfile extends StatelessWidget {
                                                         .primaryColorGreen),
                                           ),
                                     userAuth.userprofile['first_name'] != null
-                                        ? Icon(
-                                            Icons.verified,
-                                            color: ColorStyle.primaryColorGreen,
-                                          )
+                                        ? userAuth.userprofile['is_verify']
+                                            ? Icon(
+                                                Icons.verified,
+                                                color: ColorStyle
+                                                    .primaryColorGreen,
+                                              )
+                                            : Icon(
+                                                Icons.verified,
+                                                color: Colors.grey,
+                                              )
                                         : SizedBox(
                                             height: 0,
                                           )
@@ -149,10 +155,15 @@ class UserProfile extends StatelessWidget {
                                                 fontWeightDelta: 2,
                                                 color: ColorStyle
                                                     .primaryColorGreen)),
-                                    Icon(
-                                      Icons.account_circle,
-                                      color: ColorStyle.secondryColorYellow,
-                                    )
+                                    userAuth.userprofile['is_email_verify']
+                                        ? Icon(
+                                            Icons.verified,
+                                            color: ColorStyle.primaryColorGreen,
+                                          )
+                                        : Icon(
+                                            Icons.verified,
+                                            color: Colors.grey,
+                                          )
                                   ],
                                 ),
                               ],
@@ -180,6 +191,7 @@ class UserProfile extends StatelessWidget {
                           const SizedBox(
                             height: 30,
                           ),
+
                           PasswordFieldUnderline(
                             controller: controller.currentPassword.value,
                             padding: EdgeInsets.all(10),
@@ -213,7 +225,7 @@ class UserProfile extends StatelessWidget {
                             }),
                           ),
                           SizedBox(
-                            height: 20,
+                            height: 30,
                           ),
 // ------------------------ Add New Address ------------------------------>
                           Container(

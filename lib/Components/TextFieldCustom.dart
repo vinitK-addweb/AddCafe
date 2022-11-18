@@ -1,3 +1,5 @@
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+
 import '../Styles/ColorStyle.dart';
 import '../Styles/TextStyles.dart';
 import 'package:flutter/material.dart';
@@ -161,35 +163,38 @@ class PasswordFieldUnderline extends StatelessWidget {
   Widget build(BuildContext context) {
     final userAuth = UserAuth();
     // bool _isObscure = true;
-    return TextField(
-      controller: controller,
-      keyboardType: keyboardType,
-      maxLines: maxLines,
-      minLines: 1,
-      decoration: InputDecoration(
-          suffixIcon: IconButton(
-            icon: Icon(
-              userAuth.isObscure.value
-                  ? Icons.visibility
-                  : Icons.visibility_off,
+    return Obx(() {
+      return TextField(
+        obscureText: userAuth.isObscure.value,
+        controller: controller,
+        keyboardType: keyboardType,
+        maxLines: maxLines,
+        minLines: 1,
+        decoration: InputDecoration(
+            suffixIcon: IconButton(
+              icon: Icon(
+                userAuth.isObscure.value
+                    ? Icons.visibility_off
+                    : Icons.visibility,
+              ),
+              onPressed: () {
+                userAuth.obscure();
+              },
             ),
-            onPressed: () {
-              userAuth.obscure();
-            },
-          ),
-          labelText: labelText,
-          fillColor: colorFill,
-          contentPadding: padding,
-          border: UnderlineInputBorder(
-              borderRadius: BorderRadius.circular(radiusBorder!),
-              borderSide: BorderSide(color: colorBoder!, width: 1)),
-          focusedBorder: UnderlineInputBorder(
-              borderRadius: BorderRadius.circular(radiusBorder!),
-              borderSide: BorderSide(color: colorBoder!, width: 1)),
-          hintText: hintText,
-          hintStyle: textStyle!.apply(color: colorHint)),
-      style: textStyle!,
-    );
+            labelText: labelText,
+            fillColor: colorFill,
+            contentPadding: padding,
+            border: UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(radiusBorder!),
+                borderSide: BorderSide(color: colorBoder!, width: 1)),
+            focusedBorder: UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(radiusBorder!),
+                borderSide: BorderSide(color: colorBoder!, width: 1)),
+            hintText: hintText,
+            hintStyle: textStyle!.apply(color: colorHint)),
+        style: textStyle!,
+      );
+    });
   }
 }
 

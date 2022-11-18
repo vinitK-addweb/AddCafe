@@ -23,7 +23,7 @@ class MyHomePage extends StatelessWidget {
       init: HomeBannerController(),
       initState: (state) {
         controller.initMethodGetX();
-        userAuth.getlocaStorage();
+        userAuth.initCustom();
       },
       builder: (controller) {
         return Obx((() => Scaffold(

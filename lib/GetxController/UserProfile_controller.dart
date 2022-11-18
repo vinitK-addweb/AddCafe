@@ -109,7 +109,8 @@ class UserProfileController extends GetxController {
 
   changePassword() async {
     final mapedData = {
-      "email": userdetails.value.email,
+      "email": userprofile.value['email'],
+      // userdetails.value.email,
       "old_password": currentPassword.value.text,
       "new_password": newPassword.value.text
     };
