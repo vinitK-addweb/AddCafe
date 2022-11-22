@@ -56,7 +56,7 @@ class API {
       final response = await http.get(url, headers: header);
       hideLoader();
       final parsed = jsonDecode(response.body);
-      debugPrint('data=============>${parsed}');
+
       if (response.statusCode == 403) {
         '${parsed['message']}'.showError();
       }

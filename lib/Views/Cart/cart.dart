@@ -1,4 +1,6 @@
 import 'package:addcafe/Styles/TextStyles.dart';
+import 'package:addcafe/Views/AddNewAddress.dart';
+import 'package:addcafe/Views/MyHomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import './emptyCart.dart';
@@ -6,6 +8,8 @@ import '../../GetxController/Cart_controller.dart';
 import '../../Styles/ColorStyle.dart';
 import '../../Components/AppBarStyle.dart';
 import '../../Components/TextFieldCustom.dart';
+import '../../BottomNavBar.dart';
+import '../../GetxController/MyHomePage_controller.dart';
 
 class Cart extends StatelessWidget {
   const Cart({Key? key}) : super(key: key);
@@ -14,6 +18,7 @@ class Cart extends StatelessWidget {
   Widget build(BuildContext context) {
     // final cartApi = Provider.of<CartApi>(context);
     final controller = Get.put(CartController());
+    final homPageController = Get.put(HomeBannerController());
     return Scaffold(
       appBar: AppBar(
         title: Text('Cart'),
@@ -43,8 +48,8 @@ class Cart extends StatelessWidget {
               // ),
               onPressed: () {
                 controller.cartData.isNotEmpty
-                    ? Navigator.of(context).pushNamed('/addAddress')
-                    : Navigator.of(context).pushNamed('/');
+                    ? Get.to(AddNewAddress())
+                    : homPageController.currentIndex.value = 0;
               },
             ))
           ],

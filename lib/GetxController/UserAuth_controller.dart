@@ -12,6 +12,7 @@ import 'package:addcafe/Views/Auth/Otp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:addcafe/Utils/Global.dart';
 import 'package:addcafe/Utils/Constant.dart';
+import '../BottomNavBar.dart';
 
 class UserAuth extends GetxController {
   Rx<TextEditingController> textController = TextEditingController().obs;
@@ -141,7 +142,7 @@ class UserAuth extends GetxController {
         prefs.setString('userData', strPayLoad);
         prefs.setString('token', await _UserLogin['access']);
         getlocaStorage();
-        await Get.to(MyHomePage());
+        await Get.to(BottamNavigationBar());
       }
     }
   }

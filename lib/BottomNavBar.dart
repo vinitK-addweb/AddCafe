@@ -7,7 +7,7 @@ import './Styles/TextStyles.dart';
 import '../Views/Offers.dart';
 import '../Views/Cart/cart.dart';
 
-class TheFooter extends StatelessWidget {
+class BottamNavigationBar extends StatelessWidget {
   final controller = Get.put(HomeBannerController());
 
   double iconSize = 24;
