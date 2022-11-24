@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:connectivity/connectivity.dart';
-import '../Utils/Constants.dart';
+import './Constant.dart';
 import '../Utils/Global.dart';
 import 'dart:typed_data';
 
@@ -38,42 +38,115 @@ class API {
     }
   }
 
-  Future<Map<String, dynamic>?> get({required String endPoint}) async {
+// ---------------------------- Get request ---------------
+  Future<dynamic> get({required String endPoint, required isHeader}) async {
     if (!await _checkInternet()) {
       return null;
     }
 
-    final url = Uri.parse('${_kBaseURL}${endPoint}');
+    final url = Uri.parse('$_kBaseURL$endPoint');
 
-    final headers = {'Authorization': 'Bearer $kTOKENSAVED'};
+    // final headers = {'Authorization': 'Bearer $kTOKENSAVED'};
+    Map<String, String> header = {};
+
+    if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
 
     try {
       showLoaderGetX();
-      final response = await http.get(url, headers: headers);
+      final response = await http.get(url, headers: header);
+      hideLoader();
+      final parsed = jsonDecode(response.body);
+
+      if (response.statusCode == 403) {
+        '${parsed['message']}'.showError();
+      }
+      return parsed;
+    } on Exception {
+    } catch (error) {
+      hideLoader();
+      debugPrint('Error is:-$error');
+      return null;
+    }
+  }
+
+  // --------------------- Delete request -------------------->
+
+  Future<Map<String, dynamic>?> delete(
+      {required String endPoint, required bool isHeader}) async {
+    if (!await _checkInternet()) {
+      return null;
+    }
+
+    final url = Uri.parse('$_kBaseURL$endPoint');
+
+    Map<String, String> header = {};
+    if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
+
+    try {
+      showLoaderGetX();
+      final response = await http.delete(url, headers: header);
       hideLoader();
 
       final Map parsed = json.decode(response.body);
       return parsed as Map<String, dynamic>;
-    } on Exception catch (exception) {
+    } on Exception {
       // hideLoader();
       // debugPrint('Exception is:-' + exception.toString());
       // return null;
     } catch (error) {
       hideLoader();
+
       debugPrint('Error is:-' + error.toString());
       return null;
     }
   }
 
-  Future<Map<String, dynamic>?> post(
+  // --------------------- patch request -------------------->
+  Future<Map<String, dynamic>?> patch(
       {required String endPoint,
-        required Map<String, dynamic> params,
-        required bool isHeader}) async {
+      required Map<String, dynamic> params,
+      required bool isHeader}) async {
     if (!await _checkInternet()) {
       return null;
     }
 
-    final url = Uri.parse('${_kBaseURL}${endPoint}');
+    final url = Uri.parse('$_kBaseURL$endPoint');
+
+    Map<String, String> header = {};
+    if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
+
+    try {
+      showLoaderGetX();
+      final response = await http.patch(url, headers: header, body: params);
+      hideLoader();
+      debugPrint('Response status: ${response.body}');
+
+      final Map<String, dynamic> parsed = json.decode(response.body);
+      // print('userprofile===========$kTOKENSAVED ${parsed}');
+      return parsed as Map<String, dynamic>;
+    } on Exception {
+      hideLoader();
+      // debugPrint('Exception is:-' + exception.toString());
+      // return null;
+    } catch (error) {
+      hideLoader();
+
+      debugPrint('Error is:-' + error.toString());
+      return null;
+    }
+  }
+
+  // ----------------------- Post Request--------------------->
+
+  Future<Map<String, dynamic>?> post(
+      {required String endPoint,
+      required Map<String, dynamic> params,
+      required bool isHeader}) async {
+    if (!await _checkInternet()) {
+      return null;
+    }
+
+    final url = Uri.parse('$_kBaseURL$endPoint');
 
     Map<String, String> header = {};
     if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
@@ -82,11 +155,13 @@ class API {
       showLoaderGetX();
       final response = await http.post(url, headers: header, body: params);
       hideLoader();
-      debugPrint('Response status: ${response.statusCode}');
+      debugPrint('Response status: ${response.body}');
 
-      final Map parsed = json.decode(response.body);
-      return parsed as Map<String, dynamic>;
-    } on Exception catch (exception) {
+      final Map<String, dynamic> parsed = json.decode(response.body);
+
+      // print('userprofile===========$kTOKENSAVED ${parsed}');
+      return parsed;
+    } on Exception {
       // hideLoader();
       // debugPrint('Exception is:-' + exception.toString());
       // return null;
@@ -102,13 +177,13 @@ class API {
     required String endPoint,
     required Map<String, dynamic> params,
     required String fileParams,
-    required File file,
+    required file,
   }) async {
     if (!await _checkInternet()) {
       return null;
     }
 
-    final url = Uri.parse('${_kBaseURL}${endPoint}');
+    final url = Uri.parse('$_kBaseURL$endPoint');
     final request = http.MultipartRequest('POST', url);
     request.headers['Authorization'] = 'Bearer $kTOKENSAVED';
 
@@ -124,9 +199,6 @@ class API {
       final response = await request.send();
 
       hideLoader();
-
-      // print(response.stream);
-      // print(response.statusCode);
 
       final res = await http.Response.fromStream(response);
       print(res.body);
@@ -144,7 +216,7 @@ class API {
     }
   }
 
-  postImageData(Uint8List imageData) async {
+  postImageData(imageData) async {
     if (!await _checkInternet()) {
       return null;
     }
@@ -161,9 +233,7 @@ class API {
       final response = await request.send();
 
       hideLoader();
-
-      // print(response.stream);
-      // print(response.statusCode);
+      ;
 
       final res = await http.Response.fromStream(response);
       print(res.body);

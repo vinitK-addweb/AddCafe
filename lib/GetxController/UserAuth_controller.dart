@@ -1,23 +1,25 @@
 import 'dart:io';
-import 'package:addcafe/views/Auth/Signin.dart';
+import 'package:addcafe/Views/Auth/Signin.dart';
 import 'package:addcafe/Utils/API.dart';
-import '../views/Auth/Password.dart';
-import 'package:addcafe/views/MyHomePage.dart';
+import '../Views/Auth/Password.dart';
+import 'package:addcafe/Views/MyHomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:addcafe/views/Auth/Otp.dart';
+import 'package:addcafe/Views/Auth/Otp.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:addcafe/Utils/Global.dart';
-import 'package:addcafe/Utils/Constants.dart';
+import '../../Utils/Constant.dart';
+import '../BottomNavBar.dart';
 
 class UserAuth extends GetxController {
   Rx<TextEditingController> textController = TextEditingController().obs;
   Rx<TextEditingController> otp = TextEditingController().obs;
   Rx<TextEditingController> password = TextEditingController().obs;
-  Rx<TextEditingController> fullName = TextEditingController().obs;
+  Rx<TextEditingController> firstName = TextEditingController().obs;
+  Rx<TextEditingController> lastName = TextEditingController().obs;
   Rx<TextEditingController> email = TextEditingController().obs;
   Rx<TextEditingController> cPassword = TextEditingController().obs;
   Rx<TextEditingController> phone = TextEditingController().obs;
@@ -25,6 +27,7 @@ class UserAuth extends GetxController {
   RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
 
   Map<String, dynamic> _UserLogin = {};
+  RxBool isObscure = true.obs;
   final data = [
     {"id": "2", "image": "assets/images/facebook.png", "name": "Burger"},
     {"id": "3", "image": "assets/images/google.webp", "name": "Cake"},
@@ -32,18 +35,24 @@ class UserAuth extends GetxController {
 
   // late final _token;
 
+  initCustom() {
+    Future.delayed(Duration(microseconds: 3), () {
+      getlocaStorage();
+    });
+  }
+
   // ---------------------------------Form Validation-------------------------------
   SignUpValidation() {
     Get.focusScope!.unfocus();
-    print('fullName ');
-    print(password.value.text);
+
     RegExp regex =
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     if (email.value.text.isEmpty ||
-        phone.value.text.isEmpty ||
-        fullName.value.text.isEmpty ||
-        password.value.text.isEmpty ||
-        cPassword.value.text.isEmpty)
+            phone.value.text.isEmpty ||
+            firstName.value.text.isEmpty ||
+            password.value.text.isEmpty
+        // ||cPassword.value.text.isEmpty
+        )
       'All Fields are Required'.showError();
     else if (password.value.text.length < 8)
       'Password should have atleast 8 characters'.showError();
@@ -51,8 +60,8 @@ class UserAuth extends GetxController {
       'Enter a stronger password'.showError();
     else if (!GetUtils.isEmail(email.value.text))
       'Enter a Valid Email Address'.showError();
-    else if (password.value.text != cPassword.value.text)
-      'Confimation password does not match the entered password'.showError();
+    // else if (password.value.text != cPassword.value.text)
+    //   'Confimation password does not match the entered password'.showError();
     else if (phone.value.text.length < 10)
       'Plase Enter a Valid Mobile Number'.showError();
     else {
@@ -88,11 +97,12 @@ class UserAuth extends GetxController {
 // <--------------------- User Sign Up Functionality --------------------->
 
   Future signUp() async {
-    final headers = {"Content-type": "multipart/form-data"};
+    // final headers = {"Content-type": "multipart/form-data"};
     final mapedData = {
       "email": email.value.text,
       "password": password.value.text,
-      "first_name": fullName.value.text,
+      "first_name": firstName.value.text,
+      "last_name": lastName.value.text,
       "mobile_number": phone.value.text
     };
 
@@ -105,47 +115,35 @@ class UserAuth extends GetxController {
       '${_UserLogin['message']}'.showError();
     else
       Get.to(Mylogin());
-    print('dataaaaaaaaaaa=================>    ${_UserLogin}');
-    // http.Response response = await http.post(
-    //     Uri.parse('${dotenv.env['API_URL']}/accounts/signup/'),
-    //     headers: {"Content-Type": "application/json"},
-    //     body: jsonEncode(mapedData));
-
-    // print(response);
-    // if (response.statusCode == 201) {
-    //   _UserLogin = await jsonDecode(response.body);
-    //   // _token = await _UserLogin['access'];
-    //   userprofile = await _UserLogin['payload'];
-    //   print('_userProfile: ${userprofile}');
-    //   Get.to(() => Mylogin());
-    // }
   }
 
 // <-----------------  User SignIn Functionality ------------------>
 
   Future signIn() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (password.value.text.isNotEmpty) {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    final mapedData = {
-      "email": textController.value.text,
-      "password": password.value.text,
-    };
+      final mapedData = {
+        "email": textController.value.text,
+        "password": password.value.text,
+      };
 
-    _UserLogin = await API.instance.post(
-        endPoint: APIEndPoints.instance.kLogin,
-        params: mapedData,
-        isHeader: false) as Map<String, dynamic>;
+      _UserLogin = await API.instance.post(
+          endPoint: APIEndPoints.instance.kLogin,
+          params: mapedData,
+          isHeader: false) as Map<String, dynamic>;
 
-    if (_UserLogin['status'] == 401)
-      '${_UserLogin['message']}'.showError();
-    else {
-      // -------------------- Save data to the local storage------------------------
+      if (_UserLogin['status'] == 401)
+        '${_UserLogin['message']}'.showError();
+      else {
+        // -------------------- Save data to the local storage------------------------
 
-      final strPayLoad = jsonEncode(_UserLogin['payload']);
-      prefs.setString('userData', strPayLoad);
-      prefs.setString('token', await _UserLogin['access']);
-      getlocaStorage();
-      Get.to(MyHomePage());
+        final strPayLoad = jsonEncode(_UserLogin['payload']);
+        prefs.setString('userData', strPayLoad);
+        prefs.setString('token', await _UserLogin['access']);
+        getlocaStorage();
+        await Get.to(BottamNavigationBar());
+      }
     }
   }
 
@@ -177,15 +175,23 @@ class UserAuth extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // await storage.deleteItem('userData');
     // userprofile = null;
+    password.value.text = '';
+    textController.value.text = '';
+    kTOKENSAVED = '';
     userprofile = {}.obs;
     prefs.remove('userData');
     prefs.remove('token');
-
+    getlocaStorage();
     await Get.to(Mylogin());
   }
 
   //  <-----------------  User Otp verification Functionality ------------------>
-  Future MobileVerification() async {}
+
+  Future mobileVerification() async {}
+
+  obscure() {
+    isObscure.value = !isObscure.value;
+  }
 
   // String get token {
   //   return _token;
