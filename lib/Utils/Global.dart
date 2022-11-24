@@ -12,13 +12,13 @@ showLoaderGetX() {
       child: Center(
         child: Container(
           height: 60,
-          margin: EdgeInsets.only(left: 40, right: 40),
+          margin: const EdgeInsets.only(left: 40, right: 40),
           decoration: BoxDecoration(
               color: Colors.red, borderRadius: BorderRadius.circular(4)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
+              const SizedBox(
                 height: 30,
                 width: 30,
                 child: CircularProgressIndicator(
@@ -29,7 +29,7 @@ showLoaderGetX() {
               Container(
                 width: 16,
               ),
-              Text("Loading ...", style: TextStyle(color: Colors.white)),
+              const Text("Loading ...", style: TextStyle(color: Colors.white)),
             ],
           ),
         ),

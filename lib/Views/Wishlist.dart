@@ -1,24 +1,21 @@
 import 'package:addcafe/Styles/TextStyles.dart';
-import 'package:addcafe/Views/MyHomePage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-// import 'package:addcafe/Providers/apis/CartApi.dart';
-// import 'package:addcafe/Providers/apis/MyfavouritesApi.dart';
-// import 'package:provider/provider.dart';
-// import 'package:addcafe/widgets/category/rating.dart';
-// import 'package:addcafe/widgets/category/addons.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../Components/ElevatedButtonCustom.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/Views/EmptyWishlist.dart';
 import 'package:addcafe/GetxController/Wishlist_controller.dart';
-import '../Models/Model_MyWishList.dart';
 import '../Utils/Constant.dart';
 import '../Styles/ColorStyle.dart';
 import '../Components/AppBarStyle.dart';
+import '../GetxController/MyHomePage_controller.dart';
+import '../BottomNavBar.dart';
+import '../Views/Categories/addons.dart';
+
+import './../GetxController/Cart_controller.dart';
 
 class Myfavourits extends StatelessWidget {
+  const Myfavourits({super.key});
+
   @override
   Widget build(BuildContext context) {
     // final userAuth = Provider.of<UserAuth>(context);
@@ -26,20 +23,23 @@ class Myfavourits extends StatelessWidget {
     //     Get.put(MyFavouritesApi().myFavourites.value);
     final myfavapi = Get.put(MyFavouritesApi());
     // final cartApi = Provider.of<CartApi>(context);
+    // final cartData = Get.put(CartController());
+    final homPageController = Get.put(HomeBannerController());
 
     return GetBuilder(
         init: MyFavouritesApi(),
         initState: ((_) {
           myfavapi.initMethod();
         }),
-        builder: (myfavapi) {
+        builder: (_) {
           return Obx(() {
             return Scaffold(
                 appBar: AppBarStyle(
                   backgroundColor: ColorStyle.primaryColorRed,
                   leading: IconButton(
                     onPressed: () => Get.back(),
-                    icon: Icon(
+                    // currentIndex.value = 0,
+                    icon: const Icon(
                       Icons.arrow_back,
                       color: Colors.white,
                     ),
@@ -48,321 +48,282 @@ class Myfavourits extends StatelessWidget {
                   title: 'Wishlist',
                 ),
                 bottomNavigationBar: Container(
-                  padding: EdgeInsets.all(25),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: MaterialButton(
-                        height: 55,
-                        minWidth: double.infinity,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                        color: Colors.red,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Text(
-                          myfavapi.myFavourites.value.isNotEmpty
-                              ? 'Proceed to cart'
-                              : 'Add Items',
-                          style: TextStylesCustom.textStyles_20
-                              .apply(color: Colors.white),
-                        ),
-                        onPressed: () {
-                          myfavapi.myFavourites.isNotEmpty
-                              ? Navigator.of(context).pushNamed('/cart')
-                              : Get.to(MyHomePage());
-                        },
-                      ))
-                    ],
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+                  child: ElevatedButtonCustom(
+                    BgColor: ColorStyle.primaryColorRed,
+                    size: const Size(50, 50),
+                    text: myfavapi.myFavourites.isNotEmpty
+                        ? 'Proceed to Cart'
+                        : 'Add Items',
+                    onTap: () {
+                      myfavapi.myFavourites.isEmpty
+                          ? Get.to(() => BottamNavigationBar())
+                          : homPageController.setCurrentIndex(3);
+                      Get.to(() => BottamNavigationBar());
+                    },
                   ),
                 ),
-                body: myfavapi.myFavourites.value.isNotEmpty
+                body: myfavapi.myFavourites.isNotEmpty
                     ? SingleChildScrollView(
-                        child: Container(
-                          child: Column(
-                            children: myfavapi.myFavourites.value.isNotEmpty
-                                ? myfavapi.myFavourites.value.map((e) {
-                                    if (e != null) {
-                                      // List thisCartData =
-                                      //     cartApi.isInCart(e['product']);
-                                      return Container(
-                                        margin:
-                                            EdgeInsets.symmetric(vertical: 10),
-                                        child: Card(
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
+                        child: Column(
+                          children: myfavapi.myFavourites.isNotEmpty
+                              ? myfavapi.myFavourites.value.map((e) {
+                                  // List thisCartData =
+                                  //     cartData.isInCart(e.product);
+                                  return Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    child: Card(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              SizedBox(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.5,
+                                                child: Text(
+                                                  '${e.productData?.itemName}',
+                                                  style: TextStylesCustom
+                                                      .textStyles_18
+                                                      .apply(
+                                                          fontWeightDelta: 2),
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
                                                 children: [
-                                                  Container(
-                                                      width: 20,
-                                                      child: Image(
-                                                        image: AssetImage(
-                                                            'assets/images/vegIcon.png'),
-                                                        fit: BoxFit.fill,
-                                                      )),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.5,
-                                                    child: Text(
-                                                      '${e.productData?.itemName}',
-                                                      style: TextStylesCustom
-                                                          .textStyles_18
-                                                          .apply(
-                                                              fontWeightDelta:
-                                                                  2),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      // Rating(3),
-                                                      Text(
-                                                        '345 reviews',
-                                                        style: TextStylesCustom
-                                                            .textStyles_16
-                                                            .apply(
-                                                                fontWeightDelta:
-                                                                    2),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  SizedBox(
-                                                    height: 10,
-                                                  ),
+                                                  // Rating(3),
                                                   Text(
-                                                      '₹ ${e.productData?.price}',
-                                                      style: TextStylesCustom
-                                                          .textStyles_16),
-                                                  SizedBox(
-                                                    height: 10,
+                                                    '345 reviews',
+                                                    style: TextStylesCustom
+                                                        .textStyles_16
+                                                        .apply(
+                                                            fontWeightDelta: 2),
                                                   ),
-                                                  Row(
-                                                    children: [
-                                                      // <----------- Remove from wishlist ----------------->
-                                                      InkWell(
-                                                        onTap: () {
-                                                          myfavapi
-                                                              .deleteMyFavourites(
-                                                                  e.id);
-                                                        },
-                                                        child: Container(
-                                                          margin: EdgeInsets
-                                                              .symmetric(
-                                                                  vertical: 10),
-                                                          child: Text(
-                                                            'Remove',
-                                                            style: TextStyle(
-                                                                color:
-                                                                    Colors.red,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold),
-                                                          ),
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal: 8,
-                                                                  vertical: 3),
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            border: Border.all(
-                                                              color: Colors.red,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-
-                                                      Container(
-                                                        margin: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 10),
-                                                        child: Icon(
-                                                          Icons.share,
-                                                          color:
-                                                              Colors.blueAccent,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  )
                                                 ],
                                               ),
-                                              Stack(
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text('₹ ${e.productData?.price}',
+                                                  style: TextStylesCustom
+                                                      .textStyles_16),
+                                              const SizedBox(
+                                                height: 10,
+                                              ),
+                                              Row(
                                                 children: [
-                                                  Container(
-                                                    width: 150,
-                                                    child: Column(
-                                                      children: [
-                                                        Container(
-                                                          width: 150,
-                                                          height: 150,
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8),
-                                                            child: Image(
-                                                              image: NetworkImage(
-                                                                  // '${dotenv.env['IMG_URL']}
-                                                                  '${kImgUrl}/${e.productData?.featuredImage}'),
-                                                              fit: BoxFit.fill,
-                                                            ),
-                                                          ),
+                                                  // <----------- Remove from wishlist ----------------->
+                                                  InkWell(
+                                                    onTap: () {
+                                                      myfavapi
+                                                          .deleteMyFavourites(
+                                                              e.id);
+                                                    },
+                                                    child: Container(
+                                                      margin: const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 10),
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 8,
+                                                          vertical: 3),
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                          color: Colors.red,
                                                         ),
-                                                        SizedBox(
-                                                          height: 20,
-                                                        )
-                                                      ],
+                                                      ),
+                                                      child: const Text(
+                                                        'Remove',
+                                                        style: TextStyle(
+                                                            color: Colors.red,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
                                                     ),
                                                   ),
-                                                  // Positioned(
-                                                  //   top: 120,
-                                                  //   left: 45,
-                                                  //   child: thisCartData.isEmpty
-                                                  //       ? ElevatedButton(
-                                                  //           onPressed: () => {
-                                                  //             if ((e['product_data']
-                                                  //                         [
-                                                  //                         'add_on_data']
-                                                  //                     as List)
-                                                  //                 .isNotEmpty)
-                                                  //               {
-                                                  //                 showModalBottomSheet(
-                                                  //                   isScrollControlled:
-                                                  //                       true,
-                                                  //                   backgroundColor:
-                                                  //                       Colors
-                                                  //                           .transparent,
-                                                  //                   shape: RoundedRectangleBorder(
-                                                  //                       borderRadius:
-                                                  //                           BorderRadius.vertical(
-                                                  //                               top: Radius.circular(20))),
-                                                  //                   context:
-                                                  //                       context,
-                                                  //                   builder: (context) =>
-                                                  //                       Addon(e[
-                                                  //                           'product_data']),
-                                                  //                 )
-                                                  //               }
-                                                  //             else
-                                                  //               {
-                                                  //                 cartApi
-                                                  //                     .addToCart({
-                                                  //                   'item':
-                                                  //                       e['product_data']
-                                                  //                           [
-                                                  //                           'id'],
-                                                  //                   "addon": []
-                                                  //                 })
-                                                  //               }
-                                                  //           },
-                                                  //           child: Text('Add'),
-                                                  //         )
-                                                  //       : Container(
-                                                  //           width: 70,
-                                                  //           padding: EdgeInsets
-                                                  //               .symmetric(
-                                                  //                   horizontal: 8,
-                                                  //                   vertical: 8),
-                                                  //           decoration: BoxDecoration(
-                                                  //               color: Colors.red,
-                                                  //               border: Border.all(
-                                                  //                   color: Colors
-                                                  //                       .red),
-                                                  //               borderRadius: BorderRadius
-                                                  //                   .all((Radius
-                                                  //                       .circular(
-                                                  //                           4)))),
-                                                  //           child: Row(
-                                                  //             mainAxisAlignment:
-                                                  //                 MainAxisAlignment
-                                                  //                     .spaceAround,
-                                                  //             children: [
-                                                  //               InkWell(
-                                                  //                 onTap: () {
-                                                  //                   if (e['item_count'] ==
-                                                  //                       1) {
-                                                  //                     cartApi.delete(
-                                                  //                         e['id']);
-                                                  //                     return;
-                                                  //                   }
-                                                  //                   cartApi.updateQuantity(
-                                                  //                       'minus',
-                                                  //                       thisCartData[
-                                                  //                               0]
-                                                  //                           [
-                                                  //                           'id']);
-                                                  //                 },
-                                                  //                 child:
-                                                  //                     Container(
-                                                  //                   width: 20,
-                                                  //                   child: Center(
-                                                  //                     child: Text(
-                                                  //                       '-',
-                                                  //                       style: TextStyle(
-                                                  //                           color:
-                                                  //                               Colors.white),
-                                                  //                     ),
-                                                  //                   ),
-                                                  //                 ),
-                                                  //               ),
-                                                  //               Text(
-                                                  //                   '${thisCartData[0]['item_count']}',
-                                                  //                   style: TextStyle(
-                                                  //                       color: Colors
-                                                  //                           .white)),
-                                                  //               InkWell(
-                                                  //                 onTap: () {
-                                                  //                   cartApi.updateQuantity(
-                                                  //                       'plus',
-                                                  //                       thisCartData[
-                                                  //                               0]
-                                                  //                           [
-                                                  //                           'id']);
-                                                  //                 },
-                                                  //                 child:
-                                                  //                     Container(
-                                                  //                   width: 20,
-                                                  //                   child: Center(
-                                                  //                     child: Text(
-                                                  //                       '+',
-                                                  //                       style: TextStyle(
-                                                  //                           color:
-                                                  //                               Colors.white),
-                                                  //                     ),
-                                                  //                   ),
-                                                  //                 ),
-                                                  //               ),
-                                                  //             ],
-                                                  //           ),
-                                                  //         ),
-                                                  // ),
+
+                                                  Container(
+                                                    margin: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 10),
+                                                    child: const Icon(
+                                                      Icons.share,
+                                                      color: Colors.blueAccent,
+                                                    ),
+                                                  ),
                                                 ],
                                               )
                                             ],
                                           ),
-                                        ),
-                                      );
-                                    }
-                                    return SizedBox(
-                                      height: 0,
-                                    );
-                                  }).toList()
-                                : [EmptyWishlist()],
-                          ),
+                                          Stack(
+                                            children: [
+                                              SizedBox(
+                                                width: 150,
+                                                child: Column(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 150,
+                                                      height: 150,
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        child: Image(
+                                                          image: NetworkImage(
+                                                              // '${dotenv.env['IMG_URL']}
+                                                              '$kImgUrl/${e.productData?.featuredImage}'),
+                                                          fit: BoxFit.fill,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 20,
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                              Positioned(
+                                                  top: 120,
+                                                  left: 45,
+                                                  child: ElevatedButton(
+                                                    onPressed: () => {
+                                                      // if ((e.productData!
+                                                      //         .addOnData!)
+                                                      //     .isNotEmpty)
+                                                      //   {
+                                                      //     showModalBottomSheet(
+                                                      //       isScrollControlled:
+                                                      //           true,
+                                                      //       backgroundColor:
+                                                      //           Colors
+                                                      //               .transparent,
+                                                      //       shape: const RoundedRectangleBorder(
+                                                      //           borderRadius:
+                                                      //               BorderRadius
+                                                      //                   .vertical(
+                                                      //                       top:
+                                                      //                           Radius.circular(20))),
+                                                      //       context: context,
+                                                      //       builder:
+                                                      //           (context) =>
+                                                      //               Addon(),
+                                                      //     )
+                                                      //   }
+                                                      // else
+                                                      //   {
+                                                      // cartData.addToCart({
+                                                      //   'item':
+                                                      //       e.productData!.id,
+                                                      //   "addon": []
+                                                      // })
+                                                      // }
+                                                    },
+                                                    child: const Text(
+                                                        'Add to cart'),
+                                                  )
+                                                  // :
+                                                  // Container(
+                                                  //     width: 70,
+                                                  //     padding: EdgeInsets
+                                                  //         .symmetric(
+                                                  //             horizontal: 8,
+                                                  //             vertical: 8),
+                                                  //     decoration: BoxDecoration(
+                                                  //         color: Colors.red,
+                                                  //         border: Border.all(
+                                                  //             color:
+                                                  //                 Colors.red),
+                                                  //         borderRadius:
+                                                  //             BorderRadius
+                                                  //                 .all((Radius
+                                                  //                     .circular(
+                                                  //                         4)))),
+                                                  //     child: Row(
+                                                  //       mainAxisAlignment:
+                                                  //           MainAxisAlignment
+                                                  //               .spaceAround,
+                                                  //       children: [
+                                                  //         InkWell(
+                                                  //           onTap: () {
+                                                  //             if (e['item_count'] ==
+                                                  //                 1) {
+                                                  //               cartData
+                                                  //                   .delete(
+                                                  //                       e.id);
+                                                  //               return;
+                                                  //             }
+                                                  //             cartData.updateQuantity(
+                                                  //                 'minus',
+                                                  //                 thisCartData[
+                                                  //                         0]
+                                                  //                     ['id']);
+                                                  //           },
+                                                  //           child: Container(
+                                                  //             width: 20,
+                                                  //             child: Center(
+                                                  //               child: Text(
+                                                  //                 '-',
+                                                  //                 style: TextStyle(
+                                                  //                     color: Colors
+                                                  //                         .white),
+                                                  //               ),
+                                                  //             ),
+                                                  //           ),
+                                                  //         ),
+                                                  //         Text(
+                                                  //             '${thisCartData[0]['item_count']}',
+                                                  //             style: TextStyle(
+                                                  //                 color: Colors
+                                                  //                     .white)),
+                                                  //         InkWell(
+                                                  //           onTap: () {
+                                                  //             cartData.updateQuantity(
+                                                  //                 'plus',
+                                                  //                 thisCartData[
+                                                  //                         0]
+                                                  //                     ['id']);
+                                                  //           },
+                                                  //           child: Container(
+                                                  //             width: 20,
+                                                  //             child: Center(
+                                                  //               child: Text(
+                                                  //                 '+',
+                                                  //                 style: TextStyle(
+                                                  //                     color: Colors
+                                                  //                         .white),
+                                                  //               ),
+                                                  //             ),
+                                                  //           ),
+                                                  //         ),
+                                                  //       ],
+                                                  //     ),
+                                                  //   ),
+                                                  ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }).toList()
+                              : [const EmptyWishlist()],
                         ),
                       )
-                    : EmptyWishlist());
+                    : const EmptyWishlist());
           });
         });
   }

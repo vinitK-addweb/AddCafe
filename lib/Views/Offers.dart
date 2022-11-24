@@ -6,7 +6,7 @@ import '../Styles/TextStyles.dart';
 import '../Components/AppBarStyle.dart';
 import '../GetxController/MyHomePage_controller.dart';
 import '../Components/TextRichCustom.dart';
-import '../Views/HomeBanner.dart';
+// import '../Views/HomeBanner.dart';
 import '../Components/ElevatedButtonCustom.dart';
 import '../GetxController/Offers_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -18,8 +18,8 @@ class Offers extends StatelessWidget {
   Widget build(BuildContext context) {
     // final homeBanner = Get.put(HomeBannerController());
     final controller = Get.put(OffersController());
+    final homPageController = Get.put(HomeBannerController());
     // controller.fetchOffers();
-    debugPrint('data===========>${controller.offers.length}');
 
     // debugPrint('data===========>${controller.offers[1].couponBanner!}');
     return GetBuilder(
@@ -34,12 +34,12 @@ class Offers extends StatelessWidget {
                 title: 'Offers',
                 backgroundColor: ColorStyle.primaryColorRed,
                 leading: IconButton(
-                  onPressed: (() => Get.back()),
-                  icon: Icon(Icons.arrow_back),
+                  onPressed: (() => homPageController.currentIndex.value = 0),
+                  icon: const Icon(Icons.arrow_back),
                   color: Colors.white,
                 ),
               ),
-              body: controller.offers.length > 0
+              body: controller.offers.isNotEmpty
                   ? Column(
                       // mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,7 +87,7 @@ class Offers extends StatelessWidget {
                             height: 20,
                           ),
                           Container(
-                            margin: EdgeInsets.symmetric(horizontal: 20),
+                            margin: const EdgeInsets.symmetric(horizontal: 20),
                             child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -156,7 +156,7 @@ class Offers extends StatelessWidget {
                                 ]),
                           )
                         ])
-                  : SizedBox(
+                  : const SizedBox(
                       height: 0,
                     ),
             );

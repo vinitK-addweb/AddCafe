@@ -40,7 +40,7 @@ class BottamNavigationBar extends StatelessWidget {
                         size: 40),
                     selectedLabelStyle: TextStylesCustom.textStyles_20,
                     unselectedLabelStyle: TextStylesCustom.textStyles_16,
-                    items: [
+                    items: const [
                       BottomNavigationBarItem(
                         icon: Icon(Icons.home),
                         label: 'Home',

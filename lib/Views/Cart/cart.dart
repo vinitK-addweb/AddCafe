@@ -1,177 +1,174 @@
 import 'package:addcafe/Styles/TextStyles.dart';
 import 'package:addcafe/Views/AddNewAddress.dart';
-import 'package:addcafe/Views/MyHomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import './emptyCart.dart';
-import '../../GetxController/Cart_controller.dart';
 import '../../Styles/ColorStyle.dart';
-import '../../Components/AppBarStyle.dart';
-import '../../Components/TextFieldCustom.dart';
-import '../../BottomNavBar.dart';
+import '../../GetxController/Cart_controller.dart';
 import '../../GetxController/MyHomePage_controller.dart';
+import '../../Components/AppBarStyle.dart';
+import '../../Utils/Constant.dart';
+import '../../Components/ElevatedButtonCustom.dart';
 
 class Cart extends StatelessWidget {
   const Cart({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // final cartApi = Provider.of<CartApi>(context);
     final controller = Get.put(CartController());
     final homPageController = Get.put(HomeBannerController());
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Cart'),
-        centerTitle: true,
+      appBar: AppBarStyle(
+        backgroundColor: ColorStyle.primaryColorRed,
+        title: 'Cart',
+        styleTitle: TextStylesCustom.textStyles_24,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => homPageController.currentIndex.value = 0,
+        ),
       ),
       bottomNavigationBar: Container(
-        padding: EdgeInsets.all(20),
-        child: Row(
-          children: [
-            Expanded(
-                child: MaterialButton(
-              height: 55,
-              minWidth: double.infinity,
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              color: ColorStyle.primaryColorRed,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
-              child: Text(
-                  controller.cartData.isNotEmpty
-                      ? 'Proceed to checkout'
-                      : 'Add Items',
-                  style: TextStylesCustom.textStyles_20),
-              //   TextStyle(
-              //       fontSize: 20,
-              //       fontWeight: FontWeight.bold,
-              //       color: Colors.white),
-              // ),
-              onPressed: () {
-                controller.cartData.isNotEmpty
-                    ? Get.to(AddNewAddress())
-                    : homPageController.currentIndex.value = 0;
-              },
-            ))
-          ],
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        child: ElevatedButtonCustom(
+          BgColor: ColorStyle.primaryColorRed,
+          size: const Size(50, 50),
+          text: controller.cartData.isNotEmpty
+              ? 'Proceed to checkout'
+              : 'Add Items',
+          onTap: () {
+            controller.cartData.isNotEmpty
+                ? Get.to(const AddNewAddress())
+                : homPageController.currentIndex.value = 0;
+          },
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              controller.cartData.isEmpty
-                  ? EmptyCart()
-                  : Column(
-                      children: [
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 20),
-                          child: Card(
-                            child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(50)),
-                              ),
-                              child: Column(children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 3,
-                                      height: 20,
-                                      color: Colors.red,
+          child: GetBuilder(
+        init: CartController(),
+        initState: (_) => controller.initMethod(),
+        builder: (controller) {
+          return Obx(() {
+            return Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  controller.cartData.isEmpty
+                      ? const EmptyCart()
+                      : Column(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.symmetric(vertical: 20),
+                              child: Card(
+                                child: Container(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  decoration: const BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(50)),
+                                  ),
+                                  child: Column(children: [
+                                    Row(
+                                      children: [
+                                        Container(
+                                          width: 3,
+                                          height: 20,
+                                          color: Colors.red,
+                                        ),
+                                        Container(
+                                            margin: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            child: Text(
+                                              'Your Order',
+                                              style: TextStylesCustom
+                                                  .textStyles_20
+                                                  .apply(fontWeightDelta: 3),
+                                            ))
+                                      ],
                                     ),
-                                    Container(
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal: 10),
-                                        child: Text(
-                                          'Your Order',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ))
-                                  ],
-                                ),
-                                Container(
-                                  child: Column(
-                                    children: [
-                                      ...controller.cartData.map(
-                                        (e) {
-                                          return Container(
-                                            padding: EdgeInsets.all(10),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Container(
-                                                  // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-                                                  child: Row(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Container(
-                                                        margin: EdgeInsets.only(
-                                                            right: 10),
-                                                        width: 20,
-                                                        child: Image(
-                                                          image: AssetImage(
-                                                              'assets/images/vegIcon.png'),
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                e['item_detail']
-                                                                    [
-                                                                    'item_name'],
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              ),
-                                                              ...e['added_addon']
-                                                                  .map((addon) =>
-                                                                      Text(
-                                                                          '${addon['addon_name']}  ${addon['addon_price']}'))
-                                                                  .toList(),
-                                                              SizedBox(
-                                                                height: 7,
-                                                              ),
-                                                              Text(
-                                                                'Rs. ${e['item_detail']['price']}',
-                                                                style: TextStyle(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold),
-                                                              )
-                                                            ]),
-                                                      )
-                                                    ],
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        ...controller.cartData.map(
+                                          (e) {
+                                            return Container(
+                                              padding: const EdgeInsets.all(10),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                    child: Image.network(
+                                                      kImgUrl +
+                                                          e.itemDetail!
+                                                              .featuredImage
+                                                              .toString(),
+                                                      height: 90.0,
+                                                      width: 90.0,
+                                                      fit: BoxFit.fill,
+                                                    ),
                                                   ),
-                                                ),
-                                                Container(
-                                                  child: Column(
+                                                  const SizedBox(
+                                                    width: 10,
+                                                  ),
+                                                  Expanded(
+                                                    child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            e.itemDetail!
+                                                                .itemName
+                                                                .toString(),
+                                                            style: TextStylesCustom
+                                                                .textStyles_15
+                                                                .apply(
+                                                                    fontWeightDelta:
+                                                                        1),
+                                                          ),
+                                                          ...e.addedAddon!
+                                                              .map((addon) =>
+                                                                  Text(
+                                                                    '${addon.addonName}  ${addon.addonPrice}',
+                                                                    style: TextStylesCustom
+                                                                        .textStyles_15,
+                                                                  ))
+                                                              .toList(),
+                                                          const SizedBox(
+                                                            height: 7,
+                                                          ),
+                                                          Text(
+                                                            '₹ ${e.itemDetail!.price}',
+                                                            style: TextStylesCustom
+                                                                .textStyles_15
+                                                                .apply(
+                                                                    fontWeightDelta:
+                                                                        2),
+                                                          )
+                                                        ]),
+                                                  ),
+                                                  Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment.end,
                                                     children: [
                                                       Container(
                                                         width: 70,
                                                         padding:
-                                                            EdgeInsets.all(4),
+                                                            const EdgeInsets
+                                                                .all(4),
                                                         decoration: BoxDecoration(
                                                             border: Border.all(
                                                                 color:
                                                                     Colors.red),
                                                             borderRadius:
-                                                                BorderRadius
-                                                                    .all((Radius
+                                                                const BorderRadius
+                                                                        .all(
+                                                                    (Radius
                                                                         .circular(
                                                                             8)))),
                                                         child: Row(
@@ -181,236 +178,221 @@ class Cart extends StatelessWidget {
                                                           children: [
                                                             InkWell(
                                                               onTap: () {
-                                                                if (e['item_count'] ==
-                                                                    1) {
-                                                                  controller
-                                                                      .delete(e[
-                                                                          'id']);
-                                                                  return;
-                                                                }
-                                                                controller
-                                                                    .updateQuantity(
-                                                                        'minus',
-                                                                        e['id']);
+                                                                e.itemCount == 1
+                                                                    ? controller
+                                                                        .delete(e
+                                                                            .id)
+                                                                    : controller
+                                                                        .updateQuantity(
+                                                                            'minus',
+                                                                            e.id);
+                                                                // if (e.itemCount ==
+                                                                //     1) {
+                                                                //   controller
+                                                                //       .delete(
+                                                                //           e.id);
+                                                                //   return;
+                                                                // }
+                                                                // controller
+                                                                //     .updateQuantity(
+                                                                //         'minus',
+                                                                //         e.id);
                                                               },
-                                                              child: Container(
+                                                              child: SizedBox(
                                                                 width: 20,
                                                                 child: Center(
-                                                                  child: Text(
-                                                                    '-',
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .red),
-                                                                  ),
-                                                                ),
+                                                                    child: Text(
+                                                                        '-',
+                                                                        style: TextStylesCustom
+                                                                            .textStyles_20
+                                                                            .apply(color: ColorStyle.primaryColorRed))),
                                                               ),
                                                             ),
                                                             Text(
-                                                                '${e['item_count']}'),
+                                                                '${e.itemCount}'),
                                                             InkWell(
-                                                              onTap: () {
-                                                                controller
-                                                                    .updateQuantity(
-                                                                        'plus',
-                                                                        e['id']);
-                                                              },
-                                                              child: Container(
-                                                                width: 20,
-                                                                child: Center(
-                                                                  child: Text(
-                                                                    '+',
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .red),
+                                                                onTap: () {
+                                                                  controller
+                                                                      .updateQuantity(
+                                                                          'plus',
+                                                                          e.id);
+                                                                },
+                                                                child: SizedBox(
+                                                                  width: 20,
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                        '+',
+                                                                        style: TextStylesCustom
+                                                                            .textStyles_20
+                                                                            .apply(color: ColorStyle.primaryColorRed)),
                                                                   ),
-                                                                ),
-                                                              ),
-                                                            ),
+                                                                )),
                                                           ],
                                                         ),
                                                       ),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                         height: 8,
                                                       ),
                                                       Text(
-                                                          'Rs. ${e['total_price']}')
+                                                          'Rs. ${e.totalPrice}')
                                                     ],
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          );
-                                        },
+                                                  )
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            homPageController
+                                                .currentIndex.value = 0;
+                                          },
+                                          child: Container(
+                                              padding: const EdgeInsets.all(10),
+                                              child: Text(
+                                                'Add more items',
+                                                style: TextStylesCustom
+                                                    .textStyles_24
+                                                    .apply(),
+                                              )),
+                                        )
+                                      ],
+                                    )
+                                  ]),
+                                ),
+                              ),
+                            ),
+
+                            // margin: EdgeInsets.symmetric(vertical: 5),
+                            Card(
+                              child: Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(50)),
+                                ),
+                                child: Column(children: [
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width: 3,
+                                        height: 20,
+                                        color: Colors.red,
                                       ),
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        child: Container(
-                                          padding: EdgeInsets.all(10),
+                                      Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          child: Text(
+                                            'Bill Summary',
+                                            style: TextStylesCustom
+                                                .textStyles_20
+                                                .apply(fontWeightDelta: 2),
+                                          ))
+                                    ],
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.all(5),
                                           child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                'Add more items',
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                'Item Total',
+                                                style: TextStylesCustom
+                                                    .textStyles_14,
+                                              ),
+                                              Text(
+                                                '₹ ${controller.cart['total_rate']}',
+                                                style: TextStylesCustom
+                                                    .textStyles_14,
                                               )
                                             ],
                                           ),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                )
-                              ]),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          // margin: EdgeInsets.symmetric(vertical: 5),
-                          child: Card(
-                            child: Container(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(50)),
-                              ),
-                              child: Column(children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      width: 3,
-                                      height: 20,
-                                      color: Colors.red,
-                                    ),
-                                    Container(
-                                        margin: EdgeInsets.symmetric(
-                                            horizontal: 10),
-                                        child: Text(
-                                          'Bill Summary',
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ))
-                                  ],
-                                ),
-                                Container(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.all(10),
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              padding: EdgeInsets.all(5),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Item Total',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  Text(
-                                                    '₹ ${controller.cart['total_rate']}',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.all(5),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Delivery Charge',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                        Container(
+                                          padding: const EdgeInsets.all(5),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'Delivery Charge',
+                                                style: TextStylesCustom
+                                                    .textStyles_14
+                                                    .apply(
+                                                        fontWeightDelta: 3,
                                                         color: Colors.blue),
-                                                  ),
-                                                  Text(
-                                                    'FREE',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                              ),
+                                              Text(
+                                                'FREE',
+                                                style: TextStylesCustom
+                                                    .textStyles_14
+                                                    .apply(
+                                                        fontWeightDelta: 3,
                                                         color: Colors.blue),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.all(5),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Govt. taxes',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.grey),
-                                                  ),
-                                                  Text(
-                                                    '₹. 8.75',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.grey),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.only(top: 10),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Grand Total',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 18),
-                                                  ),
-                                                  Text(
-                                                    '₹ ${controller.cart['total_rate']}',
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 18),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ],
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                        Container(
+                                          padding: const EdgeInsets.all(5),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'Govt. taxes',
+                                                style: TextStylesCustom
+                                                    .textStyles_14
+                                                    .apply(color: Colors.grey),
+                                              ),
+                                              Text('₹ 8.75',
+                                                  style: TextStylesCustom
+                                                      .textStyles_14
+                                                      .apply(
+                                                          color: Colors.grey))
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          padding:
+                                              const EdgeInsets.only(top: 10),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                'Grand Total',
+                                                style: TextStylesCustom
+                                                    .textStyles_18
+                                                    .apply(fontWeightDelta: 3),
+                                              ),
+                                              Text(
+                                                '₹ ${controller.cart['total_rate']}',
+                                                style: TextStylesCustom
+                                                    .textStyles_18
+                                                    .apply(fontWeightDelta: 3),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                )
-                              ]),
+                                ]),
+                              ),
                             ),
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
-            ]),
-      ),
+                ]);
+          });
+        },
+      )),
     );
   }
 }

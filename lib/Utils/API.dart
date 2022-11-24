@@ -44,13 +44,13 @@ class API {
       return null;
     }
 
-    final url = Uri.parse('${_kBaseURL}${endPoint}');
+    final url = Uri.parse('$_kBaseURL$endPoint');
 
     // final headers = {'Authorization': 'Bearer $kTOKENSAVED'};
     Map<String, String> header = {};
 
     if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
-    ;
+
     try {
       showLoaderGetX();
       final response = await http.get(url, headers: header);
@@ -61,13 +61,10 @@ class API {
         '${parsed['message']}'.showError();
       }
       return parsed;
-    } on Exception catch (exception) {
-      // hideLoader();
-      // debugPrint('Exception is:-' + exception.toString());
-      // return null;
+    } on Exception {
     } catch (error) {
       hideLoader();
-      debugPrint('Error is:-' + error.toString());
+      debugPrint('Error is:-$error');
       return null;
     }
   }
@@ -80,7 +77,7 @@ class API {
       return null;
     }
 
-    final url = Uri.parse('${_kBaseURL}${endPoint}');
+    final url = Uri.parse('$_kBaseURL$endPoint');
 
     Map<String, String> header = {};
     if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
@@ -89,11 +86,10 @@ class API {
       showLoaderGetX();
       final response = await http.delete(url, headers: header);
       hideLoader();
-      debugPrint('Response status: ${response.statusCode}');
-      debugPrint('Deleted .====================>${url}');
+
       final Map parsed = json.decode(response.body);
       return parsed as Map<String, dynamic>;
-    } on Exception catch (exception) {
+    } on Exception {
       // hideLoader();
       // debugPrint('Exception is:-' + exception.toString());
       // return null;
@@ -105,7 +101,42 @@ class API {
     }
   }
 
-  // ----------------------- Post Request-------------------------
+  // --------------------- patch request -------------------->
+  Future<Map<String, dynamic>?> patch(
+      {required String endPoint,
+      required Map<String, dynamic> params,
+      required bool isHeader}) async {
+    if (!await _checkInternet()) {
+      return null;
+    }
+
+    final url = Uri.parse('$_kBaseURL$endPoint');
+
+    Map<String, String> header = {};
+    if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
+
+    try {
+      showLoaderGetX();
+      final response = await http.patch(url, headers: header, body: params);
+      hideLoader();
+      debugPrint('Response status: ${response.body}');
+
+      final Map<String, dynamic> parsed = json.decode(response.body);
+      // print('userprofile===========$kTOKENSAVED ${parsed}');
+      return parsed as Map<String, dynamic>;
+    } on Exception {
+      hideLoader();
+      // debugPrint('Exception is:-' + exception.toString());
+      // return null;
+    } catch (error) {
+      hideLoader();
+
+      debugPrint('Error is:-' + error.toString());
+      return null;
+    }
+  }
+
+  // ----------------------- Post Request--------------------->
 
   Future<Map<String, dynamic>?> post(
       {required String endPoint,
@@ -115,7 +146,7 @@ class API {
       return null;
     }
 
-    final url = Uri.parse('${_kBaseURL}${endPoint}');
+    final url = Uri.parse('$_kBaseURL$endPoint');
 
     Map<String, String> header = {};
     if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
@@ -127,9 +158,10 @@ class API {
       debugPrint('Response status: ${response.body}');
 
       final Map<String, dynamic> parsed = json.decode(response.body);
+
       // print('userprofile===========$kTOKENSAVED ${parsed}');
-      return parsed as Map<String, dynamic>;
-    } on Exception catch (exception) {
+      return parsed;
+    } on Exception {
       // hideLoader();
       // debugPrint('Exception is:-' + exception.toString());
       // return null;
@@ -151,7 +183,7 @@ class API {
       return null;
     }
 
-    final url = Uri.parse('${_kBaseURL}${endPoint}');
+    final url = Uri.parse('$_kBaseURL$endPoint');
     final request = http.MultipartRequest('POST', url);
     request.headers['Authorization'] = 'Bearer $kTOKENSAVED';
 

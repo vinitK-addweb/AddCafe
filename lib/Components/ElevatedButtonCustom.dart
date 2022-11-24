@@ -31,16 +31,15 @@ class ElevatedButtonCustom extends StatelessWidget {
           right: 20,
         ),
         fixedSize: size,
-        // fixedSize: Size(MediaQuery.of(context).size.width - 30, 50),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(radiusBorder!),
         ),
       ),
+      onPressed: onTap,
       child: Text(
         text!,
         style: TextStylesCustom.textStyles_14.apply(fontWeightDelta: 2),
       ),
-      onPressed: onTap,
     );
   }
 }
@@ -68,7 +67,7 @@ class ElevatedButtonCustoms extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         backgroundColor: colorBG,
         elevation: 0,
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           left: 20,
           right: 20,
         ),
@@ -77,13 +76,10 @@ class ElevatedButtonCustoms extends StatelessWidget {
           borderRadius: BorderRadius.circular(SizeStyle.size_14),
         ),
       ),
-      child: Text(
-        text!,
-        style: TextStyle(
-          color: ColorStyle.primaryColorRed,
-        ),
-      ),
       onPressed: onTap,
+      child: Text(text!,
+          style: TextStylesCustom.textStyles_14
+              .apply(color: ColorStyle.primaryColorRed)),
     );
   }
 }

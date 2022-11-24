@@ -1,41 +1,43 @@
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'dart:convert';
+import '../Models/Model_Cart.dart';
+import '../Utils/API.dart';
+import '../Utils/Global.dart';
 
 class CartController extends GetxController {
-  Map _cart = {};
-
-  List cartData = [];
+  Map cart = {};
+  RxList<CartModel> cartData = <CartModel>[].obs;
 
   // getter
-  Map get cart {
-    return _cart;
-  }
+  // Map get cart {
+  //   return _cart;
+  // }
 
   // List get cartData {
   //   return _cartData;
   // }
 
   //action
+  initMethod() {
+    Future.delayed(const Duration(milliseconds: 1), () {
+      fetchCart();
+    });
+  }
 
   //get api call for cartproduct
   Future fetchCart() async {
-    http.Response response;
-    response = await http.get(
-        Uri.parse('https://cafe.addwebprojects.com/api/v1/cart/cart-items/'),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization":
-              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
-        });
+    cart = await API.instance.get(endPoint: 'cart/cart-items/', isHeader: true);
 
-    _cart = jsonDecode(response.body);
-    cartData = _cart['payload'];
-    print('fetchCart called');
+    cartData.value =
+        List<CartModel>.from(cart['payload'].map((x) => CartModel.fromJson(x)));
+    // if (cart['message']) {
+    //   ' ${cart['message']}'.showSuccess();
+    // }
   }
 
   Future addToCart(payload) async {
+    print('payload datqa >>>>>>>>>>>' + payload.toString());
     http.Response response;
     response = await http.post(
         Uri.parse(
@@ -47,38 +49,45 @@ class CartController extends GetxController {
         },
         body: jsonEncode(payload));
     if (response.statusCode == 200) {
-      fetchCart();
+      final data = jsonDecode(response.body) as Map;
+      // print(data['message'].toString());
+      '${data['message']}'.showSuccess();
+      // fetchCart();
     }
   }
   // <------------------- update item from cart ----------------->
 
   Future updateQuantity(status, id) async {
-    http.Response response;
-    response = await http.patch(
-        Uri.parse(
-            'https://cafe.addwebprojects.com/api/v1/cart/cart-items/${id}/'),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization":
-              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
-        },
-        body: jsonEncode({"quantity": status}));
-    if (response.statusCode == 200) {
-      fetchCart();
-    } else {}
+    final params = {"quantity": status};
+    print('data======== >${params}');
+    await API.instance.patch(
+        endPoint: 'cart/cart-items/$id/', params: params, isHeader: true);
+    fetchCart();
+
+    // http.Response response;
+    // response = await http.patch(
+    //     Uri.parse(
+    //         'https://cafe.addwebprojects.com/api/v1/cart/cart-items/${id}/'),
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "Authorization":
+    //           'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
+    //     },
+    //     body: jsonEncode({"quantity": status}));
+    // if (response.statusCode == 200) {
+    //   fetchCart();
+    // } else {}
   }
 
   // <------------------- Delete item from cart ----------------->
   Future delete(id) async {
-    http.Response response;
-    response = await http.delete(
-        Uri.parse(
-            'https://cafe.addwebprojects.com/api/v1/cart/cart-items/${id}/'),
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization":
-              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
-        });
+    final res =
+        API.instance.delete(endPoint: 'cart/cart-items/$id/', isHeader: true);
+
+    print(res);
+
+    print('payload datqa >>>>>>>>>>>' + id.toString());
+
     fetchCart();
   }
 
