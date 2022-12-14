@@ -13,14 +13,14 @@ class LogoCustom extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          child: SvgPicture.asset(ImageStyle.logo),
+        SizedBox(
           height: 60,
           width: 60,
+          child: SvgPicture.asset(ImageStyle.logo),
         ),
         // Expanded(
         //     child:
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         Column(

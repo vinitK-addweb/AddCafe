@@ -3,6 +3,7 @@ import 'package:addcafe/Views/MyHomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
+import '../Views/PrivacyPolicy.dart';
 import '../Views/Wishlist.dart';
 import '../Views/userProfile.dart';
 import '../Styles/TextStyles.dart';
@@ -135,6 +136,28 @@ class MyDrowerList extends StatelessWidget {
                               margin: EdgeInsets.only(left: 20),
                               child: Text(
                                 'Faqs',
+                                style: TextStylesCustom.textStyles_20.apply(
+                                  color: ColorStyle.secondaryColorgrey,
+                                ),
+                              ),
+                            ),
+                          ]),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () => Get.to(PrivacyPolicy()),
+                        child: Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child: Row(children: [
+                            Icon(
+                              Icons.settings,
+                              size: 30,
+                              color: ColorStyle.secondaryColorgrey,
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(left: 20),
+                              child: Text(
+                                'Privacy Policy',
                                 style: TextStylesCustom.textStyles_20.apply(
                                   color: ColorStyle.secondaryColorgrey,
                                 ),

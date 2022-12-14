@@ -54,10 +54,10 @@ class API {
     try {
       showLoaderGetX();
       final response = await http.get(url, headers: header);
-      print("resddd" + response.statusCode.toString());
+      print("resddd" + response.body.toString());
       hideLoader();
       final parsed = jsonDecode(response.body);
-      // print("resddd" + parsed.toString());ss
+      print("resddd" + parsed.toString());
       if (response.statusCode == 403) {
         '${parsed['message']}'.showError();
       }
