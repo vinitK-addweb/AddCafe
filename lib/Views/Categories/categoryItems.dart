@@ -116,7 +116,7 @@ class _CategoryItemsState extends State<CategoryItems> {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           final e = widget.categoriesData[index];
-
+                          controller.getFilteredProducts(e.name);
                           return Card(
                               child: Column(
                             children: [
@@ -135,16 +135,19 @@ class _CategoryItemsState extends State<CategoryItems> {
                                       ),
                                       IconButton(
                                           onPressed: () {
+                                            // print("object");
+                                            // print(e.name);
                                             controller
                                                 .changeCategory('${e.name}');
                                           },
                                           icon: Icon(
-                                              widget.selectedMenu == e.name
+                                              controller.selectedCategory ==
+                                                      e.name
                                                   ? Icons.arrow_drop_up
                                                   : Icons.arrow_drop_down))
                                     ],
                                   )),
-                              widget.selectedMenu == e.name &&
+                              controller.selectedCategory == e.name &&
                                       controller.categoryProduct.isNotEmpty
                                   ? CategoryDropdown(controller.categoryProduct)
                                   : SizedBox(

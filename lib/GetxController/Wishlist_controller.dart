@@ -52,7 +52,7 @@ class MyFavouritesApi extends GetxController {
     }
   }
 
-  Future addToMyFavorites(productData, context) async {
+  Future addToMyFavorites(productData) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     http.Response response;
 
@@ -71,11 +71,9 @@ class MyFavouritesApi extends GetxController {
     }
   }
 
-  // List isInMyFavorites(productId) {
-  //   var a = myFavouritesData
-  //       .where((element) => element['product'] == productId)
-  //       .toList();
-  //   return a;
-  // }
-
+  List isInMyFavorites(productId) {
+    var a =
+        myFavourites.where((element) => element.product == productId).toList();
+    return a;
+  }
 }

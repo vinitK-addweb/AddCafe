@@ -20,13 +20,13 @@ class HomeCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     // final controller = ActiveProductsController();
     // controller.fetchAllProducts();
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-              margin: EdgeInsets.only(left: 20),
+              margin: const EdgeInsets.only(left: 20),
               child: Text(
                 'Explore Menu',
                 style: TextStylesCustom.textStyles_20.apply(fontWeightDelta: 4),

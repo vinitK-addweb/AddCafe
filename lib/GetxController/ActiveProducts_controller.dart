@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -8,16 +10,17 @@ import '../Models/Model_ActiveProducts.dart';
 
 class ActiveProductsController extends GetxController {
   // List<ModelActiveProducts> allProducts = <ModelActiveProducts>[];
-  RxList<ModelActiveProducts> allProducts = <ModelActiveProducts>[].obs;
-  RxList<ModelActiveProducts> categoryProduct = <ModelActiveProducts>[].obs;
-
+  // RxList<ModelActiveProducts> allProducts = <ModelActiveProducts>[].obs;
+  // RxList<ModelActiveProducts> categoryProduct = <ModelActiveProducts>[].obs;
+  RxList allProducts = [].obs;
+  RxList categoryProduct = [].obs;
   String selectedCategory = '';
   RxString checkingObx = " ".obs;
 
   initCustom() {
     Future.delayed(Duration(milliseconds: 2), () {
       fetchAllProducts();
-      categoryProductFilter();
+      // categoryProductFilter();
     });
   }
 
@@ -27,22 +30,37 @@ class ActiveProductsController extends GetxController {
         'https://cafe.addwebprojects.com/api/v1/catalogue/active-product/'));
 
     if (response.statusCode == 200) {
-      List<ModelActiveProducts> allProducts = List<ModelActiveProducts>.from(
-          jsonDecode(response.body)
-              .map((x) => ModelActiveProducts.fromJson(x)));
-      Future.delayed(Duration(milliseconds: 2), () {
-        categoryProductFilter();
-      });
+      // List<ModelActiveProducts> allProducts = List<ModelActiveProducts>.from(
+      //     jsonDecode(response.body)
+      //         .map((x) => ModelActiveProducts.fromJson(x)));
+
+      log(response.body);
+      allProducts.value = jsonDecode(response.body) as List;
+
+      print("dadadsadada" + allProducts[0]['category_name'].toString());
+      // Future.delayed(Duration(milliseconds: 2), () {
+      //   categoryProductFilter();
+      // });
+      update();
     }
   }
 
-  categoryProductFilter() {
+  getFilteredProducts(categoryName) {
+    print(" heloooo==========dsadasda");
     categoryProduct.value = allProducts
-        .where((item) => item.categoryName == selectedCategory)
+        .where((item) => item["category_name"] == categoryName)
         .toList();
-    print('fetch all product here=========>>>${categoryProduct.value}');
-    update();
+    // update();
+    // print(" dasdfa897565798765578675467 ${categoryProduct.value.length}");
   }
+
+  // categoryProductFilter() {
+  //   categoryProduct.value = allProducts
+  //       .where((item) => item.categoryName == selectedCategory)
+  //       .toList();
+  //   print('fetch all product here=========>>>${categoryProduct.value}');
+  //   update();
+  // }
 
   changeCategory(String category) {
     debugPrint(' category data=========${category}');
@@ -51,5 +69,6 @@ class ActiveProductsController extends GetxController {
     } else {
       selectedCategory = category;
     }
+    update();
   }
 }
