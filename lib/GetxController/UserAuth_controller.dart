@@ -36,7 +36,7 @@ class UserAuth extends GetxController {
   // late final _token;
 
   initCustom() {
-    Future.delayed(Duration(microseconds: 3), () {
+    Future.delayed(const Duration(microseconds: 1), () {
       getlocaStorage();
     });
   }
@@ -166,6 +166,7 @@ class UserAuth extends GetxController {
       } else {
         userprofile = {}.obs;
       }
+      update();
     });
   }
 

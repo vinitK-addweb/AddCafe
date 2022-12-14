@@ -13,6 +13,8 @@ import '../Styles/ColorStyle.dart';
 import '../Components/ElevatedButtonCustom.dart';
 
 class DrowerHeader extends StatelessWidget {
+  const DrowerHeader({super.key});
+
   @override
   Widget build(BuildContext context) {
     final userAuth = Get.put(UserAuth());
@@ -24,10 +26,10 @@ class DrowerHeader extends StatelessWidget {
           return Obx(() {
             return SingleChildScrollView(
               child: Container(
-                margin: EdgeInsets.only(top: 35),
+                margin: const EdgeInsets.only(top: 35),
                 width: double.infinity,
                 height: 200,
-                padding: EdgeInsets.only(top: 20.0),
+                padding: const EdgeInsets.only(top: 20.0),
                 child: SingleChildScrollView(
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -59,30 +61,20 @@ class DrowerHeader extends StatelessWidget {
                             Column(
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.symmetric(vertical: 7),
+                                    margin:
+                                        const EdgeInsets.symmetric(vertical: 7),
                                     child: Text(
-                                      userAuth.userprofile['first_name'] == null
-                                          ? ''
-                                          : userAuth.userprofile['first_name'],
+                                      userAuth.userprofile['first_name'] ?? '',
                                       style: TextStylesCustom.textStyles_26
                                           .apply(color: Colors.white),
                                     ),
                                   ),
-                                  Container(
-                                    child: //Text('${userAuth.userprofile}')
-                                        Text(
-                                            userAuth.userprofile.isEmpty
-                                                ? '${userAuth.userprofile}'
-                                                : userAuth.userprofile[
-                                                            'email'] ==
-                                                        null
-                                                    ? ''
-                                                    : userAuth
-                                                        .userprofile['email'],
-                                            style: TextStylesCustom
-                                                .textStyles_22
-                                                .apply(color: Colors.white)),
-                                  ),
+                                  Text(
+                                      userAuth.userprofile.isEmpty
+                                          ? '${userAuth.userprofile}'
+                                          : userAuth.userprofile['email'] ?? '',
+                                      style: TextStylesCustom.textStyles_22
+                                          .apply(color: Colors.white)),
                                 ],
                               ),
                         // Obx(() =>
