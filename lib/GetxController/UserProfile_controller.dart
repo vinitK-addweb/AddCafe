@@ -66,9 +66,10 @@ class UserProfileController extends GetxController {
 
   // --------------------- fetch user saved address--------------------------->
   getAddress() async {
+    print("getAddress=======>>>>>>> 123");
     final response = await API.instance
         .get(endPoint: 'order/saved-address/', isHeader: true);
-
+    // print("getAddress=======>>>>>>>" + response);
     addAddress.value = List<UserAddressModel>.from(
         response['payload'].map((x) => UserAddressModel.fromJson(x)));
   }
@@ -101,7 +102,15 @@ class UserProfileController extends GetxController {
 
   addresTypeFunction(value) {
     addressType.value.text = value;
-    print("object value type is ========>>" + addressType.value.text);
+  }
+
+  // --------------------------- fetch Address By id  ------------------------->
+  fetchAddressByid(id) async {
+    print("order data is here==========>>>>>" + id.toString());
+    final response =
+        await API.instance.get(endPoint: 'order/address/$id/', isHeader: true);
+
+    // print("order data is here==========>>>>>" + response['id']);
   }
 
   // --------------------------- update User Address ------------------------->

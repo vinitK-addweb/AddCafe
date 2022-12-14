@@ -381,10 +381,14 @@ class UserProfile extends StatelessWidget {
                                                       color: ColorStyle
                                                           .primaryColorGreen),
                                             ),
-                                            onPressed: () =>
-                                                Get.to(AddNewAddress(
-                                              isAddress: false,
-                                            )),
+                                            onPressed: () {
+                                              controller.fetchAddressByid(
+                                                  controller
+                                                      .addAddress[index].id);
+                                              Get.to(AddNewAddress(
+                                                isAddress: false,
+                                              ));
+                                            },
                                           ),
                                           // const SizedBox(
                                           //   width: 10,

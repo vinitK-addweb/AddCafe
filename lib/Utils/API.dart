@@ -45,7 +45,7 @@ class API {
     }
 
     final url = Uri.parse('$_kBaseURL$endPoint');
-
+    // print("url sdfd============>>>>>>$url");
     // final headers = {'Authorization': 'Bearer $kTOKENSAVED'};
     Map<String, String> header = {};
 
@@ -54,9 +54,10 @@ class API {
     try {
       showLoaderGetX();
       final response = await http.get(url, headers: header);
+      print("resddd" + response.statusCode.toString());
       hideLoader();
       final parsed = jsonDecode(response.body);
-
+      // print("resddd" + parsed.toString());ss
       if (response.statusCode == 403) {
         '${parsed['message']}'.showError();
       }
