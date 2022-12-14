@@ -11,6 +11,7 @@ import '../Utils/Global.dart';
 import '../Models/Model_UserDetails.dart';
 import '../Models/Model_AddAddress.dart';
 import '../Utils/Global.dart';
+import '../Views/userProfile.dart';
 
 class UserProfileController extends GetxController {
   Rx<UserDetailsModel> userdetails = UserDetailsModel().obs;
@@ -18,6 +19,7 @@ class UserProfileController extends GetxController {
   Rx<TextEditingController> currentPassword = TextEditingController().obs;
   Rx<TextEditingController> newPassword = TextEditingController().obs;
   Rx<TextEditingController> phoneNumber = TextEditingController().obs;
+  Rx<TextEditingController> textController = TextEditingController().obs;
   Rx<TextEditingController> buildingNameNo = TextEditingController().obs;
   Rx<TextEditingController> area = TextEditingController().obs;
   Rx<TextEditingController> landMark = TextEditingController().obs;
@@ -54,7 +56,7 @@ class UserProfileController extends GetxController {
 
       userprofile.value = await API.instance
           .get(endPoint: 'accounts/customer-profile/', isHeader: true);
-
+      print("runing=========>>>>>>>>>>>>>>>>>>");
       //  RxMap<dynamic, dynamic>.from(
       //     jsonDecode(prefs.getString('userData').toString()));
       getAddress();
@@ -72,8 +74,9 @@ class UserProfileController extends GetxController {
   }
   // --------------------------- Add New Address ------------------------->
 
-  addNewAddress() {
+  addNewAddress() async {
     final addressData = {
+      "user": "1",
       "phone_num": phoneNumber.value.text,
       "building_num_name": buildingNameNo.value.text,
       "area_colony": area.value.text,
@@ -83,13 +86,22 @@ class UserProfileController extends GetxController {
       "state": state.value.text,
       "address_type": addressType.value.text
     };
+
     debugPrint(addressData.toString());
     var response = API.instance
         .post(endPoint: 'order/address/', params: addressData, isHeader: true);
+
+    // var data = response;
+
+    getAddress();
+    update();
+    // await Get.to(UserProfile());
+    Get.back();
   }
 
   addresTypeFunction(value) {
-    addressType.value = value;
+    addressType.value.text = value;
+    print("object value type is ========>>" + addressType.value.text);
   }
 
   // --------------------------- update User Address ------------------------->

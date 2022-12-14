@@ -155,11 +155,11 @@ class API {
       showLoaderGetX();
       final response = await http.post(url, headers: header, body: params);
       hideLoader();
-      debugPrint('Response status: ${response.body}');
+      debugPrint('Response status: ${response}');
 
       final Map<String, dynamic> parsed = json.decode(response.body);
 
-      // print('userprofile===========$kTOKENSAVED ${parsed}');
+      print('userprofile===========$kTOKENSAVED ${parsed}');
       return parsed;
     } on Exception {
       // hideLoader();

@@ -74,39 +74,60 @@ class TextFormFieldUnderline extends StatelessWidget {
   final double? radiusBorder;
   final int? maxLines;
   final String? labelText;
-  final FutureOr<String?> Function()? validator;
-
-  TextFormFieldUnderline(
-      {Key? key,
-      this.controller,
-      this.padding = EdgeInsets.zero,
-      this.hintText,
-      this.keyboardType = TextInputType.text,
-      this.colorFill = Colors.white,
-      this.colorBoder = Colors.black,
-      this.colorHint = Colors.grey,
-      this.colorText = Colors.black,
-      this.textStyle = const TextStyle(),
-      this.radiusBorder = 8.0,
-      this.maxLines = 1,
-      this.labelText,
-      this.validator})
-      : super(key: key);
+  final String? Function(String?)? validator;
+  final bool? obscure;
+  final bool? readOnly;
+  TextFormFieldUnderline({
+    Key? key,
+    this.controller,
+    this.padding = EdgeInsets.zero,
+    this.hintText,
+    this.keyboardType = TextInputType.text,
+    this.colorFill = Colors.white,
+    this.colorBoder = Colors.black,
+    this.colorHint = Colors.grey,
+    this.colorText = Colors.black,
+    this.textStyle = const TextStyle(),
+    this.radiusBorder = 8.0,
+    this.maxLines = 1,
+    this.labelText,
+    this.validator,
+    this.obscure = false,
+    this.readOnly = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
-      obscureText: true,
-      decoration: InputDecoration(labelText: labelText),
-      // validator: (value) {
-      //   if (value == null || value.isEmpty) {
-      //     return 'Please enter some text';
-      //   } else {
-      //     return null;
-      //   }
-      // },
-    );
+        controller: controller,
+        obscureText: obscure!,
+        keyboardType: keyboardType,
+        readOnly: readOnly!,
+        decoration: InputDecoration(
+          errorStyle: TextStylesCustom.textStyles_12,
+          labelText: labelText,
+          labelStyle: TextStylesCustom.textStyles_14
+              .apply(color: ColorStyle.secondryColorBlack),
+          hintText: hintText,
+          hintStyle: textStyle!.apply(color: colorHint),
+          border: UnderlineInputBorder(
+              borderRadius: BorderRadius.circular(radiusBorder!),
+              borderSide: BorderSide(color: colorBoder!, width: 1)),
+          focusedBorder: UnderlineInputBorder(
+              borderRadius: BorderRadius.circular(radiusBorder!),
+              borderSide: BorderSide(color: colorBoder!, width: 1)),
+        ),
+        validator: validator
+
+        // validation.ProfileValdations()
+        // (value) {
+        //   if (value == null || value.isEmpty) {
+        //     return 'Please enter some text';
+        //   } else {
+        //     return null;
+        //   }
+        // },
+        );
     // TextField(
     //   controller: controller,
     //   keyboardType: keyboardType,
@@ -128,6 +149,74 @@ class TextFormFieldUnderline extends StatelessWidget {
     // );
   }
 }
+
+// class TextFormFieldUnderline extends StatelessWidget {
+//   final TextEditingController? controller;
+//   final TextInputType? keyboardType;
+//   final EdgeInsets? padding;
+//   final String? hintText;
+//   final Color? colorFill;
+//   final Color? colorBoder;
+//   final Color? colorText;
+//   final Color? colorHint;
+//   final TextStyle? textStyle;
+//   final double? radiusBorder;
+//   final int? maxLines;
+//   final String? labelText;
+//   final FutureOr<String?> Function()? validator;
+
+//   TextFormFieldUnderline(
+//       {Key? key,
+//       this.controller,
+//       this.padding = EdgeInsets.zero,
+//       this.hintText,
+//       this.keyboardType = TextInputType.text,
+//       this.colorFill = Colors.white,
+//       this.colorBoder = Colors.black,
+//       this.colorHint = Colors.grey,
+//       this.colorText = Colors.black,
+//       this.textStyle = const TextStyle(),
+//       this.radiusBorder = 8.0,
+//       this.maxLines = 1,
+//       this.labelText,
+//       this.validator})
+//       : super(key: key);
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return TextFormField(
+//       controller: controller,
+//       obscureText: true,
+//       decoration: InputDecoration(labelText: labelText),
+//       // validator: (value) {
+//       //   if (value == null || value.isEmpty) {
+//       //     return 'Please enter some text';
+//       //   } else {
+//       //     return null;
+//       //   }
+//       // },
+//     );
+//     // TextField(
+//     //   controller: controller,
+//     //   keyboardType: keyboardType,
+//     //   maxLines: maxLines,
+//     //   minLines: 1,
+//     //   decoration: InputDecoration(
+//     //       labelText: labelText,
+//     //       fillColor: colorFill,
+//     //       contentPadding: padding,
+//     //       border: UnderlineInputBorder(
+//     //           borderRadius: BorderRadius.circular(radiusBorder!),
+//     //           borderSide: BorderSide(color: colorBoder!, width: 1)),
+//     //       focusedBorder: UnderlineInputBorder(
+//     //           borderRadius: BorderRadius.circular(radiusBorder!),
+//     //           borderSide: BorderSide(color: colorBoder!, width: 1)),
+//     //       hintText: hintText,
+//     //       hintStyle: textStyle!.apply(color: colorHint)),
+//     //   style: textStyle!,
+//     // );
+//   }
+// }
 
 class PasswordFieldUnderline extends StatelessWidget {
   final TextEditingController? controller;

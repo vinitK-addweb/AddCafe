@@ -119,8 +119,8 @@ class UserProfile extends StatelessWidget {
                                         )),
                                   ]),
                                 ),
-                                Text(
-                                    'img=====>${kImgUrl}${userAuth.userprofile['profile_picture']}'),
+                                // Text(
+                                //     'img=====>${kImgUrl}${userAuth.userprofile['profile_picture']}'),
 
                                 const SizedBox(
                                   height: 10,

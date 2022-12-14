@@ -37,7 +37,7 @@ class Cart extends StatelessWidget {
               : 'Add Items',
           onTap: () {
             controller.cartData.isNotEmpty
-                ? Get.to(const AddNewAddress())
+                ? Get.to(AddNewAddress())
                 : homPageController.currentIndex.value = 0;
           },
         ),
