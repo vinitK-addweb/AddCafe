@@ -56,16 +56,16 @@ class _MyloginState extends State<Mylogin> {
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              LogoCustom(),
+              const LogoCustom(),
               Form(
                   key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
 

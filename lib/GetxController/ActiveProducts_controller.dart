@@ -14,8 +14,9 @@ class ActiveProductsController extends GetxController {
   // RxList<ModelActiveProducts> categoryProduct = <ModelActiveProducts>[].obs;
   RxList allProducts = [].obs;
   RxList categoryProduct = [].obs;
-  String selectedCategory = '';
+  RxString selectedCategory = ''.obs;
   RxString checkingObx = " ".obs;
+  RxList currentProducts = [].obs;
 
   initCustom() {
     Future.delayed(Duration(milliseconds: 2), () {
@@ -46,12 +47,21 @@ class ActiveProductsController extends GetxController {
   }
 
   getFilteredProducts(categoryName) {
+    print('category name' + categoryName);
     // print(" heloooo==========dsadasda");
     categoryProduct.value = allProducts
         .where((item) => item["category_name"] == categoryName)
         .toList();
-    // update();
-    // print(" dasdfa897565798765578675467 ${categoryProduct.value.length}");
+
+    // currentProducts.value = allProducts
+    //     .where((item) => item["category_name"] == categoryName)
+    //     .toList();
+    Future.delayed(Duration(milliseconds: 200), () {
+      update();
+      // categoryProductFilter();
+    });
+    //
+    print(" dasdfa897565798765578675467 ${categoryProduct.value.length}");
   }
 
   // categoryProductFilter() {
@@ -62,13 +72,13 @@ class ActiveProductsController extends GetxController {
   //   update();
   // }
 
-  changeCategory(String category) {
-    debugPrint(' category data=========${category}');
-    if (selectedCategory == category) {
-      selectedCategory = '';
-    } else {
-      selectedCategory = category;
-    }
-    update();
-  }
+  // changeCategory(String category) {
+  //   debugPrint(' category data=========${category}');
+  //   if (selectedCategory == category) {
+  //     selectedCategory = '';
+  //   } else {
+  //     selectedCategory = category;
+  //   }
+  //   update();
+  // }
 }

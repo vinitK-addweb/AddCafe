@@ -15,7 +15,8 @@ class HomeCategory extends StatelessWidget {
   // final List<ModelHomeCategory> CategoryImages;
   final List<ModelCategories> categoriesImage;
   final List<ModelBanner> bannerData;
-
+  final ActiveProductsController productController =
+      Get.put(ActiveProductsController());
   @override
   Widget build(BuildContext context) {
     // final controller = ActiveProductsController();
@@ -40,6 +41,11 @@ class HomeCategory extends StatelessWidget {
                     width: 100,
                     child: InkWell(
                       onTap: (() {
+                        print("valueeeeeeeeeeeee before" +
+                            productController.selectedCategory.value);
+                        productController.selectedCategory.value = item.name!;
+                        print("valueeeeeeeeeeeee" +
+                            productController.selectedCategory.value);
                         Get.to(CategoryItems(
                             item.name!, bannerData, categoriesImage));
                       }),

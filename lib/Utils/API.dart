@@ -70,6 +70,39 @@ class API {
     }
   }
 
+  // ---------------------------- Get request ---------------
+  Future<dynamic> getwithouLoader(
+      {required String endPoint, required isHeader}) async {
+    if (!await _checkInternet()) {
+      return null;
+    }
+
+    final url = Uri.parse('$_kBaseURL$endPoint');
+    // print("url sdfd============>>>>>>$url");
+    // final headers = {'Authorization': 'Bearer $kTOKENSAVED'};
+    Map<String, String> header = {};
+
+    if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
+
+    try {
+      // showLoaderGetX();
+      final response = await http.get(url, headers: header);
+      // print("resddd" + response.body.toString());
+      // hideLoader();
+      final parsed = jsonDecode(response.body);
+      // print("resddd" + parsed.toString());
+      if (response.statusCode == 403) {
+        '${parsed['message']}'.showError();
+      }
+      return parsed;
+    } on Exception {
+    } catch (error) {
+      hideLoader();
+      debugPrint('Error is:-$error');
+      return null;
+    }
+  }
+
   // --------------------- Delete request -------------------->
 
   Future<Map<String, dynamic>?> delete(

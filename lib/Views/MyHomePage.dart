@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../Styles/TextStyles.dart';
 import 'HomeBanner.dart';
 import 'HomeCategory.dart';
 import '../Drawer/drawerHeader.dart';
@@ -13,9 +14,12 @@ import '../GetxController/MyHomePage_controller.dart';
 import '../GetxController/UserAuth_controller.dart';
 import '../Styles/ColorStyle.dart';
 import '../Components/logoCustom.dart';
+import '../Views/SearchResult.dart';
+import '../GetxController/searchResult_controller.dart';
 
 class MyHomePage extends StatelessWidget {
   final HomeBannerController controller = Get.put(HomeBannerController());
+  final search = Get.put(SearchResultController());
   final userAuth = UserAuth();
   @override
   Widget build(BuildContext context) {
@@ -36,13 +40,11 @@ class MyHomePage extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: ColorStyle.primaryColorRed,
                         ),
-                        child: Column(children: [
+                        child: Column(children: const [
                           DrowerHeader(),
                         ]),
                       ),
-                      Container(
-                        child: MyDrowerList(),
-                      ),
+                      MyDrowerList(),
                       // userAuth.userprofile.isNotEmpty
                     ],
                   ),
@@ -50,47 +52,84 @@ class MyHomePage extends StatelessWidget {
               ),
               // bottomNavigationBar: TheFooter(),
               appBar: AppBar(
-                // backgroundColor: ColorStyle.primaryColorRed,
                 elevation: 0,
-                title: LogoCustomWhite(),
-                // Image.asset(
-                //   'assets/images/addweb.png', height: 100, width: 200,
-                //   // ),
-                // ),
+                title: const LogoCustomWhite(),
                 actions: [
                   IconButton(
                     onPressed: () {},
-                    icon: const Icon(Icons.notifications),
+                    icon: controller.search.value
+                        ? IconButton(
+                            onPressed: () {
+                              controller.search.value = false;
+                              search.searchResult.value = [];
+                              search.itemName.value.text = '';
+                            },
+                            icon: const Icon(Icons.close),
+                          )
+                        : const Icon(Icons.notifications),
                   )
                 ],
               ),
               body: SingleChildScrollView(
-                child: !(controller.bannerData.value.isNotEmpty ||
-                        controller.categoriesData.value.isNotEmpty)
-                    ? MyLoader()
-                    : Container(
-                        child: Column(
-                          children: <Widget>[
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Mysearch(),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            // HomeBanner(controller.homeBannerData.value),
-                            HomeBanner(bannerData: controller.bannerData.value),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            HomeCategory(controller.categoriesData.value,
-                                controller.bannerData.value),
-                            // CategoryItems(),
-                            // CustomerReviews(
-                            //     controller.customerReviewsData.value),
-                            // NewsLetter(),
-                          ],
-                        ),
+                child: !(controller.bannerData.isNotEmpty ||
+                        controller.categoriesData.isNotEmpty)
+                    ? const MyLoader()
+                    : Column(
+                        children: <Widget>[
+                          const SizedBox(
+                            height: 20,
+                          ),
+
+                          // <------------------- Search Bar --------------------------->
+
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 20),
+                            child: TextField(
+                                onChanged: (value) {
+                                  search.itemName.value.text = value;
+                                  search.initfunction();
+                                },
+                                // controller: search.itemName.value,
+                                onTap: (() {
+                                  controller.search.value = true;
+                                }),
+                                decoration: InputDecoration(
+                                  hintText:
+                                      "Search Your Favourite Food Here", //hint text
+                                  prefixIcon:
+                                      const Icon(Icons.search), //prefix iocn
+                                  hintStyle: TextStylesCustom.textStyles_20
+                                      .apply(
+                                          color: ColorStyle.secondryColorBlack
+                                              .withOpacity(0.5)),
+                                )),
+                          ),
+                          // ElevatedButton(
+                          //     onPressed: () {
+                          //       search.initfunction();
+                          //     },
+                          //     child: Text("Search")),
+                          // Mysearch(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+
+                          controller.search.value
+                              ? SearchResult()
+                              : Column(
+                                  children: [
+                                    HomeBanner(
+                                        bannerData:
+                                            controller.bannerData.value),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    HomeCategory(
+                                        controller.categoriesData.value,
+                                        controller.bannerData.value),
+                                  ],
+                                )
+                        ],
                       ),
               ),
 

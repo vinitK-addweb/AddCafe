@@ -28,7 +28,7 @@ class CartController extends GetxController {
   //get api call for cartproduct
   Future fetchCart() async {
     cart = await API.instance.get(endPoint: 'cart/cart-items/', isHeader: true);
-    data = cart as List;
+    // data = cart as List;
 
     cartData.value =
         List<CartModel>.from(cart['payload'].map((x) => CartModel.fromJson(x)));
@@ -53,7 +53,7 @@ class CartController extends GetxController {
       final data = jsonDecode(response.body) as Map;
       // print(data['message'].toString());
       '${data['message']}'.showSuccess();
-      // fetchCart();
+      fetchCart();
     }
   }
   // <------------------- update item from cart ----------------->

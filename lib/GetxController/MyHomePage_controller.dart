@@ -18,7 +18,7 @@ class HomeBannerController extends GetxController {
   RxList<ModelCustomerReviews> customerReviewsData =
       <ModelCustomerReviews>[].obs;
   RxInt currentIndex = 0.obs;
-
+  RxBool search = false.obs;
   initMethodGetX() {
     Future.delayed(Duration(milliseconds: 1), () {
       fetchHomeBanner();
