@@ -8,6 +8,7 @@ import 'package:get/get_core/src/get_main.dart';
 // import 'package:addcafe/Providers/apis/CartApi.dart';
 // import 'package:addcafe/Providers/apis/MyfavouritesApi.dart';
 // import 'package:provider/provider.dart';
+import '../../GetxController/Cart_controller.dart';
 import '../../GetxController/Wishlist_controller.dart';
 import 'rating.dart';
 import 'addons.dart';
@@ -19,7 +20,7 @@ class CategoryDropdown extends StatelessWidget {
   final categoryItems;
 
   // final List<ModelActiveProducts> categoryItems;
-
+  final cartApi = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     // print('category##%#%#${categoryItems}');
@@ -31,8 +32,9 @@ class CategoryDropdown extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemBuilder: (context, index) {
+          List thisCartData = cartApi.isInCart(categoryItems[index]['id']);
           return Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
+            margin: const EdgeInsets.symmetric(vertical: 10),
             child: Card(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -51,7 +53,7 @@ class CategoryDropdown extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        Container(
+                        SizedBox(
                           width: MediaQuery.of(context).size.width * 0.5,
                           child: Text(
                             '${categoryItems[index]['item_name']}',
@@ -80,6 +82,9 @@ class CategoryDropdown extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
+                        // Text(myFavouritesApi
+                        //     .isInMyFavorites(categoryItems[index]['id'])
+                        //     .toString()),
                         Row(
                           children: [
                             myFavouritesApi
@@ -88,10 +93,11 @@ class CategoryDropdown extends StatelessWidget {
                                 ? IconButton(
                                     onPressed: () {
                                       myFavouritesApi.deleteMyFavourites(
-                                        myFavouritesApi.isInMyFavorites(
-                                                categoryItems[index]['id'])[0]
-                                            ['id'],
-                                      );
+                                          categoryItems[index]['id']
+                                          // myFavouritesApi.isInMyFavorites(
+                                          //         categoryItems[index]['id'])[0]
+                                          //     ['id'],
+                                          );
                                     },
                                     icon: const Icon(
                                       Icons.favorite,
@@ -102,8 +108,7 @@ class CategoryDropdown extends StatelessWidget {
                                     onPressed: () {
                                       myFavouritesApi.addToMyFavorites({
                                         "user": 1,
-                                        "product": categoryItems[index]
-                                            ['product']
+                                        "product": categoryItems[index]['id']
                                       });
                                     },
                                     icon: const Icon(
@@ -126,13 +131,13 @@ class CategoryDropdown extends StatelessWidget {
                   ),
                   Stack(
                     children: [
-                      Container(
+                      SizedBox(
                         width: 150,
                         child: Column(
                           // mainAxisAlignment: MainAxisAlignment.center,
                           // crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Container(
+                            SizedBox(
                               width: 150,
                               height: 150,
                               child: ClipRRect(
@@ -144,7 +149,7 @@ class CategoryDropdown extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             )
                           ],
@@ -154,133 +159,134 @@ class CategoryDropdown extends StatelessWidget {
                         top: 120,
                         left: 0,
                         right: 0,
-                        child:
-                            // thisCartData.isEmpty
-                            // ? ElevatedButton(
-                            //     onPressed: () => {
-                            //       if ((e['add_on_data'] as List)
-                            //           .isNotEmpty)
-                            //         {
-                            //           showModalBottomSheet(
-                            //             isScrollControlled: true,
-                            //             backgroundColor:
-                            //                 Colors.transparent,
-                            //             shape: RoundedRectangleBorder(
-                            //                 borderRadius:
-                            //                     BorderRadius.vertical(
-                            //                         top:
-                            //                             Radius.circular(
-                            //                                 20))),
-                            //             context: context,
-                            //             builder: (context) => Addon(e),
-                            //           )
-                            //         }
-                            //       else
-                            //         {
-                            //           cartApi.addToCart({
-                            //             'item': e['id'],
-                            //             "addon": []
-                            //           })
-                            //         }
-                            //     },
-                            //     child: Text('Add'),
-                            //   )
-                            // :
-                            //   Container(
-                            // height: 50,
-                            // width: 70,
-                            // padding: EdgeInsets.symmetric(
-                            //     horizontal: 8, vertical: 8),
-                            // decoration: BoxDecoration(
-                            //     color: Colors.red,
-                            //     border: Border.all(color: Colors.red),
-                            //     borderRadius: BorderRadius.all(
-                            //         (Radius.circular(4)))),
-                            // child:
+                        child: thisCartData.isEmpty
+                            ? ElevatedButton(
+                                onPressed: () => {
+                                  if ((categoryItems[index]['add_on_data']
+                                          as List)
+                                      .isNotEmpty)
+                                    {
+                                      showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.vertical(
+                                                top: Radius.circular(20))),
+                                        context: context,
+                                        builder: (context) =>
+                                            Addon(categoryItems[index]),
+                                      )
+                                    }
+                                  else
+                                    {
+                                      cartApi.addToCart({
+                                        'item': categoryItems[index]['id'],
+                                        "addon": []
+                                      })
+                                    }
+                                },
+                                child: Text('Add'),
+                              )
+                            :
+                            //  Container(
+                            //     height: 50,
+                            //     width: 70,
+                            //     padding: EdgeInsets.symmetric(
+                            //         horizontal: 8, vertical: 8),
+                            //     decoration: BoxDecoration(
+                            //         color: Colors.red,
+                            //         border: Border.all(color: Colors.red),
+                            //         borderRadius:
+                            //             BorderRadius.all((Radius.circular(4)))),
+                            //     child:
                             Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // if (e['item_count'] == 1) {
-                            //   cartApi.delete(e['id']);
-                            //   return;
-                            // }
-                            // cartApi.updateQuantity('minus',
-                            //     thisCartData[0]['id']);
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  // if (e['item_count'] == 1) {
+                                  //   cartApi.delete(e['id']);
+                                  //   return;
+                                  // }
+                                  // cartApi.updateQuantity('minus',
+                                  //     thisCartData[0]['id']);
 
-                            // child: Container(
-                            //   width: 20,
-                            // child: Center(
+                                  // child: Container(
+                                  //   width: 20,
+                                  // child: Center(
 
-                            IconButton(
-                              style: IconButton.styleFrom(
-                                  backgroundColor: ColorStyle.primaryColorRed),
-                              // iconSize: 26,
-                              color: Colors.white,
-                              icon: CircleAvatar(
-                                  radius: 14,
-                                  child: Icon(
-                                    Icons.remove,
-                                    size: 20,
-                                  )),
-                              onPressed: () {},
-                            ),
+                                  IconButton(
+                                    style: IconButton.styleFrom(
+                                        backgroundColor:
+                                            ColorStyle.primaryColorRed),
+                                    // iconSize: 26,
+                                    color: Colors.white,
+                                    icon: const CircleAvatar(
+                                        radius: 14,
+                                        child: Icon(
+                                          Icons.remove,
+                                          size: 20,
+                                        )),
+                                    onPressed: () {},
+                                  ),
 
-                            //  Text(
-                            //   '-',
-                            //   style: TextStyle(
-                            //       color: Colors.white),
-                            // ),
-                            //       ),
-                            // ),
+                                  //  Text(
+                                  //   '-',
+                                  //   style: TextStyle(
+                                  //       color: Colors.white),
+                                  // ),
+                                  //       ),
+                                  // ),
 
-                            Text(
-                                // '${thisCartData[0]['item_count']}',
-                                '2',
-                                style: TextStylesCustom.textStyles_22.apply(
-                                    color: ColorStyle.secondryColorBlack,
-                                    fontWeightDelta: 4)),
-                            IconButton(
-                              style: IconButton.styleFrom(
-                                  backgroundColor: ColorStyle.primaryColorRed),
-                              // iconSize: 26,
-                              color: Colors.white,
-                              icon: CircleAvatar(
-                                  radius: 14,
-                                  child: Icon(
-                                    Icons.add,
-                                    size: 20,
-                                  )),
-                              onPressed: () {},
-                            ),
-                            // InkWell(
-                            //     onTap: () {
-                            //       // cartApi.updateQuantity('plus',
-                            //       //     thisCartData[0]['id']);
-                            //     },
-                            //     // child: Container(
-                            //     //   width: 20,
-                            //     //   child: Center(
-                            //     child: SizedBox(
-                            //       width: 20,
-                            //       child: IconButton(
-                            //         iconSize: 12,
-                            //         color: Colors.white,
-                            //         icon: Icon(Icons.add),
-                            //         onPressed: () {},
-                            //       ),
-                            //     )
-                            //     // Text(
-                            //     //   '+',
-                            //     //   style: TextStyle(
-                            //     //       color: Colors.white),
-                            //     // ),
-                            //     //       ),
-                            //     // ),
-                            //     ),
-                          ],
-                        ),
-                        // ),
+                                  Text(
+                                      // '${thisCartData[0]['item_count']}',
+                                      '2',
+                                      style: TextStylesCustom.textStyles_22
+                                          .apply(
+                                              color:
+                                                  ColorStyle.secondryColorBlack,
+                                              fontWeightDelta: 4)),
+                                  IconButton(
+                                    style: IconButton.styleFrom(
+                                        backgroundColor:
+                                            ColorStyle.primaryColorRed),
+                                    // iconSize: 26,
+                                    color: Colors.white,
+                                    icon: const CircleAvatar(
+                                        radius: 14,
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 20,
+                                        )),
+                                    onPressed: () {},
+                                  ),
+                                  // InkWell(
+                                  //     onTap: () {
+                                  //       // cartApi.updateQuantity('plus',
+                                  //       //     thisCartData[0]['id']);
+                                  //     },
+                                  //     // child: Container(
+                                  //     //   width: 20,
+                                  //     //   child: Center(
+                                  //     child: SizedBox(
+                                  //       width: 20,
+                                  //       child: IconButton(
+                                  //         iconSize: 12,
+                                  //         color: Colors.white,
+                                  //         icon: Icon(Icons.add),
+                                  //         onPressed: () {},
+                                  //       ),
+                                  //     )
+                                  //     // Text(
+                                  //     //   '+',
+                                  //     //   style: TextStyle(
+                                  //     //       color: Colors.white),
+                                  //     // ),
+                                  //     //       ),
+                                  //     // ),
+                                  //     ),
+                                ],
+                              ),
                       ),
+                      // ),
                     ],
                   )
                 ],

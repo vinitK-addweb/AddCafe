@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 // import 'package:addcafe/Providers/apis/CartApi.dart';
 // import 'package:provider/provider.dart';
+import '../../GetxController/Cart_controller.dart';
 import './rating.dart';
 
 class Addon extends StatefulWidget {
@@ -71,7 +74,9 @@ class _AddonState extends State<Addon> {
 
   @override
   Widget build(BuildContext context) {
-    // final cartApi = Provider.of<CartApi>(context, listen: false);
+    final cartApi = Get.put(CartController());
+
+    // Provider.of<CartApi>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.transparent,
       // ----------bottom bar---------------------
@@ -115,9 +120,9 @@ class _AddonState extends State<Addon> {
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10)))),
                     onPressed: (() {
-                      // cartApi.addToCart(
-                      //     {'item': productData['id'], "addon": productAddOn});
-                      // Navigator.pop(context);
+                      cartApi.addToCart(
+                          {'item': productData['id'], "addon": productAddOn});
+                      Navigator.pop(context);
                     }),
                     child: const Text(
                       'Add item',

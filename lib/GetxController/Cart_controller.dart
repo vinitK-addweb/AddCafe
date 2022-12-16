@@ -8,7 +8,7 @@ import '../Utils/Global.dart';
 class CartController extends GetxController {
   Map cart = {};
   RxList<CartModel> cartData = <CartModel>[].obs;
-
+  List data = [];
   // getter
   // Map get cart {
   //   return _cart;
@@ -28,6 +28,7 @@ class CartController extends GetxController {
   //get api call for cartproduct
   Future fetchCart() async {
     cart = await API.instance.get(endPoint: 'cart/cart-items/', isHeader: true);
+    data = cart as List;
 
     cartData.value =
         List<CartModel>.from(cart['payload'].map((x) => CartModel.fromJson(x)));
@@ -92,8 +93,14 @@ class CartController extends GetxController {
   }
 
   List isInCart(id) {
-    List data = cartData;
+    // List data = cartData;
+    // fetchCart();
+    print("sa" + id.toString());
+    print("data is here" + data.toString());
     var b = data.where((e) => e['item'] == id).toList();
+    print("dasdadas" + b.toString());
     return b;
+    // print("data is " + data[0].toString());
+    // return data;
   }
 }

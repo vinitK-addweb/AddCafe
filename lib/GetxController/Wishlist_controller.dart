@@ -47,25 +47,33 @@ class MyFavouritesApi extends GetxController {
   Future deleteMyFavourites(id) async {
     if (kTOKENSAVED != null) {
       await API.instance.delete(
-          endPoint: '${APIEndPoints.instance.KWishlist}${id}/', isHeader: true);
+          endPoint: '${APIEndPoints.instance.KWishlist}$id/', isHeader: true);
       fetchMyFavourites();
+      isInMyFavorites(id);
+
+      print("runninf");
     }
   }
 
   Future addToMyFavorites(productData) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
     http.Response response;
 
+    print(productData);
+    print(kTOKENSAVED);
     response = await http.post(
         Uri.parse('https://cafe.addwebprojects.com/api/v1/catalogue/wishlist/'),
         headers: {
           "Content-Type": "application/json",
-          "Authorization": 'Bearer ${prefs.get('token')}'
+          "Authorization": 'Bearer $kTOKENSAVED'
         },
         body: jsonEncode(productData));
+    print("dasdasdas" + response.body.toString());
     if (response.statusCode == 200) {
       print('addToMyFavorites called');
       fetchMyFavourites();
+      isInMyFavorites(productData['id']);
+      // update();
     } else {
       print('addToMyFavorites not called');
     }
@@ -74,6 +82,7 @@ class MyFavouritesApi extends GetxController {
   List isInMyFavorites(productId) {
     var a =
         myFavourites.where((element) => element.product == productId).toList();
+
     return a;
   }
 }

@@ -46,7 +46,7 @@ class ActiveProductsController extends GetxController {
   }
 
   getFilteredProducts(categoryName) {
-    print(" heloooo==========dsadasda");
+    // print(" heloooo==========dsadasda");
     categoryProduct.value = allProducts
         .where((item) => item["category_name"] == categoryName)
         .toList();
