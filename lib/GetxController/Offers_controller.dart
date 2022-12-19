@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import '../Models/Model_Offers.dart';
 import 'dart:convert';
 import '../Utils/API.dart';
+import '../Utils/Constant.dart';
+import '../Views/Auth/Signin.dart';
 
 class OffersController extends GetxController {
   RxList<OffersModel> offers = <OffersModel>[].obs;
@@ -10,16 +12,20 @@ class OffersController extends GetxController {
 
   initCustom() {
     debugPrint(idx.value.toString());
-    Future.delayed(Duration(milliseconds: 3), (() {
+    Future.delayed(const Duration(milliseconds: 3), (() {
       fetchOffers();
     }));
   }
 
   fetchOffers() async {
-    final response = await API.instance
-        .get(endPoint: 'promotion/active-coupon/', isHeader: true);
-    offers.value =
-        List<OffersModel>.from(response.map((x) => OffersModel.fromJson(x)));
+    if (kTOKENSAVED != '') {
+      final response = await API.instance
+          .get(endPoint: 'promotion/active-coupon/', isHeader: true);
+      offers.value =
+          List<OffersModel>.from(response.map((x) => OffersModel.fromJson(x)));
+    } else {
+      Get.to(() => Mylogin());
+    }
   }
 
   bannerIdx(id) {

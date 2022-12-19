@@ -58,9 +58,9 @@ class Myfavourits extends StatelessWidget {
                         : 'Add Items',
                     onTap: () {
                       myfavapi.myFavourites.isEmpty
-                          ? Get.to(() => BottamNavigationBar())
+                          ? Get.to(() => BottomNavBarCustom())
                           : homPageController.setCurrentIndex(3);
-                      Get.to(() => BottamNavigationBar());
+                      Get.to(() => BottomNavBarCustom());
                     },
                   ),
                 ),

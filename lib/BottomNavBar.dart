@@ -1,118 +1,179 @@
-import 'package:addcafe/Styles/ColorStyle.dart';
-import 'package:addcafe/Views/MyHomePage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import '../Styles/ImageStyle.dart';
 import 'GetxController/MyHomePage_controller.dart';
-import './Styles/TextStyles.dart';
-import '../Views/Offers.dart';
-import '../Views/Cart/cart.dart';
+import 'Styles/ColorStyle.dart';
+import 'Styles/TextStyles.dart';
+import 'Utils/Global.dart';
+import 'Views/Cart/cart.dart';
+import 'Views/MyHomePage.dart';
+import 'Views/Offers.dart';
 
-class BottamNavigationBar extends StatelessWidget {
+class BottomNavBarCustom extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => BottomNavBarCustomState();
+}
+
+class BottomNavBarCustomState extends State<BottomNavBarCustom> {
   final controller = Get.put(HomeBannerController());
+  String _currentPage = "Page1";
+  List<String> pageKeys = ["Page1", "Page2", "Page3"];
 
+  final Map<String, GlobalKey<NavigatorState>> _navigatorKeys = {
+    "Page1": GlobalKey<NavigatorState>(),
+    "Page2": GlobalKey<NavigatorState>(),
+    "Page3": GlobalKey<NavigatorState>(),
+  };
+
+  int selectedIndex = 0;
   double iconSize = 24;
 
-  final arrBody = [MyHomePage(), const Offers(), Container(), const Cart()];
+  void _selectTab(String tabItem, int index) {
+    if (tabItem == _currentPage) {
+      _navigatorKeys[tabItem]!.currentState!.popUntil((route) => route.isFirst);
+    } else {
+      setState(() {
+        _currentPage = pageKeys[index];
+        selectedIndex = index;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-        init: HomeBannerController(),
-        builder: (_) {
-          return Obx(() => WillPopScope(
-                onWillPop: () async {
-                  return false;
-                },
-                child: Scaffold(
-                  backgroundColor: Colors.white,
-                  body: arrBody[controller.currentIndex.value],
-                  bottomNavigationBar: BottomNavigationBar(
-                    currentIndex: controller.currentIndex.value,
-                    type: BottomNavigationBarType.fixed,
-                    iconSize: 30,
-                    unselectedIconTheme: IconThemeData(
-                        color: ColorStyle.secondaryColorgrey,
-                        opacity: 0.8,
-                        size: 25),
-                    selectedIconTheme: IconThemeData(
-                        color: ColorStyle.primaryColorRed,
-                        opacity: 2.0,
-                        size: 40),
-                    selectedLabelStyle: TextStylesCustom.textStyles_20,
-                    unselectedLabelStyle: TextStylesCustom.textStyles_16,
-                    items: const [
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.home),
-                        label: 'Home',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.wallet_giftcard_outlined),
-                        label: 'Offers',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.shopping_bag_outlined),
-                        label: 'Rewards',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.shopping_cart),
-                        label: 'Cart',
-                      ),
+    return WillPopScope(
+      onWillPop: () async {
+        final isFirstRouteInCurrentTab =
+            !await _navigatorKeys[_currentPage]!.currentState!.maybePop();
+        if (isFirstRouteInCurrentTab) {
+          if (_currentPage != "Page1") {
+            _selectTab("Page1", 1);
 
-                      // BottomNavigationBarItem(icon: Icon(Icons.point_of_sale), label: 'Cart')
-                    ],
-                    onTap: (index) {
-                      // controller.setCurrentIndex(index);
-                      controller.currentIndex.value = index;
-                      // if (index == 0) Get.to(MyHomePage());
-                      // if (index == 2) Get.to(Offers());
+            return false;
+          }
+        }
+        // let system handle back button if we're on the first route
+        return isFirstRouteInCurrentTab;
+      },
+      child: Scaffold(
+          body: Stack(children: <Widget>[
+            _buildOffstageNavigator("Page1"),
+            _buildOffstageNavigator("Page2"),
+            _buildOffstageNavigator("Page3"),
+          ]),
+          bottomNavigationBar: Container(
+            height: 55,
+            padding: const EdgeInsets.only(top: 5),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 3,
+                  blurRadius: 3,
+                  offset: Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: IconButton(
+                    onPressed: () {
+                      _selectTab(pageKeys[0], 0);
                     },
+                    icon: Icon(
+                      Icons.home,
+                      size: pageKeys[0] == _currentPage ? 30 : 25,
+                      color: pageKeys[0] == _currentPage
+                          ? ColorStyle.primaryColorRed
+                          : Colors.grey,
+                    ),
                   ),
                 ),
-              ));
-        });
+                Expanded(
+                    child: IconButton(
+                  onPressed: () {
+                    _selectTab(pageKeys[1], 1);
+                  },
+                  icon: Icon(
+                    Icons.wallet_giftcard_outlined,
+                    size: pageKeys[1] == _currentPage ? 30 : 25,
+                    color: pageKeys[1] == _currentPage
+                        ? ColorStyle.primaryColorRed
+                        : Colors.grey,
+                  ),
+                )),
+                // Expanded(
+                //     child: IconButton(
+                //   onPressed: () {
+                //     // _selectTab(pageKeys[2], 2);
+                //   },
+                //   icon: Icon(
+                //     Icons.shopping_bag_outlined,
+                //     color: Colors.grey,
+                //   ),
+                // )),
+                Expanded(
+                    child: IconButton(
+                  onPressed: () {
+                    _selectTab(pageKeys[2], 2);
+                  },
+                  icon: Icon(
+                    Icons.shopping_cart,
+                    size: pageKeys[2] == _currentPage ? 30 : 25,
+                    color: pageKeys[2] == _currentPage
+                        ? ColorStyle.primaryColorRed
+                        : Colors.grey,
+                  ),
+                )),
+              ],
+            ),
+          )),
+    );
+  }
+
+  Widget _buildOffstageNavigator(String tabItem) {
+    return Offstage(
+      offstage: _currentPage != tabItem,
+      child: TabNavigator(
+        navigatorKey: _navigatorKeys[tabItem],
+        tabItem: tabItem,
+      ),
+    );
   }
 }
 
-// class theFooter extends StatefulWidget {
-//   @override
-//   State<theFooter> createState() => _theFooterState();
-// }
+class TabNavigatorRoutes {
+  static const String root = '/';
+  static const String detail = '/detail';
+}
 
-// class _theFooterState extends State<theFooter> {
-//   // int _currentIndex = 0;
-//   @override
-//   Widget build(BuildContext context) => BottomNavigationBar(
-//         // currentIndex: _currentIndex,
-//         type: BottomNavigationBarType.fixed,
-//         iconSize: 35,
-//         items: [
-//           BottomNavigationBarItem(
-//               icon: Icon(Icons.menu_open_outlined),
-//               label: 'Menu',
-//               backgroundColor: Colors.blue),
-//           BottomNavigationBarItem(
-//               icon: Icon(Icons.wallet_giftcard_outlined),
-//               label: 'Rewards',
-//               backgroundColor: Colors.blue),
-//           BottomNavigationBarItem(
-//               icon: Icon(Icons.shopping_bag_outlined),
-//               label: 'Offers',
-//               backgroundColor: Colors.blue),
-//           BottomNavigationBarItem(
-//               icon: Icon(Icons.shopping_cart),
-//               label: 'Cart',
-//               backgroundColor: Colors.blue),
+class TabNavigator extends StatelessWidget {
+  TabNavigator({this.navigatorKey, this.tabItem});
+  final GlobalKey<NavigatorState>? navigatorKey;
+  final String? tabItem;
 
-//           // BottomNavigationBarItem(icon: Icon(Icons.point_of_sale), label: 'Cart')
-//         ],
-//         onTap: (index) {
-//           setState(() {
-//             controller.
-//             _currentIndex = index;
-//             if (index == 0) Get.to(MyHomePage());
-//             if (index == 2) Get.to(Offers());
-//             // if (index == 3) Navigator.of(context).pushNamed('/cart');
-//           });
-//         },
-//       );
-// }
+  @override
+  Widget build(BuildContext context) {
+    Widget? child;
+    if (tabItem == "Page1") {
+      child = MyHomePage();
+    } else if (tabItem == "Page2") {
+      child = const Offers();
+    } else if (tabItem == "Page3") {
+      child = const Cart();
+    }
+
+    return Navigator(
+      key: navigatorKey,
+      onGenerateRoute: (routeSettings) {
+        return MaterialPageRoute(builder: (context) => child!);
+      },
+    );
+  }
+}

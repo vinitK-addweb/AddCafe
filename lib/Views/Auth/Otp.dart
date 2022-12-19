@@ -1,4 +1,6 @@
+import '../../BottomNavBar.dart';
 import '../../Styles/ColorStyle.dart';
+import '../../Utils/Global.dart';
 import '../../Views/MyHomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -52,7 +54,7 @@ class Otp extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(55)),
                       onPressed: () {
-                        Get.to(MyHomePage());
+                        navigateMultiBottom(context, BottomNavBarCustom());
                       },
                       child: Text(
                         'Skip',

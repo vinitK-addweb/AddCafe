@@ -142,7 +142,7 @@ class UserAuth extends GetxController {
         prefs.setString('userData', strPayLoad);
         prefs.setString('token', await _UserLogin['access']);
         getlocaStorage();
-        await Get.to(BottamNavigationBar());
+        await Get.to(BottomNavBarCustom());
       }
     }
   }

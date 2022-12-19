@@ -3,6 +3,7 @@ import 'package:addcafe/Views/MyHomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
+import '../Utils/Global.dart';
 import '../Views/PrivacyPolicy.dart';
 import '../Views/Wishlist.dart';
 import '../Views/userProfile.dart';
@@ -79,7 +80,9 @@ class MyDrowerList extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          Get.to(Myfavourits());
+                          navigateMultiBottom(context, const Myfavourits());
+
+                          // Get.to(Myfavourits());
                         },
                         child: Padding(
                           padding: EdgeInsets.all(20.0),
@@ -101,9 +104,11 @@ class MyDrowerList extends StatelessWidget {
                         ),
                       ),
                       InkWell(
-                        onTap: () => Get.to(Offers()),
+                        onTap: () =>
+                            navigateMultiBottom(context, const Offers()),
+                        // Get.to(Offers()),
                         child: Padding(
-                          padding: EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(20.0),
                           child: Row(children: [
                             Icon(
                               Icons.discount_outlined,
@@ -111,7 +116,7 @@ class MyDrowerList extends StatelessWidget {
                               color: ColorStyle.secondaryColorgrey,
                             ),
                             Container(
-                              margin: EdgeInsets.only(left: 20),
+                              margin: const EdgeInsets.only(left: 20),
                               child: Text(
                                 'Offers',
                                 style: TextStylesCustom.textStyles_20.apply(
@@ -123,9 +128,11 @@ class MyDrowerList extends StatelessWidget {
                         ),
                       ),
                       InkWell(
-                        onTap: () => Get.to(Faq()),
+                        onTap: () => navigateMultiBottom(context, Faq()),
+
+                        // Get.to(Faq()),
                         child: Padding(
-                          padding: EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(20.0),
                           child: Row(children: [
                             Icon(
                               Icons.question_answer_outlined,
@@ -133,7 +140,7 @@ class MyDrowerList extends StatelessWidget {
                               color: ColorStyle.secondaryColorgrey,
                             ),
                             Container(
-                              margin: EdgeInsets.only(left: 20),
+                              margin: const EdgeInsets.only(left: 20),
                               child: Text(
                                 'Faqs',
                                 style: TextStylesCustom.textStyles_20.apply(

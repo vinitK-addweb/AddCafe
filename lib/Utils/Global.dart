@@ -72,3 +72,9 @@ goToAnotherScreen(Widget page) {
     curve: Curves.fastOutSlowIn,
   );
 }
+
+// bottom navigation same
+navigateMultiBottom(context, Widget child) {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (BuildContext context) => child));
+}

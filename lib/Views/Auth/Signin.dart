@@ -2,6 +2,8 @@ import 'package:addcafe/Styles/ColorStyle.dart';
 import 'package:addcafe/Views/MyHomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../BottomNavBar.dart';
+import '../../Utils/Global.dart';
 import './Signup.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
@@ -53,7 +55,7 @@ class _MyloginState extends State<Mylogin> {
           ),
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
               const SizedBox(
@@ -80,7 +82,9 @@ class _MyloginState extends State<Mylogin> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(55)),
                               onPressed: () {
-                                Get.to(MyHomePage());
+                                Get.to(BottomNavBarCustom());
+                                // navigateMultiBottom(
+                                //     context, BottomNavBarCustom());
                               },
                               child: Text(
                                 'Skip',
@@ -99,7 +103,7 @@ class _MyloginState extends State<Mylogin> {
                                   .apply(fontWeightDelta: 5)),
 
                       // margin: EdgeInsets.symmetric(vertical: 20),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text('Please Sign In to your account',
@@ -108,7 +112,7 @@ class _MyloginState extends State<Mylogin> {
                         height: 30,
                       ),
                       TextFieldUnderline(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         labelText: 'Phone Number or Email',
                         controller: controller.textController.value,
                         hintText: 'John',
@@ -128,7 +132,7 @@ class _MyloginState extends State<Mylogin> {
                           controller.continueToPasswordOrOtp();
                         }),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 42,
                       ),
 
@@ -139,14 +143,14 @@ class _MyloginState extends State<Mylogin> {
                             height: 1,
                             color: Colors.grey,
                           )),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
                             'Or',
                             style: TextStylesCustom.textStyles_17,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
@@ -156,7 +160,7 @@ class _MyloginState extends State<Mylogin> {
                           )),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 24,
                       ),
                       Row(

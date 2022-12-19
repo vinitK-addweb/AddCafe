@@ -38,7 +38,7 @@ class MyFavouritesApi extends GetxController {
       myFavourites.value =
           List<Wishlist>.from(wishlist.map((x) => Wishlist.fromJson(x)));
 
-      Get.to(() => Wishlist());
+      // Get.to(() => Wishlist());
     } else {
       Get.to(() => Mylogin());
     }
