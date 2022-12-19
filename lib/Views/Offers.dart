@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import '../Components/MainDrawer.dart';
 import '../Styles/ColorStyle.dart';
 import '../Styles/TextStyles.dart';
 import '../Components/AppBarStyle.dart';
@@ -20,7 +21,7 @@ class Offers extends StatelessWidget {
     final controller = Get.put(OffersController());
     final homPageController = Get.put(HomeBannerController());
     // controller.fetchOffers();
-
+    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
     // debugPrint('data===========>${controller.offers[1].couponBanner!}');
     return GetBuilder(
         init: OffersController(),
@@ -28,15 +29,21 @@ class Offers extends StatelessWidget {
         builder: (controller) {
           return Obx(() {
             return Scaffold(
+              key: _scaffoldKey,
+              drawer: const MainDrawer(),
               appBar: AppBarStyle(
                 styleTitle: TextStylesCustom.textStyles_24,
                 elevation: 0,
                 title: 'Offers',
                 backgroundColor: ColorStyle.primaryColorRed,
                 leading: IconButton(
-                  onPressed: (() => homPageController.currentIndex.value = 0),
-                  icon: const Icon(Icons.arrow_back),
-                  color: Colors.white,
+                  onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+                  // currentIndex.value = 0,
+                  icon: const Icon(
+                    Icons.menu,
+                    size: 34,
+                    color: Colors.white,
+                  ),
                 ),
               ),
               body: controller.offers.isNotEmpty

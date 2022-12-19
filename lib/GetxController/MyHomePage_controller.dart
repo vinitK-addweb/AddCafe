@@ -67,7 +67,6 @@ class HomeBannerController extends GetxController {
   // }
 
   setCurrentIndex(index) {
-    print('object=============>');
     currentIndex.value = index;
   }
 }

@@ -56,9 +56,10 @@ class MyDrowerList extends StatelessWidget {
                       //   ),
                       // ),
                       InkWell(
-                        onTap: (() => Get.to(UserProfile())),
+                        onTap: (() =>
+                            navigateMultiBottom(context, UserProfile())),
                         child: Container(
-                          padding: EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(20.0),
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
@@ -68,7 +69,7 @@ class MyDrowerList extends StatelessWidget {
                                   color: ColorStyle.secondaryColorgrey,
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(left: 20),
+                                  margin: const EdgeInsets.only(left: 20),
                                   child: Text(
                                     'Profile',
                                     style: TextStylesCustom.textStyles_20.apply(
@@ -80,12 +81,12 @@ class MyDrowerList extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          navigateMultiBottom(context, const Myfavourits());
+                          navigateMultiBottom(context, Myfavourits());
 
                           // Get.to(Myfavourits());
                         },
                         child: Padding(
-                          padding: EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(20.0),
                           child: Row(children: [
                             Icon(
                               Icons.favorite_border_outlined,
@@ -93,7 +94,7 @@ class MyDrowerList extends StatelessWidget {
                               color: ColorStyle.secondaryColorgrey,
                             ),
                             Container(
-                              margin: EdgeInsets.only(left: 20),
+                              margin: const EdgeInsets.only(left: 20),
                               child: Text(
                                 'My Favourites',
                                 style: TextStylesCustom.textStyles_20.apply(

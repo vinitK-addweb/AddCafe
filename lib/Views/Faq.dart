@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import '../BottomNavBar.dart';
 import 'package:get/get.dart';
+import '../Components/MainDrawer.dart';
 import '../GetxController/Faq_Controller.dart';
 import '../Styles/TextStyles.dart';
 import '../Styles/ColorStyle.dart';
@@ -14,7 +15,7 @@ class Faq extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final faq = Get.put(FaqController());
-
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return GetBuilder(
         init: FaqController(),
         initState: ((state) => faq.initMethod()),
@@ -22,17 +23,22 @@ class Faq extends StatelessWidget {
           return Obx(() {
             return Scaffold(
               // <------------------------------ Main App bar starts --------------------->
+              key: scaffoldKey,
+              drawer: const MainDrawer(),
               appBar: AppBarStyle(
+                styleTitle: TextStylesCustom.textStyles_24,
+                elevation: 0,
+                title: 'Offers',
                 backgroundColor: ColorStyle.primaryColorRed,
                 leading: IconButton(
-                  onPressed: () => Get.back(),
-                  icon: Icon(
-                    Icons.arrow_back,
+                  onPressed: () => scaffoldKey.currentState!.openDrawer(),
+                  // currentIndex.value = 0,
+                  icon: const Icon(
+                    Icons.menu,
+                    size: 34,
                     color: Colors.white,
                   ),
                 ),
-                styleTitle: TextStylesCustom.textStyles_24,
-                title: 'Faq',
               ),
 
               body: SingleChildScrollView(

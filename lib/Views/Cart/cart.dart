@@ -2,6 +2,7 @@ import 'package:addcafe/Styles/TextStyles.dart';
 import 'package:addcafe/Views/AddNewAddress.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../Components/MainDrawer.dart';
 import './emptyCart.dart';
 import '../../Styles/ColorStyle.dart';
 import '../../GetxController/Cart_controller.dart';
@@ -11,20 +12,28 @@ import '../../Utils/Constant.dart';
 import '../../Components/ElevatedButtonCustom.dart';
 
 class Cart extends StatelessWidget {
-  const Cart({Key? key}) : super(key: key);
-
+  Cart({Key? key}) : super(key: key);
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(CartController());
     final homPageController = Get.put(HomeBannerController());
     return Scaffold(
+      key: scaffoldKey,
+      drawer: const MainDrawer(),
       appBar: AppBarStyle(
-        backgroundColor: ColorStyle.primaryColorRed,
-        title: 'Cart',
         styleTitle: TextStylesCustom.textStyles_24,
+        elevation: 0,
+        title: 'Offers',
+        backgroundColor: ColorStyle.primaryColorRed,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => homPageController.currentIndex.value = 0,
+          onPressed: () => scaffoldKey.currentState!.openDrawer(),
+          // currentIndex.value = 0,
+          icon: const Icon(
+            Icons.menu,
+            size: 34,
+            color: Colors.white,
+          ),
         ),
       ),
       bottomNavigationBar: Container(

@@ -1,6 +1,7 @@
 import 'package:addcafe/Components/AppBarStyle.dart';
 import 'package:addcafe/Views/Aboutus.dart';
 import 'package:flutter/material.dart';
+import '../Components/MainDrawer.dart';
 import '../GetxController/PrivacyPolicy_controller.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +12,7 @@ import 'Terms&Condtions.dart';
 class PrivacyPolicy extends StatelessWidget {
   PrivacyPolicy({super.key});
   final controller = Get.put(PrivacyPolicyController());
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -19,15 +21,22 @@ class PrivacyPolicy extends StatelessWidget {
       builder: (_) {
         return Obx(() {
           return Scaffold(
+            key: scaffoldKey,
+            drawer: const MainDrawer(),
             appBar: AppBarStyle(
               styleTitle: TextStylesCustom.textStyles_24,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () => Get.back(),
-                color: Colors.white,
-              ),
+              elevation: 0,
+              title: 'Offers',
               backgroundColor: ColorStyle.primaryColorRed,
-              title: 'Privacy Policy',
+              leading: IconButton(
+                onPressed: () => scaffoldKey.currentState!.openDrawer(),
+                // currentIndex.value = 0,
+                icon: const Icon(
+                  Icons.menu,
+                  size: 34,
+                  color: Colors.white,
+                ),
+              ),
             ),
             body: SingleChildScrollView(
               child: Column(

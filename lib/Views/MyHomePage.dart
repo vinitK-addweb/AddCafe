@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import '../Components/AppBarStyle.dart';
+import '../Components/MainDrawer.dart';
 import '../Styles/TextStyles.dart';
 import 'HomeBanner.dart';
 import 'HomeCategory.dart';
 import '../Drawer/drawerHeader.dart';
-import '../Drawer/drawerList.dart';
-import '../BottomNavBar.dart';
+
+// import '../BottomNavBar.dart';
 import 'MyLoader.dart';
 import 'MySearch.dart';
 import 'CustomerReviews.dart';
-import 'NewsLetter.dart';
+// import 'NewsLetter.dart';
 import 'package:get/get.dart';
 import '../GetxController/MyHomePage_controller.dart';
 import '../GetxController/UserAuth_controller.dart';
@@ -21,6 +23,7 @@ class MyHomePage extends StatelessWidget {
   final HomeBannerController controller = Get.put(HomeBannerController());
   final search = Get.put(SearchResultController());
   final userAuth = UserAuth();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -31,25 +34,43 @@ class MyHomePage extends StatelessWidget {
       },
       builder: (controller) {
         return Obx((() => Scaffold(
-              drawer: Drawer(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: ColorStyle.primaryColorRed,
-                        ),
-                        child: Column(children: const [
-                          DrowerHeader(),
-                        ]),
-                      ),
-                      MyDrowerList(),
-                      // userAuth.userprofile.isNotEmpty
-                    ],
-                  ),
-                ),
-              ),
+              // drawer: MainDrawer(),
+              key: scaffoldKey,
+              drawer: const MainDrawer(),
+              // appBar: AppBarStyle(
+              //   styleTitle: TextStylesCustom.textStyles_24,
+              //   elevation: 0,
+              //   title: 'Offers',
+              //   backgroundColor: ColorStyle.primaryColorRed,
+              //   leading: IconButton(
+              //     onPressed: () => scaffoldKey.currentState!.openDrawer(),
+              //     // currentIndex.value = 0,
+              //     icon: const Icon(
+              //       Icons.menu,
+              //       size: 34,
+              //       color: Colors.white,
+              //     ),
+              //   ),
+              // ),
+              // // Drawer(
+              //   child: SingleChildScrollView(
+              //     child: Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         Container(
+              //           decoration: BoxDecoration(
+              //             color: ColorStyle.primaryColorRed,
+              //           ),
+              //           child: Column(children: const [
+              //             DrowerHeader(),
+              //           ]),
+              //         ),
+              //         MyDrowerList(),
+              //         // userAuth.userprofile.isNotEmpty
+              //       ],
+              //     ),
+              //   ),
+              // ),
               // bottomNavigationBar: TheFooter(),
               appBar: AppBar(
                 elevation: 0,

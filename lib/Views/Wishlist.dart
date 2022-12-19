@@ -4,6 +4,9 @@ import '../Components/ElevatedButtonCustom.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/Views/EmptyWishlist.dart';
 import 'package:addcafe/GetxController/Wishlist_controller.dart';
+import '../Components/MainDrawer.dart';
+import '../Drawer/drawerHeader.dart';
+import '../Drawer/drawerList.dart';
 import '../Utils/Constant.dart';
 import '../Styles/ColorStyle.dart';
 import '../Components/AppBarStyle.dart';
@@ -14,8 +17,8 @@ import '../Views/Categories/addons.dart';
 import './../GetxController/Cart_controller.dart';
 
 class Myfavourits extends StatelessWidget {
-  const Myfavourits({super.key});
-
+  Myfavourits({super.key});
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     // final userAuth = Provider.of<UserAuth>(context);
@@ -34,19 +37,35 @@ class Myfavourits extends StatelessWidget {
         builder: (_) {
           return Obx(() {
             return Scaffold(
+                key: _scaffoldKey,
                 appBar: AppBarStyle(
                   backgroundColor: ColorStyle.primaryColorRed,
+                  // trailings: [
+                  //   IconButton(
+                  //     icon: const Icon(
+                  //       Icons.menu,
+                  //       size: 34,
+                  //       color: Colors.white,
+                  //     ),
+                  //     onPressed: () {
+                  //       _scaffoldKey.currentState!.openDrawer();
+                  //     },
+                  //   ),
+                  // ],
                   leading: IconButton(
-                    onPressed: () => Get.back(),
+                    onPressed: () => _scaffoldKey.currentState!.openDrawer(),
                     // currentIndex.value = 0,
                     icon: const Icon(
-                      Icons.arrow_back,
+                      Icons.menu,
+                      size: 34,
                       color: Colors.white,
                     ),
                   ),
                   styleTitle: TextStylesCustom.textStyles_24,
                   title: 'Wishlist',
                 ),
+                drawer: const MainDrawer(),
+                // drawer:
                 bottomNavigationBar: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 30),

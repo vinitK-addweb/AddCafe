@@ -166,7 +166,7 @@ class TabNavigator extends StatelessWidget {
     } else if (tabItem == "Page2") {
       child = const Offers();
     } else if (tabItem == "Page3") {
-      child = const Cart();
+      child = Cart();
     }
 
     return Navigator(

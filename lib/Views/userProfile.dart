@@ -1,4 +1,5 @@
 import 'dart:convert';
+import '../Components/MainDrawer.dart';
 import '../Views/AddNewAddress.dart';
 import 'package:addcafe/Components/AppBarStyle.dart';
 import 'package:addcafe/Views/Auth/Signin.dart';
@@ -21,17 +22,24 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     final userAuth = Get.put(UserAuth());
     final controller = Get.put(UserProfileController());
-
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
+        key: scaffoldKey,
+        drawer: const MainDrawer(),
         appBar: AppBarStyle(
           styleTitle: TextStylesCustom.textStyles_24,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () => Get.back(),
-            color: Colors.white,
-          ),
-          backgroundColor: ColorStyle.primaryColorRed,
+          elevation: 0,
           title: 'Profile',
+          backgroundColor: ColorStyle.primaryColorRed,
+          leading: IconButton(
+            onPressed: () => scaffoldKey.currentState!.openDrawer(),
+            // currentIndex.value = 0,
+            icon: const Icon(
+              Icons.menu,
+              size: 34,
+              color: Colors.white,
+            ),
+          ),
         ),
         body: GetBuilder(
             init: UserAuth(),
