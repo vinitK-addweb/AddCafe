@@ -10,7 +10,7 @@ class SearchResultController extends GetxController {
   Rx<TextEditingController> itemName = TextEditingController().obs;
   // RxList<TermsCondtionsModel> termsCondtions = <TermsCondtionsModel>[].obs;
   initfunction() {
-    Future.delayed(const Duration(milliseconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       fetchSearchResult();
     });
   }
@@ -21,8 +21,11 @@ class SearchResultController extends GetxController {
         endPoint: "catalogue/active-product/?search=${itemName.value.text}",
         isHeader: true);
     // print("search result" + response.toString());
-    searchResult.value = response;
-    // print("the response data ========>>>>>>" +
-    //     searchResult.value[0].id.toString());
+    Future.delayed(const Duration(seconds: 2), () {
+      searchResult.value = response;
+      // print("the response data ========>>>>>>" +
+      //     searchResult.value[0].id.toString());
+      //  fetchSearchResult();
+    });
   }
 }

@@ -106,7 +106,7 @@ class MyHomePage extends StatelessWidget {
                           Container(
                             margin: const EdgeInsets.symmetric(horizontal: 20),
                             child: TextField(
-                                controller: search.itemName.value,
+                                // controller: search.itemName.value,
                                 onChanged: (value) {
                                   search.itemName.value.text = value;
                                   search.initfunction();

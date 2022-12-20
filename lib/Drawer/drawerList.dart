@@ -184,7 +184,6 @@ class MyDrowerList extends StatelessWidget {
                                       MediaQuery.of(context).size.width / 1.5,
                                       50),
                                   onTap: () {
-                                    print("Log out ho gya hai");
                                     userAuth.logOut();
                                   },
                                   text: 'LogOut',
