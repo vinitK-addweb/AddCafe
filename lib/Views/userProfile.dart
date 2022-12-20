@@ -22,6 +22,7 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     final userAuth = Get.put(UserAuth());
     final controller = Get.put(UserProfileController());
+    var formKey = GlobalKey<FormState>();
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
         key: scaffoldKey,
@@ -76,6 +77,9 @@ class UserProfile extends StatelessWidget {
                                   },
                                   child: Stack(children: [
                                     CircleAvatar(
+                                      backgroundColor:
+                                          ColorStyle.primaryColorGreen,
+                                      radius: 72,
                                       child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(60),
@@ -99,9 +103,6 @@ class UserProfile extends StatelessWidget {
                                                             : '${kImgUrl}${userAuth.userprofile['profile_picture']}',
                                                   ),
                                           )),
-                                      backgroundColor:
-                                          ColorStyle.primaryColorGreen,
-                                      radius: 72,
                                     ),
                                     Positioned(
                                         bottom: 0,
@@ -118,12 +119,12 @@ class UserProfile extends StatelessWidget {
                                           // controller.getImage(),
                                           elevation: 2,
                                           fillColor: Color(0xFFF5F6F9),
+                                          padding: const EdgeInsets.all(8.0),
+                                          shape: CircleBorder(),
                                           child: Icon(
                                             Icons.camera_alt_outlined,
                                             color: ColorStyle.primaryColorRed,
                                           ),
-                                          padding: const EdgeInsets.all(8.0),
-                                          shape: CircleBorder(),
                                         )),
                                   ]),
                                 ),
@@ -148,7 +149,7 @@ class UserProfile extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     userAuth.userprofile['first_name'] == null
-                                        ? SizedBox(
+                                        ? const SizedBox(
                                             height: 0,
                                           )
                                         : Text(
@@ -168,11 +169,11 @@ class UserProfile extends StatelessWidget {
                                                 color: ColorStyle
                                                     .primaryColorGreen,
                                               )
-                                            : Icon(
+                                            : const Icon(
                                                 Icons.verified,
                                                 color: Colors.grey,
                                               )
-                                        : SizedBox(
+                                        : const SizedBox(
                                             height: 0,
                                           )
                                   ],
@@ -188,10 +189,8 @@ class UserProfile extends StatelessWidget {
                                     Text(
                                         userAuth.userprofile.isEmpty
                                             ? '${userAuth.userprofile}'
-                                            : userAuth.userprofile['email'] ==
-                                                    null
-                                                ? ''
-                                                : userAuth.userprofile['email'],
+                                            : userAuth.userprofile['email'] ??
+                                                '',
                                         style: TextStylesCustom.textStyles_22
                                             .apply(
                                                 fontWeightDelta: 2,
@@ -202,7 +201,7 @@ class UserProfile extends StatelessWidget {
                                             Icons.verified,
                                             color: ColorStyle.primaryColorGreen,
                                           )
-                                        : Icon(
+                                        : const Icon(
                                             Icons.verified,
                                             color: Colors.grey,
                                           )
@@ -212,50 +211,78 @@ class UserProfile extends StatelessWidget {
                             ),
                           ),
 // ------------------------ Changed password ------------------------------>
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
 
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 10),
                             padding: EdgeInsets.only(bottom: 5),
-                            child: Text(
-                              'Change Password',
-                              style: TextStylesCustom.textStyles_26
-                                  .apply(fontWeightDelta: 3),
-                            ),
                             decoration: BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
                                         width: 3,
                                         color: ColorStyle.primaryColorRed))),
+                            child: Text(
+                              'Change Password',
+                              style: TextStylesCustom.textStyles_26
+                                  .apply(fontWeightDelta: 3),
+                            ),
                           ),
                           const SizedBox(
                             height: 30,
                           ),
+                          Form(
+                              key: formKey,
+                              child: Column(
+                                children: [
+                                  PasswordFieldUnderline(
+                                    controller:
+                                        controller.currentPassword.value,
+                                    padding: const EdgeInsets.all(10),
+                                    labelText: 'Enter Current Password',
+                                    // controller: controller.textController.value,
+                                    hintText: '*********',
+                                    textStyle: TextStylesCustom.textStyles_20,
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return "Please Enter your Current Password";
+                                      } else {
+                                        return null;
+                                      }
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  PasswordFieldUnderline(
+                                      controller: controller.newPassword.value,
+                                      padding: const EdgeInsets.all(10),
+                                      labelText: 'Enter New Password',
+                                      // controller: controller.textController.value,
+                                      hintText: '*********',
+                                      textStyle: TextStylesCustom.textStyles_20,
+                                      validator: (value) {
+                                        RegExp regex = RegExp(
+                                            r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                                        var passNonNullValue = value ?? "";
+                                        if (passNonNullValue.isEmpty) {
+                                          return ("Password is required");
+                                        } else if (passNonNullValue.length <
+                                            6) {
+                                          return ("Password Must be more than 5 characters");
+                                        } else if (!regex
+                                            .hasMatch(passNonNullValue)) {
+                                          return ("Password Must upper,lower,digit & Special character ");
+                                        }
+                                        return null;
+                                      }),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                ],
+                              )),
 
-                          PasswordFieldUnderline(
-                            controller: controller.currentPassword.value,
-                            padding: EdgeInsets.all(10),
-                            labelText: 'Enter Current Password',
-                            // controller: controller.textController.value,
-                            hintText: '*********',
-                            textStyle: TextStylesCustom.textStyles_20,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          PasswordFieldUnderline(
-                            controller: controller.newPassword.value,
-                            padding: EdgeInsets.all(10),
-                            labelText: 'Enter New Password',
-                            // controller: controller.textController.value,
-                            hintText: '*********',
-                            textStyle: TextStylesCustom.textStyles_20,
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
                           ElevatedButtonCustom(
                             BgColor: ColorStyle.primaryColorRed,
                             text: 'Change Password',
@@ -263,26 +290,28 @@ class UserProfile extends StatelessWidget {
                             size: Size(
                                 MediaQuery.of(context).size.width / 2.2, 40),
                             onTap: (() {
-                              controller.changePasswordValidation();
+                              if (formKey.currentState!.validate()) {
+                                controller.changePasswordValidation();
+                              }
                             }),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
 // ------------------------ Add New Address ------------------------------>
                           Container(
                             margin: EdgeInsets.symmetric(horizontal: 10),
                             padding: EdgeInsets.only(bottom: 5),
-                            child: Text(
-                              'Saved Address',
-                              style: TextStylesCustom.textStyles_26
-                                  .apply(fontWeightDelta: 3),
-                            ),
                             decoration: BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
                                         width: 3,
                                         color: ColorStyle.primaryColorRed))),
+                            child: Text(
+                              'Saved Address',
+                              style: TextStylesCustom.textStyles_26
+                                  .apply(fontWeightDelta: 3),
+                            ),
                           ),
 
                           const SizedBox(

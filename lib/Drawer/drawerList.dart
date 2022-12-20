@@ -153,9 +153,10 @@ class MyDrowerList extends StatelessWidget {
                         ),
                       ),
                       InkWell(
-                        onTap: () => Get.to(PrivacyPolicy()),
+                        onTap: () =>
+                            navigateMultiBottom(context, PrivacyPolicy()),
                         child: Padding(
-                          padding: EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(20.0),
                           child: Row(children: [
                             Icon(
                               Icons.settings,
@@ -182,7 +183,10 @@ class MyDrowerList extends StatelessWidget {
                                   size: Size(
                                       MediaQuery.of(context).size.width / 1.5,
                                       50),
-                                  onTap: () => userAuth.logOut(),
+                                  onTap: () {
+                                    print("Log out ho gya hai");
+                                    userAuth.logOut();
+                                  },
                                   text: 'LogOut',
                                 ),
                               ),

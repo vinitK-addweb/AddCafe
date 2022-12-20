@@ -117,106 +117,9 @@ class TextFormFieldUnderline extends StatelessWidget {
               borderRadius: BorderRadius.circular(radiusBorder!),
               borderSide: BorderSide(color: colorBoder!, width: 1)),
         ),
-        validator: validator
-
-        // validation.ProfileValdations()
-        // (value) {
-        //   if (value == null || value.isEmpty) {
-        //     return 'Please enter some text';
-        //   } else {
-        //     return null;
-        //   }
-        // },
-        );
-    // TextField(
-    //   controller: controller,
-    //   keyboardType: keyboardType,
-    //   maxLines: maxLines,
-    //   minLines: 1,
-    //   decoration: InputDecoration(
-    //       labelText: labelText,
-    //       fillColor: colorFill,
-    //       contentPadding: padding,
-    //       border: UnderlineInputBorder(
-    //           borderRadius: BorderRadius.circular(radiusBorder!),
-    //           borderSide: BorderSide(color: colorBoder!, width: 1)),
-    //       focusedBorder: UnderlineInputBorder(
-    //           borderRadius: BorderRadius.circular(radiusBorder!),
-    //           borderSide: BorderSide(color: colorBoder!, width: 1)),
-    //       hintText: hintText,
-    //       hintStyle: textStyle!.apply(color: colorHint)),
-    //   style: textStyle!,
-    // );
+        validator: validator!);
   }
 }
-
-// class TextFormFieldUnderline extends StatelessWidget {
-//   final TextEditingController? controller;
-//   final TextInputType? keyboardType;
-//   final EdgeInsets? padding;
-//   final String? hintText;
-//   final Color? colorFill;
-//   final Color? colorBoder;
-//   final Color? colorText;
-//   final Color? colorHint;
-//   final TextStyle? textStyle;
-//   final double? radiusBorder;
-//   final int? maxLines;
-//   final String? labelText;
-//   final FutureOr<String?> Function()? validator;
-
-//   TextFormFieldUnderline(
-//       {Key? key,
-//       this.controller,
-//       this.padding = EdgeInsets.zero,
-//       this.hintText,
-//       this.keyboardType = TextInputType.text,
-//       this.colorFill = Colors.white,
-//       this.colorBoder = Colors.black,
-//       this.colorHint = Colors.grey,
-//       this.colorText = Colors.black,
-//       this.textStyle = const TextStyle(),
-//       this.radiusBorder = 8.0,
-//       this.maxLines = 1,
-//       this.labelText,
-//       this.validator})
-//       : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return TextFormField(
-//       controller: controller,
-//       obscureText: true,
-//       decoration: InputDecoration(labelText: labelText),
-//       // validator: (value) {
-//       //   if (value == null || value.isEmpty) {
-//       //     return 'Please enter some text';
-//       //   } else {
-//       //     return null;
-//       //   }
-//       // },
-//     );
-//     // TextField(
-//     //   controller: controller,
-//     //   keyboardType: keyboardType,
-//     //   maxLines: maxLines,
-//     //   minLines: 1,
-//     //   decoration: InputDecoration(
-//     //       labelText: labelText,
-//     //       fillColor: colorFill,
-//     //       contentPadding: padding,
-//     //       border: UnderlineInputBorder(
-//     //           borderRadius: BorderRadius.circular(radiusBorder!),
-//     //           borderSide: BorderSide(color: colorBoder!, width: 1)),
-//     //       focusedBorder: UnderlineInputBorder(
-//     //           borderRadius: BorderRadius.circular(radiusBorder!),
-//     //           borderSide: BorderSide(color: colorBoder!, width: 1)),
-//     //       hintText: hintText,
-//     //       hintStyle: textStyle!.apply(color: colorHint)),
-//     //   style: textStyle!,
-//     // );
-//   }
-// }
 
 class PasswordFieldUnderline extends StatelessWidget {
   final TextEditingController? controller;
@@ -231,6 +134,7 @@ class PasswordFieldUnderline extends StatelessWidget {
   final double? radiusBorder;
   final int? maxLines;
   final String? labelText;
+  final String? Function(String?)? validator;
 
   PasswordFieldUnderline({
     Key? key,
@@ -246,6 +150,7 @@ class PasswordFieldUnderline extends StatelessWidget {
     this.radiusBorder = 8.0,
     this.maxLines = 1,
     this.labelText,
+    this.validator,
   }) : super(key: key);
 
   @override
@@ -253,12 +158,13 @@ class PasswordFieldUnderline extends StatelessWidget {
     final userAuth = UserAuth();
     // bool _isObscure = true;
     return Obx(() {
-      return TextField(
+      return TextFormField(
         obscureText: userAuth.isObscure.value,
         controller: controller,
         keyboardType: keyboardType,
         maxLines: maxLines,
         minLines: 1,
+        validator: validator,
         decoration: InputDecoration(
             suffixIcon: IconButton(
               icon: Icon(

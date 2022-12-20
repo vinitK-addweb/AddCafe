@@ -22,9 +22,7 @@ import '../../Components/logoCustom.dart';
 import '../../Views/Auth/ForgetPassword.dart';
 
 class Password extends StatelessWidget {
-  @override
-  var _isObscure = true;
-
+  var formKey = GlobalKey<FormState>();
   Widget build(BuildContext context) {
     final controller = Get.put(UserAuth());
 
@@ -47,11 +45,11 @@ class Password extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         LogoCustom(),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Stack(children: <Widget>[
@@ -90,7 +88,7 @@ class Password extends StatelessWidget {
                                         .apply(fontWeightDelta: 5)),
 
                             // margin: EdgeInsets.symmetric(vertical: 20),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Text('Please Sign In to your account',
@@ -101,12 +99,21 @@ class Password extends StatelessWidget {
                             ),
 
                             Form(
-                              child: TextFieldUnderline(
-                                padding: EdgeInsets.all(10),
-                                labelText: 'Password',
+                              key: formKey,
+                              child: PasswordFieldUnderline(
                                 controller: controller.password.value,
+                                padding: const EdgeInsets.all(10),
+                                labelText: 'Enter Your Password',
+                                // controller: controller.textController.value,
                                 hintText: '*********',
                                 textStyle: TextStylesCustom.textStyles_20,
+                                validator: (value) {
+                                  if (value!.isEmpty) {
+                                    return "Please Enter your Password";
+                                  } else {
+                                    return null;
+                                  }
+                                },
                               ),
                             ),
                             const SizedBox(
@@ -116,7 +123,7 @@ class Password extends StatelessWidget {
                                 onPressed: () {
                                   Get.to(ForgetPassword());
                                 },
-                                child: Text('Forget Password',
+                                child: Text('Forget Password ?',
                                     style: TextStylesCustom.textStyles_14)),
 
                             const SizedBox(
@@ -129,10 +136,12 @@ class Password extends StatelessWidget {
                               text: 'Continue',
                               size: Size(MediaQuery.of(context).size.width, 50),
                               onTap: (() {
-                                controller.signIn();
+                                if (formKey.currentState!.validate()) {
+                                  controller.signIn();
+                                }
                               }),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 42,
                             ),
 
@@ -143,14 +152,14 @@ class Password extends StatelessWidget {
                                   height: 1,
                                   color: Colors.grey,
                                 )),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Text(
                                   'Or',
                                   style: TextStylesCustom.textStyles_17,
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 Expanded(
@@ -160,7 +169,7 @@ class Password extends StatelessWidget {
                                 )),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 24,
                             ),
                             Row(

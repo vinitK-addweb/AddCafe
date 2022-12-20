@@ -8,6 +8,7 @@ import 'package:get/get_core/src/get_main.dart';
 // import 'package:addcafe/Providers/apis/CartApi.dart';
 // import 'package:addcafe/Providers/apis/MyfavouritesApi.dart';
 // import 'package:provider/provider.dart';
+import '../../GetxController/ActiveProducts_controller.dart';
 import '../../GetxController/Cart_controller.dart';
 import '../../GetxController/Wishlist_controller.dart';
 import 'rating.dart';
@@ -16,8 +17,9 @@ import '../../Models/Model_ActiveProducts.dart';
 
 class CategoryDropdown extends StatelessWidget {
   CategoryDropdown(this.categoryItems);
+  final conroller = Get.put(ActiveProductsController());
 
-  List categoryItems = [];
+  List categoryItems = ActiveProductsController().categoryProduct.value;
 
   // final List<ModelActiveProducts> categoryItems;
   final cartApi = Get.put(CartController());
@@ -25,8 +27,10 @@ class CategoryDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     // print('category##%#%#${categoryItems}');
     final myFavouritesApi = Get.put(MyFavouritesApi());
+
     // final cartApi = Provider.of<CartApi>(context);
     // final myFavouritesApi = Provider.of<MyFavouritesApi>(context);
+    // Future.delayed(Duration(milliseconds: 10), () {});
     return categoryItems.isEmpty
         ? Text(
             'No item found',

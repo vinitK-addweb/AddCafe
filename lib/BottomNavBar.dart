@@ -17,7 +17,7 @@ class BottomNavBarCustom extends StatefulWidget {
 }
 
 class BottomNavBarCustomState extends State<BottomNavBarCustom> {
-  final controller = Get.put(HomeBannerController());
+  // final controller = Get.put(HomeBannerController());
   String _currentPage = "Page1";
   List<String> pageKeys = ["Page1", "Page2", "Page3"];
 
@@ -31,14 +31,18 @@ class BottomNavBarCustomState extends State<BottomNavBarCustom> {
   double iconSize = 24;
 
   void _selectTab(String tabItem, int index) {
-    if (tabItem == _currentPage) {
-      _navigatorKeys[tabItem]!.currentState!.popUntil((route) => route.isFirst);
-    } else {
-      setState(() {
-        _currentPage = pageKeys[index];
-        selectedIndex = index;
-      });
-    }
+    Future.delayed(Duration(milliseconds: 1), () {
+      if (tabItem == _currentPage) {
+        _navigatorKeys[tabItem]!
+            .currentState!
+            .popUntil((route) => route.isFirst);
+      } else {
+        setState(() {
+          _currentPage = pageKeys[index];
+          selectedIndex = index;
+        });
+      }
+    });
   }
 
   @override

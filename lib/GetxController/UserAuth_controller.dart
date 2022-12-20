@@ -38,6 +38,7 @@ class UserAuth extends GetxController {
   initCustom() {
     Future.delayed(const Duration(microseconds: 1), () {
       getlocaStorage();
+      // hideLoader();
     });
   }
 
@@ -165,6 +166,7 @@ class UserAuth extends GetxController {
         }
       } else {
         userprofile = {}.obs;
+        hideLoader();
       }
       update();
     });
@@ -173,6 +175,7 @@ class UserAuth extends GetxController {
 // ------------------------ User Logout Function --------------------------->
 
   Future logOut() async {
+    print("object=========>>>>>>");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // await storage.deleteItem('userData');
     // userprofile = null;

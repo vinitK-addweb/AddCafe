@@ -3,6 +3,7 @@ import '../Models/Model_Categories.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../Utils/Global.dart';
 import '../Views/Categories/categoryItems.dart';
 import '../Models/Model_Banner.dart';
 import '../Models/Model_Categories.dart';
@@ -41,13 +42,13 @@ class HomeCategory extends StatelessWidget {
                     width: 100,
                     child: InkWell(
                       onTap: (() {
-                        print("valueeeeeeeeeeeee before" +
-                            productController.selectedCategory.value);
                         productController.selectedCategory.value = item.name!;
-                        print("valueeeeeeeeeeeee" +
-                            productController.selectedCategory.value);
-                        Get.to(CategoryItems(
-                            item.name!, bannerData, categoriesImage));
+                        Future.delayed(const Duration(microseconds: 1), () {
+                          // navigateMultiBottom(
+                          // context,
+                          Get.to(CategoryItems(
+                              item.name!, bannerData, categoriesImage));
+                        });
                       }),
                       child:
                           //  Card(

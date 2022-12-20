@@ -26,7 +26,7 @@ class PrivacyPolicy extends StatelessWidget {
             appBar: AppBarStyle(
               styleTitle: TextStylesCustom.textStyles_24,
               elevation: 0,
-              title: 'Offers',
+              title: 'privacy Policy',
               backgroundColor: ColorStyle.primaryColorRed,
               leading: IconButton(
                 onPressed: () => scaffoldKey.currentState!.openDrawer(),

@@ -23,6 +23,7 @@ import '../../Components/AppBarStyle.dart';
 
 class CategoryItems extends StatefulWidget {
   // CategoryItems({Key? key}) : super(key: key);
+
   CategoryItems(this.selectedMenu, this.bannerData, this.categoriesData);
 
   final String selectedMenu;
@@ -34,15 +35,21 @@ class CategoryItems extends StatefulWidget {
 }
 
 class _CategoryItemsState extends State<CategoryItems> {
+  final ActiveProductsController controller =
+      Get.put(ActiveProductsController());
+  // void initState() {
+  //   super.initState();
+  //   controller.selectedCategory.value = widget.selectedMenu;
+  //   // _navigatetohome();
+  // }
+
   @override
   Widget build(BuildContext context) {
-    final ActiveProductsController controller =
-        Get.put(ActiveProductsController());
-
     return GetBuilder(
       init: controller,
       initState: (_) {
-        // controller.selectedCategory = widget.selectedMenu;
+        controller.selectedCategory.value = widget.selectedMenu;
+
         controller.initCustom();
         controller.getFilteredProducts(widget.selectedMenu);
         // controller.fetchAllProducts();
@@ -127,7 +134,7 @@ class _CategoryItemsState extends State<CategoryItems> {
                                 onTap: () {
                                   controller.selectedCategory.value = e.name!;
                                   controller.getFilteredProducts('${e.name}');
-                                  Future.delayed(Duration(milliseconds: 2), () {
+                                  Future.delayed(Duration(milliseconds: 0), () {
                                     controller.update();
                                     // categoryProductFilter();
                                   });
@@ -160,7 +167,10 @@ class _CategoryItemsState extends State<CategoryItems> {
                                   ],
                                 )),
                             controller.selectedCategory == e.name
-                                ? CategoryDropdown(controller.categoryProduct)
+                                ?
+
+                                //  Future.delayed(Duration(milliseconds: 2), () {});
+                                CategoryDropdown(controller.categoryProduct)
                                 : const SizedBox(
                                     height: 0,
                                   )

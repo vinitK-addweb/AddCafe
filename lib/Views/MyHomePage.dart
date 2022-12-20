@@ -29,8 +29,8 @@ class MyHomePage extends StatelessWidget {
     return GetBuilder(
       init: HomeBannerController(),
       initState: (state) {
-        controller.initMethodGetX();
         userAuth.initCustom();
+        controller.initMethodGetX();
       },
       builder: (controller) {
         return Obx((() => Scaffold(
@@ -106,11 +106,11 @@ class MyHomePage extends StatelessWidget {
                           Container(
                             margin: const EdgeInsets.symmetric(horizontal: 20),
                             child: TextField(
+                                controller: search.itemName.value,
                                 onChanged: (value) {
                                   search.itemName.value.text = value;
                                   search.initfunction();
                                 },
-                                // controller: search.itemName.value,
                                 onTap: (() {
                                   controller.search.value = true;
                                 }),

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../Utils/Constant.dart';
+import 'Faq.dart';
 import 'MyHomePage.dart';
 import 'Auth/Signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:addcafe/Providers/apis/UserAuth.dart';
 import 'dart:convert';
 import '../BottomNavBar.dart';
+import 'Wishlist.dart';
 // import 'package:provider/provider.dart';
 
 class Splash extends StatefulWidget {
@@ -25,19 +28,19 @@ class _SplashState extends State<Splash> {
   Map<String, dynamic> userprofile = {};
 
   getlocaStorage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    var userDataPref = prefs.getString('userData');
+    print("dadagudhadjad");
+    print(userDataPref);
     Future.delayed(Duration(milliseconds: 5500), () async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      var userDataPref = prefs.getString('userData');
-
       if (userDataPref != null) {
         try {
           userprofile =
               await Map<String, dynamic>.from(jsonDecode(userDataPref));
-
+          kTOKENSAVED = prefs.getString('token') as String;
           Get.to(() => BottomNavBarCustom()
               // MyHomePage()
-
               );
           // });
         } catch (error) {

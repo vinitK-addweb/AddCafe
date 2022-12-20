@@ -28,7 +28,7 @@ class Faq extends StatelessWidget {
               appBar: AppBarStyle(
                 styleTitle: TextStylesCustom.textStyles_24,
                 elevation: 0,
-                title: 'Offers',
+                title: 'Faq',
                 backgroundColor: ColorStyle.primaryColorRed,
                 leading: IconButton(
                   onPressed: () => scaffoldKey.currentState!.openDrawer(),
