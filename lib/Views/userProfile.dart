@@ -68,6 +68,8 @@ class UserProfile extends StatelessWidget {
                               children: [
                                 InkWell(
                                   onTap: () {
+                                    print(
+                                        "hello-==============>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
                                     PickerCustom.imagePicker(
                                       (file) {
                                         controller.image.value = file;
@@ -120,7 +122,7 @@ class UserProfile extends StatelessWidget {
                                           elevation: 2,
                                           fillColor: Color(0xFFF5F6F9),
                                           padding: const EdgeInsets.all(8.0),
-                                          shape: CircleBorder(),
+                                          shape: const CircleBorder(),
                                           child: Icon(
                                             Icons.camera_alt_outlined,
                                             color: ColorStyle.primaryColorRed,
@@ -128,8 +130,6 @@ class UserProfile extends StatelessWidget {
                                         )),
                                   ]),
                                 ),
-                                // Text(
-                                //     'img=====>${kImgUrl}${userAuth.userprofile['profile_picture']}'),
 
                                 const SizedBox(
                                   height: 10,
@@ -182,7 +182,7 @@ class UserProfile extends StatelessWidget {
                                   height: 10,
                                 ),
                                 // ),
-                                //Text('${userAuth.userprofile}')
+                                Text('${controller.userdetails.value.email}'),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -216,8 +216,8 @@ class UserProfile extends StatelessWidget {
                           ),
 
                           Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10),
-                            padding: EdgeInsets.only(bottom: 5),
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            padding: const EdgeInsets.only(bottom: 5),
                             decoration: BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
@@ -290,6 +290,7 @@ class UserProfile extends StatelessWidget {
                             size: Size(
                                 MediaQuery.of(context).size.width / 2.2, 40),
                             onTap: (() {
+                              controller.getUserDetails();
                               if (formKey.currentState!.validate()) {
                                 controller.changePasswordValidation();
                               }
@@ -300,8 +301,8 @@ class UserProfile extends StatelessWidget {
                           ),
 // ------------------------ Add New Address ------------------------------>
                           Container(
-                            margin: EdgeInsets.symmetric(horizontal: 10),
-                            padding: EdgeInsets.only(bottom: 5),
+                            margin: const EdgeInsets.symmetric(horizontal: 10),
+                            padding: const EdgeInsets.only(bottom: 5),
                             decoration: BoxDecoration(
                                 border: Border(
                                     bottom: BorderSide(
@@ -320,7 +321,7 @@ class UserProfile extends StatelessWidget {
 
                           ListView.builder(
                             shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
+                            physics: const NeverScrollableScrollPhysics(),
                             itemCount: controller.addAddress.length,
                             itemBuilder: (context, index) {
                               return ListTile(

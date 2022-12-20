@@ -231,10 +231,11 @@ class API {
       request.files
           .add(await http.MultipartFile.fromPath(fileParams, file.path));
       final response = await request.send();
-
+      print("response is here $response");
       hideLoader();
 
       final res = await http.Response.fromStream(response);
+
       print(res.body);
 
       final Map parsed = json.decode(res.body);

@@ -10,8 +10,7 @@ import '../Utils/API.dart';
 import '../Utils/Global.dart';
 import '../Models/Model_UserDetails.dart';
 import '../Models/Model_AddAddress.dart';
-import '../Utils/Global.dart';
-import '../Views/userProfile.dart';
+import 'package:http/http.dart' as http;
 
 class UserProfileController extends GetxController {
   Rx<UserDetailsModel> userdetails = UserDetailsModel().obs;
@@ -32,31 +31,42 @@ class UserProfileController extends GetxController {
 
   RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
   Rx<File> image = File("").obs;
-
+  final profile = Get.put(UserAuth());
   final picker = ImagePicker();
 
+  get kTOKENSAVED => null;
+
   // ------------------ Update Profile image ------------------------------------>
-
   updateProfileImage() async {
-    // final params = {'profile_picture': image.value};
+    print("img print");
+    print(image.value.path.isEmpty);
+    final params = {
+      '_method': 'post',
+    };
 
-    var response = await API.instance.postImage(
-        endPoint: 'accounts/customer-profile/',
-        params: {},
-        fileParams: 'profile_picture',
-        file: image.value);
-    debugPrint('image path===============> ');
-    getUserDetails();
+    final response = await API.instance.postImage(
+      endPoint: "accounts/customer-profile/",
+      params: params,
+      fileParams: "profile_picture",
+      file: image.value,
+    );
+
+    if (response!.isNotEmpty) {
+      profile.signIn();
+      // getUserDetails();
+      "Profile picture uploaded".showSuccess();
+    }
   }
 
   //  ----------------- Get User details from local storage --------------------->
   getUserDetails() async {
+    print("object===============>>>>>>>>>>>");
     Future.delayed(Duration(milliseconds: 1), () async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       userprofile.value = await API.instance
           .get(endPoint: 'accounts/customer-profile/', isHeader: true);
-      print("runing=========>>>>>>>>>>>>>>>>>>");
+      print("runing=========>>>>>>>>>>>>>>>>>> ${userprofile.value}");
       //  RxMap<dynamic, dynamic>.from(
       //     jsonDecode(prefs.getString('userData').toString()));
       getAddress();

@@ -4,16 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:get/get.dart';
 import '../Utils/API.dart';
 
 import '../Models/Model_MyWishList.dart';
 import '../Utils/Constant.dart';
-import '../Utils/Global.dart';
-import '../Styles/TextStyles.dart';
-import '../Styles/ColorStyle.dart';
 
 class MyFavouritesApi extends GetxController {
   RxList<Wishlist> myFavourites = <Wishlist>[].obs;
@@ -59,8 +55,8 @@ class MyFavouritesApi extends GetxController {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
     http.Response response;
 
-    print(productData);
-    print(kTOKENSAVED);
+    // print(productData);
+    // print(kTOKENSAVED);
     response = await http.post(
         Uri.parse('https://cafe.addwebprojects.com/api/v1/catalogue/wishlist/'),
         headers: {
@@ -82,7 +78,7 @@ class MyFavouritesApi extends GetxController {
   List isInMyFavorites(productId) {
     var a =
         myFavourites.where((element) => element.product == productId).toList();
-
+    // update();
     return a;
   }
 }
