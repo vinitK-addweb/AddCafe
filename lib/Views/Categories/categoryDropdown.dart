@@ -223,38 +223,14 @@ class CategoryDropdown extends StatelessWidget {
                                       },
                                       child: const Text('Add'),
                                     )
-                                  :
-                                  //  Container(
-                                  //     height: 50,
-                                  //     width: 70,
-                                  //     padding: EdgeInsets.symmetric(
-                                  //         horizontal: 8, vertical: 8),
-                                  //     decoration: BoxDecoration(
-                                  //         color: Colors.red,
-                                  //         border: Border.all(color: Colors.red),
-                                  //         borderRadius:
-                                  //             BorderRadius.all((Radius.circular(4)))),
-                                  //     child:
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        // if (e['item_count'] == 1) {
-                                        //   cartApi.delete(e['id']);
-                                        //   return;
-                                        // }
-                                        // cartApi.updateQuantity('minus',
-                                        //     thisCartData[0]['id']);
-
-                                        // child: Container(
-                                        //   width: 20,
-                                        // child: Center(
-
                                         IconButton(
                                           style: IconButton.styleFrom(
                                               backgroundColor:
                                                   ColorStyle.primaryColorRed),
-                                          // iconSize: 26,
                                           color: Colors.white,
                                           icon: const CircleAvatar(
                                               radius: 14,
@@ -265,22 +241,10 @@ class CategoryDropdown extends StatelessWidget {
                                           onPressed: () {
                                             cartApi.updateQuantity(
                                                 'minus', thisCartData[0].id);
-                                            // Future.delayed(
-                                            //     Duration(milliseconds: 0), () {
+
                                             cartApi.update();
-                                            // categoryProductFilter();
-                                            // });
                                           },
                                         ),
-
-                                        //  Text(
-                                        //   '-',
-                                        //   style: TextStyle(
-                                        //       color: Colors.white),
-                                        // ),
-                                        //       ),
-                                        // ),
-
                                         Text(
                                             thisCartData[0]
                                                 .itemCount

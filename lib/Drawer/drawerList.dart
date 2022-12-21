@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
 import '../Utils/Global.dart';
+import '../Views/Cart/cart.dart';
 import '../Views/PrivacyPolicy.dart';
 import '../Views/Wishlist.dart';
 import '../Views/userProfile.dart';
@@ -23,10 +24,9 @@ class MyDrowerList extends StatelessWidget {
         },
         builder: (userAuth) {
           return Obx(() {
-            return Container(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+            return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   Card(
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -81,7 +81,7 @@ class MyDrowerList extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          navigateMultiBottom(context, Myfavourits());
+                          Get.to(() => Cart());
 
                           // Get.to(Myfavourits());
                         },
@@ -353,7 +353,7 @@ class MyDrowerList extends StatelessWidget {
                   //     ),
                   //   ],
                   // )),
-                ]));
+                ]);
           });
         });
   }

@@ -26,7 +26,7 @@ class UserProfileController extends GetxController {
   Rx<TextEditingController> state = TextEditingController().obs;
   Rx<TextEditingController> pinCode = TextEditingController().obs;
   Rx<TextEditingController> addressType = TextEditingController().obs;
-
+  RxInt address = 0.obs;
   Map<String, dynamic> _changePass = {};
 
   RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
@@ -35,6 +35,13 @@ class UserProfileController extends GetxController {
   final picker = ImagePicker();
 
   get kTOKENSAVED => null;
+
+  initprofile() {
+    Future.delayed(Duration(milliseconds: 10), () {
+      getUserDetails();
+      getAddress();
+    });
+  }
 
   // ------------------ Update Profile image ------------------------------------>
   updateProfileImage() async {

@@ -2,6 +2,7 @@ import 'package:addcafe/GetxController/Cart_controller.dart';
 import 'package:flutter/material.dart';
 import '../Components/AppBarStyle.dart';
 import '../Components/MainDrawer.dart';
+import '../GetxController/UserProfile_controller.dart';
 import '../Styles/TextStyles.dart';
 import 'HomeBanner.dart';
 import 'HomeCategory.dart';
@@ -25,6 +26,7 @@ class MyHomePage extends StatelessWidget {
   final search = Get.put(SearchResultController());
   final userAuth = Get.put(UserAuth());
   final cart = Get.put(CartController());
+  final userProfile = Get.put(UserProfileController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class MyHomePage extends StatelessWidget {
         cart.initMethod();
         userAuth.initCustom();
         controller.initMethodGetX();
+        userProfile.initprofile();
       },
       builder: (controller) {
         return Obx((() => Scaffold(

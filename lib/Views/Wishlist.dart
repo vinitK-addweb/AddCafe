@@ -1,18 +1,19 @@
 import 'package:addcafe/Styles/TextStyles.dart';
 import 'package:addcafe/Views/Cart/cart.dart';
+import 'package:addcafe/Views/MyHomePage.dart';
 import 'package:flutter/material.dart';
 import '../Components/ElevatedButtonCustom.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/Views/EmptyWishlist.dart';
 import 'package:addcafe/GetxController/Wishlist_controller.dart';
 import '../Components/MainDrawer.dart';
-import '../Drawer/drawerHeader.dart';
-import '../Drawer/drawerList.dart';
+
 import '../Utils/Constant.dart';
 import '../Styles/ColorStyle.dart';
 import '../Components/AppBarStyle.dart';
 import '../GetxController/MyHomePage_controller.dart';
 import '../BottomNavBar.dart';
+import '../Utils/Global.dart';
 import '../Views/Categories/addons.dart';
 
 import './../GetxController/Cart_controller.dart';
@@ -41,21 +42,8 @@ class Myfavourits extends StatelessWidget {
                 key: _scaffoldKey,
                 appBar: AppBarStyle(
                   backgroundColor: ColorStyle.primaryColorRed,
-                  // trailings: [
-                  //   IconButton(
-                  //     icon: const Icon(
-                  //       Icons.menu,
-                  //       size: 34,
-                  //       color: Colors.white,
-                  //     ),
-                  //     onPressed: () {
-                  //       _scaffoldKey.currentState!.openDrawer();
-                  //     },
-                  //   ),
-                  // ],
                   leading: IconButton(
                     onPressed: () => _scaffoldKey.currentState!.openDrawer(),
-                    // currentIndex.value = 0,
                     icon: const Icon(
                       Icons.menu,
                       size: 34,
@@ -66,20 +54,20 @@ class Myfavourits extends StatelessWidget {
                   title: 'Wishlist',
                 ),
                 drawer: const MainDrawer(),
-                // drawer:
                 bottomNavigationBar: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                   child: ElevatedButtonCustom(
                     BgColor: ColorStyle.primaryColorRed,
                     size: const Size(50, 50),
-                    text: myfavapi.myFavourites.isNotEmpty
+                    text: myfavapi.myFavourites.isNotEmpty &&
+                            cartApi.cartData.isNotEmpty
                         ? 'Proceed to Cart'
-                        : 'Add Items',
+                        : 'Add Products',
                     onTap: () {
                       myfavapi.myFavourites.isNotEmpty
                           ? Get.to(() => Cart())
-                          : Get.to(() => BottomNavBarCustom());
+                          : navigateMultiBottom(context, MyHomePage());
                     },
                   ),
                 ),
@@ -88,8 +76,9 @@ class Myfavourits extends StatelessWidget {
                         child: Column(
                           children: myfavapi.myFavourites.isNotEmpty
                               ? myfavapi.myFavourites.value.map((e) {
-                                  // List thisCartData =
-                                  //     cartData.isInCart(e.product);
+                                  //  List thisCartData = cartApi.isInCart(categoryItems[index]['id']);
+                                  List thisCartData =
+                                      cartApi.isInCart(e.product);
                                   return Container(
                                     margin: const EdgeInsets.symmetric(
                                         vertical: 10),
@@ -216,123 +205,190 @@ class Myfavourits extends StatelessWidget {
                                                 ),
                                               ),
                                               Positioned(
-                                                  top: 120,
-                                                  left: 45,
-                                                  child: ElevatedButton(
-                                                    onPressed: () => {
-                                                      if ((e.productData!
-                                                              .addOnData!)
-                                                          .isNotEmpty)
-                                                        {
-                                                          showModalBottomSheet(
-                                                            isScrollControlled:
-                                                                true,
-                                                            backgroundColor:
-                                                                Colors
-                                                                    .transparent,
-                                                            shape: const RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .vertical(
+                                                top: 120,
+                                                left: 45,
+                                                child: thisCartData.isEmpty
+                                                    ? ElevatedButton(
+                                                        onPressed: () => {
+                                                          if ((e.productData!
+                                                                  .addOnData!)
+                                                              .isNotEmpty)
+                                                            {
+                                                              showModalBottomSheet(
+                                                                isScrollControlled:
+                                                                    true,
+                                                                backgroundColor:
+                                                                    Colors
+                                                                        .transparent,
+                                                                shape: const RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.vertical(
                                                                             top:
                                                                                 Radius.circular(20))),
-                                                            context: context,
-                                                            builder: (context) =>
-                                                                AddonWishlist(e
-                                                                    .productData),
-                                                          )
-                                                        }
-                                                      else
-                                                        {
-                                                          cartApi.addToCart({
-                                                            'item': e
-                                                                .productData!
-                                                                .id,
-                                                            "addon": []
-                                                          })
-                                                        }
-                                                    },
-                                                    child: const Text(
-                                                        'Add to cart'),
-                                                  )
-                                                  // :
-                                                  // Container(
-                                                  //     width: 70,
-                                                  //     padding: EdgeInsets
-                                                  //         .symmetric(
-                                                  //             horizontal: 8,
-                                                  //             vertical: 8),
-                                                  //     decoration: BoxDecoration(
-                                                  //         color: Colors.red,
-                                                  //         border: Border.all(
-                                                  //             color:
-                                                  //                 Colors.red),
-                                                  //         borderRadius:
-                                                  //             BorderRadius
-                                                  //                 .all((Radius
-                                                  //                     .circular(
-                                                  //                         4)))),
-                                                  //     child: Row(
-                                                  //       mainAxisAlignment:
-                                                  //           MainAxisAlignment
-                                                  //               .spaceAround,
-                                                  //       children: [
-                                                  //         InkWell(
-                                                  //           onTap: () {
-                                                  //             if (e['item_count'] ==
-                                                  //                 1) {
-                                                  //               cartData
-                                                  //                   .delete(
-                                                  //                       e.id);
-                                                  //               return;
-                                                  //             }
-                                                  //             cartData.updateQuantity(
-                                                  //                 'minus',
-                                                  //                 thisCartData[
-                                                  //                         0]
-                                                  //                     ['id']);
-                                                  //           },
-                                                  //           child: Container(
-                                                  //             width: 20,
-                                                  //             child: Center(
-                                                  //               child: Text(
-                                                  //                 '-',
-                                                  //                 style: TextStyle(
-                                                  //                     color: Colors
-                                                  //                         .white),
-                                                  //               ),
-                                                  //             ),
-                                                  //           ),
-                                                  //         ),
-                                                  //         Text(
-                                                  //             '${thisCartData[0]['item_count']}',
-                                                  //             style: TextStyle(
-                                                  //                 color: Colors
-                                                  //                     .white)),
-                                                  //         InkWell(
-                                                  //           onTap: () {
-                                                  //             cartData.updateQuantity(
-                                                  //                 'plus',
-                                                  //                 thisCartData[
-                                                  //                         0]
-                                                  //                     ['id']);
-                                                  //           },
-                                                  //           child: Container(
-                                                  //             width: 20,
-                                                  //             child: Center(
-                                                  //               child: Text(
-                                                  //                 '+',
-                                                  //                 style: TextStyle(
-                                                  //                     color: Colors
-                                                  //                         .white),
-                                                  //               ),
-                                                  //             ),
-                                                  //           ),
-                                                  //         ),
-                                                  //       ],
-                                                  //     ),
-                                                  //   ),
-                                                  ),
+                                                                context:
+                                                                    context,
+                                                                builder: (context) =>
+                                                                    AddonWishlist(
+                                                                        e.productData),
+                                                              )
+                                                            }
+                                                          else
+                                                            {
+                                                              cartApi
+                                                                  .addToCart({
+                                                                'item': e
+                                                                    .productData!
+                                                                    .id,
+                                                                "addon": []
+                                                              })
+                                                            }
+                                                        },
+                                                        child: const Text(
+                                                            'Add to cart'),
+                                                      )
+                                                    : Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          IconButton(
+                                                            style: IconButton.styleFrom(
+                                                                backgroundColor:
+                                                                    ColorStyle
+                                                                        .primaryColorRed),
+                                                            color: Colors.white,
+                                                            icon:
+                                                                const CircleAvatar(
+                                                                    radius: 14,
+                                                                    child: Icon(
+                                                                      Icons
+                                                                          .remove,
+                                                                      size: 20,
+                                                                    )),
+                                                            onPressed: () {
+                                                              cartApi.updateQuantity(
+                                                                  'minus',
+                                                                  thisCartData[
+                                                                          0]
+                                                                      .id);
+
+                                                              cartApi.update();
+                                                            },
+                                                          ),
+                                                          Text(
+                                                              thisCartData[0]
+                                                                  .itemCount
+                                                                  .toString(),
+                                                              style: TextStylesCustom
+                                                                  .textStyles_22
+                                                                  .apply(
+                                                                      color: ColorStyle
+                                                                          .secondryColorBlack,
+                                                                      fontWeightDelta:
+                                                                          4)),
+                                                          IconButton(
+                                                            style: IconButton.styleFrom(
+                                                                backgroundColor:
+                                                                    ColorStyle
+                                                                        .primaryColorRed),
+                                                            // iconSize: 26,
+                                                            color: Colors.white,
+                                                            icon:
+                                                                const CircleAvatar(
+                                                                    radius: 14,
+                                                                    child: Icon(
+                                                                      Icons.add,
+                                                                      size: 20,
+                                                                    )),
+                                                            onPressed: () {
+                                                              cartApi.updateQuantity(
+                                                                  'plus',
+                                                                  thisCartData[
+                                                                          0]
+                                                                      .id);
+                                                              cartApi.update();
+                                                            },
+                                                          ),
+                                                        ],
+                                                      ),
+
+                                                // Container(
+                                                //     width: 70,
+                                                //     padding: EdgeInsets
+                                                //         .symmetric(
+                                                //             horizontal: 8,
+                                                //             vertical: 8),
+                                                //     decoration: BoxDecoration(
+                                                //         color: Colors.red,
+                                                //         border: Border.all(
+                                                //             color:
+                                                //                 Colors.red),
+                                                //         borderRadius:
+                                                //             BorderRadius
+                                                //                 .all((Radius
+                                                //                     .circular(
+                                                //                         4)))),
+                                                //     child: Row(
+                                                //       mainAxisAlignment:
+                                                //           MainAxisAlignment
+                                                //               .spaceAround,
+                                                //       children: [
+                                                //         InkWell(
+                                                //           onTap: () {
+                                                //             if (e['item_count'] ==
+                                                //                 1) {
+                                                //               cartData
+                                                //                   .delete(
+                                                //                       e.id);
+                                                //               return;
+                                                //             }
+                                                //             cartData.updateQuantity(
+                                                //                 'minus',
+                                                //                 thisCartData[
+                                                //                         0]
+                                                //                     ['id']);
+                                                //           },
+                                                //           child: Container(
+                                                //             width: 20,
+                                                //             child: Center(
+                                                //               child: Text(
+                                                //                 '-',
+                                                //                 style: TextStyle(
+                                                //                     color: Colors
+                                                //                         .white),
+                                                //               ),
+                                                //             ),
+                                                //           ),
+                                                //         ),
+                                                //         Text(
+                                                //             '${thisCartData[0]['item_count']}',
+                                                //             style: TextStyle(
+                                                //                 color: Colors
+                                                //                     .white)),
+                                                //         InkWell(
+                                                //           onTap: () {
+                                                //             cartData.updateQuantity(
+                                                //                 'plus',
+                                                //                 thisCartData[
+                                                //                         0]
+                                                //                     ['id']);
+                                                //           },
+                                                //           child: Container(
+                                                //             width: 20,
+                                                //             child: Center(
+                                                //               child: Text(
+                                                //                 '+',
+                                                //                 style: TextStyle(
+                                                //                     color: Colors
+                                                //                         .white),
+                                                //               ),
+                                                //             ),
+                                                //           ),
+                                                //         ),
+                                                //       ],
+                                                //     ),
+                                                //   ),
+                                              ),
                                             ],
                                           )
                                         ],

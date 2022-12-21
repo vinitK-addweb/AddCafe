@@ -55,7 +55,7 @@ class _CategoryItemsState extends State<CategoryItems> {
               backgroundColor: ColorStyle.primaryColorRed,
               leading: IconButton(
                 onPressed: () => Get.back(),
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back,
                   color: Colors.white,
                 ),
