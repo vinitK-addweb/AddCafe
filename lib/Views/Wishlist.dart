@@ -1,4 +1,5 @@
 import 'package:addcafe/Styles/TextStyles.dart';
+import 'package:addcafe/Views/Cart/cart.dart';
 import 'package:flutter/material.dart';
 import '../Components/ElevatedButtonCustom.dart';
 import 'package:get/get.dart';
@@ -76,10 +77,9 @@ class Myfavourits extends StatelessWidget {
                         ? 'Proceed to Cart'
                         : 'Add Items',
                     onTap: () {
-                      myfavapi.myFavourites.isEmpty
-                          ? Get.to(() => BottomNavBarCustom())
-                          : homPageController.setCurrentIndex(3);
-                      Get.to(() => BottomNavBarCustom());
+                      myfavapi.myFavourites.isNotEmpty
+                          ? Get.to(() => Cart())
+                          : Get.to(() => BottomNavBarCustom());
                     },
                   ),
                 ),

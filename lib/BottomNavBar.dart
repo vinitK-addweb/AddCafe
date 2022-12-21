@@ -10,6 +10,7 @@ import 'Utils/Global.dart';
 import 'Views/Cart/cart.dart';
 import 'Views/MyHomePage.dart';
 import 'Views/Offers.dart';
+import 'Views/Wishlist.dart';
 
 class BottomNavBarCustom extends StatefulWidget {
   @override
@@ -128,7 +129,7 @@ class BottomNavBarCustomState extends State<BottomNavBarCustom> {
                     _selectTab(pageKeys[2], 2);
                   },
                   icon: Icon(
-                    Icons.shopping_cart,
+                    Icons.favorite_border_outlined,
                     size: pageKeys[2] == _currentPage ? 30 : 25,
                     color: pageKeys[2] == _currentPage
                         ? ColorStyle.primaryColorRed
@@ -170,7 +171,7 @@ class TabNavigator extends StatelessWidget {
     } else if (tabItem == "Page2") {
       child = const Offers();
     } else if (tabItem == "Page3") {
-      child = Cart();
+      child = Myfavourits();
     }
 
     return Navigator(

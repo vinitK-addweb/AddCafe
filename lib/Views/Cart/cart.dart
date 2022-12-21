@@ -24,13 +24,13 @@ class Cart extends StatelessWidget {
       appBar: AppBarStyle(
         styleTitle: TextStylesCustom.textStyles_24,
         elevation: 0,
-        title: 'Offers',
+        title: 'Cart',
         backgroundColor: ColorStyle.primaryColorRed,
         leading: IconButton(
-          onPressed: () => scaffoldKey.currentState!.openDrawer(),
+          onPressed: () => Get.back(),
           // currentIndex.value = 0,
           icon: const Icon(
-            Icons.menu,
+            Icons.arrow_back,
             size: 34,
             color: Colors.white,
           ),
@@ -242,8 +242,7 @@ class Cart extends StatelessWidget {
                                                       const SizedBox(
                                                         height: 8,
                                                       ),
-                                                      Text(
-                                                          'Rs. ${e.totalPrice}')
+                                                      Text('₹ ${e.totalPrice}')
                                                     ],
                                                   )
                                                 ],
@@ -253,8 +252,7 @@ class Cart extends StatelessWidget {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            homPageController
-                                                .currentIndex.value = 0;
+                                            Get.back();
                                           },
                                           child: Container(
                                               padding: const EdgeInsets.all(10),
@@ -382,7 +380,7 @@ class Cart extends StatelessWidget {
                                                     .apply(fontWeightDelta: 3),
                                               ),
                                               Text(
-                                                '₹ ${controller.cart['total_rate']}',
+                                                '₹ ${controller.cart['total_rate'] + 8.75}',
                                                 style: TextStylesCustom
                                                     .textStyles_18
                                                     .apply(fontWeightDelta: 3),

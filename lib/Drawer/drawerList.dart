@@ -89,14 +89,14 @@ class MyDrowerList extends StatelessWidget {
                           padding: const EdgeInsets.all(20.0),
                           child: Row(children: [
                             Icon(
-                              Icons.favorite_border_outlined,
+                              Icons.shopping_cart,
                               size: 30,
                               color: ColorStyle.secondaryColorgrey,
                             ),
                             Container(
                               margin: const EdgeInsets.only(left: 20),
                               child: Text(
-                                'My Favourites',
+                                'Cart',
                                 style: TextStylesCustom.textStyles_20.apply(
                                     color: ColorStyle.secondaryColorgrey),
                               ),
@@ -104,30 +104,30 @@ class MyDrowerList extends StatelessWidget {
                           ]),
                         ),
                       ),
-                      InkWell(
-                        onTap: () =>
-                            navigateMultiBottom(context, const Offers()),
-                        // Get.to(Offers()),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(children: [
-                            Icon(
-                              Icons.discount_outlined,
-                              size: 30,
-                              color: ColorStyle.secondaryColorgrey,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(left: 20),
-                              child: Text(
-                                'Offers',
-                                style: TextStylesCustom.textStyles_20.apply(
-                                  color: ColorStyle.secondaryColorgrey,
-                                ),
-                              ),
-                            ),
-                          ]),
-                        ),
-                      ),
+                      // InkWell(
+                      //   onTap: () =>
+                      //       navigateMultiBottom(context, const Offers()),
+                      //   // Get.to(Offers()),
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(20.0),
+                      //     child: Row(children: [
+                      //       Icon(
+                      //         Icons.discount_outlined,
+                      //         size: 30,
+                      //         color: ColorStyle.secondaryColorgrey,
+                      //       ),
+                      //       Container(
+                      //         margin: const EdgeInsets.only(left: 20),
+                      //         child: Text(
+                      //           'Offers',
+                      //           style: TextStylesCustom.textStyles_20.apply(
+                      //             color: ColorStyle.secondaryColorgrey,
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ]),
+                      //   ),
+                      // ),
                       InkWell(
                         onTap: () => navigateMultiBottom(context, Faq()),
 

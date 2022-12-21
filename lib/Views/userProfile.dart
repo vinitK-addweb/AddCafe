@@ -68,8 +68,6 @@ class UserProfile extends StatelessWidget {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    print(
-                                        "hello-==============>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
                                     PickerCustom.imagePicker(
                                       (file) {
                                         controller.image.value = file;
@@ -182,7 +180,7 @@ class UserProfile extends StatelessWidget {
                                   height: 10,
                                 ),
                                 // ),
-                                Text('${controller.userdetails.value.email}'),
+
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

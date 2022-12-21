@@ -1,3 +1,4 @@
+import 'package:addcafe/GetxController/Cart_controller.dart';
 import 'package:flutter/material.dart';
 import '../Components/AppBarStyle.dart';
 import '../Components/MainDrawer.dart';
@@ -22,13 +23,15 @@ import '../GetxController/searchResult_controller.dart';
 class MyHomePage extends StatelessWidget {
   final HomeBannerController controller = Get.put(HomeBannerController());
   final search = Get.put(SearchResultController());
-  final userAuth = UserAuth();
+  final userAuth = Get.put(UserAuth());
+  final cart = Get.put(CartController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
       init: HomeBannerController(),
       initState: (state) {
+        cart.initMethod();
         userAuth.initCustom();
         controller.initMethodGetX();
       },
