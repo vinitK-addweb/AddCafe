@@ -46,8 +46,6 @@ class MyFavouritesApi extends GetxController {
           endPoint: '${APIEndPoints.instance.KWishlist}$id/', isHeader: true);
       fetchMyFavourites();
       isInMyFavorites(id);
-
-      print("runninf");
     }
   }
 
@@ -64,9 +62,8 @@ class MyFavouritesApi extends GetxController {
           "Authorization": 'Bearer $kTOKENSAVED'
         },
         body: jsonEncode(productData));
-    print("dasdasdas" + response.body.toString());
+
     if (response.statusCode == 200) {
-      print('addToMyFavorites called');
       fetchMyFavourites();
       isInMyFavorites(productData['id']);
       // update();

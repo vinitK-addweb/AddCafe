@@ -29,7 +29,7 @@ class Myfavourits extends StatelessWidget {
     // final cartApi = Provider.of<CartApi>(context);
     // final cartData = Get.put(CartController());
     final homPageController = Get.put(HomeBannerController());
-
+    final cartApi = Get.put(CartController());
     return GetBuilder(
         init: MyFavouritesApi(),
         initState: ((_) {
@@ -220,36 +220,37 @@ class Myfavourits extends StatelessWidget {
                                                   left: 45,
                                                   child: ElevatedButton(
                                                     onPressed: () => {
-                                                      // if ((e.productData!
-                                                      //         .addOnData!)
-                                                      //     .isNotEmpty)
-                                                      //   {
-                                                      //     showModalBottomSheet(
-                                                      //       isScrollControlled:
-                                                      //           true,
-                                                      //       backgroundColor:
-                                                      //           Colors
-                                                      //               .transparent,
-                                                      //       shape: const RoundedRectangleBorder(
-                                                      //           borderRadius:
-                                                      //               BorderRadius
-                                                      //                   .vertical(
-                                                      //                       top:
-                                                      //                           Radius.circular(20))),
-                                                      //       context: context,
-                                                      //       builder:
-                                                      //           (context) =>
-                                                      //               Addon(),
-                                                      //     )
-                                                      //   }
-                                                      // else
-                                                      //   {
-                                                      // cartData.addToCart({
-                                                      //   'item':
-                                                      //       e.productData!.id,
-                                                      //   "addon": []
-                                                      // })
-                                                      // }
+                                                      if ((e.productData!
+                                                              .addOnData!)
+                                                          .isNotEmpty)
+                                                        {
+                                                          showModalBottomSheet(
+                                                            isScrollControlled:
+                                                                true,
+                                                            backgroundColor:
+                                                                Colors
+                                                                    .transparent,
+                                                            shape: const RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .vertical(
+                                                                            top:
+                                                                                Radius.circular(20))),
+                                                            context: context,
+                                                            builder: (context) =>
+                                                                AddonWishlist(e
+                                                                    .productData),
+                                                          )
+                                                        }
+                                                      else
+                                                        {
+                                                          cartApi.addToCart({
+                                                            'item': e
+                                                                .productData!
+                                                                .id,
+                                                            "addon": []
+                                                          })
+                                                        }
                                                     },
                                                     child: const Text(
                                                         'Add to cart'),

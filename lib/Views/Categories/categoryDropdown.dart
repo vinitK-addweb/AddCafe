@@ -180,7 +180,7 @@ class CategoryDropdown extends StatelessWidget {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  // Text(cartApi.cartData[index].itemCount
+                                  // Text(categoryItems[index]
                                   //     .toString())
                                 ],
                               ),
@@ -221,7 +221,7 @@ class CategoryDropdown extends StatelessWidget {
                                             })
                                           }
                                       },
-                                      child: Text('Add'),
+                                      child: const Text('Add'),
                                     )
                                   :
                                   //  Container(
