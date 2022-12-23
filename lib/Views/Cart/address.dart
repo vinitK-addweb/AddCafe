@@ -22,13 +22,26 @@ class Address extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(10),
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(color: ColorStyle.white),
-                  child: Text(
-                    "Select an Address",
-                    style: TextStylesCustom.textStyles_24
-                        .apply(fontWeightDelta: 3),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Select an Address",
+                        style: TextStylesCustom.textStyles_24
+                            .apply(fontWeightDelta: 3),
+                      ),
+                      IconButton(
+                          onPressed: (() => Get.back()),
+                          icon: Icon(
+                            Icons.close,
+                            color:
+                                ColorStyle.secondryColorBlack.withOpacity(0.7),
+                            size: 28,
+                          ))
+                    ],
                   ),
                 ),
                 Expanded(

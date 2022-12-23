@@ -12,6 +12,8 @@ import '../Models/Model_UserDetails.dart';
 import '../Models/Model_AddAddress.dart';
 import 'package:http/http.dart' as http;
 
+import '../Views/AddNewAddress.dart';
+
 class UserProfileController extends GetxController {
   Rx<UserDetailsModel> userdetails = UserDetailsModel().obs;
   RxList<UserAddressModel> addAddress = <UserAddressModel>[].obs;
@@ -123,11 +125,23 @@ class UserProfileController extends GetxController {
 
   // --------------------------- fetch Address By id  ------------------------->
   fetchAddressByid(id) async {
-    // print("order data is here==========>>>>>" + id.toString());
-    final response =
-        await API.instance.get(endPoint: 'order/address/$id/', isHeader: true);
+    print(addAddress[id].buildingNumName);
+    addAddress[id].buildingNumName.toString().showSuccess();
+    phoneNumber.value = addAddress[id].phoneNum as TextEditingController;
 
-    // print("order data is here==========>>>>>" + response['id']);
+    buildingNameNo.value =
+        addAddress[id].buildingNumName as TextEditingController;
+    area.value = addAddress[id].areaColony as TextEditingController;
+    landMark.value = addAddress[id].areaColony as TextEditingController;
+    pinCode.value = addAddress[id].areaColony as TextEditingController;
+    city.value = addAddress[id].areaColony as TextEditingController;
+    state.value = addAddress[id].areaColony as TextEditingController;
+    addressType.value = addAddress[id].areaColony as TextEditingController;
+
+    print(addressType.value);
+    Get.to(AddNewAddress(
+      isAddress: false,
+    ));
   }
 
   // --------------------------- update User Address ------------------------->
