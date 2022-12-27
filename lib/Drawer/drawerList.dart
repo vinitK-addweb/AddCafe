@@ -15,6 +15,7 @@ import '../Views/Offers.dart';
 
 class MyDrowerList extends StatelessWidget {
   final userAuth = Get.put(UserAuth());
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -184,6 +185,7 @@ class MyDrowerList extends StatelessWidget {
                                       MediaQuery.of(context).size.width / 1.5,
                                       50),
                                   onTap: () {
+                                    scaffoldKey.currentState?.closeDrawer();
                                     userAuth.logOut();
                                   },
                                   text: 'LogOut',

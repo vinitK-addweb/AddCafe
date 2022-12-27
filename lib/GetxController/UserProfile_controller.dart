@@ -13,6 +13,7 @@ import '../Models/Model_AddAddress.dart';
 import 'package:http/http.dart' as http;
 
 import '../Views/AddNewAddress.dart';
+import '../Views/userProfile.dart';
 
 class UserProfileController extends GetxController {
   Rx<UserDetailsModel> userdetails = UserDetailsModel().obs;
@@ -29,6 +30,8 @@ class UserProfileController extends GetxController {
   Rx<TextEditingController> pinCode = TextEditingController().obs;
   Rx<TextEditingController> addressType = TextEditingController().obs;
   RxInt address = 0.obs;
+  RxInt AddUpdateid = 0.obs;
+
   Map<String, dynamic> _changePass = {};
 
   RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
@@ -88,7 +91,7 @@ class UserProfileController extends GetxController {
     print("getAddress=======>>>>>>> 123");
     final response = await API.instance
         .get(endPoint: 'order/saved-address/', isHeader: true);
-    // print("getAddress=======>>>>>>>" + response);
+
     addAddress.value = List<UserAddressModel>.from(
         response['payload'].map((x) => UserAddressModel.fromJson(x)));
   }
@@ -124,19 +127,18 @@ class UserProfileController extends GetxController {
   }
 
   // --------------------------- fetch Address By id  ------------------------->
-  fetchAddressByid(id) async {
-    print(addAddress[id].buildingNumName);
-    addAddress[id].buildingNumName.toString().showSuccess();
-    phoneNumber.value = addAddress[id].phoneNum as TextEditingController;
+  fetchAddressByid(idx) async {
+    // print(addAddress[id].buildingNumName);
 
-    buildingNameNo.value =
-        addAddress[id].buildingNumName as TextEditingController;
-    area.value = addAddress[id].areaColony as TextEditingController;
-    landMark.value = addAddress[id].areaColony as TextEditingController;
-    pinCode.value = addAddress[id].areaColony as TextEditingController;
-    city.value = addAddress[id].areaColony as TextEditingController;
-    state.value = addAddress[id].areaColony as TextEditingController;
-    addressType.value = addAddress[id].areaColony as TextEditingController;
+    phoneNumber.value.text = addAddress[idx].phoneNum!;
+
+    buildingNameNo.value.text = addAddress[idx].buildingNumName!;
+    area.value.text = addAddress[idx].areaColony!;
+    landMark.value.text = addAddress[idx].landmark!;
+    pinCode.value.text = addAddress[idx].pincode.toString();
+    city.value.text = addAddress[idx].city!;
+    state.value.text = addAddress[idx].state!;
+    addressType.value.text = addAddress[idx].addressType!;
 
     print(addressType.value);
     Get.to(AddNewAddress(
@@ -147,7 +149,28 @@ class UserProfileController extends GetxController {
   // --------------------------- update User Address ------------------------->
 
   updateAddress() {
+    "hello".showSuccess();
     // phoneNumber.value =
+    print("object = = = = = = == = == = = == == = = =>");
+    final addressData = {
+      "user": "1",
+      "phone_num": phoneNumber.value.text,
+      "building_num_name": buildingNameNo.value.text,
+      "area_colony": area.value.text,
+      "landmark": landMark.value.text,
+      "pincode": pinCode.value.text,
+      "city": city.value.text,
+      "state": state.value.text,
+      "address_type": addressType.value.text
+    };
+
+    var response = API.instance.patch(
+        endPoint: '/order/address/$AddUpdateid/',
+        params: addressData,
+        isHeader: true);
+    getAddress();
+    update();
+    Get.to(UserProfile());
   }
 
   // --------------------------- Delete User Address ------------------------->

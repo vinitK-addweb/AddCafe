@@ -179,6 +179,7 @@ class UserAuth extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // await storage.deleteItem('userData');
     // userprofile = null;
+
     password.value.text = '';
     textController.value.text = '';
     kTOKENSAVED = '';
@@ -186,7 +187,7 @@ class UserAuth extends GetxController {
     prefs.remove('userData');
     prefs.remove('token');
     getlocaStorage();
-    await Get.to(Mylogin());
+    Get.to(Mylogin());
   }
 
   //  <-----------------  User Otp verification Functionality ------------------>

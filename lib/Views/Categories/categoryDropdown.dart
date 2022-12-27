@@ -31,19 +31,21 @@ class CategoryDropdown extends StatelessWidget {
     // final cartApi = Provider.of<CartApi>(context);
     // final myFavouritesApi = Provider.of<MyFavouritesApi>(context);
     // Future.delayed(Duration(milliseconds: 10), () {});
-    return categoryItems.isEmpty
-        ? Text(
-            ' No item found',
-            style: TextStylesCustom.textStyles_15
-                .apply(fontWeightDelta: 2, color: ColorStyle.primaryColorRed),
-          )
-        : ListView.builder(
-            itemCount: categoryItems.length,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemBuilder: (context, index) {
-              List thisCartData = cartApi.isInCart(categoryItems[index]['id']);
-              return Obx(() {
+    return Obx(() {
+      return categoryItems.isEmpty
+          ? Text(
+              ' No item found',
+              style: TextStylesCustom.textStyles_15
+                  .apply(fontWeightDelta: 2, color: ColorStyle.primaryColorRed),
+            )
+          : ListView.builder(
+              itemCount: categoryItems.length,
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                List thisCartData =
+                    cartApi.isInCart(categoryItems[index]['id']);
+                // return Obx(() {
                 return Container(
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: Card(
@@ -283,7 +285,8 @@ class CategoryDropdown extends StatelessWidget {
                     ),
                   ),
                 );
+                // });
               });
-            });
+    });
   }
 }

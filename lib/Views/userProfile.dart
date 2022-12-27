@@ -59,7 +59,7 @@ class UserProfile extends StatelessWidget {
                           const SizedBox(
                             height: 40,
                           ),
-
+                          // Text(controller.addAddress[0].toString()),
                           Container(
                             padding: const EdgeInsets.only(
                                 left: 20, right: 20, bottom: 30, top: 30),
@@ -418,6 +418,10 @@ class UserProfile extends StatelessWidget {
                                                           .primaryColorGreen),
                                             ),
                                             onPressed: () {
+                                              controller.AddUpdateid.value =
+                                                  controller
+                                                      .addAddress[index].id!;
+
                                               controller
                                                   .fetchAddressByid(index);
                                               // Get.to(AddNewAddress(

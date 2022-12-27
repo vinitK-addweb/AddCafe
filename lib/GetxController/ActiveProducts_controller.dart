@@ -56,12 +56,11 @@ class ActiveProductsController extends GetxController {
     // currentProducts.value = allProducts
     //     .where((item) => item["category_name"] == categoryName)
     //     .toList();
-    Future.delayed(Duration(milliseconds: 200), () {
-      update();
-      // categoryProductFilter();
-    });
+    // Future.delayed(Duration(milliseconds: 1), () {
+    update();
+    // categoryProductFilter();
+    // });
     //
-    print(" dasdfa897565798765578675467 ${categoryProduct.value.length}");
   }
 
   // categoryProductFilter() {

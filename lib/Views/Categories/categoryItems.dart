@@ -40,6 +40,7 @@ class _CategoryItemsState extends State<CategoryItems> {
 
   @override
   Widget build(BuildContext context) {
+    // controller.selectedCategory.value = widget.selectedMenu;
     return GetBuilder(
       init: controller,
       initState: (_) {
