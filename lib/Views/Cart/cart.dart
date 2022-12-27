@@ -14,11 +14,64 @@ import '../../Components/AppBarStyle.dart';
 import '../../Utils/Constant.dart';
 import '../../Components/ElevatedButtonCustom.dart';
 import 'address.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-class Cart extends StatelessWidget {
+class Cart extends StatefulWidget {
   Cart({Key? key}) : super(key: key);
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
+  State<Cart> createState() => _CartState();
+}
+
+class _CartState extends State<Cart> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  Razorpay? _razorpay;
+  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    Fluttertoast.showToast(
+        msg: "Payment Success : ${response.paymentId}", timeInSecForIosWeb: 4);
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    Fluttertoast.showToast(
+        msg: "Error here : ${response.code} - ${response.message}",
+        timeInSecForIosWeb: 4);
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    Fluttertoast.showToast(
+        msg: "External-wallet is : ${response.walletName} ",
+        timeInSecForIosWeb: 4);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _razorpay = Razorpay();
+    _razorpay?.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay?.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay?.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+
+  void makePayment() async {
+    var options = {
+      'key': 'rzp_test_u0UCMR2fWYdz4P',
+      'amount': 2000,
+      'name': 'test',
+      'description': 'testing purpose',
+      'prefill': {
+        'contact': '+91-9999988888',
+        'email': 'test@gmail.com',
+      },
+    };
+    try {
+      _razorpay?.open(options);
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
   Widget build(BuildContext context) {
     final controller = Get.put(CartController());
     final homPageController = Get.put(HomeBannerController());
@@ -160,9 +213,10 @@ class Cart extends StatelessWidget {
                                 'Proceed to checkout',
                             // : 'Add Items',
                             onTap: () {
+                              makePayment();
                               // controller.cartData.isNotEmpty
                               //     ?
-                              Get.to(AddNewAddress());
+                              // Get.to(AddNewAddress());
                               // : Get.to(BottomNavBarCustom());
                             },
                           ),
