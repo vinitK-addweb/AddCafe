@@ -54,10 +54,11 @@ class _CartState extends State<Cart> {
     _razorpay?.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
+  var total;
   void makePayment() async {
     var options = {
       'key': 'rzp_test_u0UCMR2fWYdz4P',
-      'amount': 2000,
+      'amount': total * 100,
       'name': 'test',
       'description': 'testing purpose',
       'prefill': {
@@ -77,6 +78,7 @@ class _CartState extends State<Cart> {
     final homPageController = Get.put(HomeBannerController());
     final userProfile = Get.put(UserProfileController());
     final couponApply = Get.put(CouponController());
+
     return GetBuilder(
         init: controller,
         initState: (_) => controller.initMethod(),
@@ -213,6 +215,8 @@ class _CartState extends State<Cart> {
                                 'Proceed to checkout',
                             // : 'Add Items',
                             onTap: () {
+                              total =
+                                  controller.cart['total_rate'] + 20 + 27.00;
                               makePayment();
                               // controller.cartData.isNotEmpty
                               //     ?

@@ -54,7 +54,6 @@ class API {
     try {
       showLoaderGetX();
       final response = await http.get(url, headers: header);
-      print("getAddress=======>>>>>>>" + response.body.toString());
 
       hideLoader();
       final parsed = jsonDecode(response.body);

@@ -88,7 +88,6 @@ class UserProfileController extends GetxController {
 
   // --------------------- fetch user saved address--------------------------->
   getAddress() async {
-    print("getAddress=======>>>>>>> 123");
     final response = await API.instance
         .get(endPoint: 'order/saved-address/', isHeader: true);
 
