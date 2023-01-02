@@ -54,23 +54,75 @@ class Myfavourits extends StatelessWidget {
                   title: 'Wishlist',
                 ),
                 drawer: const MainDrawer(),
-                bottomNavigationBar: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                  child: ElevatedButtonCustom(
-                    BgColor: ColorStyle.primaryColorRed,
-                    size: const Size(50, 50),
-                    text: myfavapi.myFavourites.isNotEmpty &&
-                            cartApi.cartData.isNotEmpty
-                        ? 'Proceed to Cart'
-                        : 'Add Products',
-                    onTap: () {
-                      myfavapi.myFavourites.isNotEmpty
-                          ? Get.to(() => Cart())
-                          : navigateMultiBottom(context, MyHomePage());
-                    },
-                  ),
-                ),
+                bottomNavigationBar: cartApi.cartData.isNotEmpty
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: InkWell(
+                          onTap: (() => Get.to(Cart())),
+                          child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                color: ColorStyle.primaryColorRed,
+                                borderRadius: const BorderRadius.only(
+                                    topLeft: Radius.circular(15),
+                                    topRight: Radius.circular(15))),
+                            height: 60,
+                            // child: ElevatedButton(
+                            //   onPressed: () {
+                            //     Navigator.of(context).pushNamed('/cart');
+                            //   },
+                            child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${cartApi.cart['count']} ${cartApi.cartData.length > 1 ? 'ITEMS' : 'ITEM'}',
+                                        style: TextStylesCustom.textStyles_11
+                                            .apply(color: ColorStyle.white),
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        '₹ ${cartApi.cart['total_rate']}',
+                                        style: TextStylesCustom.textStyles_14
+                                            .apply(
+                                                fontWeightDelta: 2,
+                                                color: ColorStyle.white),
+                                      )
+                                    ],
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Next  >',
+                                        style: TextStylesCustom.textStyles_16
+                                            .apply(color: ColorStyle.white),
+                                      )
+                                    ],
+                                  )
+                                ]),
+                          ),
+                        ),
+                      )
+                    : Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 30),
+                        child: ElevatedButtonCustom(
+                          BgColor: ColorStyle.primaryColorRed,
+                          size: const Size(50, 50),
+                          text: 'Add Products',
+                          onTap: () {
+                            navigateMultiBottom(context, MyHomePage());
+                          },
+                        ),
+                      ),
                 body: myfavapi.myFavourites.isNotEmpty
                     ? SingleChildScrollView(
                         child: Column(
@@ -164,15 +216,15 @@ class Myfavourits extends StatelessWidget {
                                                     ),
                                                   ),
 
-                                                  Container(
-                                                    margin: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 10),
-                                                    child: const Icon(
-                                                      Icons.share,
-                                                      color: Colors.blueAccent,
-                                                    ),
-                                                  ),
+                                                  // Container(
+                                                  //   margin: const EdgeInsets
+                                                  //           .symmetric(
+                                                  //       horizontal: 10),
+                                                  //   child: const Icon(
+                                                  //     Icons.share,
+                                                  //     color: Colors.blueAccent,
+                                                  //   ),
+                                                  // ),
                                                 ],
                                               )
                                             ],

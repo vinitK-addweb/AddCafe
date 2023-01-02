@@ -27,5 +27,6 @@ class SearchResultController extends GetxController {
       //     searchResult.value[0].id.toString());
       //  fetchSearchResult();
     });
+    // update();
   }
 }

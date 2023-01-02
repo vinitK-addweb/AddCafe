@@ -45,14 +45,14 @@ class AboutUs extends StatelessWidget {
             ),
             Text(
               "Food Solution Addweb",
-              style: TextStylesCustom.textStyles_24.apply(fontWeightDelta: 3),
+              style: TextStylesCustom.textStyles_18.apply(fontWeightDelta: 3),
             ),
             const SizedBox(
               height: 10,
             ),
             Text(
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
-              style: TextStylesCustom.textStyles_17,
+              style: TextStylesCustom.textStyles_13,
             ),
 
             const SizedBox(

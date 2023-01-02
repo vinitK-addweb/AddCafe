@@ -37,13 +37,13 @@ class TermsConditions extends StatelessWidget {
             ),
             Text(
               "Terms & Conditions",
-              style: TextStylesCustom.textStyles_24.apply(fontWeightDelta: 2),
+              style: TextStylesCustom.textStyles_18.apply(fontWeightDelta: 2),
             ),
             const SizedBox(
               height: 10,
             ),
             Text(termsCondtions[0].tAndC.toString(),
-                style: TextStylesCustom.textStyles_18),
+                style: TextStylesCustom.textStyles_13),
           ],
         ));
   }

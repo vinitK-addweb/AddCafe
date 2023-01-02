@@ -31,6 +31,8 @@ class UserProfileController extends GetxController {
   Rx<TextEditingController> addressType = TextEditingController().obs;
   RxInt address = 0.obs;
   RxInt AddUpdateid = 0.obs;
+  RxBool showPassField = false.obs;
+  RxBool showAddress = false.obs;
 
   Map<String, dynamic> _changePass = {};
 

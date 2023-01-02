@@ -50,17 +50,18 @@ class BottomNavBarCustomState extends State<BottomNavBarCustom> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        final isFirstRouteInCurrentTab =
-            !await _navigatorKeys[_currentPage]!.currentState!.maybePop();
-        if (isFirstRouteInCurrentTab) {
-          if (_currentPage != "Page1") {
-            _selectTab("Page1", 1);
+        return false;
+        // final isFirstRouteInCurrentTab =
+        //     !await _navigatorKeys[_currentPage]!.currentState!.maybePop();
+        // if (isFirstRouteInCurrentTab) {
+        //   if (_currentPage != "Page1") {
+        //     _selectTab("Page1", 1);
 
-            return false;
-          }
-        }
-        // let system handle back button if we're on the first route
-        return isFirstRouteInCurrentTab;
+        //     return false;
+        //   }
+        // }
+        // // let system handle back button if we're on the first route
+        // return isFirstRouteInCurrentTab;
       },
       child: Scaffold(
           body: Stack(children: <Widget>[
@@ -113,16 +114,17 @@ class BottomNavBarCustomState extends State<BottomNavBarCustom> {
                         : Colors.grey,
                   ),
                 )),
-                // Expanded(
-                //     child: IconButton(
-                //   onPressed: () {
-                //     // _selectTab(pageKeys[2], 2);
-                //   },
-                //   icon: Icon(
-                //     Icons.shopping_bag_outlined,
-                //     color: Colors.grey,
-                //   ),
-                // )),
+                Expanded(
+                    child: IconButton(
+                  onPressed: () {
+                    Get.to(Cart());
+                    // _selectTab(pageKeys[2], 2);
+                  },
+                  icon: const Icon(
+                    Icons.shopping_bag_outlined,
+                    color: Colors.grey,
+                  ),
+                )),
                 Expanded(
                     child: IconButton(
                   onPressed: () {

@@ -1,17 +1,17 @@
 import 'package:addcafe/GetxController/Cart_controller.dart';
 import 'package:flutter/material.dart';
-import '../Components/AppBarStyle.dart';
+
 import '../Components/MainDrawer.dart';
 import '../GetxController/UserProfile_controller.dart';
 import '../Styles/TextStyles.dart';
+
+import 'Cart/cart.dart';
 import 'HomeBanner.dart';
 import 'HomeCategory.dart';
-import '../Drawer/drawerHeader.dart';
 
 // import '../BottomNavBar.dart';
 import 'MyLoader.dart';
-import 'MySearch.dart';
-import 'CustomerReviews.dart';
+
 // import 'NewsLetter.dart';
 import 'package:get/get.dart';
 import '../GetxController/MyHomePage_controller.dart';
@@ -82,21 +82,80 @@ class MyHomePage extends StatelessWidget {
                 elevation: 0,
                 title: const LogoCustomWhite(),
                 actions: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: controller.search.value
-                        ? IconButton(
+                  controller.search.value
+                      ? IconButton(
+                          onPressed: () {},
+                          icon: IconButton(
                             onPressed: () {
                               controller.search.value = false;
                               search.searchResult.value = [];
                               search.itemName.value.text = '';
                             },
                             icon: const Icon(Icons.close),
-                          )
-                        : const Icon(Icons.notifications),
-                  )
+                          ))
+                      : const SizedBox(
+                          width: 40,
+                        ),
                 ],
               ),
+              bottomNavigationBar: cart.cartData.isNotEmpty
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: InkWell(
+                        onTap: (() => Get.to(Cart())),
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: ColorStyle.primaryColorRed,
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  topRight: Radius.circular(15))),
+                          height: 60,
+                          // child: ElevatedButton(
+                          //   onPressed: () {
+                          //     Navigator.of(context).pushNamed('/cart');
+                          //   },
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${cart.cart['count']} ${cart.cartData.length > 1 ? 'ITEMS' : 'ITEM'}',
+                                      style: TextStylesCustom.textStyles_11
+                                          .apply(color: ColorStyle.white),
+                                    ),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      '₹ ${cart.cart['total_rate']}',
+                                      style: TextStylesCustom.textStyles_14
+                                          .apply(
+                                              fontWeightDelta: 2,
+                                              color: ColorStyle.white),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Next  >',
+                                      style: TextStylesCustom.textStyles_16
+                                          .apply(color: ColorStyle.white),
+                                    )
+                                  ],
+                                )
+                              ]),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(
+                      height: 0,
+                    ),
               body: SingleChildScrollView(
                 child: !(controller.bannerData.isNotEmpty ||
                         controller.categoriesData.isNotEmpty)
@@ -125,7 +184,7 @@ class MyHomePage extends StatelessWidget {
                                       "Search Your Favourite Food Here", //hint text
                                   prefixIcon:
                                       const Icon(Icons.search), //prefix iocn
-                                  hintStyle: TextStylesCustom.textStyles_20
+                                  hintStyle: TextStylesCustom.textStyles_16
                                       .apply(
                                           color: ColorStyle.secondryColorBlack
                                               .withOpacity(0.5)),

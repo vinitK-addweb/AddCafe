@@ -31,18 +31,15 @@ class _SplashState extends State<Splash> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     var userDataPref = prefs.getString('userData');
-    print("dadagudhadjad");
-    print(userDataPref);
+    // print("dadagudhadjad");
+    // print(userDataPref);
     Future.delayed(Duration(milliseconds: 5500), () async {
       if (userDataPref != null) {
         try {
           userprofile =
               await Map<String, dynamic>.from(jsonDecode(userDataPref));
           kTOKENSAVED = prefs.getString('token') as String;
-          Get.to(() => BottomNavBarCustom()
-              // MyHomePage()
-              );
-          // });
+          Get.to(() => BottomNavBarCustom());
         } catch (error) {
           print(error);
         }

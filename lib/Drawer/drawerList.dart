@@ -57,8 +57,8 @@ class MyDrowerList extends StatelessWidget {
                       //   ),
                       // ),
                       InkWell(
-                        onTap: (() =>
-                            navigateMultiBottom(context, UserProfile())),
+                        onTap: (() => Get.to(UserProfile())),
+                        // navigateMultiBottom(context, UserProfile())),
                         child: Container(
                           padding: const EdgeInsets.all(20.0),
                           child: Row(
@@ -66,14 +66,14 @@ class MyDrowerList extends StatelessWidget {
                               children: [
                                 Icon(
                                   Icons.person_outline,
-                                  size: 30,
+                                  size: 25,
                                   color: ColorStyle.secondaryColorgrey,
                                 ),
                                 Container(
                                   margin: const EdgeInsets.only(left: 20),
                                   child: Text(
                                     'Profile',
-                                    style: TextStylesCustom.textStyles_20.apply(
+                                    style: TextStylesCustom.textStyles_16.apply(
                                         color: ColorStyle.secondaryColorgrey),
                                   ),
                                 ),
@@ -91,14 +91,14 @@ class MyDrowerList extends StatelessWidget {
                           child: Row(children: [
                             Icon(
                               Icons.shopping_cart,
-                              size: 30,
+                              size: 25,
                               color: ColorStyle.secondaryColorgrey,
                             ),
                             Container(
                               margin: const EdgeInsets.only(left: 20),
                               child: Text(
                                 'Cart',
-                                style: TextStylesCustom.textStyles_20.apply(
+                                style: TextStylesCustom.textStyles_16.apply(
                                     color: ColorStyle.secondaryColorgrey),
                               ),
                             ),
@@ -130,7 +130,8 @@ class MyDrowerList extends StatelessWidget {
                       //   ),
                       // ),
                       InkWell(
-                        onTap: () => navigateMultiBottom(context, Faq()),
+                        onTap: () => Get.to(Faq()),
+                        // navigateMultiBottom(context, Faq()),
 
                         // Get.to(Faq()),
                         child: Padding(
@@ -138,14 +139,14 @@ class MyDrowerList extends StatelessWidget {
                           child: Row(children: [
                             Icon(
                               Icons.question_answer_outlined,
-                              size: 30,
+                              size: 25,
                               color: ColorStyle.secondaryColorgrey,
                             ),
                             Container(
                               margin: const EdgeInsets.only(left: 20),
                               child: Text(
-                                'Faqs',
-                                style: TextStylesCustom.textStyles_20.apply(
+                                'FAQs',
+                                style: TextStylesCustom.textStyles_16.apply(
                                   color: ColorStyle.secondaryColorgrey,
                                 ),
                               ),
@@ -154,21 +155,66 @@ class MyDrowerList extends StatelessWidget {
                         ),
                       ),
                       InkWell(
-                        onTap: () =>
-                            navigateMultiBottom(context, PrivacyPolicy()),
+                        onTap: () {},
+                        // navigateMultiBottom(context, PrivacyPolicy()),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Row(children: [
+                            Icon(
+                              Icons.history,
+                              size: 25,
+                              color: ColorStyle.secondaryColorgrey,
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(left: 20),
+                              child: Text(
+                                'Order History ',
+                                style: TextStylesCustom.textStyles_16.apply(
+                                  color: ColorStyle.secondaryColorgrey,
+                                ),
+                              ),
+                            ),
+                          ]),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Row(children: [
+                            Icon(
+                              Icons.support,
+                              size: 25,
+                              color: ColorStyle.secondaryColorgrey,
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(left: 20),
+                              child: Text(
+                                'Help and Support ',
+                                style: TextStylesCustom.textStyles_16.apply(
+                                  color: ColorStyle.secondaryColorgrey,
+                                ),
+                              ),
+                            ),
+                          ]),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () => Get.to(PrivacyPolicy()),
+                        //     navigateMultiBottom(context, PrivacyPolicy()),
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Row(children: [
                             Icon(
                               Icons.settings,
-                              size: 30,
+                              size: 25,
                               color: ColorStyle.secondaryColorgrey,
                             ),
                             Container(
                               margin: const EdgeInsets.only(left: 20),
                               child: Text(
                                 'Privacy Policy',
-                                style: TextStylesCustom.textStyles_20.apply(
+                                style: TextStylesCustom.textStyles_16.apply(
                                   color: ColorStyle.secondaryColorgrey,
                                 ),
                               ),

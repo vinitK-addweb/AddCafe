@@ -85,10 +85,11 @@ class _CartState extends State<Cart> {
         builder: (controller) {
           return Obx(() {
             return Scaffold(
+              backgroundColor: Colors.white70.withOpacity(0.9),
               key: scaffoldKey,
               drawer: const MainDrawer(),
               appBar: AppBarStyle(
-                styleTitle: TextStylesCustom.textStyles_24,
+                styleTitle: TextStylesCustom.textStyles_20,
                 elevation: 0,
                 title: 'Cart',
                 backgroundColor: ColorStyle.primaryColorRed,
@@ -434,7 +435,7 @@ class _CartState extends State<Cart> {
                                               child: Text(
                                                 'Add more items',
                                                 style: TextStylesCustom
-                                                    .textStyles_24
+                                                    .textStyles_19
                                                     .apply(),
                                               )),
                                         )
@@ -492,6 +493,12 @@ class _CartState extends State<Cart> {
                                       text: 'Apply',
                                       onTap: () {
                                         couponApply.applyCoupon();
+                                        FocusScopeNode currentFocus =
+                                            FocusScope.of(context);
+                                        if (!currentFocus.hasPrimaryFocus &&
+                                            currentFocus.focusedChild != null) {
+                                          currentFocus.focusedChild?.unfocus();
+                                        }
                                       },
                                     ),
                                   ),
@@ -519,11 +526,11 @@ class _CartState extends State<Cart> {
                             // margin: EdgeInsets.symmetric(vertical: 5),
                             Card(
                               child: Container(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 5),
                                 decoration: const BoxDecoration(
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(50)),
+                                      BorderRadius.all(Radius.circular(20)),
                                 ),
                                 child: Column(children: [
                                   Row(
@@ -639,6 +646,37 @@ class _CartState extends State<Cart> {
                                 ]),
                               ),
                             ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 8),
+                              decoration: const BoxDecoration(
+                                  // border: Border()
+                                  color: Colors.white,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    Text(
+                                      "Cancellation",
+                                      style: TextStylesCustom.textStyles_14
+                                          .apply(fontWeightDelta: 3),
+                                    ),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      "100% cancellation fee will be applicable if you decide to cancel the order anytime after order placement. Avoid cancellation as it leads to food wastage",
+                                      style: TextStylesCustom.textStyles_12,
+                                    ),
+                                  ]),
+                            )
                           ],
                         ),
                       ),

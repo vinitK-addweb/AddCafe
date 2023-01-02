@@ -16,7 +16,7 @@ import 'addons.dart';
 import '../../Models/Model_ActiveProducts.dart';
 
 class CategoryDropdown extends StatelessWidget {
-  CategoryDropdown(this.categoryItems);
+  CategoryDropdown(this.categoryItems, {super.key});
   final conroller = Get.put(ActiveProductsController());
 
   List categoryItems = ActiveProductsController().categoryProduct;
@@ -139,21 +139,24 @@ class CategoryDropdown extends StatelessWidget {
                                               "user": 1,
                                               "product": categoryItems[index]
                                                   ['id']
+                                              //  cartApi.update();
                                             });
+                                            // myFavouritesApi.update();
+                                            // cartApi.update();
                                           },
                                           icon: const Icon(
                                             Icons.favorite_border,
                                             color: Colors.red,
                                           ),
                                         ),
-                                  Container(
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: const Icon(
-                                      Icons.share,
-                                      color: Colors.blueAccent,
-                                    ),
-                                  ),
+                                  // Container(
+                                  //   margin: const EdgeInsets.symmetric(
+                                  //       horizontal: 10),
+                                  //   child: const Icon(
+                                  //     Icons.share,
+                                  //     color: Colors.blueAccent,
+                                  //   ),
+                                  // ),
                                 ],
                               )
                             ],

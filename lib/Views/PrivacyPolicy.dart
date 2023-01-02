@@ -24,15 +24,16 @@ class PrivacyPolicy extends StatelessWidget {
             key: scaffoldKey,
             drawer: const MainDrawer(),
             appBar: AppBarStyle(
-              styleTitle: TextStylesCustom.textStyles_24,
+              styleTitle: TextStylesCustom.textStyles_20,
               elevation: 0,
-              title: 'privacy Policy',
+              title: 'Privacy Policy',
               backgroundColor: ColorStyle.primaryColorRed,
               leading: IconButton(
-                onPressed: () => scaffoldKey.currentState!.openDrawer(),
+                onPressed: () => Get.back(),
+                // scaffoldKey.currentState!.openDrawer(),
                 // currentIndex.value = 0,
                 icon: const Icon(
-                  Icons.menu,
+                  Icons.arrow_back,
                   size: 34,
                   color: Colors.white,
                 ),
@@ -65,14 +66,14 @@ class PrivacyPolicy extends StatelessWidget {
                           ),
                           Text(
                             "Privacy Policy",
-                            style: TextStylesCustom.textStyles_24
+                            style: TextStylesCustom.textStyles_18
                                 .apply(fontWeightDelta: 2),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
                           Text(controller.privacyPolicy[0].pAndP.toString(),
-                              style: TextStylesCustom.textStyles_18),
+                              style: TextStylesCustom.textStyles_13),
                         ],
                       )),
                   TermsConditions(controller.termsCondtions),

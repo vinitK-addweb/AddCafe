@@ -75,7 +75,10 @@ class MyFavouritesApi extends GetxController {
   List isInMyFavorites(productId) {
     var a =
         myFavourites.where((element) => element.product == productId).toList();
-    // update();
+    // Future.delayed(Duration(milliseconds: 1), () {
+    //   update();
+    // });
+
     return a;
   }
 }

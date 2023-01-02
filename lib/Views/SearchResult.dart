@@ -204,26 +204,102 @@ class SearchResult extends StatelessWidget {
                                   //         borderRadius:
                                   //             BorderRadius.all((Radius.circular(4)))),
                                   //     child:
+                                  // Row(
+                                  //     mainAxisAlignment:
+                                  //         MainAxisAlignment.center,
+                                  //     children: [
+                                  //       // if (e['item_count'] == 1) {
+                                  //       //   cartApi.delete(e['id']);
+                                  //       //   return;
+                                  //       // }
+                                  //       // cartApi.updateQuantity('minus',
+                                  //       //     thisCartData[0]['id']);
+
+                                  //       // child: Container(
+                                  //       //   width: 20,
+                                  //       // child: Center(
+
+                                  //       IconButton(
+                                  //         style: IconButton.styleFrom(
+                                  //             backgroundColor:
+                                  //                 ColorStyle.primaryColorRed),
+                                  //         // iconSize: 26,
+                                  //         color: Colors.white,
+                                  //         icon: const CircleAvatar(
+                                  //             radius: 14,
+                                  //             child: Icon(
+                                  //               Icons.remove,
+                                  //               size: 20,
+                                  //             )),
+                                  //         onPressed: () {},
+                                  //       ),
+
+                                  //       //  Text(
+                                  //       //   '-',
+                                  //       //   style: TextStyle(
+                                  //       //       color: Colors.white),
+                                  //       // ),
+                                  //       //       ),
+                                  //       // ),
+
+                                  //       Text(
+                                  //           // '${thisCartData[0]['item_count']}',
+                                  //           '2',
+                                  //           style: TextStylesCustom
+                                  //               .textStyles_22
+                                  //               .apply(
+                                  //                   color: ColorStyle
+                                  //                       .secondryColorBlack,
+                                  //                   fontWeightDelta: 4)),
+                                  //       IconButton(
+                                  //         style: IconButton.styleFrom(
+                                  //             backgroundColor:
+                                  //                 ColorStyle.primaryColorRed),
+                                  //         // iconSize: 26,
+                                  //         color: Colors.white,
+                                  //         icon: const CircleAvatar(
+                                  //             radius: 14,
+                                  //             child: Icon(
+                                  //               Icons.add,
+                                  //               size: 20,
+                                  //             )),
+                                  //         onPressed: () {},
+                                  //       ),
+                                  //       // InkWell(
+                                  //       //     onTap: () {
+                                  //       //       // cartApi.updateQuantity('plus',
+                                  //       //       //     thisCartData[0]['id']);
+                                  //       //     },
+                                  //       //     // child: Container(
+                                  //       //     //   width: 20,
+                                  //       //     //   child: Center(
+                                  //       //     child: SizedBox(
+                                  //       //       width: 20,
+                                  //       //       child: IconButton(
+                                  //       //         iconSize: 12,
+                                  //       //         color: Colors.white,
+                                  //       //         icon: Icon(Icons.add),
+                                  //       //         onPressed: () {},
+                                  //       //       ),
+                                  //       //     )
+                                  //       //     // Text(
+                                  //       //     //   '+',
+                                  //       //     //   style: TextStyle(
+                                  //       //     //       color: Colors.white),
+                                  //       //     // ),
+                                  //       //     //       ),
+                                  //       //     // ),
+                                  //       //     ),
+                                  //     ],
+                                  //   ),
                                   Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        // if (e['item_count'] == 1) {
-                                        //   cartApi.delete(e['id']);
-                                        //   return;
-                                        // }
-                                        // cartApi.updateQuantity('minus',
-                                        //     thisCartData[0]['id']);
-
-                                        // child: Container(
-                                        //   width: 20,
-                                        // child: Center(
-
                                         IconButton(
                                           style: IconButton.styleFrom(
                                               backgroundColor:
                                                   ColorStyle.primaryColorRed),
-                                          // iconSize: 26,
                                           color: Colors.white,
                                           icon: const CircleAvatar(
                                               radius: 14,
@@ -231,20 +307,17 @@ class SearchResult extends StatelessWidget {
                                                 Icons.remove,
                                                 size: 20,
                                               )),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            cartApi.updateQuantity(
+                                                'minus', thisCartData[0].id);
+
+                                            cartApi.update();
+                                          },
                                         ),
-
-                                        //  Text(
-                                        //   '-',
-                                        //   style: TextStyle(
-                                        //       color: Colors.white),
-                                        // ),
-                                        //       ),
-                                        // ),
-
                                         Text(
-                                            // '${thisCartData[0]['item_count']}',
-                                            '2',
+                                            thisCartData[0]
+                                                .itemCount
+                                                .toString(),
                                             style: TextStylesCustom
                                                 .textStyles_22
                                                 .apply(
@@ -263,33 +336,12 @@ class SearchResult extends StatelessWidget {
                                                 Icons.add,
                                                 size: 20,
                                               )),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            cartApi.updateQuantity(
+                                                'plus', thisCartData[0].id);
+                                            cartApi.update();
+                                          },
                                         ),
-                                        // InkWell(
-                                        //     onTap: () {
-                                        //       // cartApi.updateQuantity('plus',
-                                        //       //     thisCartData[0]['id']);
-                                        //     },
-                                        //     // child: Container(
-                                        //     //   width: 20,
-                                        //     //   child: Center(
-                                        //     child: SizedBox(
-                                        //       width: 20,
-                                        //       child: IconButton(
-                                        //         iconSize: 12,
-                                        //         color: Colors.white,
-                                        //         icon: Icon(Icons.add),
-                                        //         onPressed: () {},
-                                        //       ),
-                                        //     )
-                                        //     // Text(
-                                        //     //   '+',
-                                        //     //   style: TextStyle(
-                                        //     //       color: Colors.white),
-                                        //     // ),
-                                        //     //       ),
-                                        //     // ),
-                                        //     ),
                                       ],
                                     ),
                             ),
