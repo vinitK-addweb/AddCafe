@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
 import '../Utils/Global.dart';
 import '../Views/Cart/cart.dart';
+import '../Views/OrderHistory.dart';
 import '../Views/PrivacyPolicy.dart';
 import '../Views/Wishlist.dart';
 import '../Views/userProfile.dart';
@@ -21,7 +22,7 @@ class MyDrowerList extends StatelessWidget {
     {'name': 'Profile', 'tap': UserProfile(), 'icon': Icons.person_outline},
     {'name': 'Cart', 'tap': Cart(), 'icon': Icons.shopping_cart},
     {'name': 'FAQs', 'tap': Faq(), 'icon': Icons.discount_outlined},
-    {'name': 'Order History', 'tap': '', 'icon': Icons.history},
+    {'name': 'Order History', 'tap': OrderHistory(), 'icon': Icons.history},
     {
       'name': 'Help & Support',
       'tap': "UserProfile()",
@@ -99,7 +100,7 @@ class MyDrowerList extends StatelessWidget {
                                       50),
                                   onTap: () {
                                     // scaffoldKey.currentState?.closeDrawer();
-                                    Navigator.of(context).pop();
+                                    // Navigator.of(context).pop();
                                     userAuth.logOut();
                                   },
                                   text: 'LogOut',
