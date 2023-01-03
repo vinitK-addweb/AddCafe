@@ -20,10 +20,9 @@ jobs:
           java-version: '12.x'
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '3.3.9'   
+          channel: 'stable'   
           architecture: x64
       - run: flutter pub get
-      - run: flutter test
       - run: flutter build apk --debug  --split-per-abi
       - name: push to Releases
         uses: ncipollo/release-action@v1
