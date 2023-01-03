@@ -16,6 +16,29 @@ import '../Views/Offers.dart';
 class MyDrowerList extends StatelessWidget {
   final userAuth = Get.put(UserAuth());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final drawerList = [
+    {'name': 'Profile', 'tap': UserProfile(), 'icon': Icons.person_outline},
+    {'name': 'Cart', 'tap': Cart(), 'icon': Icons.shopping_cart},
+    {'name': 'FAQs', 'tap': Faq(), 'icon': Icons.discount_outlined},
+    {'name': 'Order History', 'tap': '', 'icon': Icons.history},
+    {
+      'name': 'Help & Support',
+      'tap': "UserProfile()",
+      'icon': Icons.question_answer_outlined
+    },
+    {'name': 'Privacy Policy', 'tap': PrivacyPolicy(), 'icon': Icons.settings},
+  ];
+  // toggleDrawer() async {
+  //   if (scaffoldKey.currentState!.isDrawerOpen) {
+  //     scaffoldKey.currentState!.closeDrawer();
+  //     //close drawer, if drawer is open
+  //   } else {
+  //     scaffoldKey.currentState!.openDrawer();
+  //     //open drawer, if drawer is closed
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -32,196 +55,40 @@ class MyDrowerList extends StatelessWidget {
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // InkWell(
-                      //   onTap: () {
-                      //     Get.to(MyHomePage());
-                      //   },
-                      //   child: Container(
-                      //     padding: EdgeInsets.all(20.0),
-                      //     child: Row(
-                      //         crossAxisAlignment: CrossAxisAlignment.start,
-                      //         children: [
-                      //           Icon(
-                      //             Icons.home_outlined,
-                      //             size: 30,
-                      //             color: ColorStyle.secondaryColorgrey,
-                      //           ),
-                      //           Container(
-                      //             margin: EdgeInsets.only(left: 20),
-                      //             child: Text('Home',
-                      //                 style: TextStylesCustom.textStyles_20.apply(
-                      //                   color: ColorStyle.secondaryColorgrey,
-                      //                 )),
-                      //           ),
-                      //         ]),
-                      //   ),
-                      // ),
-                      InkWell(
-                        onTap: (() => Get.to(UserProfile())),
-                        // navigateMultiBottom(context, UserProfile())),
-                        child: Container(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  Icons.person_outline,
-                                  size: 25,
-                                  color: ColorStyle.secondaryColorgrey,
-                                ),
-                                Container(
-                                  margin: const EdgeInsets.only(left: 20),
-                                  child: Text(
-                                    'Profile',
-                                    style: TextStylesCustom.textStyles_16.apply(
-                                        color: ColorStyle.secondaryColorgrey),
-                                  ),
-                                ),
-                              ]),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Get.to(() => Cart());
-
-                          // Get.to(Myfavourits());
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(children: [
-                            Icon(
-                              Icons.shopping_cart,
-                              size: 25,
-                              color: ColorStyle.secondaryColorgrey,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(left: 20),
-                              child: Text(
-                                'Cart',
-                                style: TextStylesCustom.textStyles_16.apply(
-                                    color: ColorStyle.secondaryColorgrey),
-                              ),
-                            ),
-                          ]),
-                        ),
-                      ),
-                      // InkWell(
-                      //   onTap: () =>
-                      //       navigateMultiBottom(context, const Offers()),
-                      //   // Get.to(Offers()),
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.all(20.0),
-                      //     child: Row(children: [
-                      //       Icon(
-                      //         Icons.discount_outlined,
-                      //         size: 30,
-                      //         color: ColorStyle.secondaryColorgrey,
-                      //       ),
-                      //       Container(
-                      //         margin: const EdgeInsets.only(left: 20),
-                      //         child: Text(
-                      //           'Offers',
-                      //           style: TextStylesCustom.textStyles_20.apply(
-                      //             color: ColorStyle.secondaryColorgrey,
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ]),
-                      //   ),
-                      // ),
-                      InkWell(
-                        onTap: () => Get.to(Faq()),
-                        // navigateMultiBottom(context, Faq()),
-
-                        // Get.to(Faq()),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(children: [
-                            Icon(
-                              Icons.question_answer_outlined,
-                              size: 25,
-                              color: ColorStyle.secondaryColorgrey,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(left: 20),
-                              child: Text(
-                                'FAQs',
-                                style: TextStylesCustom.textStyles_16.apply(
-                                  color: ColorStyle.secondaryColorgrey,
+                      ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: drawerList.length,
+                          itemBuilder: ((context, index) {
+                            return SizedBox(
+                              child: InkWell(
+                                onTap: () {
+                                  Get.to(drawerList[index]['tap']);
+                                  Navigator.of(context).pop();
+                                },
+                                // navigateMultiBottom(context, PrivacyPolicy()),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Row(children: [
+                                    Icon(
+                                      drawerList[index]['icon'] as IconData,
+                                      size: 25,
+                                      color: ColorStyle.secondaryColorgrey,
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(left: 20),
+                                      child: Text(
+                                        drawerList[index]['name'].toString(),
+                                        style: TextStylesCustom.textStyles_16
+                                            .apply(
+                                          color: ColorStyle.secondaryColorgrey,
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
                                 ),
                               ),
-                            ),
-                          ]),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        // navigateMultiBottom(context, PrivacyPolicy()),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(children: [
-                            Icon(
-                              Icons.history,
-                              size: 25,
-                              color: ColorStyle.secondaryColorgrey,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(left: 20),
-                              child: Text(
-                                'Order History ',
-                                style: TextStylesCustom.textStyles_16.apply(
-                                  color: ColorStyle.secondaryColorgrey,
-                                ),
-                              ),
-                            ),
-                          ]),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(children: [
-                            Icon(
-                              Icons.support,
-                              size: 25,
-                              color: ColorStyle.secondaryColorgrey,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(left: 20),
-                              child: Text(
-                                'Help and Support ',
-                                style: TextStylesCustom.textStyles_16.apply(
-                                  color: ColorStyle.secondaryColorgrey,
-                                ),
-                              ),
-                            ),
-                          ]),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () => Get.to(PrivacyPolicy()),
-                        //     navigateMultiBottom(context, PrivacyPolicy()),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Row(children: [
-                            Icon(
-                              Icons.settings,
-                              size: 25,
-                              color: ColorStyle.secondaryColorgrey,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(left: 20),
-                              child: Text(
-                                'Privacy Policy',
-                                style: TextStylesCustom.textStyles_16.apply(
-                                  color: ColorStyle.secondaryColorgrey,
-                                ),
-                              ),
-                            ),
-                          ]),
-                        ),
-                      ),
+                            );
+                          })),
                       userAuth.userprofile.isNotEmpty
                           ? Column(children: [
                               Center(
@@ -231,7 +98,8 @@ class MyDrowerList extends StatelessWidget {
                                       MediaQuery.of(context).size.width / 1.5,
                                       50),
                                   onTap: () {
-                                    scaffoldKey.currentState?.closeDrawer();
+                                    // scaffoldKey.currentState?.closeDrawer();
+                                    Navigator.of(context).pop();
                                     userAuth.logOut();
                                   },
                                   text: 'LogOut',

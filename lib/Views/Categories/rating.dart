@@ -11,15 +11,17 @@ class Rating extends StatelessWidget {
     return Container(
       child: Row(children: [
         ...List.generate(rating, (index) {
-          return Icon(
+          return const Icon(
             Icons.star,
             color: Colors.red,
+            size: 15,
           );
         }),
         ...List.generate(5 - rating, (index) {
-          return Icon(
+          return const Icon(
             Icons.star_border,
             color: Colors.red,
+            size: 15,
           );
         })
       ]),

@@ -84,7 +84,7 @@ class UserProfileController extends GetxController {
       //  RxMap<dynamic, dynamic>.from(
       //     jsonDecode(prefs.getString('userData').toString()));
       getAddress();
-      update();
+      // update();
     });
   }
 
@@ -125,6 +125,20 @@ class UserProfileController extends GetxController {
 
   addresTypeFunction(value) {
     addressType.value.text = value;
+  }
+
+  // clear the edit address fields
+
+  clearEdit() async {
+    phoneNumber.value.text = "";
+
+    buildingNameNo.value.text = "";
+    area.value.text = "";
+    landMark.value.text = "";
+    pinCode.value.text = "";
+    city.value.text = "";
+    state.value.text = "";
+    addressType.value.text = "";
   }
 
   // --------------------------- fetch Address By id  ------------------------->

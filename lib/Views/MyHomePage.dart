@@ -40,9 +40,9 @@ class MyHomePage extends StatelessWidget {
       },
       builder: (controller) {
         return Obx((() => Scaffold(
-              // drawer: MainDrawer(),
+              drawer: MainDrawer(),
               key: scaffoldKey,
-              drawer: const MainDrawer(),
+              // drawer: const MainDrawer(),
               // appBar: AppBarStyle(
               //   styleTitle: TextStylesCustom.textStyles_24,
               //   elevation: 0,

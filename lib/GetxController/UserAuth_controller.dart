@@ -182,12 +182,12 @@ class UserAuth extends GetxController {
 
     password.value.text = '';
     textController.value.text = '';
-    kTOKENSAVED = '';
-    userprofile = {}.obs;
+    // kTOKENSAVED = '';
+    // userprofile = {}.obs;
     prefs.remove('userData');
     prefs.remove('token');
     getlocaStorage();
-    Get.to(Mylogin());
+    // Get.to(Mylogin());
   }
 
   //  <-----------------  User Otp verification Functionality ------------------>

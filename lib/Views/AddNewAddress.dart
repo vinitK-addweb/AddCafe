@@ -18,10 +18,9 @@ class AddNewAddress extends StatelessWidget {
   AddNewAddress({super.key, this.isAddress = true});
   final formKey = GlobalKey<FormState>();
   final bool? isAddress;
-
+  final controller = Get.put(UserProfileController());
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(UserProfileController());
     // final scaffoldKey = GlobalKey<ScaffoldState>();
 
     //  final GlobalKey<FormState> _key = GlobalKey<FormState>()

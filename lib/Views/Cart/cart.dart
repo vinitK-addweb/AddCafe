@@ -492,6 +492,7 @@ class _CartState extends State<Cart> {
                                       size: const Size(90, 40),
                                       text: 'Apply',
                                       onTap: () {
+                                        controller.taxShippingCharges();
                                         couponApply.applyCoupon();
                                         FocusScopeNode currentFocus =
                                             FocusScope.of(context);
@@ -582,7 +583,8 @@ class _CartState extends State<Cart> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              'Delivery partner fee',
+                                              controller.tax['delivery'][0]
+                                                  ['label'],
                                               style: TextStylesCustom
                                                   .textStyles_14
                                                   .apply(
@@ -590,7 +592,7 @@ class _CartState extends State<Cart> {
                                                       color: Colors.blue),
                                             ),
                                             Text(
-                                              '₹ 27.00',
+                                              '₹ ${controller.tax['delivery'][0]['cost']}',
                                               style: TextStylesCustom
                                                   .textStyles_14
                                                   .apply(
@@ -607,12 +609,16 @@ class _CartState extends State<Cart> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              'Taxes and charges',
+                                              controller.tax['tax'][0]
+                                                  ['tax_name'],
                                               style: TextStylesCustom
                                                   .textStyles_14
                                                   .apply(color: Colors.grey),
                                             ),
-                                            Text('₹ 20.00',
+                                            Text(
+                                                '₹ ${(controller.tax['tax'][0]['percentage'] / 100) * controller.cart['total_rate']}',
+
+                                                // controller.cart['total_rate'] % controller.tax['tax'][0]['percentage']}',
                                                 style: TextStylesCustom
                                                     .textStyles_14
                                                     .apply(color: Colors.grey))
@@ -632,7 +638,7 @@ class _CartState extends State<Cart> {
                                                   .apply(fontWeightDelta: 3),
                                             ),
                                             Text(
-                                              '₹ ${controller.cart['total_rate'] + 20 + 27.00}',
+                                              '₹ ${controller.cart['total_rate'] + (controller.tax['tax'][0]['percentage'] / 100) * controller.cart['total_rate'] + controller.tax['delivery'][0]['cost']}',
                                               style: TextStylesCustom
                                                   .textStyles_18
                                                   .apply(fontWeightDelta: 3),

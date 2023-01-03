@@ -18,12 +18,12 @@ import '../Components/ElevatedButtonCustom.dart';
 import '../Components/PickerCustom.dart';
 
 class UserProfile extends StatelessWidget {
+  final userAuth = Get.put(UserAuth());
+  final controller = Get.put(UserProfileController());
+  var formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    final userAuth = Get.put(UserAuth());
-    final controller = Get.put(UserProfileController());
-    var formKey = GlobalKey<FormState>();
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
         key: scaffoldKey,
         drawer: const MainDrawer(),
@@ -561,6 +561,7 @@ class UserProfile extends StatelessWidget {
                                                 2.5,
                                             40),
                                         onTap: () {
+                                          controller.clearEdit();
                                           Get.to(AddNewAddress());
                                           // showModalBottomSheet(
                                           //     isScrollControlled: true,

@@ -82,8 +82,8 @@ class CategoryDropdown extends StatelessWidget {
                                 children: [
                                   Rating(3),
                                   Text(
-                                    '345 reviews',
-                                    style: TextStylesCustom.textStyles_15
+                                    '(345)',
+                                    style: TextStylesCustom.textStyles_13
                                         .apply(fontWeightDelta: 2),
                                   ),
                                 ],
@@ -96,23 +96,18 @@ class CategoryDropdown extends StatelessWidget {
                               const SizedBox(
                                 height: 10,
                               ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                child: Text(
+                                  '${categoryItems[index]['description']}',
+                                  style: TextStylesCustom.textStyles_10,
+                                ),
+                              ),
                               // Text(myFavouritesApi
                               //     .isInMyFavorites(categoryItems[index]['id'])
                               //     .toString()),
                               Row(
                                 children: [
-                                  // myFavouritesApi
-                                  //         .isInMyFavorites(
-                                  //             categoryItems[index]['id'])
-                                  //         .isNotEmpty
-                                  //     ? Text(myFavouritesApi
-                                  //         .isInMyFavorites(
-                                  //             categoryItems[index]['id'])[0]
-                                  //         .id
-                                  //         .toString())
-                                  //     : Text("data"),
-                                  // Text(
-                                  //     "data ${cartApi.isInCart(categoryItems[index]['id'])}"),
                                   myFavouritesApi
                                           .isInMyFavorites(
                                               categoryItems[index]['id'])
@@ -149,14 +144,6 @@ class CategoryDropdown extends StatelessWidget {
                                             color: Colors.red,
                                           ),
                                         ),
-                                  // Container(
-                                  //   margin: const EdgeInsets.symmetric(
-                                  //       horizontal: 10),
-                                  //   child: const Icon(
-                                  //     Icons.share,
-                                  //     color: Colors.blueAccent,
-                                  //   ),
-                                  // ),
                                 ],
                               )
                             ],
