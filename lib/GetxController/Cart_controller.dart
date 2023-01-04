@@ -7,8 +7,9 @@ import '../Utils/Global.dart';
 
 class CartController extends GetxController {
   Map cart = {};
+  Map tax = {};
   RxList<CartModel> cartData = <CartModel>[].obs;
-  List data = [];
+  // List data = [];
   // getter
   // Map get cart {
   //   return _cart;
@@ -22,6 +23,7 @@ class CartController extends GetxController {
   initMethod() {
     Future.delayed(const Duration(milliseconds: 1), () {
       fetchCart();
+      taxShippingCharges();
     });
   }
 
@@ -32,9 +34,15 @@ class CartController extends GetxController {
 
     cartData.value =
         List<CartModel>.from(cart['payload'].map((x) => CartModel.fromJson(x)));
+    // update();
     // if (cart['message']) {
     //   ' ${cart['message']}'.showSuccess();
     // }
+  }
+
+  Future taxShippingCharges() async {
+    tax = await API.instance
+        .get(endPoint: 'order/tax-shipping-charge/', isHeader: true);
   }
 
   Future addToCart(payload) async {
@@ -64,20 +72,6 @@ class CartController extends GetxController {
     await API.instance.patch(
         endPoint: 'cart/cart-items/$id/', params: params, isHeader: true);
     fetchCart();
-
-    // http.Response response;
-    // response = await http.patch(
-    //     Uri.parse(
-    //         'https://cafe.addwebprojects.com/api/v1/cart/cart-items/${id}/'),
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       "Authorization":
-    //           'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
-    //     },
-    //     body: jsonEncode({"quantity": status}));
-    // if (response.statusCode == 200) {
-    //   fetchCart();
-    // } else {}
   }
 
   // <------------------- Delete item from cart ----------------->
@@ -93,14 +87,12 @@ class CartController extends GetxController {
   }
 
   List isInCart(id) {
-    // List data = cartData;
-    // fetchCart();
+    List data = cartData;
+
     print("sa" + id.toString());
     print("data is here" + data.toString());
-    var b = data.where((e) => e['item'] == id).toList();
+    var b = data.where((e) => e.itemDetail!.id == id).toList();
     print("dasdadas" + b.toString());
     return b;
-    // print("data is " + data[0].toString());
-    // return data;
   }
 }

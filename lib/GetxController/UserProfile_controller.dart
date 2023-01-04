@@ -10,7 +10,10 @@ import '../Utils/API.dart';
 import '../Utils/Global.dart';
 import '../Models/Model_UserDetails.dart';
 import '../Models/Model_AddAddress.dart';
-import '../Utils/Global.dart';
+import 'package:http/http.dart' as http;
+
+import '../Views/AddNewAddress.dart';
+import '../Views/Auth/Signin.dart';
 import '../Views/userProfile.dart';
 
 class UserProfileController extends GetxController {
@@ -27,49 +30,82 @@ class UserProfileController extends GetxController {
   Rx<TextEditingController> state = TextEditingController().obs;
   Rx<TextEditingController> pinCode = TextEditingController().obs;
   Rx<TextEditingController> addressType = TextEditingController().obs;
+  RxInt address = 0.obs;
+  RxInt AddUpdateid = 0.obs;
+  RxBool showPassField = false.obs;
+  RxBool showAddress = false.obs;
 
   Map<String, dynamic> _changePass = {};
 
   RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
   Rx<File> image = File("").obs;
-
+  final profile = Get.put(UserAuth());
   final picker = ImagePicker();
 
+  get kTOKENSAVED => null;
+
+  initprofile() {
+    print("======== ===== there >>>>>>>>>>>>>>>>");
+    Future.delayed(Duration(milliseconds: 10), () {
+      if (kTOKENSAVED != '') {
+        print("======== helllooooo >>>>>>>>>>>>>>>>");
+        getUserDetails();
+        getAddress();
+        Get.to(() => UserProfile());
+      } else {
+        Get.to(() => Mylogin());
+        debugPrint("======== helllooooo  byeeeeeeeeeeeeee>>>>>>>>>>>>>>>>");
+      }
+    });
+  }
+
   // ------------------ Update Profile image ------------------------------------>
-
   updateProfileImage() async {
-    // final params = {'profile_picture': image.value};
+    print("img print");
+    print(image.value.path.isEmpty);
+    final params = {
+      '_method': 'post',
+    };
 
-    var response = await API.instance.postImage(
-        endPoint: 'accounts/customer-profile/',
-        params: {},
-        fileParams: 'profile_picture',
-        file: image.value);
-    debugPrint('image path===============> ');
-    getUserDetails();
+    final response = await API.instance.postImage(
+      endPoint: "accounts/customer-profile/",
+      params: params,
+      fileParams: "profile_picture",
+      file: image.value,
+    );
+
+    if (response!.isNotEmpty) {
+      profile.signIn();
+      // getUserDetails();
+      "Profile picture uploaded".showSuccess();
+    }
   }
 
   //  ----------------- Get User details from local storage --------------------->
   getUserDetails() async {
-    Future.delayed(Duration(milliseconds: 1), () async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("object===============>>>>>>>>>>>");
+    if (kTOKENSAVED != "") {
+      Future.delayed(Duration(milliseconds: 1), () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      userprofile.value = await API.instance
-          .get(endPoint: 'accounts/customer-profile/', isHeader: true);
-      print("runing=========>>>>>>>>>>>>>>>>>>");
-      //  RxMap<dynamic, dynamic>.from(
-      //     jsonDecode(prefs.getString('userData').toString()));
-      getAddress();
-      update();
-    });
+        userprofile.value = await API.instance
+            .get(endPoint: 'accounts/customer-profile/', isHeader: true);
+
+        //  RxMap<dynamic, dynamic>.from(
+        //     jsonDecode(prefs.getString('userData').toString()));
+        getAddress();
+        // Get.to(() => userprofile());
+      });
+    } else {
+      Get.to(() => Mylogin());
+    }
   }
 
   // --------------------- fetch user saved address--------------------------->
   getAddress() async {
-    print("getAddress=======>>>>>>> 123");
     final response = await API.instance
         .get(endPoint: 'order/saved-address/', isHeader: true);
-    // print("getAddress=======>>>>>>>" + response);
+
     addAddress.value = List<UserAddressModel>.from(
         response['payload'].map((x) => UserAddressModel.fromJson(x)));
   }
@@ -104,19 +140,65 @@ class UserProfileController extends GetxController {
     addressType.value.text = value;
   }
 
-  // --------------------------- fetch Address By id  ------------------------->
-  fetchAddressByid(id) async {
-    print("order data is here==========>>>>>" + id.toString());
-    final response =
-        await API.instance.get(endPoint: 'order/address/$id/', isHeader: true);
+  // clear the edit address fields
 
-    // print("order data is here==========>>>>>" + response['id']);
+  clearEdit() async {
+    phoneNumber.value.text = "";
+
+    buildingNameNo.value.text = "";
+    area.value.text = "";
+    landMark.value.text = "";
+    pinCode.value.text = "";
+    city.value.text = "";
+    state.value.text = "";
+    addressType.value.text = "";
+  }
+
+  // --------------------------- fetch Address By id  ------------------------->
+  fetchAddressByid(idx) async {
+    // print(addAddress[id].buildingNumName);
+
+    phoneNumber.value.text = addAddress[idx].phoneNum!;
+
+    buildingNameNo.value.text = addAddress[idx].buildingNumName!;
+    area.value.text = addAddress[idx].areaColony!;
+    landMark.value.text = addAddress[idx].landmark!;
+    pinCode.value.text = addAddress[idx].pincode.toString();
+    city.value.text = addAddress[idx].city!;
+    state.value.text = addAddress[idx].state!;
+    addressType.value.text = addAddress[idx].addressType!;
+
+    print(addressType.value);
+    Get.to(AddNewAddress(
+      isAddress: false,
+    ));
   }
 
   // --------------------------- update User Address ------------------------->
 
   updateAddress() {
+    "hello".showSuccess();
     // phoneNumber.value =
+    print("object = = = = = = == = == = = == == = = =>");
+    final addressData = {
+      "user": "1",
+      "phone_num": phoneNumber.value.text,
+      "building_num_name": buildingNameNo.value.text,
+      "area_colony": area.value.text,
+      "landmark": landMark.value.text,
+      "pincode": pinCode.value.text,
+      "city": city.value.text,
+      "state": state.value.text,
+      "address_type": addressType.value.text
+    };
+
+    var response = API.instance.patch(
+        endPoint: '/order/address/$AddUpdateid/',
+        params: addressData,
+        isHeader: true);
+    getAddress();
+    update();
+    Get.to(UserProfile());
   }
 
   // --------------------------- Delete User Address ------------------------->

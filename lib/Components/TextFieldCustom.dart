@@ -246,6 +246,7 @@ class PasswordFieldUnderline extends StatelessWidget {
     this.radiusBorder = 8.0,
     this.maxLines = 1,
     this.labelText,
+    required String? Function(dynamic value) validator,
   }) : super(key: key);
 
   @override
