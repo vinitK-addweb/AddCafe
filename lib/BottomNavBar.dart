@@ -121,7 +121,7 @@ class BottomNavBarCustomState extends State<BottomNavBarCustom> {
                     // _selectTab(pageKeys[2], 2);
                   },
                   icon: const Icon(
-                    Icons.shopping_bag_outlined,
+                    Icons.shopping_cart,
                     color: Colors.grey,
                   ),
                 )),
