@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:addcafe/Models/Model_Cart.dart';
 import 'package:addcafe/Views/Auth/Signin.dart';
 import 'package:addcafe/Utils/API.dart';
 import '../Views/Auth/Password.dart';
@@ -13,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:addcafe/Utils/Global.dart';
 import 'package:addcafe/Utils/Constant.dart';
 import '../BottomNavBar.dart';
+import 'Cart_controller.dart';
 
 class UserAuth extends GetxController {
   Rx<TextEditingController> textController = TextEditingController().obs;
@@ -32,7 +34,7 @@ class UserAuth extends GetxController {
     {"id": "2", "image": "assets/images/facebook.png", "name": "Burger"},
     {"id": "3", "image": "assets/images/google.webp", "name": "Cake"},
   ];
-
+  final cartApi = Get.put(CartController());
   // late final _token;
 
   initCustom() {
@@ -182,6 +184,7 @@ class UserAuth extends GetxController {
     userprofile = {}.obs;
     prefs.remove('userData');
     prefs.remove('token');
+    cartApi.cartData.value = [];
     getlocaStorage();
     await Get.to(Mylogin());
   }

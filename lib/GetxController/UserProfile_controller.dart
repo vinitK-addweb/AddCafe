@@ -1,3 +1,4 @@
+import 'package:addcafe/Utils/Constant.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,7 @@ import 'package:http/http.dart' as http;
 import '../Views/AddNewAddress.dart';
 import '../Views/Auth/Signin.dart';
 import '../Views/userProfile.dart';
+import 'Cart_controller.dart';
 
 class UserProfileController extends GetxController {
   Rx<UserDetailsModel> userdetails = UserDetailsModel().obs;
@@ -41,8 +43,6 @@ class UserProfileController extends GetxController {
   Rx<File> image = File("").obs;
   final profile = Get.put(UserAuth());
   final picker = ImagePicker();
-
-  get kTOKENSAVED => null;
 
   initprofile() {
     print("======== ===== there >>>>>>>>>>>>>>>>");

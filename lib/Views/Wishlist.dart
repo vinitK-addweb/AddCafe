@@ -22,6 +22,7 @@ class Myfavourits extends StatelessWidget {
     // List<Wishlist> myFavouritesApi =
     //     Get.put(MyFavouritesApi().myFavourites.value);
     final myfavapi = Get.put(MyFavouritesApi());
+
     // final cartApi = Provider.of<CartApi>(context);
     // final cartData = Get.put(CartController());
     final homPageController = Get.put(HomeBannerController());
@@ -37,7 +38,7 @@ class Myfavourits extends StatelessWidget {
                 appBar: AppBarStyle(
                   backgroundColor: ColorStyle.primaryColorRed,
                   leading: IconButton(
-                    onPressed: () => Get.back(),
+                    onPressed: () => homPageController.currentIndex.value = 0,
                     // currentIndex.value = 0,
                     icon: const Icon(
                       Icons.arrow_back,

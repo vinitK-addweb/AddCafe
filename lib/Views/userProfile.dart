@@ -1,5 +1,6 @@
 import 'dart:convert';
 // import '../Components/MainDrawer.dart';
+import '../GetxController/MyHomePage_controller.dart';
 import '../Views/AddNewAddress.dart';
 import 'package:addcafe/Components/AppBarStyle.dart';
 import 'package:addcafe/Views/Auth/Signin.dart';
@@ -21,6 +22,7 @@ class UserProfile extends StatelessWidget {
   final userAuth = Get.put(UserAuth());
   final controller = Get.put(UserProfileController());
   var formKey = GlobalKey<FormState>();
+  final homPageController = Get.put(HomeBannerController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class UserProfile extends StatelessWidget {
           title: 'Profile',
           backgroundColor: ColorStyle.primaryColorRed,
           leading: IconButton(
-            onPressed: () => Get.back(),
+            onPressed: () => homPageController.currentIndex.value = 0,
             // scaffoldKey.currentState!.openDrawer(),
             // currentIndex.value = 0,
             icon: const Icon(

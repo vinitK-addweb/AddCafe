@@ -24,7 +24,7 @@ class Cart extends StatelessWidget {
         styleTitle: TextStylesCustom.textStyles_24,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => homPageController.currentIndex.value = 0,
+          onPressed: () => Get.back(),
         ),
       ),
       bottomNavigationBar: Container(

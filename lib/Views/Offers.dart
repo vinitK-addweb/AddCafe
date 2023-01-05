@@ -12,13 +12,13 @@ import '../GetxController/Offers_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class Offers extends StatelessWidget {
-  const Offers({super.key});
-
+  Offers({super.key});
+  final controller = Get.put(OffersController());
+  final homPageController = Get.put(HomeBannerController());
   @override
   Widget build(BuildContext context) {
     // final homeBanner = Get.put(HomeBannerController());
-    final controller = Get.put(OffersController());
-    final homPageController = Get.put(HomeBannerController());
+
     // controller.fetchOffers();
 
     // debugPrint('data===========>${controller.offers[1].couponBanner!}');

@@ -19,7 +19,7 @@ class ActiveProductsController extends GetxController {
   RxList currentProducts = [].obs;
 
   initCustom() {
-    Future.delayed(Duration(milliseconds: 2), () {
+    Future.delayed(Duration(milliseconds: 50), () {
       fetchAllProducts();
       // categoryProductFilter();
     });

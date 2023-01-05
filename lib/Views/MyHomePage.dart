@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import '../GetxController/Cart_controller.dart';
-import '../GetxController/UserProfile_controller.dart';
+
 import '../Styles/TextStyles.dart';
 import 'Cart/cart.dart';
 import 'HomeBanner.dart';
 import 'HomeCategory.dart';
 import '../Drawer/drawerHeader.dart';
 import '../Drawer/drawerList.dart';
-import '../BottomNavBar.dart';
+
 import 'MyLoader.dart';
-import 'MySearch.dart';
-import 'CustomerReviews.dart';
-import 'NewsLetter.dart';
+
 import 'package:get/get.dart';
 import '../GetxController/MyHomePage_controller.dart';
 import '../GetxController/UserAuth_controller.dart';
@@ -62,10 +60,11 @@ class MyHomePage extends StatelessWidget {
                 elevation: 0,
                 title: const LogoCustomWhite(),
                 actions: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: controller.search.value
-                        ? IconButton(
+                  controller.search.value
+                      ? IconButton(
+                          onPressed: () {},
+                          icon: IconButton(
+                            iconSize: 30,
                             onPressed: () {
                               controller.search.value = false;
                               search.searchResult.value = [];
@@ -73,8 +72,12 @@ class MyHomePage extends StatelessWidget {
                             },
                             icon: const Icon(Icons.close),
                           )
-                        : const Icon(Icons.notifications),
-                  )
+                          // : const Icon(Icons.notifications),
+                          )
+                      : const SizedBox(
+                          height: 0,
+                          width: 50,
+                        )
                 ],
               ),
 
@@ -165,18 +168,13 @@ class MyHomePage extends StatelessWidget {
                                       "Search Your Favourite Food Here", //hint text
                                   prefixIcon:
                                       const Icon(Icons.search), //prefix iocn
-                                  hintStyle: TextStylesCustom.textStyles_20
+                                  hintStyle: TextStylesCustom.textStyles_16
                                       .apply(
                                           color: ColorStyle.secondryColorBlack
                                               .withOpacity(0.5)),
                                 )),
                           ),
-                          // ElevatedButton(
-                          //     onPressed: () {
-                          //       search.initfunction();
-                          //     },
-                          //     child: Text("Search")),
-                          // Mysearch(),
+
                           const SizedBox(
                             height: 20,
                           ),
