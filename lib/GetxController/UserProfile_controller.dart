@@ -1,4 +1,3 @@
-import 'package:addcafe/Utils/Constant.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:get/get.dart';
@@ -14,9 +13,7 @@ import '../Models/Model_AddAddress.dart';
 import 'package:http/http.dart' as http;
 
 import '../Views/AddNewAddress.dart';
-import '../Views/Auth/Signin.dart';
 import '../Views/userProfile.dart';
-import 'Cart_controller.dart';
 
 class UserProfileController extends GetxController {
   Rx<UserDetailsModel> userdetails = UserDetailsModel().obs;
@@ -45,17 +42,9 @@ class UserProfileController extends GetxController {
   final picker = ImagePicker();
 
   initprofile() {
-    print("======== ===== there >>>>>>>>>>>>>>>>");
     Future.delayed(Duration(milliseconds: 10), () {
-      if (kTOKENSAVED != '') {
-        print("======== helllooooo >>>>>>>>>>>>>>>>");
-        getUserDetails();
-        getAddress();
-        Get.to(() => UserProfile());
-      } else {
-        Get.to(() => Mylogin());
-        debugPrint("======== helllooooo  byeeeeeeeeeeeeee>>>>>>>>>>>>>>>>");
-      }
+      getUserDetails();
+      getAddress();
     });
   }
 
@@ -84,21 +73,17 @@ class UserProfileController extends GetxController {
   //  ----------------- Get User details from local storage --------------------->
   getUserDetails() async {
     print("object===============>>>>>>>>>>>");
-    if (kTOKENSAVED != "") {
-      Future.delayed(Duration(milliseconds: 1), () async {
-        SharedPreferences prefs = await SharedPreferences.getInstance();
+    Future.delayed(Duration(milliseconds: 1), () async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
 
-        userprofile.value = await API.instance
-            .get(endPoint: 'accounts/customer-profile/', isHeader: true);
-
-        //  RxMap<dynamic, dynamic>.from(
-        //     jsonDecode(prefs.getString('userData').toString()));
-        getAddress();
-        // Get.to(() => userprofile());
-      });
-    } else {
-      Get.to(() => Mylogin());
-    }
+      userprofile.value = await API.instance
+          .get(endPoint: 'accounts/customer-profile/', isHeader: true);
+      print("runing=========>>>>>>>>>>>>>>>>>> ${userprofile.value}");
+      //  RxMap<dynamic, dynamic>.from(
+      //     jsonDecode(prefs.getString('userData').toString()));
+      getAddress();
+      // update();
+    });
   }
 
   // --------------------- fetch user saved address--------------------------->

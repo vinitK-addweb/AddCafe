@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'dart:convert';
 import '../Models/Model_Cart.dart';
 import '../Utils/API.dart';
+import '../Utils/Constant.dart';
 import '../Utils/Global.dart';
 
 class CartController extends GetxController {
@@ -48,13 +49,10 @@ class CartController extends GetxController {
   Future addToCart(payload) async {
     print('payload datqa >>>>>>>>>>>' + payload.toString());
     http.Response response;
-    response = await http.post(
-        Uri.parse(
-            'https://cafe.addwebprojects.com/api/v1/cart/add-cart-items/'),
+    response = await http.post(Uri.parse('${kBaseUrl}cart/add-cart-items/'),
         headers: {
           "Content-Type": "application/json",
-          "Authorization":
-              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc0MDQwNjQ1LCJpYXQiOjE2NjU0MDA2NDUsImp0aSI6ImI0NDM0M2M3MDMyYTRhMWZiNzczNzAyZTJhMDkzYzMwIiwidXNlcl9pZCI6MX0.Hs1B5pTqMfP7h5DJT4JFI31Ze6gmeJgNCExVNCvEswo'
+          "Authorization": 'Bearer $kTOKENSAVED'
         },
         body: jsonEncode(payload));
     if (response.statusCode == 200) {
