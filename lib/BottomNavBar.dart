@@ -46,7 +46,7 @@ class BottamNavigationBar extends StatelessWidget {
                     bottomNavigationBar: BottomNavigationBar(
                       currentIndex: controller.currentIndex.value,
                       type: BottomNavigationBarType.fixed,
-                      iconSize: 30,
+                      iconSize: 28,
                       unselectedIconTheme: IconThemeData(
                           color: ColorStyle.secondaryColorgrey,
                           opacity: 0.8,
@@ -54,7 +54,7 @@ class BottamNavigationBar extends StatelessWidget {
                       selectedIconTheme: IconThemeData(
                           color: ColorStyle.primaryColorRed,
                           opacity: 2.0,
-                          size: 40),
+                          size: 28),
                       selectedLabelStyle: TextStylesCustom.textStyles_20,
                       unselectedLabelStyle: TextStylesCustom.textStyles_16,
                       items: const [

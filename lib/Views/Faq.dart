@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import '../BottomNavBar.dart';
 import 'package:get/get.dart';
+// import '../Components/MainDrawer.dart';
 import '../GetxController/Faq_Controller.dart';
 import '../Styles/TextStyles.dart';
 import '../Styles/ColorStyle.dart';
@@ -14,7 +15,7 @@ class Faq extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final faq = Get.put(FaqController());
-
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return GetBuilder(
         init: FaqController(),
         initState: ((state) => faq.initMethod()),
@@ -22,17 +23,22 @@ class Faq extends StatelessWidget {
           return Obx(() {
             return Scaffold(
               // <------------------------------ Main App bar starts --------------------->
+              key: scaffoldKey,
+              // drawer: const MainDrawer(),
               appBar: AppBarStyle(
+                styleTitle: TextStylesCustom.textStyles_20,
+                elevation: 0,
+                title: 'FAQ',
                 backgroundColor: ColorStyle.primaryColorRed,
                 leading: IconButton(
                   onPressed: () => Get.back(),
-                  icon: Icon(
+                  // currentIndex.value = 0,
+                  icon: const Icon(
                     Icons.arrow_back,
+                    size: 34,
                     color: Colors.white,
                   ),
                 ),
-                styleTitle: TextStylesCustom.textStyles_24,
-                title: 'Faq',
               ),
 
               body: SingleChildScrollView(
@@ -48,11 +54,15 @@ class Faq extends StatelessWidget {
                               // decoration: BoxDecoration(color:),
 
                               // <------------------ Faq card start-------------->
-                              faq.faqData.value.map((e) {
+                              faq.faqData.map((e) {
                         return Stack(children: [
                           InkWell(
                             onTap: () {
-                              faq.currentid.value = e.id!;
+                              if (faq.currentid.value == e.id) {
+                                faq.currentid.value = 0;
+                              } else {
+                                faq.currentid.value = e.id!;
+                              }
                             },
                             child: Card(
                                 shape: RoundedRectangleBorder(
@@ -74,7 +84,7 @@ class Faq extends StatelessWidget {
                                           child: Text(
                                             '${e.question}',
                                             style: TextStylesCustom
-                                                .textStyles_20
+                                                .textStyles_15
                                                 .apply(
                                               fontWeightDelta: 3,
                                               color:
@@ -92,7 +102,7 @@ class Faq extends StatelessWidget {
                                               '${e.answer}',
                                               textAlign: TextAlign.justify,
                                               style: TextStylesCustom
-                                                  .textStyles_16
+                                                  .textStyles_13
                                                   .apply(
                                                 fontWeightDelta: 2,
                                                 color: ColorStyle
@@ -118,7 +128,13 @@ class Faq extends StatelessWidget {
                                         : Icons.arrow_drop_down,
                                     size: 40,
                                   ),
-                                  onPressed: () => faq.currentid.value = e.id!))
+                                  onPressed: () {
+                                    if (faq.currentid.value == e.id) {
+                                      faq.currentid.value = 0;
+                                    } else {
+                                      faq.currentid.value = e.id!;
+                                    }
+                                  }))
                         ]);
                       }).toList()),
                     ),
@@ -143,7 +159,7 @@ class Faq extends StatelessWidget {
                                 margin: EdgeInsets.only(top: 10),
                                 child: Text(
                                   'Do you have more questions?',
-                                  style: TextStylesCustom.textStyles_20.apply(
+                                  style: TextStylesCustom.textStyles_17.apply(
                                     fontWeightDelta: 3,
                                     color: ColorStyle.secondryColorBlack,
                                   ),
@@ -153,7 +169,7 @@ class Faq extends StatelessWidget {
                                 child: Text(
                                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
                                   textAlign: TextAlign.center,
-                                  style: TextStylesCustom.textStyles_15.apply(
+                                  style: TextStylesCustom.textStyles_13.apply(
                                     fontWeightDelta: 3,
                                     color: ColorStyle.secondaryColorgrey,
                                   ),
@@ -171,7 +187,7 @@ class Faq extends StatelessWidget {
                                     child: Text(
                                       'Send Us A Direct Mail',
                                       style:
-                                          TextStylesCustom.textStyles_20.apply(
+                                          TextStylesCustom.textStyles_16.apply(
                                         fontWeightDelta: 3,
                                         color: Colors.white,
                                       ),

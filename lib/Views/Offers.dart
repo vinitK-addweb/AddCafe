@@ -29,7 +29,7 @@ class Offers extends StatelessWidget {
           return Obx(() {
             return Scaffold(
               appBar: AppBarStyle(
-                styleTitle: TextStylesCustom.textStyles_24,
+                styleTitle: TextStylesCustom.textStyles_20,
                 elevation: 0,
                 title: 'Offers',
                 backgroundColor: ColorStyle.primaryColorRed,

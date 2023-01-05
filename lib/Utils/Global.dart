@@ -1,9 +1,9 @@
+import 'package:addcafe/Styles/ColorStyle.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-
-import '../Styles/ColorStyle.dart';
 // import '../Styles/ColorStyle.dart';
 // import '../Styles/TextStyles.dart';
 
@@ -85,4 +85,10 @@ goToAnotherScreen(Widget page) {
     transitionDuration: Duration(milliseconds: 400),
     curve: Curves.fastOutSlowIn,
   );
+}
+
+// bottom navigation same
+navigateMultiBottom(context, Widget child) {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (BuildContext context) => child));
 }

@@ -2,6 +2,8 @@ import 'package:addcafe/Styles/ColorStyle.dart';
 import 'package:addcafe/Views/MyHomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../BottomNavBar.dart';
+import '../../Utils/Global.dart';
 import './Signup.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
@@ -21,7 +23,7 @@ class Mylogin extends StatefulWidget {
 
 class _MyloginState extends State<Mylogin> {
   final controller = Get.put(UserAuth());
-  var _formKey = GlobalKey<FormState>();
+  var formKey = GlobalKey<FormState>();
 
   var email = '';
   late var phone = null;
@@ -53,7 +55,7 @@ class _MyloginState extends State<Mylogin> {
           ),
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
               const SizedBox(
@@ -61,7 +63,7 @@ class _MyloginState extends State<Mylogin> {
               ),
               const LogoCustom(),
               Form(
-                  key: _formKey,
+                  key: formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -81,6 +83,8 @@ class _MyloginState extends State<Mylogin> {
                                   borderRadius: BorderRadius.circular(55)),
                               onPressed: () {
                                 Get.to(MyHomePage());
+                                // navigateMultiBottom(
+                                //     context, BottomNavBarCustom());
                               },
                               child: Text(
                                 'Skip',
@@ -99,21 +103,50 @@ class _MyloginState extends State<Mylogin> {
                                   .apply(fontWeightDelta: 5)),
 
                       // margin: EdgeInsets.symmetric(vertical: 20),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text('Please Sign In to your account',
                           style: TextStylesCustom.textStyles_16),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
-                      TextFieldUnderline(
-                        padding: EdgeInsets.all(10),
-                        labelText: 'Phone Number or Email',
+                      TextFormFieldUnderline(
+                        padding: const EdgeInsets.all(10),
+
+                        validator: (value) {
+                          if (double.tryParse(value!) != null) {
+                            if (value.length != 10) {
+                              return 'Enter a Valid Mobile No. Or Email Address';
+                            } else {
+                              return null;
+                            }
+                          } else {
+                            if (!GetUtils.isEmail(value)) {
+                              return 'Enter a Valid Email Address Or Mobile No.';
+                            } else {
+                              return null;
+                            }
+                          }
+                        },
                         controller: controller.textController.value,
-                        hintText: 'John',
+                        // keyboardType: TextInputType.number,
+                        labelText: 'Phone Number or Email',
+                        // readOnly: true,
+                        // controller: controller.textController.value,
+                        colorHint:
+                            ColorStyle.secondryColorBlack.withOpacity(0.4),
+                        hintText: 'John@mail.com',
+
                         textStyle: TextStylesCustom.textStyles_20,
                       ),
+                      // TextFieldUnderline(
+                      //   padding: const EdgeInsets.all(10),
+                      //   labelText: 'Phone Number or Email',
+                      //   controller: controller.textController.value,
+                      //   hintText: 'John',
+                      //   textStyle: TextStylesCustom.textStyles_20,
+                      // ),
 
                       const SizedBox(
                         height: 25,
@@ -125,10 +158,12 @@ class _MyloginState extends State<Mylogin> {
                         text: 'Continue',
                         size: Size(MediaQuery.of(context).size.width, 50),
                         onTap: (() {
-                          controller.continueToPasswordOrOtp();
+                          if (formKey.currentState!.validate()) {
+                            controller.continueToPasswordOrOtp();
+                          }
                         }),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 42,
                       ),
 
@@ -139,14 +174,14 @@ class _MyloginState extends State<Mylogin> {
                             height: 1,
                             color: Colors.grey,
                           )),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Text(
                             'Or',
                             style: TextStylesCustom.textStyles_17,
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
@@ -156,7 +191,7 @@ class _MyloginState extends State<Mylogin> {
                           )),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 24,
                       ),
                       Row(

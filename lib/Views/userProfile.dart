@@ -39,7 +39,7 @@ class UserProfile extends StatelessWidget {
             // currentIndex.value = 0,
             icon: const Icon(
               Icons.arrow_back,
-              size: 34,
+              size: 24,
               color: Colors.white,
             ),
           ),

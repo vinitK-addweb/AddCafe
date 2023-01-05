@@ -31,15 +31,15 @@ class ForgetPassword extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
-              LogoCustom(),
+              const LogoCustom(),
               Form(
                   child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
 
@@ -55,7 +55,7 @@ class ForgetPassword extends StatelessWidget {
                               .apply(fontWeightDelta: 5)),
 
                   // margin: EdgeInsets.symmetric(vertical: 20),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text('Recover your password here!',
@@ -64,7 +64,7 @@ class ForgetPassword extends StatelessWidget {
                     height: 30,
                   ),
                   TextFieldUnderline(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     labelText: 'Phone Number or Email',
                     controller: controller.textController.value,
                     hintText: 'John',
@@ -81,10 +81,10 @@ class ForgetPassword extends StatelessWidget {
                     text: 'Continue',
                     size: Size(MediaQuery.of(context).size.width, 50),
                     onTap: (() {
-                      controller.continueToPasswordOrOtp();
+                      controller.forgetPassword();
                     }),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
 

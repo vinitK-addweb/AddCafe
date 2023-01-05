@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:addcafe/Models/Model_Cart.dart';
+import 'package:addcafe/Views/Auth/ForgetPassword.dart';
 import 'package:addcafe/Views/Auth/Signin.dart';
 import 'package:addcafe/Utils/API.dart';
 import '../Views/Auth/Password.dart';
@@ -25,7 +26,7 @@ class UserAuth extends GetxController {
   Rx<TextEditingController> email = TextEditingController().obs;
   Rx<TextEditingController> cPassword = TextEditingController().obs;
   Rx<TextEditingController> phone = TextEditingController().obs;
-
+  // Rx<TextEditingController> forgetPass = TextEditingController().obs;
   RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
 
   Map<String, dynamic> _UserLogin = {};
@@ -199,6 +200,20 @@ class UserAuth extends GetxController {
   // String get token {
   //   return _token;
   // }
+
+  Future forgetPassword() async {
+    final mapedData = {"email": textController.value.text};
+    final resposne = await API.instance.post(
+        endPoint: "accounts/send-password-reset-code/",
+        params: mapedData,
+        isHeader: false) as Map<String, dynamic>;
+    if (resposne['status'] == 202) {
+      '${resposne['message']}'.showSuccess();
+      Get.to(Mylogin());
+      textController.value.text = '';
+    }
+    // print("data ============>>>>>>>>>" + resposne.toString());
+  }
 
   get userProfile {
     return userprofile;
