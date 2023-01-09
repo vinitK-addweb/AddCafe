@@ -2,6 +2,7 @@ import 'package:addcafe/Views/Cart/cart.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import '../../GetxController/Cart_controller.dart';
+import '../../GetxController/Wishlist_controller.dart';
 import '../../Utils/Global.dart';
 import 'categoryDropdown.dart';
 // import 'package:provider/provider.dart';
@@ -37,7 +38,7 @@ class _CategoryItemsState extends State<CategoryItems> {
   //   controller.selectedCategory.value = widget.selectedMenu;
   //   // _navigatetohome();
   // }
-
+  // final myFavouritesApi = Get.put(MyFavouritesApi());
   @override
   Widget build(BuildContext context) {
     // controller.selectedCategory.value = widget.selectedMenu;

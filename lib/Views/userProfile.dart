@@ -414,7 +414,7 @@ class UserProfile extends StatelessWidget {
                                                   children: [
                                                     const Icon(
                                                       Icons.location_on,
-                                                      size: 21,
+                                                      size: 16,
                                                     ),
                                                     const SizedBox(
                                                       width: 10,
@@ -435,7 +435,7 @@ class UserProfile extends StatelessWidget {
                                                   children: [
                                                     const Icon(
                                                       Icons.call,
-                                                      size: 21,
+                                                      size: 16,
                                                     ),
                                                     const SizedBox(
                                                       width: 10,
@@ -453,14 +453,14 @@ class UserProfile extends StatelessWidget {
                                                   height: 10,
                                                 ),
                                                 Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
+                                                  // mainAxisAlignment:
+                                                  //     MainAxisAlignment.start,
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                      CrossAxisAlignment.center,
                                                   children: [
                                                     const Icon(
                                                       Icons.home,
-                                                      size: 21,
+                                                      size: 16,
                                                     ),
                                                     const SizedBox(
                                                       width: 10,

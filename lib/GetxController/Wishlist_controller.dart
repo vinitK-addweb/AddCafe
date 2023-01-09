@@ -23,7 +23,7 @@ class MyFavouritesApi extends GetxController {
   // }
 
   initMethod() {
-    Future.delayed(Duration(milliseconds: 1), () {
+    Future.delayed(Duration(milliseconds: 10), () {
       fetchMyFavourites();
     });
   }
@@ -31,26 +31,26 @@ class MyFavouritesApi extends GetxController {
   Future fetchMyFavourites() async {
     // SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    if (kTOKENSAVED != '') {
-      final wishlist = await API.instance
-          .get(endPoint: APIEndPoints.instance.KWishlist, isHeader: true);
+    // if (kTOKENSAVED != '') {
+    final wishlist = await API.instance
+        .get(endPoint: APIEndPoints.instance.KWishlist, isHeader: true);
 
-      myFavourites.value =
-          List<Wishlist>.from(wishlist.map((x) => Wishlist.fromJson(x)));
+    myFavourites.value =
+        List<Wishlist>.from(wishlist.map((x) => Wishlist.fromJson(x)));
 
-      Get.to(() => Wishlist());
-    } else {
-      Get.to(() => Mylogin());
-    }
+    //   Get.to(() => Wishlist());
+    // } else {
+    //   Get.to(() => Mylogin());
+    // }
   }
 
   Future deleteMyFavourites(id) async {
     if (kTOKENSAVED != null) {
-      await API.instance.delete(
-          endPoint: '${APIEndPoints.instance.KWishlist}$id/', isHeader: true);
+      await API.instance
+          .delete(endPoint: 'catalogue/wishlist/$id/', isHeader: true);
       fetchMyFavourites();
       isInMyFavorites(id);
-
+      // update();
       print("runninf");
     }
   }
@@ -72,7 +72,7 @@ class MyFavouritesApi extends GetxController {
     if (response.statusCode == 200) {
       print('addToMyFavorites called');
       fetchMyFavourites();
-      isInMyFavorites(productData['id']);
+      // isInMyFavorites(productData['id']);
       // update();
     } else {
       print('addToMyFavorites not called');
@@ -80,6 +80,7 @@ class MyFavouritesApi extends GetxController {
   }
 
   List isInMyFavorites(productId) {
+    print("the is data is here ==============>>>>>>>>>>>>>>>> $productId");
     var a =
         myFavourites.where((element) => element.product == productId).toList();
 

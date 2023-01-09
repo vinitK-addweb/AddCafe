@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../GetxController/Cart_controller.dart';
 
 import '../GetxController/UserProfile_controller.dart';
+import '../GetxController/Wishlist_controller.dart';
 import '../Styles/TextStyles.dart';
 import 'Cart/cart.dart';
 import 'HomeBanner.dart';
@@ -25,6 +26,7 @@ class MyHomePage extends StatelessWidget {
   final userAuth = Get.put(UserAuth());
   final cart = Get.put(CartController());
   final userProfile = Get.put(UserProfileController());
+  final myFavouritesApi = Get.put(MyFavouritesApi());
   // final userProfile = Get.put(UserProfileController());
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class MyHomePage extends StatelessWidget {
         cart.initMethod();
         userAuth.initCustom();
         controller.initMethodGetX();
+        myFavouritesApi.initMethod();
         userProfile.initprofile();
       },
       builder: (controller) {

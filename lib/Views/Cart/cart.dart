@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:addcafe/BottomNavBar.dart';
 import 'package:addcafe/Styles/TextStyles.dart';
 import 'package:addcafe/Views/AddNewAddress.dart';
@@ -6,6 +8,7 @@ import 'package:get/get.dart';
 
 import '../../GetxController/Coupon_controller.dart';
 import '../../GetxController/UserProfile_controller.dart';
+import '../Offers.dart';
 import './emptyCart.dart';
 import '../../Styles/ColorStyle.dart';
 import '../../GetxController/Cart_controller.dart';
@@ -97,7 +100,7 @@ class _CartState extends State<Cart> {
                   // currentIndex.value = 0,
                   icon: const Icon(
                     Icons.arrow_back,
-                    size: 34,
+                    size: 24,
                     color: Colors.white,
                   ),
                 ),
@@ -123,7 +126,7 @@ class _CartState extends State<Cart> {
                       ),
                     )
                   : Container(
-                      height: 180,
+                      height: 150,
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       margin: const EdgeInsets.symmetric(horizontal: 15),
                       child: Column(
@@ -137,13 +140,6 @@ class _CartState extends State<Cart> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              // Padding(
-                              //   padding: EdgeInsets.all(5),
-                              //   child:
-                              // const SizedBox(
-                              //   width: 10,
-                              // ),
-
                               Row(children: [
                                 Icon(
                                   Icons.location_on,
@@ -448,78 +444,112 @@ class _CartState extends State<Cart> {
                             // Container(
                             //   margin: const EdgeInsets.symmetric(horizontal: 20),
                             //   child:
+                            InkWell(
+                              onTap: (() => Get.to(() => Offers())),
+                              child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 8),
+                                  decoration: const BoxDecoration(
+                                      // border: Border()
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10))),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          ImageIcon(
+                                            const AssetImage(
+                                                'assets/images/Coupon.png'),
+                                            size: 25,
+                                            color: ColorStyle.secondryColorRed,
+                                          ),
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            'Use Coupon',
+                                            style: TextStylesCustom
+                                                .textStyles_20
+                                                .apply(fontWeightDelta: 3),
+                                          ),
+                                        ],
+                                      ),
 
-                            Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Text("Apply Coupon code",
-                                  style: TextStylesCustom.textStyles_16),
+                                      const Icon(
+                                        Icons.arrow_forward_ios,
+                                        size: 20,
+                                      )
+                                      // )
+                                    ],
+                                  )),
                             ),
-                            Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              decoration: BoxDecoration(
-                                  border: Border(
-                                      bottom: BorderSide(
-                                color: ColorStyle.secondryColorBlack
-                                    .withOpacity(0.7),
-                                width: 1,
-                              ))),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: TextField(
-                                        controller: couponApply.coupon.value,
-                                        decoration: InputDecoration(
-                                          hintText: "Coupon...", //hint text
-                                          prefixIcon: Image.asset(
-                                            'assets/images/Coupon.png',
-                                            height: 10,
-                                            width: 50,
-                                          ), //prefix iocn
-                                          hintStyle: TextStylesCustom
-                                              .textStyles_20
-                                              .apply(
-                                                  color: ColorStyle
-                                                      .secondryColorBlack
-                                                      .withOpacity(0.5)),
-                                        )),
-                                  ),
-                                  FittedBox(
-                                    child: ElevatedButtonCustom(
-                                      BgColor: ColorStyle.primaryColorRed,
-                                      radiusBorder: 5,
-                                      size: const Size(90, 40),
-                                      text: 'Apply',
-                                      onTap: () {
-                                        controller.taxShippingCharges();
-                                        couponApply.applyCoupon();
-                                        FocusScopeNode currentFocus =
-                                            FocusScope.of(context);
-                                        if (!currentFocus.hasPrimaryFocus &&
-                                            currentFocus.focusedChild != null) {
-                                          currentFocus.focusedChild?.unfocus();
-                                        }
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // Container(
+                            //   margin:
+                            //       const EdgeInsets.symmetric(horizontal: 10),
+                            //   decoration: BoxDecoration(
+                            //       border: Border(
+                            //           bottom: BorderSide(
+                            //     color: ColorStyle.secondryColorBlack
+                            //         .withOpacity(0.7),
+                            //     width: 1,
+                            //   ))),
+                            //   child: Row(
+                            //     children: [
+                            //       Expanded(
+                            //         child: TextField(
+                            //             controller: couponApply.coupon.value,
+                            //             decoration: InputDecoration(
+                            //               hintText: "Coupon...", //hint text
+                            //               prefixIcon: Image.asset(
+                            //                 'assets/images/Coupon.png',
+                            //                 height: 10,
+                            //                 width: 50,
+                            //               ), //prefix iocn
+                            //               hintStyle: TextStylesCustom
+                            //                   .textStyles_20
+                            //                   .apply(
+                            //                       color: ColorStyle
+                            //                           .secondryColorBlack
+                            //                           .withOpacity(0.5)),
+                            //             )),
+                            //       ),
+                            //       FittedBox(
+                            //         child: ElevatedButtonCustom(
+                            //           BgColor: ColorStyle.primaryColorRed,
+                            //           radiusBorder: 5,
+                            //           size: const Size(90, 40),
+                            //           text: 'Apply',
+                            //           onTap: () {
+                            //             controller.taxShippingCharges();
+                            //             couponApply.applyCoupon();
+                            //             FocusScopeNode currentFocus =
+                            //                 FocusScope.of(context);
+                            //             if (!currentFocus.hasPrimaryFocus &&
+                            //                 currentFocus.focusedChild != null) {
+                            //               currentFocus.focusedChild?.unfocus();
+                            //             }
+                            //           },
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                             // const SizedBox(
                             //   height: 5,
                             // ),
                             // ),
-                            Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Text(
-                                couponApply.response['message'] != null
-                                    ? couponApply.response['message'].toString()
-                                    : '',
-                                // couponApply.message.value,
-                                style: TextStylesCustom.textStyles_13
-                                    .apply(color: ColorStyle.primaryColorRed),
-                              ),
-                            ),
+                            // Text(
+                            //   couponApply.response['message'] != null
+                            //       ? couponApply.response['message'].toString()
+                            //       : '',
+                            //   // couponApply.message.value,
+                            //   style: TextStylesCustom.textStyles_13
+                            //       .apply(color: ColorStyle.primaryColorRed),
+                            // ),
+
                             const SizedBox(
                               height: 10,
                             ),

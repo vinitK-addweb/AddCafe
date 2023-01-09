@@ -14,7 +14,11 @@ class BottamNavigationBar extends StatelessWidget {
 
   double iconSize = 24;
 
-  final arrBody = [MyHomePage(), Offers(), UserProfile(), Myfavourits()];
+  final arrBody = [
+    MyHomePage(),
+    // Offers(),
+    UserProfile(), Myfavourits()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -62,10 +66,10 @@ class BottamNavigationBar extends StatelessWidget {
                           icon: Icon(Icons.home),
                           label: 'Home',
                         ),
-                        BottomNavigationBarItem(
-                          icon: Icon(Icons.wallet_giftcard_outlined),
-                          label: 'Offers',
-                        ),
+                        // BottomNavigationBarItem(
+                        //   icon: Icon(Icons.wallet_giftcard_outlined),
+                        //   label: 'Offers',
+                        // ),
                         BottomNavigationBarItem(
                           icon: Icon(Icons.person_outline),
                           label: 'Profile',
