@@ -90,7 +90,7 @@ class UserProfileController extends GetxController {
       email.value.text = userprofile['email'];
       mobile.value.text = userprofile['mobile_number'].toString();
 
-      print(email);
+      print(mobile);
       //  RxMap<dynamic, dynamic>.from(
       //     jsonDecode(prefs.getString('userData').toString()));
       getAddress();

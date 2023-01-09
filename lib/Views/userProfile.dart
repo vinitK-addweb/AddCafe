@@ -300,6 +300,7 @@ class UserProfile extends StatelessWidget {
                                       ),
                                       TextFieldUnderline(
                                         keyboardType: TextInputType.number,
+                                        controller: controller.mobile.value,
                                         padding: const EdgeInsets.all(10),
                                         labelText: 'Your Mobile No.',
                                         textStyle:
