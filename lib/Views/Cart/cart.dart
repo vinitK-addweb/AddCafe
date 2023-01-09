@@ -32,8 +32,11 @@ class _CartState extends State<Cart> {
 
   Razorpay? _razorpay;
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    // print("Payment Success" + response.toString());
     Fluttertoast.showToast(
-        msg: "Payment Success : ${response.paymentId}", timeInSecForIosWeb: 4);
+        msg:
+            "Payment Success : ${response.paymentId} order id ->${response.orderId} signature==> ${response.signature} ",
+        timeInSecForIosWeb: 4000);
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -60,7 +63,7 @@ class _CartState extends State<Cart> {
   var total;
   void makePayment() async {
     var options = {
-      'key': 'rzp_test_u0UCMR2fWYdz4P',
+      'key': 'rzp_test_LuYttoJAWCJq5K',
       'amount': total * 100,
       'name': 'test',
       'description': 'testing purpose',

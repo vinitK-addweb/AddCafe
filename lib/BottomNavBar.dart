@@ -7,6 +7,7 @@ import 'GetxController/MyHomePage_controller.dart';
 import './Styles/TextStyles.dart';
 import '../Views/Offers.dart';
 import '../Views/Cart/cart.dart';
+import 'Views/OrderHistory.dart';
 import 'Views/Wishlist.dart';
 
 class BottamNavigationBar extends StatelessWidget {
@@ -17,6 +18,7 @@ class BottamNavigationBar extends StatelessWidget {
   final arrBody = [
     MyHomePage(),
     // Offers(),
+    OrderHistory(),
     UserProfile(), Myfavourits()
   ];
 
@@ -66,10 +68,10 @@ class BottamNavigationBar extends StatelessWidget {
                           icon: Icon(Icons.home),
                           label: 'Home',
                         ),
-                        // BottomNavigationBarItem(
-                        //   icon: Icon(Icons.wallet_giftcard_outlined),
-                        //   label: 'Offers',
-                        // ),
+                        BottomNavigationBarItem(
+                          icon: Icon(Icons.history),
+                          label: 'History',
+                        ),
                         BottomNavigationBarItem(
                           icon: Icon(Icons.person_outline),
                           label: 'Profile',

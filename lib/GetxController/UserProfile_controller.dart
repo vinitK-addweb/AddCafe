@@ -29,11 +29,17 @@ class UserProfileController extends GetxController {
   Rx<TextEditingController> state = TextEditingController().obs;
   Rx<TextEditingController> pinCode = TextEditingController().obs;
   Rx<TextEditingController> addressType = TextEditingController().obs;
+
+  Rx<TextEditingController> fname = TextEditingController().obs;
+  Rx<TextEditingController> lname = TextEditingController().obs;
+  Rx<TextEditingController> email = TextEditingController().obs;
+  Rx<TextEditingController> mobile = TextEditingController().obs;
+
   RxInt address = 0.obs;
   RxInt AddUpdateid = 0.obs;
   RxBool showPassField = false.obs;
   RxBool showAddress = false.obs;
-
+  RxBool showEditProfile = false.obs;
   Map<String, dynamic> _changePass = {};
 
   RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
@@ -79,6 +85,12 @@ class UserProfileController extends GetxController {
       userprofile.value = await API.instance
           .get(endPoint: 'accounts/customer-profile/', isHeader: true);
       print("runing=========>>>>>>>>>>>>>>>>>> ${userprofile.value}");
+      fname.value.text = userprofile['first_name'];
+      lname.value.text = userprofile['last_name'];
+      email.value.text = userprofile['email'];
+      mobile.value.text = userprofile['mobile_number'].toString();
+
+      print(email);
       //  RxMap<dynamic, dynamic>.from(
       //     jsonDecode(prefs.getString('userData').toString()));
       getAddress();
@@ -94,7 +106,30 @@ class UserProfileController extends GetxController {
     addAddress.value = List<UserAddressModel>.from(
         response['payload'].map((x) => UserAddressModel.fromJson(x)));
   }
+
   // --------------------------- Add New Address ------------------------->
+  editProfile() async {
+    final data = {
+      "email": email.value.text,
+      "first_name": fname.value.text,
+      "last_name": lname.value.text,
+      "mobile_number": mobile.value.text,
+    };
+
+    debugPrint(data.toString());
+    var response = API.instance.post(
+        endPoint: 'accounts/customer-profile/', params: data, isHeader: true);
+
+    // var data = response;
+    // Future.delayed(Duration(milliseconds: 10), () async {
+    getUserDetails();
+    update();
+
+    // });
+    // await Get.to(UserProfile());
+    // Get.back();
+  }
+  // ------------------ Edit Profile ------------------------------------>
 
   addNewAddress() async {
     final addressData = {

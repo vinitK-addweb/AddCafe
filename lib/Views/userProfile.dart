@@ -185,34 +185,152 @@ class UserProfile extends StatelessWidget {
                                   ),
                                   // ),
 
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                          userAuth.userprofile.isEmpty
-                                              ? '${userAuth.userprofile}'
-                                              : userAuth.userprofile['email'] ??
-                                                  '',
-                                          style: TextStylesCustom.textStyles_22
-                                              .apply(
-                                                  fontWeightDelta: 2,
-                                                  color: ColorStyle
-                                                      .primaryColorGreen)),
-                                      userAuth.userprofile['is_email_verify']
-                                          ? Icon(
-                                              Icons.verified,
-                                              color:
-                                                  ColorStyle.primaryColorGreen,
-                                            )
-                                          : const Icon(
-                                              Icons.verified,
-                                              color: Colors.grey,
-                                            )
-                                    ],
-                                  ),
+                                  // Row(
+                                  //   mainAxisAlignment: MainAxisAlignment.center,
+                                  //   children: [
+                                  //     Text(
+                                  //         userAuth.userprofile.isEmpty
+                                  //             ? '${userAuth.userprofile}'
+                                  //             : userAuth.userprofile['email'] ??
+                                  //                 '',
+                                  //         style: TextStylesCustom.textStyles_22
+                                  //             .apply(
+                                  //                 fontWeightDelta: 2,
+                                  //                 color: ColorStyle
+                                  //                     .primaryColorGreen)),
+                                  //     userAuth.userprofile['is_email_verify']
+                                  //         ? Icon(
+                                  //             Icons.verified,
+                                  //             color:
+                                  //                 ColorStyle.primaryColorGreen,
+                                  //           )
+                                  //         : const Icon(
+                                  //             Icons.verified,
+                                  //             color: Colors.grey,
+                                  //           )
+                                  //   ],
+                                  // ),
                                 ],
                               ),
                             ),
+
+                            // ------------------------ Edit Profile------------------------------>
+                            const SizedBox(
+                              height: 20,
+                            ),
+
+                            InkWell(
+                              onTap: () {
+                                controller.showEditProfile.value =
+                                    !controller.showEditProfile.value;
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                padding: const EdgeInsets.only(bottom: 5),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            width: 3,
+                                            color:
+                                                ColorStyle.primaryColorRed))),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Edit Profile',
+                                      style: TextStylesCustom.textStyles_20
+                                          .apply(fontWeightDelta: 3),
+                                    ),
+                                    Icon(controller.showEditProfile.value
+                                        ? Icons.keyboard_arrow_up
+                                        : Icons.keyboard_arrow_down)
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            controller.showEditProfile.value
+                                ?
+                                // Column(
+                                //     crossAxisAlignment:
+                                //         CrossAxisAlignment.start,
+                                //     children: [
+                                Form(
+                                    // key: formKey,
+                                    child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      TextFieldUnderline(
+                                        controller: controller.fname.value,
+                                        padding: const EdgeInsets.all(10),
+                                        labelText: 'Your Name',
+                                        // controller: controller.textController.value,
+
+                                        textStyle:
+                                            TextStylesCustom.textStyles_16,
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      TextFieldUnderline(
+                                        controller: controller.lname.value,
+                                        padding: const EdgeInsets.all(10),
+                                        labelText: 'Your Last Name',
+                                        textStyle:
+                                            TextStylesCustom.textStyles_16,
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      TextFieldUnderline(
+                                        controller: controller.email.value,
+                                        padding: const EdgeInsets.all(10),
+                                        labelText: 'Your Email',
+                                        textStyle:
+                                            TextStylesCustom.textStyles_16,
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      TextFieldUnderline(
+                                        controller: controller.mobile.value,
+                                        padding: const EdgeInsets.all(10),
+                                        labelText: 'Your Mobile No.',
+                                        textStyle:
+                                            TextStylesCustom.textStyles_16,
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      ElevatedButtonCustom(
+                                        BgColor: ColorStyle.primaryColorRed,
+                                        text: 'Edit Profile',
+                                        radiusBorder: 5,
+                                        size: Size(
+                                            MediaQuery.of(context).size.width /
+                                                2.2,
+                                            40),
+                                        onTap: (() {
+                                          controller.editProfile();
+                                        }),
+                                      )
+                                      //   ],
+                                      // )
+                                    ],
+                                  ))
+                                : const SizedBox(
+                                    height: 0,
+                                  ),
+
 // ------------------------ Changed password ------------------------------>
                             const SizedBox(
                               height: 20,
@@ -224,6 +342,7 @@ class UserProfile extends StatelessWidget {
                                     !controller.showPassField.value;
                               },
                               child: Container(
+                                width: MediaQuery.of(context).size.width,
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 padding: const EdgeInsets.only(bottom: 5),
@@ -233,10 +352,19 @@ class UserProfile extends StatelessWidget {
                                             width: 3,
                                             color:
                                                 ColorStyle.primaryColorRed))),
-                                child: Text(
-                                  'Change Password',
-                                  style: TextStylesCustom.textStyles_20
-                                      .apply(fontWeightDelta: 3),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Change Password',
+                                      style: TextStylesCustom.textStyles_20
+                                          .apply(fontWeightDelta: 3),
+                                    ),
+                                    Icon(controller.showPassField.value
+                                        ? Icons.keyboard_arrow_up
+                                        : Icons.keyboard_arrow_down)
+                                  ],
                                 ),
                               ),
                             ),
@@ -372,6 +500,7 @@ class UserProfile extends StatelessWidget {
                                     !controller.showAddress.value;
                               },
                               child: Container(
+                                width: MediaQuery.of(context).size.width,
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 padding: const EdgeInsets.only(bottom: 5),
@@ -381,10 +510,19 @@ class UserProfile extends StatelessWidget {
                                             width: 3,
                                             color:
                                                 ColorStyle.primaryColorRed))),
-                                child: Text(
-                                  'Address',
-                                  style: TextStylesCustom.textStyles_20
-                                      .apply(fontWeightDelta: 3),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Address',
+                                      style: TextStylesCustom.textStyles_20
+                                          .apply(fontWeightDelta: 3),
+                                    ),
+                                    Icon(controller.showAddress.value
+                                        ? Icons.keyboard_arrow_up
+                                        : Icons.keyboard_arrow_down)
+                                  ],
                                 ),
                               ),
                             ),
