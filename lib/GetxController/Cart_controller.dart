@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'dart:convert';
@@ -5,20 +6,14 @@ import '../Models/Model_Cart.dart';
 import '../Utils/API.dart';
 import '../Utils/Constant.dart';
 import '../Utils/Global.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CartController extends GetxController {
   Map cart = {};
   Map tax = {};
   RxList<CartModel> cartData = <CartModel>[].obs;
-  // List data = [];
-  // getter
-  // Map get cart {
-  //   return _cart;
-  // }
-
-  // List get cartData {
-  //   return _cartData;
-  // }
+  Razorpay? _razorpay;
 
   //action
   initMethod() {
@@ -31,20 +26,17 @@ class CartController extends GetxController {
   //get api call for cartproduct
   Future fetchCart() async {
     cart = await API.instance.get(endPoint: 'cart/cart-items/', isHeader: true);
-    // data = cart as List;
 
     cartData.value =
         List<CartModel>.from(cart['payload'].map((x) => CartModel.fromJson(x)));
-    // update();
-    // if (cart['message']) {
-    //   ' ${cart['message']}'.showSuccess();
-    // }
   }
 
   Future taxShippingCharges() async {
     tax = await API.instance
         .get(endPoint: 'order/tax-shipping-charge/', isHeader: true);
   }
+
+  // -------------------- Add to cart functionality ------------------------>>
 
   Future addToCart(payload) async {
     print('payload datqa >>>>>>>>>>>' + payload.toString());
@@ -93,4 +85,7 @@ class CartController extends GetxController {
     print("dasdadas" + b.toString());
     return b;
   }
+
+  // -------------------- create order for user ---------------------->
+
 }

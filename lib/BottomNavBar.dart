@@ -3,6 +3,7 @@ import 'package:addcafe/Views/MyHomePage.dart';
 import 'package:addcafe/Views/userProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'GetxController/Cart_controller.dart';
 import 'GetxController/MyHomePage_controller.dart';
 import './Styles/TextStyles.dart';
 import '../Views/Offers.dart';
@@ -21,7 +22,7 @@ class BottamNavigationBar extends StatelessWidget {
     OrderHistory(),
     UserProfile(), Myfavourits()
   ];
-
+  final cart = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -41,6 +42,7 @@ class BottamNavigationBar extends StatelessWidget {
       },
       child: GetBuilder(
           init: HomeBannerController(),
+          initState: cart.initMethod(),
           builder: (_) {
             return Obx(() => WillPopScope(
                   onWillPop: () async {

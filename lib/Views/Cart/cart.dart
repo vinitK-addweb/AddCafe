@@ -1,20 +1,24 @@
+import 'dart:convert';
 import 'dart:ui';
-
+import 'package:http/http.dart' as http;
 import 'package:addcafe/BottomNavBar.dart';
 import 'package:addcafe/Styles/TextStyles.dart';
-import 'package:addcafe/Views/AddNewAddress.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../../Utils/Constant.dart';
 import '../../GetxController/Coupon_controller.dart';
 import '../../GetxController/UserProfile_controller.dart';
+import '../../Utils/API.dart';
+import '../../Utils/Global.dart';
 import '../Offers.dart';
+import '../OrderDetails.dart';
 import './emptyCart.dart';
 import '../../Styles/ColorStyle.dart';
 import '../../GetxController/Cart_controller.dart';
 import '../../GetxController/MyHomePage_controller.dart';
 import '../../Components/AppBarStyle.dart';
-import '../../Utils/Constant.dart';
+
 import '../../Components/ElevatedButtonCustom.dart';
 import 'address.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -29,14 +33,30 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
+  final controller = Get.put(CartController());
   Razorpay? _razorpay;
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    // print("Payment Success" + response.toString());
+    print(
+        "Payment Success : ${response.paymentId} order id ->${response.orderId} signature==> ${response.signature} ");
     Fluttertoast.showToast(
         msg:
             "Payment Success : ${response.paymentId} order id ->${response.orderId} signature==> ${response.signature} ",
-        timeInSecForIosWeb: 4000);
+        timeInSecForIosWeb: 4);
+
+    var res = API.instance
+        .post(
+            endPoint: 'order/handle-payment/',
+            params: {
+              "razorpay_payment_id": response.paymentId.toString(),
+              "razorpay_order_id": response.orderId.toString(),
+              "razorpay_signature": response.signature.toString()
+            },
+            isHeader: true)
+        .then((value) => Get.to(OrderDetails()));
+
+    // controller.fetchCart();
+
+    print(res);
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -61,15 +81,72 @@ class _CartState extends State<Cart> {
   }
 
   var total;
+  Map userOrder = {};
+  Map orderpayment = {};
+
+  submitRequest(addressid, double price) async {
+    final loginUrl = '${kBaseUrl}order/order-create/';
+    final param = {
+      "address": addressid,
+      "order_notes": "(This is Optional Field)",
+      "discount": null,
+      "discount_amount": 0,
+      "rate_after_discount": price,
+      "payment_mode": "cash"
+    };
+
+    final url = Uri.parse(loginUrl);
+
+    print(param);
+
+    var paramJSON = jsonEncode(param);
+    var header = {
+      'Content-Type': 'application/json',
+      "Authorization": 'Bearer $kTOKENSAVED'
+    };
+    print(paramJSON);
+
+    try {
+      showLoaderGetX();
+
+      var response = await http.post(url, headers: header, body: paramJSON);
+      print(header);
+      print(response.body);
+      hideLoader();
+      if (response.statusCode == 200) {
+        // var jsonData = json.decode(response.body);
+        userOrder = json.decode(response.body);
+        orderPayment();
+      } else {
+        print(response.body);
+        'Somthing went wrong'.showError();
+      }
+    } catch (error) {
+      debugPrint('Error is:-' + error.toString());
+      hideLoader();
+      return null;
+    }
+  }
+
+  orderPayment() async {
+    orderpayment = await API.instance.post(
+        endPoint: 'order/payment/',
+        params: {"order_id": userOrder['payload']['id'].toString()},
+        isHeader: true) as Map;
+    makePayment();
+  }
+
   void makePayment() async {
+    print("object");
     var options = {
-      'key': 'rzp_test_LuYttoJAWCJq5K',
-      'amount': total * 100,
-      'name': 'test',
+      'key': orderpayment['payload']['razor_key'].toString(),
+      'amount': orderpayment['payload']['amount'],
+      'name': orderpayment['payload']['name'].toString(),
+      "order_id": orderpayment['payload']['id'].toString(),
       'description': 'testing purpose',
       'prefill': {
-        'contact': '+91-9999988888',
-        'email': 'test@gmail.com',
+        'contact': '+91-${orderpayment['payload']['email']}',
+        'email': orderpayment['payload']['email'].toString(),
       },
     };
     try {
@@ -80,7 +157,6 @@ class _CartState extends State<Cart> {
   }
 
   Widget build(BuildContext context) {
-    final controller = Get.put(CartController());
     final homPageController = Get.put(HomeBannerController());
     final userProfile = Get.put(UserProfileController());
     final couponApply = Get.put(CouponController());
@@ -216,7 +292,18 @@ class _CartState extends State<Cart> {
                             onTap: () {
                               total =
                                   controller.cart['total_rate'] + 20 + 27.00;
-                              makePayment();
+                              // submitRequest();
+                              submitRequest(
+                                  userProfile
+                                      .addAddress[userProfile.address.value].id,
+                                  total);
+                              // createOrder(
+                              //     userProfile
+                              //         .addAddress[userProfile.address.value].id,
+                              //     total
+
+                              //     );
+                              // makePayment();
                               // controller.cartData.isNotEmpty
                               //     ?
                               // Get.to(AddNewAddress());

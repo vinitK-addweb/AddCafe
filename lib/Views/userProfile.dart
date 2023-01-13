@@ -87,24 +87,17 @@ class UserProfile extends StatelessWidget {
                                                 BorderRadius.circular(60),
                                             child: CircleAvatar(
                                               radius: 65,
-                                              child: controller.image.value.path
-                                                      .isNotEmpty
-                                                  ? Image.file(
-                                                      controller.image.value,
-                                                      fit: BoxFit.cover,
-                                                      height: 65 * 2,
-                                                      width: 65 * 2,
-                                                    )
-                                                  : Image.network(
-                                                      userAuth.userprofile
-                                                              .isEmpty
-                                                          ? 'https://mir-s3-cdn-cf.behance.net/user/276/462829507061295.5f9717443f152.png'
-                                                          : userAuth.userprofile[
-                                                                      'profile_picture'] ==
-                                                                  null
-                                                              ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi6mIqR-61xHjJUEMUfzQvP_ZeVtRZ-Hh_B9OQIh5hLjVH1ZO5U23ZehKJMmIsZkMF5Ew&usqp=CAU'
-                                                              : '${kImgUrl}${userAuth.userprofile['profile_picture']}',
-                                                    ),
+                                              child: Image.network(
+                                                fit: BoxFit.fill,
+                                                controller.image.value.path
+                                                        .isEmpty
+                                                    ? 'https://mir-s3-cdn-cf.behance.net/user/276/462829507061295.5f9717443f152.png'
+                                                    : userAuth.userprofile[
+                                                                'profile_picture'] ==
+                                                            null
+                                                        ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi6mIqR-61xHjJUEMUfzQvP_ZeVtRZ-Hh_B9OQIh5hLjVH1ZO5U23ZehKJMmIsZkMF5Ew&usqp=CAU'
+                                                        : '${kImgUrl}${userAuth.userprofile['profile_picture']}',
+                                              ),
                                             )),
                                       ),
                                       Positioned(

@@ -19,6 +19,8 @@ class Offers extends StatelessWidget {
   final homPageController = Get.put(HomeBannerController());
   final couponApply = Get.put(CouponController());
   final cart = Get.put(CartController());
+  final coupon = Get.put(CouponController());
+  var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     // final homeBanner = Get.put(HomeBannerController());
@@ -29,7 +31,7 @@ class Offers extends StatelessWidget {
     return GetBuilder(
         init: OffersController(),
         initState: controller.initCustom(),
-        builder: (controller) {
+        builder: (_) {
           return Obx(() {
             return Scaffold(
               appBar: AppBarStyle(
@@ -64,19 +66,23 @@ class Offers extends StatelessWidget {
                     child: Row(
                       children: [
                         Expanded(
-                          child: TextField(
-                              controller: couponApply.coupon.value,
-                              decoration: InputDecoration(
-                                hintText: "Coupon...", //hint text
-                                prefixIcon: Image.asset(
-                                  'assets/images/Coupon.png',
-                                  height: 10,
-                                  width: 50,
-                                ), //prefix iocn
-                                hintStyle: TextStylesCustom.textStyles_20.apply(
-                                    color: ColorStyle.secondryColorBlack
-                                        .withOpacity(0.5)),
-                              )),
+                          child: Form(
+                            key: formKey,
+                            child: TextField(
+                                controller: couponApply.coupon.value,
+                                decoration: InputDecoration(
+                                  hintText: "Coupon...", //hint text
+                                  prefixIcon: Image.asset(
+                                    'assets/images/Coupon.png',
+                                    height: 10,
+                                    width: 50,
+                                  ), //prefix iocn
+                                  hintStyle: TextStylesCustom.textStyles_20
+                                      .apply(
+                                          color: ColorStyle.secondryColorBlack
+                                              .withOpacity(0.5)),
+                                )),
+                          ),
                         ),
                         FittedBox(
                             child: TextButton(
@@ -86,7 +92,7 @@ class Offers extends StatelessWidget {
                           ),
                           onPressed: () {
                             cart.taxShippingCharges();
-                            couponApply.applyCoupon();
+                            couponApply.applyCoupon(coupon.coupon.value.text);
                             // FocusScopeNode currentFocus =
                             //     FocusScope.of(context);
                             // if (!currentFocus.hasPrimaryFocus &&
@@ -130,139 +136,230 @@ class Offers extends StatelessWidget {
                           .apply(color: ColorStyle.primaryColorRed),
                     ),
                   ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      'Available Coupons',
+                      style: TextStylesCustom.textStyles_22
+                          .apply(fontWeightDelta: 3),
+                    ),
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
-                  ListView.builder(
-                      itemCount: 5,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Text("data");
-                      }),
+                  Expanded(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: ListView.builder(
+                          itemCount: controller.offers.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                                // height: 100,
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 8),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 8),
+                                decoration: BoxDecoration(
+                                  color: ColorStyle.white.withOpacity(0.8),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(20)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 5, horizontal: 8),
+                                            decoration: BoxDecoration(
+                                              color: ColorStyle.white
+                                                  .withOpacity(0.8),
+                                              border: Border.all(
+                                                  width: 0.5,
+                                                  color: ColorStyle
+                                                      .secondryColorBlack
+                                                      .withOpacity(0.3),
+                                                  style: BorderStyle.solid),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(8)),
+                                            ),
+                                            child: Text(
+                                                controller.offers[index].code
+                                                    .toString(),
+                                                style: TextStylesCustom
+                                                    .textStyles_14)),
+                                        Text(
+                                          "View Details",
+                                          style: TextStylesCustom.textStyles_14,
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        FittedBox(
+                                          child: SizedBox(
+                                            width: 240,
+                                            child: Text(
+                                              controller
+                                                  .offers[index].description
+                                                  .toString(),
+                                              style: TextStylesCustom
+                                                  .textStyles_12,
+                                            ),
+                                          ),
+                                        ),
+                                        ElevatedButtonCustom(
+                                          onTap: () {
+                                            cart.taxShippingCharges();
+                                            couponApply.applyCoupon(controller
+                                                .offers[index].code
+                                                .toString());
+                                          },
+                                          text: 'Apply',
+                                          size: const Size(78, 20),
+                                          radiusBorder: 10,
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ));
+                          }),
+                    ),
+                  ),
+
+                  //  controller.offers.isNotEmpty
+                  //     ? Column(
+                  //         // mainAxisAlignment: MainAxisAlignment.start,
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //             const SizedBox(
+                  //               height: 20,
+                  //             ),
+                  //             CarouselSlider(
+                  //               options: CarouselOptions(
+                  //                 height: 130.0, autoPlay: false,
+                  //                 // enlargeCenterPage: true,
+                  //               ),
+                  //               items: controller.offers.map((i) {
+                  //                 var index = controller.offers.indexOf(i);
+                  //                 return Builder(
+                  //                   builder: (BuildContext context) {
+                  //                     return InkWell(
+                  //                       onTap: () {
+                  //                         controller.bannerIdx(index);
+                  //                       },
+                  //                       child: Container(
+                  //                         decoration: BoxDecoration(
+                  //                             image: DecorationImage(
+                  //                                 image:
+                  //                                     NetworkImage(i.couponBanner!),
+                  //                                 fit: BoxFit.fill),
+                  //                             borderRadius:
+                  //                                 BorderRadius.circular(10)),
+                  //                         width: MediaQuery.of(context).size.width,
+                  //                         margin: const EdgeInsets.symmetric(
+                  //                             horizontal: 5.0),
+                  //                       ),
+                  //                     );
+                  //                   },
+                  //                 );
+                  //               }).toList(),
+                  //             ),
+
+                  //             // HomeBanner(
+                  //             //   bannerData: homeBanner.bannerData.value,
+                  //             //   autoplay: false,
+                  //             // ),
+
+                  //             const SizedBox(
+                  //               height: 20,
+                  //             ),
+                  //             Container(
+                  //               margin: const EdgeInsets.symmetric(horizontal: 20),
+                  //               child: Column(
+                  //                   crossAxisAlignment: CrossAxisAlignment.start,
+                  //                   children: [
+                  //                     Text(
+                  //                       'Chinese BOGO Week is here.',
+                  //                       style: TextStylesCustom.textStyles_18
+                  //                           .apply(fontWeightDelta: 3),
+                  //                     ),
+                  //                     const SizedBox(
+                  //                       height: 20,
+                  //                     ),
+                  //                     Text(
+                  //                       'Terms and Conditions',
+                  //                       style: TextStylesCustom.textStyles_20.apply(
+                  //                           color: ColorStyle.secondryColorRed),
+                  //                     ),
+                  //                     Text(
+                  //                       controller.offers[controller.idx.value]
+                  //                           .termsAndCondition
+                  //                           .toString(),
+                  //                       // 'To redeem the coupon code, the claimant types the coupon code into the promotional box in the booking field of the Quovai\'s websites and the relevant discount will be automatically deducted from the final price of the qualifying purchase. If the claimant fails to enter the coupon code at the time of purchase as specified, the purchase will not be eligible for the discount. Discounts may not be claimed after confirmation of a claimant\'s purchase',
+                  //                       style: TextStylesCustom.textStyles_16,
+                  //                     ),
+                  //                     const SizedBox(
+                  //                       height: 20,
+                  //                     ),
+                  //                     Row(
+                  //                       children: [
+                  //                         TextRichCustom(
+                  //                           color: ColorStyle.primaryColorGreen,
+                  //                           textFirst: 'Coupan ro be applied: ',
+                  //                           textSecond: controller
+                  //                               .offers[controller.idx.value].code,
+                  //                         ),
+                  //                         IconButton(
+                  //                             onPressed: () {
+                  //                               Clipboard.setData(ClipboardData(
+                  //                                   text: controller
+                  //                                       .offers[
+                  //                                           controller.idx.value]
+                  //                                       .code));
+                  //                             },
+                  //                             icon: Icon(
+                  //                               Icons.copy_sharp,
+                  //                               color:
+                  //                                   ColorStyle.secondryColorGreen,
+                  //                             ))
+                  //                       ],
+                  //                     ),
+                  //                     Text(controller
+                  //                         .offers[controller.idx.value].description
+                  //                         .toString()),
+                  //                     const SizedBox(
+                  //                       height: 20,
+                  //                     ),
+                  //                     ElevatedButtonCustom(
+                  //                       BgColor: ColorStyle.primaryColorRed,
+                  //                       radiusBorder: 50,
+                  //                       onTap: () {
+                  //                         controller.fetchOffers();
+                  //                       },
+                  //                       text: 'Apply Offer',
+                  //                       size: Size(
+                  //                           MediaQuery.of(context).size.width, 50),
+                  //                     )
+                  //                   ]),
+                  //             )
+                  //           ])
+                  //     : const SizedBox(
+                  //         height: 0,
+                  //       ),
+                  // );
                 ],
               ),
             );
-
-            //  controller.offers.isNotEmpty
-            //     ? Column(
-            //         // mainAxisAlignment: MainAxisAlignment.start,
-            //         crossAxisAlignment: CrossAxisAlignment.start,
-            //         children: [
-            //             const SizedBox(
-            //               height: 20,
-            //             ),
-            //             CarouselSlider(
-            //               options: CarouselOptions(
-            //                 height: 130.0, autoPlay: false,
-            //                 // enlargeCenterPage: true,
-            //               ),
-            //               items: controller.offers.map((i) {
-            //                 var index = controller.offers.indexOf(i);
-            //                 return Builder(
-            //                   builder: (BuildContext context) {
-            //                     return InkWell(
-            //                       onTap: () {
-            //                         controller.bannerIdx(index);
-            //                       },
-            //                       child: Container(
-            //                         decoration: BoxDecoration(
-            //                             image: DecorationImage(
-            //                                 image:
-            //                                     NetworkImage(i.couponBanner!),
-            //                                 fit: BoxFit.fill),
-            //                             borderRadius:
-            //                                 BorderRadius.circular(10)),
-            //                         width: MediaQuery.of(context).size.width,
-            //                         margin: const EdgeInsets.symmetric(
-            //                             horizontal: 5.0),
-            //                       ),
-            //                     );
-            //                   },
-            //                 );
-            //               }).toList(),
-            //             ),
-
-            //             // HomeBanner(
-            //             //   bannerData: homeBanner.bannerData.value,
-            //             //   autoplay: false,
-            //             // ),
-
-            //             const SizedBox(
-            //               height: 20,
-            //             ),
-            //             Container(
-            //               margin: const EdgeInsets.symmetric(horizontal: 20),
-            //               child: Column(
-            //                   crossAxisAlignment: CrossAxisAlignment.start,
-            //                   children: [
-            //                     Text(
-            //                       'Chinese BOGO Week is here.',
-            //                       style: TextStylesCustom.textStyles_18
-            //                           .apply(fontWeightDelta: 3),
-            //                     ),
-            //                     const SizedBox(
-            //                       height: 20,
-            //                     ),
-            //                     Text(
-            //                       'Terms and Conditions',
-            //                       style: TextStylesCustom.textStyles_20.apply(
-            //                           color: ColorStyle.secondryColorRed),
-            //                     ),
-            //                     Text(
-            //                       controller.offers[controller.idx.value]
-            //                           .termsAndCondition
-            //                           .toString(),
-            //                       // 'To redeem the coupon code, the claimant types the coupon code into the promotional box in the booking field of the Quovai\'s websites and the relevant discount will be automatically deducted from the final price of the qualifying purchase. If the claimant fails to enter the coupon code at the time of purchase as specified, the purchase will not be eligible for the discount. Discounts may not be claimed after confirmation of a claimant\'s purchase',
-            //                       style: TextStylesCustom.textStyles_16,
-            //                     ),
-            //                     const SizedBox(
-            //                       height: 20,
-            //                     ),
-            //                     Row(
-            //                       children: [
-            //                         TextRichCustom(
-            //                           color: ColorStyle.primaryColorGreen,
-            //                           textFirst: 'Coupan ro be applied: ',
-            //                           textSecond: controller
-            //                               .offers[controller.idx.value].code,
-            //                         ),
-            //                         IconButton(
-            //                             onPressed: () {
-            //                               Clipboard.setData(ClipboardData(
-            //                                   text: controller
-            //                                       .offers[
-            //                                           controller.idx.value]
-            //                                       .code));
-            //                             },
-            //                             icon: Icon(
-            //                               Icons.copy_sharp,
-            //                               color:
-            //                                   ColorStyle.secondryColorGreen,
-            //                             ))
-            //                       ],
-            //                     ),
-            //                     Text(controller
-            //                         .offers[controller.idx.value].description
-            //                         .toString()),
-            //                     const SizedBox(
-            //                       height: 20,
-            //                     ),
-            //                     ElevatedButtonCustom(
-            //                       BgColor: ColorStyle.primaryColorRed,
-            //                       radiusBorder: 50,
-            //                       onTap: () {
-            //                         controller.fetchOffers();
-            //                       },
-            //                       text: 'Apply Offer',
-            //                       size: Size(
-            //                           MediaQuery.of(context).size.width, 50),
-            //                     )
-            //                   ]),
-            //             )
-            //           ])
-            //     : const SizedBox(
-            //         height: 0,
-            //       ),
-            // );
           });
         });
   }

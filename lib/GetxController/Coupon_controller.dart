@@ -28,9 +28,9 @@ class CouponController extends GetxController {
   //   //     List<ModelFaq>.from(response.map((x) => ModelFaq.fromJson(x)));
   // }
 
-  Future applyCoupon() async {
+  Future applyCoupon(value) async {
     print("object");
-    final params = {"code": coupon.value.text};
+    final params = {"code": value};
     response.value = (await API.instance.post(
         endPoint: "promotion/apply-coupon/", params: params, isHeader: true))!;
     message = response!['message'];

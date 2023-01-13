@@ -184,16 +184,16 @@ class API {
 
     Map<String, String> header = {};
     if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
-
+    print(url);
     try {
       showLoaderGetX();
       final response = await http.post(url, headers: header, body: params);
       hideLoader();
-      debugPrint('Response status: ${response}');
+      debugPrint('Response status: ${response.body}');
 
       final Map<String, dynamic> parsed = json.decode(response.body);
 
-      print('userprofile===========$kTOKENSAVED ${parsed}');
+      // print('userprofile===========$kTOKENSAVED ${parsed}');
       return parsed;
     } on Exception {
       // hideLoader();
