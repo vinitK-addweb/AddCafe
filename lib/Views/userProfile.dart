@@ -79,27 +79,36 @@ class UserProfile extends StatelessWidget {
                                     },
                                     child: Stack(children: [
                                       CircleAvatar(
-                                        backgroundColor:
-                                            ColorStyle.primaryColorGreen,
-                                        radius: 72,
-                                        child: ClipRRect(
+                                          backgroundColor:
+                                              ColorStyle.primaryColorGreen,
+                                          radius: 72,
+                                          child: ClipRRect(
                                             borderRadius:
-                                                BorderRadius.circular(60),
+                                                BorderRadius.circular(70),
                                             child: CircleAvatar(
                                               radius: 65,
-                                              child: Image.network(
-                                                fit: BoxFit.fill,
-                                                controller.image.value.path
-                                                        .isEmpty
-                                                    ? 'https://mir-s3-cdn-cf.behance.net/user/276/462829507061295.5f9717443f152.png'
-                                                    : userAuth.userprofile[
-                                                                'profile_picture'] ==
-                                                            null
-                                                        ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi6mIqR-61xHjJUEMUfzQvP_ZeVtRZ-Hh_B9OQIh5hLjVH1ZO5U23ZehKJMmIsZkMF5Ew&usqp=CAU'
-                                                        : '${kImgUrl}${userAuth.userprofile['profile_picture']}',
-                                              ),
-                                            )),
-                                      ),
+                                              // backgroundColor:
+                                              //     ColorStyle.primaryColorGreen,
+                                              child: controller.image.value.path
+                                                      .isNotEmpty
+                                                  ? Image.file(
+                                                      controller.image.value,
+                                                      fit: BoxFit.cover,
+                                                      width: double.infinity,
+                                                      // height: 65 * 2,
+                                                      // width: 65 * 2,
+                                                    )
+                                                  : Image.network(
+                                                      fit: BoxFit.cover,
+                                                      height: double.infinity,
+                                                      width: double.infinity,
+                                                      userAuth.userprofile
+                                                              .isEmpty
+                                                          ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi6mIqR-61xHjJUEMUfzQvP_ZeVtRZ-Hh_B9OQIh5hLjVH1ZO5U23ZehKJMmIsZkMF5Ew&usqp=CAU'
+                                                          : '$kImgUrl${userAuth.userprofile['profile_picture']}',
+                                                    ),
+                                            ),
+                                          )),
                                       Positioned(
                                           bottom: 0,
                                           right: -25,
@@ -115,7 +124,7 @@ class UserProfile extends StatelessWidget {
                                             },
                                             // controller.getImage(),
                                             elevation: 2,
-                                            fillColor: Color(0xFFF5F6F9),
+                                            fillColor: const Color(0xFFF5F6F9),
                                             padding: const EdgeInsets.all(8.0),
                                             shape: const CircleBorder(),
                                             child: Icon(
@@ -299,9 +308,7 @@ class UserProfile extends StatelessWidget {
                                         textStyle:
                                             TextStylesCustom.textStyles_16,
                                       ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
+
                                       const SizedBox(
                                         height: 20,
                                       ),

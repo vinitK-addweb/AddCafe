@@ -86,6 +86,7 @@ class MyHomePage extends StatelessWidget {
                 ],
               ),
 
+// <------------------------------------ cart item ------------------------------------------>
               bottomNavigationBar: cart.cartData.isNotEmpty
                   ? Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -99,10 +100,6 @@ class MyHomePage extends StatelessWidget {
                                   topLeft: Radius.circular(15),
                                   topRight: Radius.circular(15))),
                           height: 60,
-                          // child: ElevatedButton(
-                          //   onPressed: () {
-                          //     Navigator.of(context).pushNamed('/cart');
-                          //   },
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -144,7 +141,7 @@ class MyHomePage extends StatelessWidget {
                   : const SizedBox(
                       height: 0,
                     ),
-
+// <-----------------------------------cart item end------------------------------------------>
               body: SingleChildScrollView(
                 child: !(controller.bannerData.isNotEmpty ||
                         controller.categoriesData.isNotEmpty)

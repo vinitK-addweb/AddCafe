@@ -17,6 +17,7 @@ class HomeCategory extends StatelessWidget {
   final List<ModelBanner> bannerData;
   final ActiveProductsController productController =
       Get.put(ActiveProductsController());
+
   @override
   Widget build(BuildContext context) {
     // final controller = ActiveProductsController();
@@ -41,19 +42,21 @@ class HomeCategory extends StatelessWidget {
                     width: 100,
                     child: InkWell(
                       onTap: (() {
-                        print("valueeeeeeeeeeeee before" +
-                            productController.selectedCategory.value);
-                        productController.selectedCategory.value = item.name!;
-                        print("valueeeeeeeeeeeee" +
-                            productController.selectedCategory.value);
-                        Get.to(CategoryItems(
-                            item.name!, bannerData, categoriesImage));
+    //                     print(
+    //                         'select category${productController.selectedCategory}');
+    //                     productController.selectedCategory.value ==
+    //                         item.name;
+    //                     productController.getFilteredProducts(item.name);
+    // Future.delayed(const Duration(milliseconds: 10), () {
+    //                     productController.update();});
+    //                     print(
+    //                         'selected category${productController.selectedCategory.value}');
+                        productController.slectCategory(item.name);
+                        Future.delayed(const Duration(milliseconds: 10), () {
+                          Get.to(CategoryItems(item.name!, bannerData, categoriesImage));
+                        });
                       }),
-                      child:
-                          //  Card(
-                          //   elevation: 0,
-                          //   child:
-                          Column(
+                      child: Column(
                         children: [
                           CircleAvatar(
                             backgroundImage: NetworkImage(item.image!),

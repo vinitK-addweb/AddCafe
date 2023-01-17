@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 // import '../Styles/ColorStyle.dart';
 // import '../Styles/TextStyles.dart';
 
@@ -77,6 +78,8 @@ extension SnackBar on String {
   }
 }
 
+
+
 goToAnotherScreen(Widget page) {
   GetPage(
     name: "/second",
@@ -91,4 +94,9 @@ goToAnotherScreen(Widget page) {
 navigateMultiBottom(context, Widget child) {
   Navigator.push(
       context, MaterialPageRoute(builder: (BuildContext context) => child));
+}
+
+
+spinkitLoader(){
+  return const Center(child: SpinKitCircle(color: Colors.grey, size: 60.0));
 }

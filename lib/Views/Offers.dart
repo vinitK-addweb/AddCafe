@@ -225,7 +225,7 @@ class Offers extends StatelessWidget {
                                                 .toString());
                                           },
                                           text: 'Apply',
-                                          size: const Size(78, 20),
+                                          size: const Size(100, 20),
                                           radiusBorder: 10,
                                         )
                                       ],

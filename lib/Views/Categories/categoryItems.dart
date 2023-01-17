@@ -15,6 +15,7 @@ import '../../Models/Model_Categories.dart';
 import '../../Styles/TextStyles.dart';
 import '../../Styles/ColorStyle.dart';
 import '../../Components/AppBarStyle.dart';
+import '../../GetxController/MyHomePage_controller.dart';
 
 class CategoryItems extends StatefulWidget {
   // CategoryItems({Key? key}) : super(key: key);
@@ -33,6 +34,7 @@ class _CategoryItemsState extends State<CategoryItems> {
   final ActiveProductsController controller =
       Get.put(ActiveProductsController());
   final cartApi = Get.put(CartController());
+  final home = Get.put( HomeBannerController ());
   // void initState() {
   //   super.initState();
   //   controller.selectedCategory.value = widget.selectedMenu;
@@ -48,7 +50,7 @@ class _CategoryItemsState extends State<CategoryItems> {
         controller.selectedCategory.value = widget.selectedMenu;
 
         controller.initCustom();
-        controller.getFilteredProducts(widget.selectedMenu);
+        // controller.getFilteredProducts(widget.selectedMenu);
         // controller.fetchAllProducts();
       },
       builder: (_) {
@@ -72,6 +74,7 @@ class _CategoryItemsState extends State<CategoryItems> {
             //   ),
             //   centerTitle: true,
             // ),
+
             bottomNavigationBar: cartApi.cartData.isNotEmpty
                 ? Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -139,11 +142,11 @@ class _CategoryItemsState extends State<CategoryItems> {
                     ),
                     HomeBanner(bannerData: widget.bannerData),
                     ListView.builder(
-                      itemCount: widget.categoriesData.length,
+                      itemCount: home.categoriesData.length,
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                        final e = widget.categoriesData[index];
+                        final e = home.categoriesData[index];
                         // controller.getFilteredProducts(e.name);
                         return Card(
                             child: Column(
@@ -155,14 +158,8 @@ class _CategoryItemsState extends State<CategoryItems> {
                                       e.name!) {
                                     controller.selectedCategory.value = '';
                                   } else {
-                                    controller.selectedCategory.value = e.name!;
-                                    controller.getFilteredProducts('${e.name}');
-                                    Future.delayed(Duration(milliseconds: 0),
-                                        () {
-                                      controller.update();
-                                      // categoryProductFilter();
-                                    });
-                                  }
+                                  controller.slectCategory(e.name!);}
+
                                 },
                                 child: Padding(
                                   padding:
@@ -210,11 +207,13 @@ class _CategoryItemsState extends State<CategoryItems> {
                                     ],
                                   ),
                                 )),
-                            controller.selectedCategory == e.name
+                            controller.selectedCategory.value == e.name
                                 ?
 
                                 //  Future.delayed(Duration(milliseconds: 2), () {});
-                                CategoryDropdown(controller.categoryProduct)
+                                CategoryDropdown(
+                                    // controller.categoryProduct
+                                )
                                 : const SizedBox(
                                     height: 0,
                                   )
