@@ -1,11 +1,7 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import '../BottomNavBar.dart';
+
 import 'package:get/get.dart';
-// import '../Components/MainDrawer.dart';
+
 import '../GetxController/Faq_Controller.dart';
 import '../Styles/TextStyles.dart';
 import '../Styles/ColorStyle.dart';
@@ -24,7 +20,7 @@ class Faq extends StatelessWidget {
             return Scaffold(
               // <------------------------------ Main App bar starts --------------------->
               key: scaffoldKey,
-              // drawer: const MainDrawer(),
+
               appBar: AppBarStyle(
                 styleTitle: TextStylesCustom.textStyles_20,
                 elevation: 0,
@@ -32,7 +28,6 @@ class Faq extends StatelessWidget {
                 backgroundColor: ColorStyle.primaryColorRed,
                 leading: IconButton(
                   onPressed: () => Get.back(),
-                  // currentIndex.value = 0,
                   icon: const Icon(
                     Icons.arrow_back,
                     size: 34,
@@ -45,13 +40,10 @@ class Faq extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 5),
                       child: Column(
                           children:
-                              // Container(child: Text(''),)
-
-                              // height: 500,
-                              // decoration: BoxDecoration(color:),
 
                               // <------------------ Faq card start-------------->
                               faq.faqData.map((e) {
@@ -69,7 +61,7 @@ class Faq extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(20)),
                                 child: Container(
                                     width: MediaQuery.of(context).size.width,
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(20),
                                           topRight: Radius.circular(20)),
@@ -80,11 +72,15 @@ class Faq extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Padding(
-                                          padding: const EdgeInsets.all(10.0),
+                                          padding: const EdgeInsets.only(
+                                              left: 10.0,
+                                              right: 20,
+                                              top: 10,
+                                              bottom: 10),
                                           child: Text(
                                             '${e.question}',
                                             style: TextStylesCustom
-                                                .textStyles_15
+                                                .textStyles_16
                                                 .apply(
                                               fontWeightDelta: 3,
                                               color:
@@ -92,8 +88,6 @@ class Faq extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        // arrow
-                                        //     ?
                                         Visibility(
                                           visible: faq.currentid.value == e.id,
                                           child: Padding(
@@ -111,9 +105,6 @@ class Faq extends StatelessWidget {
                                             ),
                                           ),
                                         )
-                                        // : SizedBox(
-                                        //     height: 0,
-                                        //   ),
                                       ],
                                     ))),
                           ),
@@ -141,8 +132,8 @@ class Faq extends StatelessWidget {
                     Container(
                         margin: const EdgeInsets.all(10.0),
                         width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.all(15),
-                        decoration: BoxDecoration(
+                        padding: const EdgeInsets.all(15),
+                        decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(20),
                               topRight: Radius.circular(20)),
@@ -152,11 +143,9 @@ class Faq extends StatelessWidget {
                           children: [
                             Image.asset(
                               'assets/images/faqs.png',
-                              // height: 100,
-                              // width: 200,
                             ),
                             Container(
-                                margin: EdgeInsets.only(top: 10),
+                                margin: const EdgeInsets.only(top: 10),
                                 child: Text(
                                   'Do you have more questions?',
                                   style: TextStylesCustom.textStyles_17.apply(
@@ -165,7 +154,8 @@ class Faq extends StatelessWidget {
                                   ),
                                 )),
                             Container(
-                                margin: EdgeInsets.only(top: 8, bottom: 20),
+                                margin:
+                                    const EdgeInsets.only(top: 8, bottom: 20),
                                 child: Text(
                                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
                                   textAlign: TextAlign.center,
@@ -179,10 +169,9 @@ class Faq extends StatelessWidget {
                                 child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                         shape: RoundedRectangleBorder(
-                                            //to set border radius to button
                                             borderRadius:
                                                 BorderRadius.circular(12)),
-                                        padding: EdgeInsets.all(20)),
+                                        padding: const EdgeInsets.all(20)),
                                     onPressed: () {},
                                     child: Text(
                                       'Send Us A Direct Mail',

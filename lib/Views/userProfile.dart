@@ -147,27 +147,27 @@ class UserProfile extends StatelessWidget {
                                       // <-------------------user profile details -------------------->
 
                                       const SizedBox(
-                                          height: 15,
+                                          height: 10,
                                         ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      userAuth.userprofile['first_name'] == null
+                                      controller.fname.value.text.isEmpty
                                           ? const SizedBox(
                                               height: 0,
                                             )
                                           : Text(
-                                              '${userAuth.userprofile['first_name']} ${userAuth.userprofile['last_name']}',
+                                              '${controller.fname.value.text} ${controller.lname.value.text}',
                                               style: TextStylesCustom
-                                                  .textStyles_26
+                                                  .textStyles_20
                                                   .apply(
                                                       fontWeightDelta: 2,
                                                       fontSizeDelta: 4,
                                                       color: ColorStyle
                                                           .primaryColorGreen),
                                             ),
-                                      userAuth.userprofile['first_name'] != null
-                                          ? userAuth.userprofile['is_verify']
+                                      controller.fname.value.text.isNotEmpty
+                                          ? controller.userprofile['is_verify']
                                               ? Icon(
                                                   Icons.verified,
                                                   color: ColorStyle
@@ -291,7 +291,7 @@ class UserProfile extends StatelessWidget {
                                           : ''),
                                       Obx(() {
                                         return SizedBox(
-                                            height: 70,
+                                            height: 80,
                                             child: ListView.builder(
                                                 scrollDirection:
                                                     Axis.horizontal,
