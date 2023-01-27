@@ -68,256 +68,252 @@ class AddNewAddress extends StatelessWidget {
 //           builder: (_) {
 //             return
 
-            // Obx(() {
-            // return
-            SingleChildScrollView(
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(30), topRight: Radius.circular(30)),
-            child: SingleChildScrollView(
-              // physics: NeverScrollableScrollPhysics(),
-              child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 15),
-                color: Colors.white,
-                child: Form(
-                    key: formKey,
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
+            Obx(() {
+          return SingleChildScrollView(
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+              child: SingleChildScrollView(
+                // physics: NeverScrollableScrollPhysics(),
+                child: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 15),
+                  color: Colors.white,
+                  child: Form(
+                      key: formKey,
+                      child: Padding(
+                        padding: const EdgeInsets.all(15.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                            ),
 
-                          const SizedBox(
-                            height: 30,
-                          ),
-                          // TextFieldUnderline(
-                          //   padding: EdgeInsets.all(10),
-                          //   labelText: 'Phone Number or Email',
-                          //   // controller: controller.textController.value,
-                          //   hintText: 'John',
-                          //   textStyle: TextStylesCustom.textStyles_20,
-                          // ),
-                          // Text(data),
-                          TextFormFieldUnderline(
-                            padding: EdgeInsets.all(10),
-                            validator: (value) {
-                              // if (value!.isEmpty) {
-                              //   return "Please Enter Mobile Number";
-                              //   // ignore: curly_braces_in_flow_control_structures
-                              //   } else
-                              if (value!.length != 10) {
-                                return "Please Enter Mobile Number";
-                              } else {
-                                return null;
-                              }
-                            },
-                            controller: controller.phoneNumber.value,
-                            keyboardType: TextInputType.number,
-                            labelText: 'Phone Number',
-                            // readOnly: true,
-                            // controller: controller.textController.value,
-                            colorHint: ColorStyle.secondryColorBlack,
-                            hintText: '987654321',
-                            textStyle: TextStylesCustom.textStyles_20,
-                          ),
-
-                          const SizedBox(
-                            height: 20,
-                          ),
-
-                          TextFormFieldUnderline(
-                            padding: const EdgeInsets.all(10),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please Enter Building Name/Number";
-                              } else {
-                                return null;
-                              }
-                            },
-                            controller: controller.buildingNameNo.value,
-                            labelText: 'Building Name/Number',
-                            hintText: 'arihant villa',
-                            colorHint: ColorStyle.secondryColorBlack,
-                            textStyle: TextStylesCustom.textStyles_20,
-                          ),
-
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextFormFieldUnderline(
-                            padding: const EdgeInsets.all(10),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please Enter Area";
-                              } else {
-                                return null;
-                              }
-                            },
-                            controller: controller.area.value,
-                            textStyle: TextStylesCustom.textStyles_20,
-                            hintText: 'Mansrover',
-                            labelText: 'Area',
-                            colorHint: ColorStyle.secondryColorBlack,
-                          ),
-                          // TextFieldUnderline(
-                          //   controller: controller.area.value,
-                          //   textStyle: TextStylesCustom.textStyles_20,
-                          //   hintText: 'Mansrover',
-                          //   labelText: 'Area',
-                          // ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextFormFieldUnderline(
-                            padding: EdgeInsets.all(10),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please Enter Land Mark";
-                              } else {
-                                return null;
-                              }
-                            },
-                            controller: controller.landMark.value,
-                            textStyle: TextStylesCustom.textStyles_20,
-                            hintText: 'New Sanganer Road',
-                            labelText: 'Land Mark',
-                          ),
-                          // TextFieldUnderline(
-                          //   controller: controller.landMark.value,
-                          //   textStyle: TextStylesCustom.textStyles_20,
-                          //   hintText: 'New Sanganer Road',
-                          //   labelText: 'Land Mark',
-                          // ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextFormFieldUnderline(
-                            padding: EdgeInsets.all(10),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please Enter City";
-                              } else {
-                                return null;
-                              }
-                            },
-                            controller: controller.city.value,
-                            textStyle: TextStylesCustom.textStyles_20,
-                            hintText: 'Jaipur',
-                            labelText: 'City',
-                          ),
-
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextFormFieldUnderline(
-                            padding: EdgeInsets.all(10),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please Enter City";
-                              } else {
-                                return null;
-                              }
-                            },
-                            controller: controller.state.value,
-                            textStyle: TextStylesCustom.textStyles_20,
-                            hintText: 'Rajasthan',
-                            labelText: 'State',
-                          ),
-
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          TextFormFieldUnderline(
-                            padding: EdgeInsets.all(10),
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please Enter City";
-                              } else {
-                                return null;
-                              }
-                            },
-                            controller: controller.pinCode.value,
-                            keyboardType: TextInputType.number,
-                            textStyle: TextStylesCustom.textStyles_20,
-                            hintText: '302020',
-                            labelText: 'Pincode',
-                          ),
-
-                          const SizedBox(
-                            height: 20,
-                          ),
-
-                          DropdownButtonFormField(
-                              style: TextStylesCustom.textStyles_20
-                                  .apply(color: ColorStyle.secondaryColorgrey),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            // TextFieldUnderline(
+                            //   padding: EdgeInsets.all(10),
+                            //   labelText: 'Phone Number or Email',
+                            //   // controller: controller.textController.value,
+                            //   hintText: 'John',
+                            //   textStyle: TextStylesCustom.textStyles_20,
+                            // ),
+                            // Text(data),
+                            TextFormFieldUnderline(
+                              padding: EdgeInsets.all(10),
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'please select address type';
+                                // if (value!.isEmpty) {
+                                //   return "Please Enter Mobile Number";
+                                //   // ignore: curly_braces_in_flow_control_structures
+                                //   } else
+                                if (value!.length != 10) {
+                                  return "Please Enter Mobile Number";
                                 } else {
                                   return null;
                                 }
                               },
-                              hint: const Text(
-                                'Address Type',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              items: const [
-                                DropdownMenuItem(
-                                  value: 'home',
-                                  child: Text('home'),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'work',
-                                  child: Text('work'),
-                                )
-                              ],
-                              onChanged: (value) {
-                                controller.addresTypeFunction(value);
-                                // setState(() {
-                                //   addresType = value;
-                                // });
-                              }),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                              controller: controller.phoneNumber.value,
+                              keyboardType: TextInputType.number,
+                              labelText: 'Phone Number',
+                              // readOnly: true,
+                              // controller: controller.textController.value,
+                              colorHint: ColorStyle.secondryColorBlack,
+                              hintText: '987654321',
+                              textStyle: TextStylesCustom.textStyles_20,
+                            ),
 
-                          // ElevatedButton(
-                          //   onPressed: () {
-                          //     usercontroller.getUserDetails();
-                          //     // Validate returns true if the form is valid, or false otherwise.
-                          //     if (_formKey.currentState!.validate()) {
-                          //       // addaddressApi.addNewAddress({
-                          //       //   // "is_deleted": true,
-                          //       //   // "full_name": "string",
-                          //       //   "phone_num": phoneNumber.text,
-                          //       //   "building_num_name": buildingNumber.text,
-                          //       //   "area_colony": area.text,
-                          //       //   "landmark": landmark.text,
-                          //       //   "pincode": int.parse(pincode.text),
-                          //       //   "city": city.text,
-                          //       //   "state": state.text,
-                          //       //   "address_type": addresType,
-                          //       //   "user": 1
-                          //       // });
-                          //       Navigator.pop(context);
-                          //     }
-                          //   },
-                          //   child: const Text('Add address'),
-                          // ),
-                        ],
-                      ),
-                    )),
+                            const SizedBox(
+                              height: 20,
+                            ),
+
+                            TextFormFieldUnderline(
+                              padding: const EdgeInsets.all(10),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please Enter Building Name/Number";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              controller: controller.buildingNameNo.value,
+                              labelText: 'Building Name/Number',
+                              hintText: 'arihant villa',
+                              colorHint: ColorStyle.secondryColorBlack,
+                              textStyle: TextStylesCustom.textStyles_20,
+                            ),
+
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextFormFieldUnderline(
+                              padding: const EdgeInsets.all(10),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please Enter Area";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              controller: controller.area.value,
+                              textStyle: TextStylesCustom.textStyles_20,
+                              hintText: 'Mansrover',
+                              labelText: 'Area',
+                              colorHint: ColorStyle.secondryColorBlack,
+                            ),
+                            // TextFieldUnderline(
+                            //   controller: controller.area.value,
+                            //   textStyle: TextStylesCustom.textStyles_20,
+                            //   hintText: 'Mansrover',
+                            //   labelText: 'Area',
+                            // ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextFormFieldUnderline(
+                              padding: EdgeInsets.all(10),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please Enter Land Mark";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              controller: controller.landMark.value,
+                              textStyle: TextStylesCustom.textStyles_20,
+                              hintText: 'New Sanganer Road',
+                              labelText: 'Land Mark',
+                            ),
+                            // TextFieldUnderline(
+                            //   controller: controller.landMark.value,
+                            //   textStyle: TextStylesCustom.textStyles_20,
+                            //   hintText: 'New Sanganer Road',
+                            //   labelText: 'Land Mark',
+                            // ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextFormFieldUnderline(
+                              padding: EdgeInsets.all(10),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please Enter City";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              controller: controller.city.value,
+                              textStyle: TextStylesCustom.textStyles_20,
+                              hintText: 'Jaipur',
+                              labelText: 'City',
+                            ),
+
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextFormFieldUnderline(
+                              padding: EdgeInsets.all(10),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please Enter City";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              controller: controller.state.value,
+                              textStyle: TextStylesCustom.textStyles_20,
+                              hintText: 'Rajasthan',
+                              labelText: 'State',
+                            ),
+
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            TextFormFieldUnderline(
+                              padding: EdgeInsets.all(10),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please Enter City";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              controller: controller.pinCode.value,
+                              keyboardType: TextInputType.number,
+                              textStyle: TextStylesCustom.textStyles_20,
+                              hintText: '302020',
+                              labelText: 'Pincode',
+                            ),
+
+                            const SizedBox(
+                              height: 20,
+                            ),
+
+                            DropdownButtonFormField(
+                                style: TextStylesCustom.textStyles_20.apply(
+                                    color: ColorStyle.secondaryColorgrey),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'please select address type';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                                hint: const Text(
+                                  'Address Type',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                items: const [
+                                  DropdownMenuItem(
+                                    value: 'home',
+                                    child: Text('home'),
+                                  ),
+                                  DropdownMenuItem(
+                                    value: 'work',
+                                    child: Text('work'),
+                                  )
+                                ],
+                                onChanged: (value) {
+                                  controller.addresTypeFunction(value);
+                                  // setState(() {
+                                  //   addresType = value;
+                                  // });
+                                }),
+                            const SizedBox(
+                              height: 20,
+                            ),
+
+                            // ElevatedButton(
+                            //   onPressed: () {
+                            //     usercontroller.getUserDetails();
+                            //     // Validate returns true if the form is valid, or false otherwise.
+                            //     if (_formKey.currentState!.validate()) {
+                            //       // addaddressApi.addNewAddress({
+                            //       //   // "is_deleted": true,
+                            //       //   // "full_name": "string",
+                            //       //   "phone_num": phoneNumber.text,
+                            //       //   "building_num_name": buildingNumber.text,
+                            //       //   "area_colony": area.text,
+                            //       //   "landmark": landmark.text,
+                            //       //   "pincode": int.parse(pincode.text),
+                            //       //   "city": city.text,
+                            //       //   "state": state.text,
+                            //       //   "address_type": addresType,
+                            //       //   "user": 1
+                            //       // });
+                            //       Navigator.pop(context);
+                            //     }
+                            //   },
+                            //   child: const Text('Add address'),
+                            // ),
+                          ],
+                        ),
+                      )),
+                ),
               ),
             ),
-          ),
-        )
-        // }
-        // )
-
-        );
+          );
+        }));
     //   },
     // )
 

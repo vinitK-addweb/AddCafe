@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:ui';
 import 'package:http/http.dart' as http;
 import 'package:addcafe/BottomNavBar.dart';
 import 'package:addcafe/Styles/TextStyles.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Utils/Constant.dart';
@@ -11,6 +9,7 @@ import '../../GetxController/Coupon_controller.dart';
 import '../../GetxController/UserProfile_controller.dart';
 import '../../Utils/API.dart';
 import '../../Utils/Global.dart';
+import '../AddNewAddress.dart';
 import '../Offers.dart';
 import '../OrderDetails.dart';
 import './emptyCart.dart';
@@ -18,7 +17,6 @@ import '../../Styles/ColorStyle.dart';
 import '../../GetxController/Cart_controller.dart';
 import '../../GetxController/MyHomePage_controller.dart';
 import '../../Components/AppBarStyle.dart';
-
 import '../../Components/ElevatedButtonCustom.dart';
 import 'address.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -118,21 +116,21 @@ class _CartState extends State<Cart> {
         userOrder = json.decode(response.body);
         orderPayment();
       } else {
-        print(response.body);
+        // print(response.body);
         'Somthing went wrong'.showError();
       }
     } catch (error) {
-      debugPrint('Error is:-' + error.toString());
+      debugPrint('Error is:-$error');
       hideLoader();
       return null;
     }
   }
 
   orderPayment() async {
-    orderpayment = await API.instance.post(
-        endPoint: 'order/payment/',
-        params: {"order_id": userOrder['payload']['id'].toString()},
-        isHeader: true) as Map;
+    final param = {"order_id": userOrder['payload']['id'].toString()};
+    print(param);
+    orderpayment = await API.instance
+        .post(endPoint: 'order/payment/', params: param, isHeader: true) as Map;
     makePayment();
   }
 
@@ -191,96 +189,113 @@ class _CartState extends State<Cart> {
                       child: ElevatedButtonCustom(
                         BgColor: ColorStyle.primaryColorRed,
                         size: Size(MediaQuery.of(context).size.width, 50),
-                        text:
-                            // controller.cartData.isNotEmpty
-                            //     ? 'Proceed to checkout'
-                            // :
-                            'Add Items',
+                        text: 'Add Items',
                         onTap: () {
-                          // controller.cartData.isNotEmpty
-                          // ? Get.to(AddNewAddress())
-                          // :
                           Get.to(BottamNavigationBar());
                         },
                       ),
                     )
                   : Container(
-                      height: 150,
+                      height: 180,
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       margin: const EdgeInsets.symmetric(horizontal: 15),
                       child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Card(
-                          //   child:
-
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(children: [
-                                Icon(
-                                  Icons.location_on,
-                                  color: ColorStyle.primaryColorRed,
-                                  size: 21,
-                                ),
-                                const SizedBox(
-                                  width: 2,
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                      text: 'Delviery at ',
-                                      style: TextStylesCustom.textStyles_18
-                                          .apply(
-                                              color: ColorStyle
-                                                  .secondryColorBlack),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: userProfile
-                                              .addAddress[
-                                                  userProfile.address.value]
-                                              .addressType,
-                                          style: TextStylesCustom.textStyles_18
-                                              .apply(fontWeightDelta: 3),
-                                        )
-                                      ]),
+                          userProfile.addAddress.isEmpty
+                              ? TextButton(
+                                  onPressed: () {
+                                    Get.to(() => AddNewAddress());
+                                  },
+                                  child: const Text('Add Address'),
                                 )
-                              ]),
-                              InkWell(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(20))),
-                                    context: context,
-                                    builder: (context) => Address(),
-                                  );
-                                },
-                                child: Text("Change",
-                                    style: TextStylesCustom.textStyles_15.apply(
-                                        color: ColorStyle.secondryColorRed)),
-                              ),
-                            ],
-                          ),
-                          FittedBox(
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              width: 210.0,
-                              child: Text(
-                                '${userProfile.addAddress[userProfile.address.value].buildingNumName},${userProfile.addAddress[userProfile.address.value].areaColony},${userProfile.addAddress[userProfile.address.value].landmark},${userProfile.addAddress[userProfile.address.value].city},${userProfile.addAddress[userProfile.address.value].state},${userProfile.addAddress[userProfile.address.value].pincode}',
-                                style: TextStylesCustom.textStyles_13,
-                              ),
-                            ),
-                          ),
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(children: [
+                                            Icon(
+                                              Icons.location_on,
+                                              color: ColorStyle.primaryColorRed,
+                                              size: 21,
+                                            ),
+                                            const SizedBox(
+                                              width: 2,
+                                            ),
+                                            RichText(
+                                              text: TextSpan(
+                                                  text: 'Delviery at ',
+                                                  style: TextStylesCustom
+                                                      .textStyles_18
+                                                      .apply(
+                                                          color: ColorStyle
+                                                              .secondryColorBlack),
+                                                  children: <TextSpan>[
+                                                    TextSpan(
+                                                      text: userProfile
+                                                          .addAddress[
+                                                              userProfile
+                                                                  .address
+                                                                  .value]
+                                                          .addressType,
+                                                      style: TextStylesCustom
+                                                          .textStyles_18
+                                                          .apply(
+                                                              fontWeightDelta:
+                                                                  3),
+                                                    )
+                                                  ]),
+                                            )
+                                          ]),
+                                          InkWell(
+                                            onTap: () {
+                                              showModalBottomSheet(
+                                                isScrollControlled: true,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.vertical(
+                                                                top: Radius
+                                                                    .circular(
+                                                                        20))),
+                                                context: context,
+                                                builder: (context) => Address(),
+                                              );
+                                            },
+                                            child: Text("Change",
+                                                style: TextStylesCustom
+                                                    .textStyles_15
+                                                    .apply(
+                                                        color: ColorStyle
+                                                            .secondryColorRed)),
+                                          ),
+                                        ],
+                                      ),
+                                      FittedBox(
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 20, vertical: 5),
+                                          width: 310.0,
+                                          child: Text(
+                                            '${userProfile.addAddress[userProfile.address.value].buildingNumName},${userProfile.addAddress[userProfile.address.value].areaColony},${userProfile.addAddress[userProfile.address.value].landmark},${userProfile.addAddress[userProfile.address.value].city},${userProfile.addAddress[userProfile.address.value].state},${userProfile.addAddress[userProfile.address.value].pincode}',
+                                            style:
+                                                TextStylesCustom.textStyles_13,
+                                          ),
+                                        ),
+                                      ),
 
-                          // ),
-                          const SizedBox(
-                            height: 10,
-                          ),
+                                      // ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                    ]),
                           ElevatedButtonCustom(
                             BgColor: ColorStyle.primaryColorRed,
                             size: Size(MediaQuery.of(context).size.width, 50),
@@ -297,17 +312,6 @@ class _CartState extends State<Cart> {
                                   userProfile
                                       .addAddress[userProfile.address.value].id,
                                   total);
-                              // createOrder(
-                              //     userProfile
-                              //         .addAddress[userProfile.address.value].id,
-                              //     total
-
-                              //     );
-                              // makePayment();
-                              // controller.cartData.isNotEmpty
-                              //     ?
-                              // Get.to(AddNewAddress());
-                              // : Get.to(BottomNavBarCustom());
                             },
                           ),
                         ],

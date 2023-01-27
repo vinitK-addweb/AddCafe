@@ -71,9 +71,10 @@ class MyHomePage extends StatelessWidget {
                           icon: IconButton(
                             iconSize: 30,
                             onPressed: () {
+                              search.itemName.value.text = '';
+
                               controller.search.value = false;
                               search.searchResult.value = [];
-                              search.itemName.value.text = '';
                             },
                             icon: const Icon(Icons.close),
                           )
@@ -157,11 +158,11 @@ class MyHomePage extends StatelessWidget {
                           Container(
                             margin: const EdgeInsets.symmetric(horizontal: 20),
                             child: TextField(
+                                controller: search.itemName.value,
                                 onChanged: (value) {
-                                  search.itemName.value.text = value;
+                                  // search.itemName.value.text = value;
                                   search.initfunction();
                                 },
-                                // controller: search.itemName.value,
                                 onTap: (() {
                                   controller.search.value = true;
                                 }),

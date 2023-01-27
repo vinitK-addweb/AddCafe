@@ -14,7 +14,7 @@ class PickerCustom {
     final DateTime? picked = await showDatePicker(
         context: Get.context!,
         initialDate: selectedDate,
-        firstDate: DateTime.now(),
+        firstDate: DateTime(1930),
         lastDate: DateTime(2500));
     if (picked != null && picked != selectedDate) {
       selectedDate = picked;

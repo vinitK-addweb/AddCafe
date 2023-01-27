@@ -30,10 +30,18 @@ class UserProfileController extends GetxController {
   Rx<TextEditingController> pinCode = TextEditingController().obs;
   Rx<TextEditingController> addressType = TextEditingController().obs;
 
+// ----------------------- Edit profile details -------------------->
   Rx<TextEditingController> fname = TextEditingController().obs;
   Rx<TextEditingController> lname = TextEditingController().obs;
   Rx<TextEditingController> email = TextEditingController().obs;
   Rx<TextEditingController> mobile = TextEditingController().obs;
+  Rx<TextEditingController> dob = TextEditingController().obs;
+  List genders = [
+    ["Male", Icons.male, 'M'],
+    ["Female", Icons.female, 'F'],
+    ["Others", Icons.transgender, 'O'],
+  ].obs;
+  RxString selectedgender = ''.obs;
 
   RxInt address = 0.obs;
   RxInt AddUpdateid = 0.obs;
@@ -71,7 +79,7 @@ class UserProfileController extends GetxController {
 
     if (response!.isNotEmpty) {
       profile.signIn();
-      // getUserDetails();
+
       "Profile picture uploaded".showSuccess();
     }
   }
@@ -84,17 +92,15 @@ class UserProfileController extends GetxController {
 
       userprofile.value = await API.instance
           .get(endPoint: 'accounts/customer-profile/', isHeader: true);
-      print("runing=========>>>>>>>>>>>>>>>>>> ${userprofile.value}");
+
+      print(userprofile);
       fname.value.text = userprofile['first_name'];
       lname.value.text = userprofile['last_name'];
       email.value.text = userprofile['email'];
       mobile.value.text = userprofile['mobile_number'].toString();
-
-      print(mobile);
-      //  RxMap<dynamic, dynamic>.from(
-      //     jsonDecode(prefs.getString('userData').toString()));
+      dob.value.text = userprofile['dob'];
+      selectedgender.value = userprofile['gender'];
       getAddress();
-      // update();
     });
   }
 
@@ -114,26 +120,23 @@ class UserProfileController extends GetxController {
       "first_name": fname.value.text,
       "last_name": lname.value.text,
       "mobile_number": mobile.value.text,
+      "gender": selectedgender.value,
+      "dob": dob.value.text
     };
 
     debugPrint(data.toString());
     var response = API.instance.post(
         endPoint: 'accounts/customer-profile/', params: data, isHeader: true);
 
-    // var data = response;
-    // Future.delayed(Duration(milliseconds: 10), () async {
     getUserDetails();
     update();
-
-    // });
-    // await Get.to(UserProfile());
-    // Get.back();
   }
   // ------------------ Edit Profile ------------------------------------>
 
   addNewAddress() async {
+    print("object   ===============>>>>>>>>>>>>>>>");
     final addressData = {
-      "user": "1",
+      "user": userprofile['id'].toString(),
       "phone_num": phoneNumber.value.text,
       "building_num_name": buildingNameNo.value.text,
       "area_colony": area.value.text,

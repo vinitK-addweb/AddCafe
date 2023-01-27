@@ -1,10 +1,9 @@
-import 'package:addcafe/Components/AppBarStyle.dart';
 import 'package:flutter/material.dart';
-import '../GetxController/PrivacyPolicy_controller.dart';
+
 import 'package:get/get.dart';
 
 import '../Models/Model_Terms&Conditions.dart';
-import '../Styles/ColorStyle.dart';
+
 import '../Styles/TextStyles.dart';
 
 class TermsConditions extends StatelessWidget {
@@ -17,6 +16,7 @@ class TermsConditions extends StatelessWidget {
     return termsCondtions.isEmpty
         ? const SizedBox(
             height: 0,
+            child: Text("data"),
           )
         : Container(
             margin: const EdgeInsets.all(20),

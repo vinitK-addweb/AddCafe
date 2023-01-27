@@ -39,7 +39,6 @@ class CartController extends GetxController {
   // -------------------- Add to cart functionality ------------------------>>
 
   Future addToCart(payload) async {
-    print('payload datqa >>>>>>>>>>>' + payload.toString());
     http.Response response;
     response = await http.post(Uri.parse('${kBaseUrl}cart/add-cart-items/'),
         headers: {
@@ -49,8 +48,7 @@ class CartController extends GetxController {
         body: jsonEncode(payload));
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body) as Map;
-      // print(data['message'].toString());
-      '${data['message']}'.showSuccess();
+
       fetchCart();
     }
   }

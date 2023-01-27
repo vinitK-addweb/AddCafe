@@ -9,13 +9,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
 import '../GetxController/UserProfile_controller.dart';
+import 'package:intl/intl.dart';
 import '../Utils/Constant.dart';
 import '../Styles/TextStyles.dart';
 import '../Styles/ColorStyle.dart';
 import '../Components/ElevatedButtonCustom.dart';
 import '../Styles/EffectStyle.dart';
 import '../Components/TextFieldCustom.dart';
-import '../Components/ElevatedButtonCustom.dart';
+
 import '../Components/PickerCustom.dart';
 
 class UserProfile extends StatelessWidget {
@@ -24,6 +25,7 @@ class UserProfile extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
   final homPageController = Get.put(HomeBannerController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +63,7 @@ class UserProfile extends StatelessWidget {
                             const SizedBox(
                               height: 40,
                             ),
-                            // Text(controller.addAddress[0].toString()),
+
                             Container(
                               padding: const EdgeInsets.only(
                                   left: 20, right: 20, bottom: 30, top: 30),
@@ -134,11 +136,9 @@ class UserProfile extends StatelessWidget {
                                           )),
                                     ]),
                                   ),
-
                                   const SizedBox(
                                     height: 10,
                                   ),
-
                                   userAuth.userprofile.isEmpty
                                       ? const SizedBox(
                                           height: 15,
@@ -185,33 +185,6 @@ class UserProfile extends StatelessWidget {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  // ),
-
-                                  // Row(
-                                  //   mainAxisAlignment: MainAxisAlignment.center,
-                                  //   children: [
-                                  //     Text(
-                                  //         userAuth.userprofile.isEmpty
-                                  //             ? '${userAuth.userprofile}'
-                                  //             : userAuth.userprofile['email'] ??
-                                  //                 '',
-                                  //         style: TextStylesCustom.textStyles_22
-                                  //             .apply(
-                                  //                 fontWeightDelta: 2,
-                                  //                 color: ColorStyle
-                                  //                     .primaryColorGreen)),
-                                  //     userAuth.userprofile['is_email_verify']
-                                  //         ? Icon(
-                                  //             Icons.verified,
-                                  //             color:
-                                  //                 ColorStyle.primaryColorGreen,
-                                  //           )
-                                  //         : const Icon(
-                                  //             Icons.verified,
-                                  //             color: Colors.grey,
-                                  //           )
-                                  //   ],
-                                  // ),
                                 ],
                               ),
                             ),
@@ -257,12 +230,7 @@ class UserProfile extends StatelessWidget {
                               height: 30,
                             ),
                             controller.showEditProfile.value
-                                ?
-                                // Column(
-                                //     crossAxisAlignment:
-                                //         CrossAxisAlignment.start,
-                                //     children: [
-                                Form(
+                                ? Form(
                                     // key: formKey,
                                     child: Column(
                                     crossAxisAlignment:
@@ -272,8 +240,6 @@ class UserProfile extends StatelessWidget {
                                         controller: controller.fname.value,
                                         padding: const EdgeInsets.all(10),
                                         labelText: 'Your Name',
-                                        // controller: controller.textController.value,
-
                                         textStyle:
                                             TextStylesCustom.textStyles_16,
                                       ),
@@ -311,6 +277,124 @@ class UserProfile extends StatelessWidget {
 
                                       const SizedBox(
                                         height: 20,
+                                      ),
+                                      Text(
+                                        "Gender*",
+                                        style: TextStylesCustom.textStyles_18,
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(controller
+                                              .selectedgender.value.isNotEmpty
+                                          ? ''
+                                          : ''),
+                                      Obx(() {
+                                        return SizedBox(
+                                            height: 70,
+                                            child: ListView.builder(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                shrinkWrap: true,
+                                                itemCount:
+                                                    controller.genders.length,
+                                                itemBuilder: (context, index) {
+                                                  return InkWell(
+                                                    splashColor: ColorStyle
+                                                        .secondryColorRed,
+                                                    onTap: () {
+                                                      controller.selectedgender
+                                                              .value =
+                                                          controller.genders[
+                                                              index][2];
+                                                    },
+                                                    child: Card(
+                                                        color: controller
+                                                                    .selectedgender
+                                                                    .value ==
+                                                                controller
+                                                                        .genders[
+                                                                    index][2]
+                                                            ? Color(0xFF3B4257)
+                                                            : Colors.white,
+                                                        child: Container(
+                                                          height: 40,
+                                                          width: 50,
+                                                          alignment:
+                                                              Alignment.center,
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .all(12.0),
+                                                          child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: <Widget>[
+                                                              Icon(
+                                                                controller
+                                                                        .genders[
+                                                                    index][1],
+                                                                color: controller
+                                                                            .selectedgender
+                                                                            .value ==
+                                                                        controller.genders[index]
+                                                                            [2]
+                                                                    ? Colors
+                                                                        .white
+                                                                    : Colors
+                                                                        .grey,
+                                                                size: 16,
+                                                              ),
+                                                              const SizedBox(
+                                                                  height: 10),
+                                                              Text(
+                                                                controller
+                                                                        .genders[
+                                                                    index][0],
+                                                                style: TextStylesCustom.textStyles_12.apply(
+                                                                    color: controller.selectedgender.value ==
+                                                                            controller.genders[index][
+                                                                                2]
+                                                                        ? Colors
+                                                                            .white
+                                                                        : Colors
+                                                                            .grey),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        )),
+                                                  );
+                                                }));
+                                      }),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      TextField(
+                                          controller: controller.dob.value,
+                                          decoration: const InputDecoration(
+                                              prefixIcon: Icon(Icons
+                                                  .calendar_today), //icon of text field
+                                              labelText:
+                                                  "D.O.B" //label text of field
+                                              ),
+                                          readOnly:
+                                              true, // when true user cannot edit text
+                                          onTap: () async {
+                                            final dob =
+                                                await PickerCustom.datePicker(
+                                                    'yyyy-MM-dd');
+                                            controller.dob.value.text =
+                                                dob == null
+                                                    ? controller.dob.value.text
+                                                    : dob.toString();
+                                            // print(dob.toString());
+                                            //when click we have to show the datepicker
+                                          }),
+                                      const SizedBox(
+                                        height: 15,
                                       ),
                                       ElevatedButtonCustom(
                                         BgColor: ColorStyle.primaryColorRed,
@@ -648,14 +732,8 @@ class UserProfile extends StatelessWidget {
                                                           controller
                                                               .fetchAddressByid(
                                                                   index);
-                                                          // Get.to(AddNewAddress(
-                                                          //   isAddress: false,
-                                                          // ));
                                                         },
                                                       ),
-                                                      // const SizedBox(
-                                                      //   width: 10,
-                                                      // ),
                                                       Text(
                                                         '|',
                                                         style: TextStylesCustom
@@ -690,9 +768,6 @@ class UserProfile extends StatelessWidget {
                                           );
                                         },
                                       ),
-                                      // const SizedBox(
-                                      //   height: 10,
-                                      // ),
                                       ElevatedButtonCustom(
                                         BgColor: ColorStyle.primaryColorRed,
                                         text: '+ Add Address',
@@ -704,14 +779,6 @@ class UserProfile extends StatelessWidget {
                                         onTap: () {
                                           controller.clearEdit();
                                           Get.to(AddNewAddress());
-                                          // showModalBottomSheet(
-                                          //     isScrollControlled: true,
-                                          //     backgroundColor: Colors.transparent,
-                                          //     shape: RoundedRectangleBorder(
-                                          //         borderRadius: BorderRadius.vertical(
-                                          //             top: Radius.circular(20))),
-                                          //     context: context,
-                                          //     builder: (context) => AddNewAddress());
                                         },
                                       ),
                                       const SizedBox(

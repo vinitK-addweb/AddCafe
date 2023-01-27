@@ -32,23 +32,17 @@ class CategoryDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print('category##%#%#${categoryItems}');
-
-    // final cartApi = Provider.of<CartApi>(context);
-    // final myFavouritesApi = Provider.of<MyFavouritesApi>(context);
-    // Future.delayed(Duration(milliseconds: 10), () {});
-
-      if (controller.isloader) {
-        return spinkitLoader();
+    if (controller.isloader) {
+      return spinkitLoader();
+    } else {
+      if (controller.categoryProduct.isEmpty) {
+        return Text(
+          ' No item found ',
+          style: TextStylesCustom.textStyles_15
+              .apply(fontWeightDelta: 2, color: ColorStyle.primaryColorRed),
+        );
       } else {
-        if (controller.categoryProduct.isEmpty) {
-          return Text(
-            ' No item found ',
-            style: TextStylesCustom.textStyles_15
-                .apply(fontWeightDelta: 2, color: ColorStyle.primaryColorRed),
-          );
-        } else {
-          return Obx(() {
+        return Obx(() {
           return ListView.builder(
               itemCount: controller.categoryProduct.length,
               physics: const NeverScrollableScrollPhysics(),
@@ -67,7 +61,6 @@ class CategoryDropdown extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Text(categoryItems.toString()),
                               const SizedBox(
                                   width: 20,
                                   child: Image(
@@ -115,45 +108,47 @@ class CategoryDropdown extends StatelessWidget {
                                   style: TextStylesCustom.textStyles_10,
                                 ),
                               ),
-
-                              Row(
-                                children: [
-                                  myFavouritesApi
-                                          .isInMyFavorites(controller
-                                              .categoryProduct[index]['id'])
-                                          .isNotEmpty
-                                      ? IconButton(
-                                          onPressed: () {
-                                            myFavouritesApi.deleteMyFavourites(
-                                              //  categoryItems[index]['id']
+                              Obx(() {
+                                return Row(
+                                  children: [
+                                    myFavouritesApi
+                                            .isInMyFavorites(controller
+                                                .categoryProduct[index]['id'])
+                                            .isNotEmpty
+                                        ? IconButton(
+                                            onPressed: () {
                                               myFavouritesApi
-                                                  .isInMyFavorites(controller
-                                                          .categoryProduct[
-                                                      index]['id'])[0]
-                                                  .id,
-                                            );
-                                          },
-                                          icon: const Icon(
-                                            Icons.favorite,
-                                            color: Colors.red,
+                                                  .deleteMyFavourites(
+                                                //  categoryItems[index]['id']
+                                                myFavouritesApi
+                                                    .isInMyFavorites(controller
+                                                            .categoryProduct[
+                                                        index]['id'])[0]
+                                                    .id,
+                                              );
+                                            },
+                                            icon: const Icon(
+                                              Icons.favorite,
+                                              color: Colors.red,
+                                            ),
+                                          )
+                                        : IconButton(
+                                            onPressed: () {
+                                              myFavouritesApi.addToMyFavorites({
+                                                "user": 1,
+                                                "product": controller
+                                                        .categoryProduct[index]
+                                                    ['id']
+                                              });
+                                            },
+                                            icon: const Icon(
+                                              Icons.favorite_border,
+                                              color: Colors.red,
+                                            ),
                                           ),
-                                        )
-                                      : IconButton(
-                                          onPressed: () {
-                                            myFavouritesApi.addToMyFavorites({
-                                              "user": 1,
-                                              "product": controller
-                                                  .categoryProduct[index]['id']
-                                              //  cartApi.update();
-                                            });
-                                          },
-                                          icon: const Icon(
-                                            Icons.favorite_border,
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                ],
-                              )
+                                  ],
+                                );
+                              })
                             ],
                           ),
                         ),
@@ -162,8 +157,6 @@ class CategoryDropdown extends StatelessWidget {
                             SizedBox(
                               width: 150,
                               child: Column(
-                                // mainAxisAlignment: MainAxisAlignment.center,
-                                // crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SizedBox(
                                     width: 150,
@@ -180,8 +173,6 @@ class CategoryDropdown extends StatelessWidget {
                                   const SizedBox(
                                     height: 20,
                                   ),
-                                  // Text(categoryItems[index]
-                                  //     .toString())
                                 ],
                               ),
                             ),
@@ -260,7 +251,6 @@ class CategoryDropdown extends StatelessWidget {
                                           style: IconButton.styleFrom(
                                               backgroundColor:
                                                   ColorStyle.primaryColorRed),
-                                          // iconSize: 26,
                                           color: Colors.white,
                                           icon: const CircleAvatar(
                                               radius: 14,
@@ -277,7 +267,6 @@ class CategoryDropdown extends StatelessWidget {
                                       ],
                                     ),
                             ),
-                            // ),
                           ],
                         )
                       ],
@@ -285,9 +274,8 @@ class CategoryDropdown extends StatelessWidget {
                   ),
                 );
               });
-          });
-        }
+        });
       }
-
+    }
   }
 }

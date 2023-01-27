@@ -1,3 +1,5 @@
+// ignore_for_file: unrelated_type_equality_checks
+
 import 'package:addcafe/Views/Cart/cart.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +36,7 @@ class _CategoryItemsState extends State<CategoryItems> {
   final ActiveProductsController controller =
       Get.put(ActiveProductsController());
   final cartApi = Get.put(CartController());
-  final home = Get.put( HomeBannerController ());
+  final home = Get.put(HomeBannerController());
   // void initState() {
   //   super.initState();
   //   controller.selectedCategory.value = widget.selectedMenu;
@@ -43,15 +45,12 @@ class _CategoryItemsState extends State<CategoryItems> {
   // final myFavouritesApi = Get.put(MyFavouritesApi());
   @override
   Widget build(BuildContext context) {
-    // controller.selectedCategory.value = widget.selectedMenu;
     return GetBuilder(
       init: controller,
       initState: (_) {
         controller.selectedCategory.value = widget.selectedMenu;
 
         controller.initCustom();
-        // controller.getFilteredProducts(widget.selectedMenu);
-        // controller.fetchAllProducts();
       },
       builder: (_) {
         return Obx(() => Scaffold(
@@ -88,10 +87,6 @@ class _CategoryItemsState extends State<CategoryItems> {
                                 topLeft: Radius.circular(15),
                                 topRight: Radius.circular(15))),
                         height: 60,
-                        // child: ElevatedButton(
-                        //   onPressed: () {
-                        //     Navigator.of(context).pushNamed('/cart');
-                        //   },
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -147,19 +142,28 @@ class _CategoryItemsState extends State<CategoryItems> {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         final e = home.categoriesData[index];
-                        // controller.getFilteredProducts(e.name);
+
                         return Card(
                             child: Column(
                           children: [
-                            // Text(e.toString()),
                             InkWell(
                                 onTap: () {
                                   if (controller.selectedCategory.value ==
                                       e.name!) {
                                     controller.selectedCategory.value = '';
-                                  } else {
-                                  controller.slectCategory(e.name!);}
 
+                                    Future.delayed(
+                                        const Duration(milliseconds: 10), () {
+                                      controller.update();
+                                    });
+                                  } else {
+                                    controller.slectCategory(e.name!);
+
+                                    Future.delayed(
+                                        const Duration(milliseconds: 10), () {
+                                      controller.update();
+                                    });
+                                  }
                                 },
                                 child: Padding(
                                   padding:
@@ -176,26 +180,19 @@ class _CategoryItemsState extends State<CategoryItems> {
                                       ),
                                       IconButton(
                                           onPressed: () {
-                                            // print("object");
-                                            // print(e.name);
-                                            // controller
-                                            //     .changeCategory('${e.name}');
-
                                             if (controller.selectedCategory ==
                                                 e.name) {
                                               controller
                                                   .selectedCategory.value = '';
-                                              print(" = = = == =  > " +
-                                                  controller
-                                                      .selectedCategory.value
-                                                      .toString());
+                                              Future.delayed(
+                                                  const Duration(
+                                                      milliseconds: 10), () {
+                                                controller.update();
+                                              });
                                             } else {
-                                              print("bejct O" +
-                                                  controller
-                                                      .selectedCategory.value
-                                                      .toString());
                                               controller
                                                   .getFilteredProducts(e.name);
+                                              controller.slectCategory(e.name!);
                                               controller.update();
                                             }
                                           },
@@ -213,7 +210,7 @@ class _CategoryItemsState extends State<CategoryItems> {
                                 //  Future.delayed(Duration(milliseconds: 2), () {});
                                 CategoryDropdown(
                                     // controller.categoryProduct
-                                )
+                                    )
                                 : const SizedBox(
                                     height: 0,
                                   )
