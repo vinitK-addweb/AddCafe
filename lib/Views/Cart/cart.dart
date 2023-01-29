@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:addcafe/BottomNavBar.dart';
 import 'package:addcafe/Styles/TextStyles.dart';
@@ -37,11 +38,9 @@ class _CartState extends State<Cart> {
     print(
         "Payment Success : ${response.paymentId} order id ->${response.orderId} signature==> ${response.signature} ");
     Fluttertoast.showToast(
-        msg:
-            "Payment Success : ${response.paymentId} order id ->${response.orderId} signature==> ${response.signature} ",
-        timeInSecForIosWeb: 4);
+        msg: "Payment Success : ${response.paymentId} ", timeInSecForIosWeb: 4);
 
-    var res = API.instance
+    API.instance
         .post(
             endPoint: 'order/handle-payment/',
             params: {
@@ -51,16 +50,18 @@ class _CartState extends State<Cart> {
             },
             isHeader: true)
         .then((value) => Get.to(OrderDetails()));
-
-    // controller.fetchCart();
-
-    print(res);
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
     Fluttertoast.showToast(
         msg: "Error here : ${response.code} - ${response.message}",
         timeInSecForIosWeb: 4);
+    log('${userOrder['payload']['id']}');
+    var del = API.instance.delete(
+        endPoint: '/order/user-order/${userOrder['payload']['id']}',
+        isHeader: true);
+
+    log(del.toString());
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
@@ -95,28 +96,24 @@ class _CartState extends State<Cart> {
 
     final url = Uri.parse(loginUrl);
 
-    print(param);
-
     var paramJSON = jsonEncode(param);
     var header = {
       'Content-Type': 'application/json',
       "Authorization": 'Bearer $kTOKENSAVED'
     };
-    print(paramJSON);
+    log(paramJSON);
 
     try {
       showLoaderGetX();
 
       var response = await http.post(url, headers: header, body: paramJSON);
-      print(header);
-      print(response.body);
+
+      log(response.body);
       hideLoader();
       if (response.statusCode == 200) {
-        // var jsonData = json.decode(response.body);
         userOrder = json.decode(response.body);
         orderPayment();
       } else {
-        // print(response.body);
         'Somthing went wrong'.showError();
       }
     } catch (error) {
@@ -128,14 +125,13 @@ class _CartState extends State<Cart> {
 
   orderPayment() async {
     final param = {"order_id": userOrder['payload']['id'].toString()};
-    print(param);
+
     orderpayment = await API.instance
         .post(endPoint: 'order/payment/', params: param, isHeader: true) as Map;
     makePayment();
   }
 
   void makePayment() async {
-    print("object");
     var options = {
       'key': orderpayment['payload']['razor_key'].toString(),
       'amount': orderpayment['payload']['amount'],
@@ -143,7 +139,7 @@ class _CartState extends State<Cart> {
       "order_id": orderpayment['payload']['id'].toString(),
       'description': 'testing purpose',
       'prefill': {
-        'contact': '+91-${orderpayment['payload']['email']}',
+        'contact': '+${orderpayment['payload']['contact']}',
         'email': orderpayment['payload']['email'].toString(),
       },
     };

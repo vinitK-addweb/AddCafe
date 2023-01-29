@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/widgets.dart';
 
 import 'package:get/get.dart';
@@ -18,7 +20,7 @@ class OrderHistoryController extends GetxController {
     // print("search" + itemName.toString());
     orderHistory.value =
         await API.instance.get(endPoint: "order/user-order/", isHeader: true);
-
+    log(orderHistory.toString());
     // Future.delayed(const Duration(seconds: 2), () {
     //   searchResult.value = response;
     // });

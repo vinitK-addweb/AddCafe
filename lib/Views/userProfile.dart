@@ -89,16 +89,12 @@ class UserProfile extends StatelessWidget {
                                                 BorderRadius.circular(70),
                                             child: CircleAvatar(
                                               radius: 65,
-                                              // backgroundColor:
-                                              //     ColorStyle.primaryColorGreen,
                                               child: controller.image.value.path
                                                       .isNotEmpty
                                                   ? Image.file(
                                                       controller.image.value,
                                                       fit: BoxFit.cover,
                                                       width: double.infinity,
-                                                      // height: 65 * 2,
-                                                      // width: 65 * 2,
                                                     )
                                                   : Image.network(
                                                       fit: BoxFit.cover,
@@ -124,7 +120,6 @@ class UserProfile extends StatelessWidget {
                                                 },
                                               );
                                             },
-                                            // controller.getImage(),
                                             elevation: 2,
                                             fillColor: const Color(0xFFF5F6F9),
                                             padding: const EdgeInsets.all(8.0),

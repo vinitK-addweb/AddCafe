@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -119,6 +120,7 @@ class API {
     try {
       showLoaderGetX();
       final response = await http.delete(url, headers: header);
+
       hideLoader();
 
       final Map parsed = json.decode(response.body);

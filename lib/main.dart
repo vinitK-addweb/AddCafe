@@ -31,8 +31,11 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
   ]);
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
+
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
           AndroidFlutterLocalNotificationsPlugin>()

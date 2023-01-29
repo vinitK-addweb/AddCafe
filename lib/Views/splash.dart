@@ -21,6 +21,13 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
+    FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+    Future.delayed(Duration(milliseconds: 10), () {
+      _firebaseMessaging.getToken().then((token) {
+        print('FlutterFire Messaging Example: Got APNs token: $token');
+      });
+    });
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification notification = message.notification!;
       AndroidNotification android = message.notification!.android!;

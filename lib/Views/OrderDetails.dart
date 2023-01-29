@@ -331,7 +331,7 @@ class OrderDetails extends StatelessWidget {
                         onTap: (() {}),
                         text: 'Cancel Order',
                         BgColor: ColorStyle.primaryColorRed,
-                        size: const Size(130, 35),
+                        size: const Size(140, 35),
                         radiusBorder: 5,
                       )
                     ],
