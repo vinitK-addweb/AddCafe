@@ -20,6 +20,7 @@ class UserProfileController extends GetxController {
   RxList<UserAddressModel> addAddress = <UserAddressModel>[].obs;
   Rx<TextEditingController> currentPassword = TextEditingController().obs;
   Rx<TextEditingController> newPassword = TextEditingController().obs;
+  Rx<TextEditingController> cnewPassword = TextEditingController().obs;
   Rx<TextEditingController> phoneNumber = TextEditingController().obs;
   Rx<TextEditingController> textController = TextEditingController().obs;
   Rx<TextEditingController> buildingNameNo = TextEditingController().obs;
@@ -134,7 +135,6 @@ class UserProfileController extends GetxController {
   // ------------------ Edit Profile ------------------------------------>
 
   addNewAddress() async {
-    print("object   ===============>>>>>>>>>>>>>>>");
     final addressData = {
       "user": userprofile['id'].toString(),
       "phone_num": phoneNumber.value.text,

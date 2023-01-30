@@ -467,7 +467,6 @@ class UserProfile extends StatelessWidget {
                                                     const EdgeInsets.all(10),
                                                 labelText:
                                                     'Enter Current Password',
-                                                // controller: controller.textController.value,
                                                 hintText: '*********',
                                                 textStyle: TextStylesCustom
                                                     .textStyles_16,
@@ -516,7 +515,7 @@ class UserProfile extends StatelessWidget {
                                               ),
                                               PasswordFieldUnderline(
                                                   controller: controller
-                                                      .newPassword.value,
+                                                      .cnewPassword.value,
                                                   padding:
                                                       const EdgeInsets.all(10),
                                                   labelText:
@@ -526,21 +525,13 @@ class UserProfile extends StatelessWidget {
                                                   textStyle: TextStylesCustom
                                                       .textStyles_16,
                                                   validator: (value) {
-                                                    RegExp regex = RegExp(
-                                                        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-                                                    var passNonNullValue =
-                                                        value ?? "";
-                                                    if (passNonNullValue
-                                                        .isEmpty) {
-                                                      return ("Password is required");
-                                                    } else if (passNonNullValue
-                                                            .length <
-                                                        6) {
-                                                      return ("Password Must be more than 5 characters");
-                                                    } else if (!regex.hasMatch(
-                                                        passNonNullValue)) {
-                                                      return ("Password Must upper,lower,digit & Special character ");
+                                                    if (controller.cnewPassword
+                                                            .value.text !=
+                                                        controller.newPassword
+                                                            .value.text) {
+                                                      return ("Yor New Password & Current Password is Mismatch");
                                                     }
+
                                                     return null;
                                                   }),
                                             ],

@@ -192,22 +192,27 @@ class CategoryDropdown extends StatelessWidget {
                                                 ['add_on_data'] as List)
                                             .isNotEmpty)
                                           {
-                                            showModalBottomSheet(
-                                              isScrollControlled: true,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              shape:
-                                                  const RoundedRectangleBorder(
+                                            if (kTOKENSAVED != '')
+                                              {
+                                                showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  shape: const RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.vertical(
                                                               top: Radius
                                                                   .circular(
                                                                       20))),
-                                              context: context,
-                                              builder: (context) => Addon(
-                                                  controller
-                                                      .categoryProduct[index]),
-                                            )
+                                                  context: context,
+                                                  builder: (context) => Addon(
+                                                      controller
+                                                              .categoryProduct[
+                                                          index]),
+                                                )
+                                              }
+                                            else
+                                              {Get.to(() => Mylogin())}
                                           }
                                         else
                                           {
