@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../GetxController/Cart_controller.dart';
-import '../GetxController/Coupon_controller.dart';
+
 import '../Styles/ColorStyle.dart';
 import '../Styles/TextStyles.dart';
 import '../Components/AppBarStyle.dart';
@@ -13,13 +13,15 @@ import '../Components/ElevatedButtonCustom.dart';
 import '../GetxController/Offers_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import 'Cart/cart.dart';
+
 class Offers extends StatelessWidget {
   Offers({super.key});
   final controller = Get.put(OffersController());
   final homPageController = Get.put(HomeBannerController());
-  final couponApply = Get.put(CouponController());
+
   final cart = Get.put(CartController());
-  final coupon = Get.put(CouponController());
+  // final coupon = Get.put(CouponController());
   var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -68,8 +70,8 @@ class Offers extends StatelessWidget {
                         Expanded(
                           child: Form(
                             key: formKey,
-                            child: TextField(
-                                controller: couponApply.coupon.value,
+                            child: TextFormField(
+                                controller: controller.coupon.value,
                                 decoration: InputDecoration(
                                   hintText: "Coupon...", //hint text
                                   prefixIcon: Image.asset(
@@ -92,7 +94,8 @@ class Offers extends StatelessWidget {
                           ),
                           onPressed: () {
                             cart.taxShippingCharges();
-                            couponApply.applyCoupon(coupon.coupon.value.text);
+                            controller
+                                .applyCoupon(controller.coupon.value.text);
                             // FocusScopeNode currentFocus =
                             //     FocusScope.of(context);
                             // if (!currentFocus.hasPrimaryFocus &&
@@ -125,18 +128,6 @@ class Offers extends StatelessWidget {
                   const SizedBox(
                     height: 10,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
-                      couponApply.response['message'] != null
-                          ? couponApply.response['message'].toString()
-                          : '',
-                      // couponApply.message.value,
-                      style: TextStylesCustom.textStyles_13
-                          .apply(color: ColorStyle.primaryColorRed),
-                    ),
-                  ),
-
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -188,7 +179,7 @@ class Offers extends StatelessWidget {
                                                       Radius.circular(8)),
                                             ),
                                             child: Text(
-                                                controller.offers[index].code
+                                                controller.offers[index]['code']
                                                     .toString(),
                                                 style: TextStylesCustom
                                                     .textStyles_14)),
@@ -209,8 +200,8 @@ class Offers extends StatelessWidget {
                                           child: SizedBox(
                                             width: 240,
                                             child: Text(
-                                              controller
-                                                  .offers[index].description
+                                              controller.offers[index]
+                                                      ['description']
                                                   .toString(),
                                               style: TextStylesCustom
                                                   .textStyles_12,
@@ -218,11 +209,47 @@ class Offers extends StatelessWidget {
                                           ),
                                         ),
                                         ElevatedButtonCustom(
-                                          onTap: () {
-                                            cart.taxShippingCharges();
-                                            couponApply.applyCoupon(controller
-                                                .offers[index].code
-                                                .toString());
+                                          onTap: () async {
+                                            showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        Obx((() {
+                                                          return AlertDialog(
+                                                            title: const Text(
+                                                                'AlertDialog Title'),
+                                                            content: Text(
+                                                              controller.response[
+                                                                          'message'] ==
+                                                                      null
+                                                                  ? ''
+                                                                  : controller
+                                                                      .response[
+                                                                          'message']
+                                                                      .toString(),
+
+                                                              // couponApply.message.value,
+                                                              style: TextStylesCustom
+                                                                  .textStyles_13
+                                                                  .apply(
+                                                                      color: ColorStyle
+                                                                          .primaryColorRed),
+                                                            ),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Get.back(),
+                                                                child:
+                                                                    const Text(
+                                                                        'OK'),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        })));
+                                            await cart.taxShippingCharges();
+                                            await controller.applyCoupon(
+                                                controller.offers[index]
+                                                    ['code']);
                                           },
                                           text: 'Apply',
                                           size: const Size(100, 20),
@@ -235,128 +262,6 @@ class Offers extends StatelessWidget {
                           }),
                     ),
                   ),
-
-                  //  controller.offers.isNotEmpty
-                  //     ? Column(
-                  //         // mainAxisAlignment: MainAxisAlignment.start,
-                  //         crossAxisAlignment: CrossAxisAlignment.start,
-                  //         children: [
-                  //             const SizedBox(
-                  //               height: 20,
-                  //             ),
-                  //             CarouselSlider(
-                  //               options: CarouselOptions(
-                  //                 height: 130.0, autoPlay: false,
-                  //                 // enlargeCenterPage: true,
-                  //               ),
-                  //               items: controller.offers.map((i) {
-                  //                 var index = controller.offers.indexOf(i);
-                  //                 return Builder(
-                  //                   builder: (BuildContext context) {
-                  //                     return InkWell(
-                  //                       onTap: () {
-                  //                         controller.bannerIdx(index);
-                  //                       },
-                  //                       child: Container(
-                  //                         decoration: BoxDecoration(
-                  //                             image: DecorationImage(
-                  //                                 image:
-                  //                                     NetworkImage(i.couponBanner!),
-                  //                                 fit: BoxFit.fill),
-                  //                             borderRadius:
-                  //                                 BorderRadius.circular(10)),
-                  //                         width: MediaQuery.of(context).size.width,
-                  //                         margin: const EdgeInsets.symmetric(
-                  //                             horizontal: 5.0),
-                  //                       ),
-                  //                     );
-                  //                   },
-                  //                 );
-                  //               }).toList(),
-                  //             ),
-
-                  //             // HomeBanner(
-                  //             //   bannerData: homeBanner.bannerData.value,
-                  //             //   autoplay: false,
-                  //             // ),
-
-                  //             const SizedBox(
-                  //               height: 20,
-                  //             ),
-                  //             Container(
-                  //               margin: const EdgeInsets.symmetric(horizontal: 20),
-                  //               child: Column(
-                  //                   crossAxisAlignment: CrossAxisAlignment.start,
-                  //                   children: [
-                  //                     Text(
-                  //                       'Chinese BOGO Week is here.',
-                  //                       style: TextStylesCustom.textStyles_18
-                  //                           .apply(fontWeightDelta: 3),
-                  //                     ),
-                  //                     const SizedBox(
-                  //                       height: 20,
-                  //                     ),
-                  //                     Text(
-                  //                       'Terms and Conditions',
-                  //                       style: TextStylesCustom.textStyles_20.apply(
-                  //                           color: ColorStyle.secondryColorRed),
-                  //                     ),
-                  //                     Text(
-                  //                       controller.offers[controller.idx.value]
-                  //                           .termsAndCondition
-                  //                           .toString(),
-                  //                       // 'To redeem the coupon code, the claimant types the coupon code into the promotional box in the booking field of the Quovai\'s websites and the relevant discount will be automatically deducted from the final price of the qualifying purchase. If the claimant fails to enter the coupon code at the time of purchase as specified, the purchase will not be eligible for the discount. Discounts may not be claimed after confirmation of a claimant\'s purchase',
-                  //                       style: TextStylesCustom.textStyles_16,
-                  //                     ),
-                  //                     const SizedBox(
-                  //                       height: 20,
-                  //                     ),
-                  //                     Row(
-                  //                       children: [
-                  //                         TextRichCustom(
-                  //                           color: ColorStyle.primaryColorGreen,
-                  //                           textFirst: 'Coupan ro be applied: ',
-                  //                           textSecond: controller
-                  //                               .offers[controller.idx.value].code,
-                  //                         ),
-                  //                         IconButton(
-                  //                             onPressed: () {
-                  //                               Clipboard.setData(ClipboardData(
-                  //                                   text: controller
-                  //                                       .offers[
-                  //                                           controller.idx.value]
-                  //                                       .code));
-                  //                             },
-                  //                             icon: Icon(
-                  //                               Icons.copy_sharp,
-                  //                               color:
-                  //                                   ColorStyle.secondryColorGreen,
-                  //                             ))
-                  //                       ],
-                  //                     ),
-                  //                     Text(controller
-                  //                         .offers[controller.idx.value].description
-                  //                         .toString()),
-                  //                     const SizedBox(
-                  //                       height: 20,
-                  //                     ),
-                  //                     ElevatedButtonCustom(
-                  //                       BgColor: ColorStyle.primaryColorRed,
-                  //                       radiusBorder: 50,
-                  //                       onTap: () {
-                  //                         controller.fetchOffers();
-                  //                       },
-                  //                       text: 'Apply Offer',
-                  //                       size: Size(
-                  //                           MediaQuery.of(context).size.width, 50),
-                  //                     )
-                  //                   ]),
-                  //             )
-                  //           ])
-                  //     : const SizedBox(
-                  //         height: 0,
-                  //       ),
-                  // );
                 ],
               ),
             );

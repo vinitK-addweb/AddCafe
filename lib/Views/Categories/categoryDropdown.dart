@@ -1,5 +1,7 @@
 import 'package:addcafe/Styles/ColorStyle.dart';
 import 'package:addcafe/Styles/TextStyles.dart';
+import 'package:addcafe/Utils/Constant.dart';
+import 'package:addcafe/Views/Auth/Signin.dart';
 import 'package:addcafe/Views/Categories/categoryItems.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,15 +20,10 @@ import 'addons.dart';
 import '../../Models/Model_ActiveProducts.dart';
 
 class CategoryDropdown extends StatelessWidget {
-  CategoryDropdown(
-      // this.categoryItems,
-      {super.key});
+  CategoryDropdown({super.key});
 
   final controller = Get.put(ActiveProductsController());
 
-  // List categoryItems = ActiveProductsController().categoryProduct;
-
-  // final List<ModelActiveProducts> categoryItems;
   final cartApi = Get.put(CartController());
   final myFavouritesApi = Get.put(MyFavouritesApi());
 
@@ -117,15 +114,18 @@ class CategoryDropdown extends StatelessWidget {
                                             .isNotEmpty
                                         ? IconButton(
                                             onPressed: () {
-                                              myFavouritesApi
-                                                  .deleteMyFavourites(
-                                                //  categoryItems[index]['id']
+                                              if (kTOKENSAVED != '') {
                                                 myFavouritesApi
-                                                    .isInMyFavorites(controller
-                                                            .categoryProduct[
-                                                        index]['id'])[0]
-                                                    .id,
-                                              );
+                                                    .deleteMyFavourites(
+                                                  myFavouritesApi
+                                                      .isInMyFavorites(controller
+                                                              .categoryProduct[
+                                                          index]['id'])[0]
+                                                      .id,
+                                                );
+                                              } else {
+                                                Get.to(() => Mylogin());
+                                              }
                                             },
                                             icon: const Icon(
                                               Icons.favorite,
@@ -134,12 +134,17 @@ class CategoryDropdown extends StatelessWidget {
                                           )
                                         : IconButton(
                                             onPressed: () {
-                                              myFavouritesApi.addToMyFavorites({
-                                                "user": 1,
-                                                "product": controller
-                                                        .categoryProduct[index]
-                                                    ['id']
-                                              });
+                                              if (kTOKENSAVED != '') {
+                                                myFavouritesApi
+                                                    .addToMyFavorites({
+                                                  "user": 1,
+                                                  "product": controller
+                                                          .categoryProduct[
+                                                      index]['id']
+                                                });
+                                              } else {
+                                                Get.to(() => Mylogin());
+                                              }
                                             },
                                             icon: const Icon(
                                               Icons.favorite_border,
@@ -206,11 +211,17 @@ class CategoryDropdown extends StatelessWidget {
                                           }
                                         else
                                           {
-                                            cartApi.addToCart({
-                                              'item': controller
-                                                  .categoryProduct[index]['id'],
-                                              "addon": []
-                                            })
+                                            if (kTOKENSAVED != '')
+                                              {
+                                                cartApi.addToCart({
+                                                  'item': controller
+                                                          .categoryProduct[
+                                                      index]['id'],
+                                                  "addon": []
+                                                })
+                                              }
+                                            else
+                                              {Get.to(() => Mylogin())}
                                           }
                                       },
                                       child: const Text('Add'),

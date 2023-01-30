@@ -39,8 +39,10 @@ class OrderHistory extends StatelessWidget {
                             fontWeightDelta: 3,
                             color: ColorStyle.secondryColorRed),
                       ))
-                    : SingleChildScrollView(
+                    : SizedBox(
                         child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            // scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
                             itemCount: controller.orderHistory.length,
                             itemBuilder: ((context, idx) {
@@ -51,20 +53,18 @@ class OrderHistory extends StatelessWidget {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(8),
                                     border: Border.all(width: 0.1),
-
-                                    // color: ColorStyle.secondryColorBlack,
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      // Text(controller.orderHistory.length
-                                      //     .toString()),
                                       ListView.builder(
                                           shrinkWrap: true,
                                           physics:
                                               const NeverScrollableScrollPhysics(),
-                                          itemCount: 2,
+                                          itemCount: controller
+                                              .orderHistory[idx]['product']
+                                              .length,
                                           itemBuilder: ((context, index) {
                                             return RichText(
                                               textAlign: TextAlign.start,
@@ -184,7 +184,8 @@ class OrderHistory extends StatelessWidget {
                                       )
                                     ],
                                   ));
-                            }))));
+                            })),
+                      ));
           });
         });
   }

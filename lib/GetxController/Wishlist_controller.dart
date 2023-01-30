@@ -72,15 +72,12 @@ class MyFavouritesApi extends GetxController {
     if (response.statusCode == 200) {
       print('addToMyFavorites called');
       fetchMyFavourites();
-      // isInMyFavorites(productData['id']);
-      // update();
     } else {
       print('addToMyFavorites not called');
     }
   }
 
   List isInMyFavorites(productId) {
-    print("the is data is here ==============>>>>>>>>>>>>>>>> $productId");
     var a =
         myFavourites.where((element) => element.product == productId).toList();
 

@@ -6,7 +6,7 @@ import 'package:addcafe/Styles/TextStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../Utils/Constant.dart';
-import '../../GetxController/Coupon_controller.dart';
+// import '../../GetxController/Coupon_controller.dart';
 import '../../GetxController/UserProfile_controller.dart';
 import '../../Utils/API.dart';
 import '../../Utils/Global.dart';
@@ -17,6 +17,7 @@ import './emptyCart.dart';
 import '../../Styles/ColorStyle.dart';
 import '../../GetxController/Cart_controller.dart';
 import '../../GetxController/MyHomePage_controller.dart';
+import '../../GetxController/Offers_controller.dart';
 import '../../Components/AppBarStyle.dart';
 import '../../Components/ElevatedButtonCustom.dart';
 import 'address.dart';
@@ -33,6 +34,8 @@ class Cart extends StatefulWidget {
 class _CartState extends State<Cart> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final controller = Get.put(CartController());
+  final offer = Get.put(OffersController());
+  String dropdownValue = 'Cash';
   Razorpay? _razorpay;
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     print(
@@ -82,16 +85,29 @@ class _CartState extends State<Cart> {
   var total;
   Map userOrder = {};
   Map orderpayment = {};
+  Map checkout = {};
+
+  // coupon checkout function-------------------->>>>>
+  checkOut(addressid, double price) async {
+    final param = {
+      "coupon_id": offer.response['payload'] == null
+          ? ''
+          : offer.response['payload']['coupon_id'].toString()
+    };
+
+    checkout = await API.instance
+        .post(endPoint: 'cart/checkout/', params: param, isHeader: true) as Map;
+
+    await submitRequest(addressid, price);
+  }
 
   submitRequest(addressid, double price) async {
     final loginUrl = '${kBaseUrl}order/order-create/';
     final param = {
       "address": addressid,
       "order_notes": "(This is Optional Field)",
-      "discount": null,
-      "discount_amount": 0,
-      "rate_after_discount": price,
-      "payment_mode": "cash"
+      "rate_after_discount":
+          checkout['total_rate_after_discount'] ?? checkout['total_rate'],
     };
 
     final url = Uri.parse(loginUrl);
@@ -112,7 +128,9 @@ class _CartState extends State<Cart> {
       hideLoader();
       if (response.statusCode == 200) {
         userOrder = json.decode(response.body);
-        orderPayment();
+        controller.update();
+        log("Order Created");
+        dropdownValue == 'Cash' ? Get.to(OrderDetails()) : orderPayment();
       } else {
         'Somthing went wrong'.showError();
       }
@@ -153,7 +171,7 @@ class _CartState extends State<Cart> {
   Widget build(BuildContext context) {
     final homPageController = Get.put(HomeBannerController());
     final userProfile = Get.put(UserProfileController());
-    final couponApply = Get.put(CouponController());
+    // final couponApply = Get.put(CouponController());
 
     return GetBuilder(
         init: controller,
@@ -170,7 +188,6 @@ class _CartState extends State<Cart> {
                 backgroundColor: ColorStyle.primaryColorRed,
                 leading: IconButton(
                   onPressed: () => Get.back(),
-                  // currentIndex.value = 0,
                   icon: const Icon(
                     Icons.arrow_back,
                     size: 24,
@@ -192,7 +209,7 @@ class _CartState extends State<Cart> {
                       ),
                     )
                   : Container(
-                      height: 180,
+                      height: MediaQuery.of(context).size.height / 4.8,
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       margin: const EdgeInsets.symmetric(horizontal: 15),
                       child: Column(
@@ -286,29 +303,57 @@ class _CartState extends State<Cart> {
                                           ),
                                         ),
                                       ),
-
-                                      // ),
                                       const SizedBox(
                                         height: 10,
                                       ),
                                     ]),
-                          ElevatedButtonCustom(
-                            BgColor: ColorStyle.primaryColorRed,
-                            size: Size(MediaQuery.of(context).size.width, 50),
-                            text:
-                                // controller.cartData.isNotEmpty
-                                //     ?
-                                'Proceed to checkout',
-                            // : 'Add Items',
-                            onTap: () {
-                              total =
-                                  controller.cart['total_rate'] + 20 + 27.00;
-                              // submitRequest();
-                              submitRequest(
-                                  userProfile
-                                      .addAddress[userProfile.address.value].id,
-                                  total);
-                            },
+                          FittedBox(
+                            child: Row(
+                              children: [
+                                DropdownButton<String>(
+                                  value: dropdownValue,
+                                  items: <String>['Cash', 'Online']
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: const TextStyle(fontSize: 15),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      dropdownValue = newValue!;
+                                    });
+                                  },
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                ElevatedButtonCustom(
+                                  radiusBorder: 10,
+                                  BgColor: ColorStyle.primaryColorRed,
+                                  size: Size(
+                                      MediaQuery.of(context).size.width / 1.6,
+                                      40),
+                                  text: 'Proceed to checkout',
+                                  onTap: () {
+                                    total = controller.cart['total_rate'];
+                                    // +
+                                    // 20 +
+                                    // 27.00;
+                                    checkOut(
+                                        userProfile
+                                            .addAddress[
+                                                userProfile.address.value]
+                                            .id,
+                                        total);
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -322,10 +367,10 @@ class _CartState extends State<Cart> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Column(
-                            //     crossAxisAlignment: CrossAxisAlignment.start,
-                            //     children: [
-
+                            // Text(checkout['total_rate_after_discount'] == null
+                            //     ? checkout['total_rate'].toString()
+                            //     : checkout['total_rate_after_discount']
+                            //         .toString()),
                             Container(
                               margin: const EdgeInsets.symmetric(vertical: 20),
                               child: Card(
@@ -456,17 +501,6 @@ class _CartState extends State<Cart> {
                                                                         .updateQuantity(
                                                                             'minus',
                                                                             e.id);
-                                                                // if (e.itemCount ==
-                                                                //     1) {
-                                                                //   controller
-                                                                //       .delete(
-                                                                //           e.id);
-                                                                //   return;
-                                                                // }
-                                                                // controller
-                                                                //     .updateQuantity(
-                                                                //         'minus',
-                                                                //         e.id);
                                                               },
                                                               child: SizedBox(
                                                                 width: 20,
