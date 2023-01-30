@@ -77,19 +77,15 @@ class Signup extends StatelessWidget {
                               )),
                         ]),
                         Column(
-                          // mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(
                               height: 30,
                             ),
                             Text('Hola Foodies!',
-                                style:
-                                    // TextStyle(fontWeight: FontWeight.w900, fontSize: 30)
-                                    TextStylesCustom.textStyles_30
-                                        .apply(fontWeightDelta: 5)),
+                                style: TextStylesCustom.textStyles_30
+                                    .apply(fontWeightDelta: 5)),
 
-                            // margin: EdgeInsets.symmetric(vertical: 20),
                             SizedBox(
                               height: 5,
                             ),
