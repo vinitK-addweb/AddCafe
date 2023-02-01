@@ -1,12 +1,12 @@
+import 'dart:io';
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
+import 'dart:typed_data';
+import '../Utils/Global.dart';
+import '../Utils/Constant.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:connectivity/connectivity.dart';
-import '../Utils/Constant.dart';
-import '../Utils/Global.dart';
-import 'dart:typed_data';
 
 class API {
   API._privateConstructor();
@@ -113,14 +113,14 @@ class API {
     }
 
     final url = Uri.parse('$_kBaseURL$endPoint');
-
+    log("delte url" + url.toString());
     Map<String, String> header = {};
     if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
 
     try {
       showLoaderGetX();
       final response = await http.delete(url, headers: header);
-
+      log(response.toString());
       hideLoader();
 
       final Map parsed = json.decode(response.body);

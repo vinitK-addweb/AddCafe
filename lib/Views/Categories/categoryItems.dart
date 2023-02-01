@@ -1,23 +1,21 @@
-// ignore_for_file: unrelated_type_equality_checks
-
-import 'package:addcafe/Views/Cart/cart.dart';
-import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import '../../GetxController/Cart_controller.dart';
-import '../../GetxController/Wishlist_controller.dart';
-import '../../Utils/Global.dart';
-import 'categoryDropdown.dart';
-// import 'package:provider/provider.dart';
 import '../HomeBanner.dart';
-
-import '../../GetxController/ActiveProducts_controller.dart';
-
-import '../../Models/Model_Banner.dart';
-import '../../Models/Model_Categories.dart';
+import 'package:get/get.dart';
+import 'categoryDropdown.dart';
+import '../../Utils/Global.dart';
 import '../../Styles/TextStyles.dart';
 import '../../Styles/ColorStyle.dart';
+import 'package:flutter/material.dart';
+import '../../Models/Model_Banner.dart';
 import '../../Components/AppBarStyle.dart';
+import '../../Models/Model_Categories.dart';
+import 'package:addcafe/Views/Cart/cart.dart';
+import '../../GetxController/Cart_controller.dart';
+import '../../GetxController/Wishlist_controller.dart';
 import '../../GetxController/MyHomePage_controller.dart';
+import '../../GetxController/ActiveProducts_controller.dart';
+// ignore_for_file: unrelated_type_equality_checks
+
+// import 'package:provider/provider.dart';
 
 class CategoryItems extends StatefulWidget {
   // CategoryItems({Key? key}) : super(key: key);
@@ -75,55 +73,58 @@ class _CategoryItemsState extends State<CategoryItems> {
             // ),
 
             bottomNavigationBar: cartApi.cartData.isNotEmpty
-                ? Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: InkWell(
-                      onTap: (() => Get.to(Cart())),
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                            color: ColorStyle.primaryColorRed,
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(15),
-                                topRight: Radius.circular(15))),
-                        height: 60,
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${cartApi.cart['count']} ${cartApi.cartData.length > 1 ? 'ITEMS' : 'ITEM'}',
-                                    style: TextStylesCustom.textStyles_11
-                                        .apply(color: ColorStyle.white),
-                                  ),
-                                  const SizedBox(
-                                    height: 4,
-                                  ),
-                                  Text(
-                                    '₹ ${cartApi.cart['total_rate']}',
-                                    style: TextStylesCustom.textStyles_14.apply(
-                                        fontWeightDelta: 2,
-                                        color: ColorStyle.white),
-                                  )
-                                ],
-                              ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Next  >',
-                                    style: TextStylesCustom.textStyles_16
-                                        .apply(color: ColorStyle.white),
-                                  )
-                                ],
-                              )
-                            ]),
+                ? Obx(() {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8),
+                      child: InkWell(
+                        onTap: (() => Get.to(Cart())),
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: ColorStyle.primaryColorRed,
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  topRight: Radius.circular(15))),
+                          height: 60,
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${cartApi.cart['count']} ${cartApi.cartData.length > 1 ? 'ITEMS' : 'ITEM'}',
+                                      style: TextStylesCustom.textStyles_11
+                                          .apply(color: ColorStyle.white),
+                                    ),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                      '₹ ${cartApi.cart['total_rate']}',
+                                      style: TextStylesCustom.textStyles_14
+                                          .apply(
+                                              fontWeightDelta: 2,
+                                              color: ColorStyle.white),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Next  >',
+                                      style: TextStylesCustom.textStyles_16
+                                          .apply(color: ColorStyle.white),
+                                    )
+                                  ],
+                                )
+                              ]),
+                        ),
                       ),
-                    ),
-                  )
+                    );
+                  })
                 : const SizedBox(
                     height: 0,
                   ),

@@ -1,28 +1,28 @@
 import 'dart:convert';
+import 'address.dart';
 import 'dart:developer';
+import '../Offers.dart';
+import './emptyCart.dart';
+import 'package:get/get.dart';
+import '../../Utils/API.dart';
+import '../OrderDetails.dart';
+import '../AddNewAddress.dart';
+import '../../Utils/Global.dart';
+import '../../Utils/Constant.dart';
+import '../../Styles/ColorStyle.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:addcafe/BottomNavBar.dart';
-import 'package:addcafe/Styles/TextStyles.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import '../../Utils/Constant.dart';
-// import '../../GetxController/Coupon_controller.dart';
-import '../../GetxController/UserProfile_controller.dart';
-import '../../Utils/API.dart';
-import '../../Utils/Global.dart';
-import '../AddNewAddress.dart';
-import '../Offers.dart';
-import '../OrderDetails.dart';
-import './emptyCart.dart';
-import '../../Styles/ColorStyle.dart';
-import '../../GetxController/Cart_controller.dart';
-import '../../GetxController/MyHomePage_controller.dart';
-import '../../GetxController/Offers_controller.dart';
 import '../../Components/AppBarStyle.dart';
-import '../../Components/ElevatedButtonCustom.dart';
-import 'address.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:addcafe/Styles/TextStyles.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../../GetxController/Cart_controller.dart';
+import '../../Components/ElevatedButtonCustom.dart';
+import '../../GetxController/Offers_controller.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
+import '../../GetxController/MyHomePage_controller.dart';
+import '../../GetxController/UserProfile_controller.dart';
+// import '../../GetxController/Coupon_controller.dart';
 
 class Cart extends StatefulWidget {
   Cart({Key? key}) : super(key: key);
@@ -37,22 +37,23 @@ class _CartState extends State<Cart> {
   final offer = Get.put(OffersController());
   String dropdownValue = 'Cash';
   Razorpay? _razorpay;
+
+  // <------------------- Razor pay integration ----------------------------------->
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     print(
         "Payment Success : ${response.paymentId} order id ->${response.orderId} signature==> ${response.signature} ");
     Fluttertoast.showToast(
         msg: "Payment Success : ${response.paymentId} ", timeInSecForIosWeb: 4);
+    final param = {
+      "razorpay_payment_id": response.paymentId.toString(),
+      "razorpay_order_id": response.orderId.toString(),
+      "razorpay_signature": response.signature.toString()
+    };
 
     API.instance
-        .post(
-            endPoint: 'order/handle-payment/',
-            params: {
-              "razorpay_payment_id": response.paymentId.toString(),
-              "razorpay_order_id": response.orderId.toString(),
-              "razorpay_signature": response.signature.toString()
-            },
-            isHeader: true)
+        .post(endPoint: 'order/handle-payment/', params: param, isHeader: true)
         .then((value) => Get.to(OrderDetails()));
+    controller.update();
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -61,10 +62,10 @@ class _CartState extends State<Cart> {
         timeInSecForIosWeb: 4);
     log('${userOrder['payload']['id']}');
     var del = API.instance.delete(
-        endPoint: '/order/user-order/${userOrder['payload']['id']}',
+        endPoint: 'order/user-order/${userOrder['payload']['id']}/',
         isHeader: true);
 
-    log(del.toString());
+    log('delete item ===================>>>>>>>>>>>>>>>' + del.toString());
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
@@ -82,27 +83,29 @@ class _CartState extends State<Cart> {
     _razorpay?.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
 
-  var total;
+  var discount = 0;
   Map userOrder = {};
   Map orderpayment = {};
   Map checkout = {};
 
-  // coupon checkout function-------------------->>>>>
+  // ---------------------------coupon checkout function-------------------->>>>>
   checkOut(addressid, double price) async {
     final param = {
-      "coupon_id": offer.response['payload'] == null
+      "coupon_id": offer.couponData['payload'] == null
           ? ''
-          : offer.response['payload']['coupon_id'].toString()
+          : offer.couponData['payload']['coupon_id'].toString()
     };
 
     checkout = await API.instance
         .post(endPoint: 'cart/checkout/', params: param, isHeader: true) as Map;
 
-    await submitRequest(addressid, price);
+    // log(checkout.toString());
+    submitRequest(addressid, price);
   }
 
+// <------------------------- order create functionality --------------------->>>
   submitRequest(addressid, double price) async {
-    final loginUrl = '${kBaseUrl}order/order-create/';
+    final orderCreate = '${kBaseUrl}order/order-create/';
     final param = {
       "address": addressid,
       "order_notes": "(This is Optional Field)",
@@ -110,26 +113,27 @@ class _CartState extends State<Cart> {
           checkout['total_rate_after_discount'] ?? checkout['total_rate'],
     };
 
-    final url = Uri.parse(loginUrl);
+    final url = Uri.parse(orderCreate);
 
     var paramJSON = jsonEncode(param);
     var header = {
       'Content-Type': 'application/json',
       "Authorization": 'Bearer $kTOKENSAVED'
     };
-    log(paramJSON);
 
     try {
       showLoaderGetX();
 
       var response = await http.post(url, headers: header, body: paramJSON);
 
-      log(response.body);
+      log('Order Id=====================================================>>>>>>>>>>>>>>>>>>>');
+      log(response.body.toString());
+      // log(response.body);
       hideLoader();
       if (response.statusCode == 200) {
         userOrder = json.decode(response.body);
         controller.update();
-        log("Order Created");
+
         dropdownValue == 'Cash' ? Get.to(OrderDetails()) : orderPayment();
       } else {
         'Somthing went wrong'.showError();
@@ -141,14 +145,17 @@ class _CartState extends State<Cart> {
     }
   }
 
+// <------------------------ Order Payment Functionality ----------------------->
   orderPayment() async {
     final param = {"order_id": userOrder['payload']['id'].toString()};
 
     orderpayment = await API.instance
         .post(endPoint: 'order/payment/', params: param, isHeader: true) as Map;
+
     makePayment();
   }
 
+// <----------------------- Make Payment on Razor pay functionality ------------>
   void makePayment() async {
     var options = {
       'key': orderpayment['payload']['razor_key'].toString(),
@@ -162,6 +169,7 @@ class _CartState extends State<Cart> {
       },
     };
     try {
+      log(options.toString());
       _razorpay?.open(options);
     } catch (e) {
       debugPrint(e.toString());
@@ -171,12 +179,13 @@ class _CartState extends State<Cart> {
   Widget build(BuildContext context) {
     final homPageController = Get.put(HomeBannerController());
     final userProfile = Get.put(UserProfileController());
-    // final couponApply = Get.put(CouponController());
 
     return GetBuilder(
         init: controller,
-        initState: (_) => controller.initMethod(),
-        builder: (controller) {
+        initState: (_) {
+          controller.initMethod();
+        },
+        builder: (_) {
           return Obx(() {
             return Scaffold(
               backgroundColor: Colors.white70.withOpacity(0.9),
@@ -340,7 +349,7 @@ class _CartState extends State<Cart> {
                                       40),
                                   text: 'Proceed to checkout',
                                   onTap: () {
-                                    total = controller.cart['total_rate'];
+                                    // total = controller.cart['total_rate'];
                                     // +
                                     // 20 +
                                     // 27.00;
@@ -349,7 +358,7 @@ class _CartState extends State<Cart> {
                                             .addAddress[
                                                 userProfile.address.value]
                                             .id,
-                                        total);
+                                        controller.total.value);
                                   },
                                 ),
                               ],
@@ -610,74 +619,11 @@ class _CartState extends State<Cart> {
                                     ],
                                   )),
                             ),
-                            // Container(
-                            //   margin:
-                            //       const EdgeInsets.symmetric(horizontal: 10),
-                            //   decoration: BoxDecoration(
-                            //       border: Border(
-                            //           bottom: BorderSide(
-                            //     color: ColorStyle.secondryColorBlack
-                            //         .withOpacity(0.7),
-                            //     width: 1,
-                            //   ))),
-                            //   child: Row(
-                            //     children: [
-                            //       Expanded(
-                            //         child: TextField(
-                            //             controller: couponApply.coupon.value,
-                            //             decoration: InputDecoration(
-                            //               hintText: "Coupon...", //hint text
-                            //               prefixIcon: Image.asset(
-                            //                 'assets/images/Coupon.png',
-                            //                 height: 10,
-                            //                 width: 50,
-                            //               ), //prefix iocn
-                            //               hintStyle: TextStylesCustom
-                            //                   .textStyles_20
-                            //                   .apply(
-                            //                       color: ColorStyle
-                            //                           .secondryColorBlack
-                            //                           .withOpacity(0.5)),
-                            //             )),
-                            //       ),
-                            //       FittedBox(
-                            //         child: ElevatedButtonCustom(
-                            //           BgColor: ColorStyle.primaryColorRed,
-                            //           radiusBorder: 5,
-                            //           size: const Size(90, 40),
-                            //           text: 'Apply',
-                            //           onTap: () {
-                            //             controller.taxShippingCharges();
-                            //             couponApply.applyCoupon();
-                            //             FocusScopeNode currentFocus =
-                            //                 FocusScope.of(context);
-                            //             if (!currentFocus.hasPrimaryFocus &&
-                            //                 currentFocus.focusedChild != null) {
-                            //               currentFocus.focusedChild?.unfocus();
-                            //             }
-                            //           },
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                            // const SizedBox(
-                            //   height: 5,
-                            // ),
-                            // ),
-                            // Text(
-                            //   couponApply.response['message'] != null
-                            //       ? couponApply.response['message'].toString()
-                            //       : '',
-                            //   // couponApply.message.value,
-                            //   style: TextStylesCustom.textStyles_13
-                            //       .apply(color: ColorStyle.primaryColorRed),
-                            // ),
 
                             const SizedBox(
                               height: 10,
                             ),
-                            // margin: EdgeInsets.symmetric(vertical: 5),
+
                             Card(
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
@@ -705,9 +651,7 @@ class _CartState extends State<Cart> {
                                           ))
                                     ],
                                   ),
-                                  // Container(
-                                  //   padding: const EdgeInsets.only(left: 10),
-                                  // child:
+
                                   Column(
                                     children: [
                                       Container(
@@ -769,14 +713,37 @@ class _CartState extends State<Cart> {
                                                   .apply(color: Colors.grey),
                                             ),
                                             Text(
-                                                '₹ ${(controller.tax['tax'][0]['percentage'] / 100) * controller.cart['total_rate']}',
-
-                                                // controller.cart['total_rate'] % controller.tax['tax'][0]['percentage']}',
+                                                ' ${controller.tax['tax'][0]['percentage']} %',
                                                 style: TextStylesCustom
                                                     .textStyles_14
                                                     .apply(color: Colors.grey))
                                           ],
                                         ),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Coupon',
+                                            style: TextStylesCustom
+                                                .textStyles_14
+                                                .apply(
+                                                    color: ColorStyle
+                                                        .secondryColorBlack
+                                                        .withOpacity(0.7)),
+                                          ),
+                                          Text('₹ -${controller.discount}',
+                                              style: TextStylesCustom
+                                                  .textStyles_14
+                                                  .apply(
+                                                      color: ColorStyle
+                                                          .secondryColorBlack
+                                                          .withOpacity(0.7)))
+                                        ],
                                       ),
                                       Container(
                                         padding: const EdgeInsets.only(top: 10),
@@ -790,12 +757,13 @@ class _CartState extends State<Cart> {
                                                   .textStyles_18
                                                   .apply(fontWeightDelta: 3),
                                             ),
-                                            Text(
-                                              '₹ ${controller.cart['total_rate'] + (controller.tax['tax'][0]['percentage'] / 100) * controller.cart['total_rate'] + controller.tax['delivery'][0]['cost']}',
-                                              style: TextStylesCustom
-                                                  .textStyles_18
-                                                  .apply(fontWeightDelta: 3),
-                                            )
+                                            Obx(() => Text(
+                                                  '₹ ${controller.totalAmount()}',
+                                                  style: TextStylesCustom
+                                                      .textStyles_18
+                                                      .apply(
+                                                          fontWeightDelta: 3),
+                                                ))
                                           ],
                                         ),
                                       ),

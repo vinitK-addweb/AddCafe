@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../BottomNavBar.dart';
-import '../Components/AppBarStyle.dart';
-import '../Components/ElevatedButtonCustom.dart';
-import '../GetxController/Cart_controller.dart';
 import '../Styles/ColorStyle.dart';
 import '../Styles/TextStyles.dart';
+import 'package:flutter/material.dart';
+import '../Components/AppBarStyle.dart';
+import '../GetxController/Cart_controller.dart';
+import '../Components/ElevatedButtonCustom.dart';
 import 'package:fdottedline_nullsafety/fdottedline__nullsafety.dart';
 
 class OrderDetails extends StatelessWidget {
@@ -25,7 +24,7 @@ class OrderDetails extends StatelessWidget {
           title: 'Order Details',
           backgroundColor: ColorStyle.primaryColorRed,
           leading: IconButton(
-            onPressed: (() => Get.back()),
+            onPressed: (() => Get.to(() => BottamNavigationBar())),
             icon: const Icon(
               Icons.arrow_back_ios_new_sharp,
               size: 20,

@@ -1,25 +1,31 @@
+import 'dart:convert';
+import 'dart:developer';
+import '../Utils/API.dart';
+import 'package:get/get.dart';
+import '../Utils/Global.dart';
+import '../Utils/Constant.dart';
+import './Offers_controller.dart';
+import '../Models/Model_Cart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:get/get.dart';
-import 'dart:convert';
-import '../Models/Model_Cart.dart';
-import '../Utils/API.dart';
-import '../Utils/Constant.dart';
-import '../Utils/Global.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class CartController extends GetxController {
   Map cart = {};
   Map tax = {};
   RxList<CartModel> cartData = <CartModel>[].obs;
   Razorpay? _razorpay;
+  RxDouble discount = 0.0.obs;
+  RxDouble grandTotal = 0.0.obs;
+  RxDouble total = 0.0.obs;
 
   //action
   initMethod() {
     Future.delayed(const Duration(milliseconds: 1), () {
       fetchCart();
       taxShippingCharges();
+      totalAmount();
     });
   }
 
@@ -34,6 +40,22 @@ class CartController extends GetxController {
   Future taxShippingCharges() async {
     tax = await API.instance
         .get(endPoint: 'order/tax-shipping-charge/', isHeader: true);
+    log('taxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' + tax.toString());
+  }
+
+  cartDiscount(value) {
+    discount.value = value;
+    total.value - discount.value;
+    // grandTotal.value =
+  }
+
+  totalAmount() {
+    total.value = cart['total_rate'] +
+        (cart['total_rate'] / 100) * tax['tax'][0]['percentage'] +
+        tax['delivery'][0]['cost'] -
+        discount.value;
+    total.value = total.value.toPrecision(2);
+    return total.value;
   }
 
   // -------------------- Add to cart functionality ------------------------>>
@@ -83,7 +105,4 @@ class CartController extends GetxController {
     print("dasdadas" + b.toString());
     return b;
   }
-
-  // -------------------- create order for user ---------------------->
-
 }

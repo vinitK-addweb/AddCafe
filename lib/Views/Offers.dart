@@ -1,19 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'Cart/cart.dart';
 import 'package:get/get.dart';
-import '../GetxController/Cart_controller.dart';
-
 import '../Styles/ColorStyle.dart';
 import '../Styles/TextStyles.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../Components/AppBarStyle.dart';
-import '../GetxController/MyHomePage_controller.dart';
 import '../Components/TextRichCustom.dart';
-// import '../Views/HomeBanner.dart';
+import '../GetxController/Cart_controller.dart';
 import '../Components/ElevatedButtonCustom.dart';
 import '../GetxController/Offers_controller.dart';
+import '../GetxController/MyHomePage_controller.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-import 'Cart/cart.dart';
+// import '../Views/HomeBanner.dart';
 
 class Offers extends StatelessWidget {
   Offers({super.key});
@@ -210,21 +209,34 @@ class Offers extends StatelessWidget {
                                         ),
                                         ElevatedButtonCustom(
                                           onTap: () async {
+                                            await controller.applyCoupon(
+                                                controller.offers[index]
+                                                    ['code']);
+                                            await cart.taxShippingCharges();
+
+                                            await controller.checkOut();
+                                            controller.update();
+                                            cart.cartDiscount(
+                                                controller.checkout[
+                                                        'discount_amount'] ??
+                                                    0.0);
                                             showDialog(
                                                 context: context,
                                                 builder:
                                                     (BuildContext context) =>
                                                         Obx((() {
                                                           return AlertDialog(
-                                                            title: const Text(
-                                                                'AlertDialog Title'),
-                                                            content: Text(
-                                                              controller.response[
+                                                            content: Text(controller
+                                                                        .checkout[
+                                                                    'message'] ??
+                                                                ''),
+                                                            title: Text(
+                                                              controller.couponData[
                                                                           'message'] ==
                                                                       null
                                                                   ? ''
                                                                   : controller
-                                                                      .response[
+                                                                      .couponData[
                                                                           'message']
                                                                       .toString(),
 
@@ -237,8 +249,10 @@ class Offers extends StatelessWidget {
                                                             ),
                                                             actions: <Widget>[
                                                               TextButton(
-                                                                onPressed: () =>
-                                                                    Get.back(),
+                                                                onPressed: () {
+                                                                  Get.back();
+                                                                  Get.back();
+                                                                },
                                                                 child:
                                                                     const Text(
                                                                         'OK'),
@@ -246,10 +260,6 @@ class Offers extends StatelessWidget {
                                                             ],
                                                           );
                                                         })));
-                                            await cart.taxShippingCharges();
-                                            await controller.applyCoupon(
-                                                controller.offers[index]
-                                                    ['code']);
                                           },
                                           text: 'Apply',
                                           size: const Size(100, 20),

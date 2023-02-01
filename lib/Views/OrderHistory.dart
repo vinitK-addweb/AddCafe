@@ -1,12 +1,12 @@
-import 'package:addcafe/Components/ElevatedButtonCustom.dart';
-import 'package:addcafe/Styles/ColorStyle.dart';
-import 'package:addcafe/Styles/TextStyles.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/material.dart';
 import '../Components/AppBarStyle.dart';
+import 'package:addcafe/Styles/ColorStyle.dart';
+import 'package:addcafe/Styles/TextStyles.dart';
 import '../GetxController/MyHomePage_controller.dart';
 import '../GetxController/OrderHistory_controller.dart';
+import 'package:addcafe/Components/ElevatedButtonCustom.dart';
 
 class OrderHistory extends StatelessWidget {
   OrderHistory({super.key});
@@ -34,7 +34,7 @@ class OrderHistory extends StatelessWidget {
                 body: controller.orderHistory.isEmpty
                     ? Center(
                         child: Text(
-                        " Please order somthing....",
+                        " ",
                         style: TextStylesCustom.textStyles_20.apply(
                             fontWeightDelta: 3,
                             color: ColorStyle.secondryColorRed),
@@ -172,14 +172,14 @@ class OrderHistory extends StatelessWidget {
                                             style:
                                                 TextStylesCustom.textStyles_14,
                                           ),
-                                          FittedBox(
-                                            child: ElevatedButtonCustom(
-                                              text: 'ReOrder',
-                                              size: const Size(100, 15),
-                                              onTap: () {},
-                                              radiusBorder: 8,
-                                            ),
-                                          ),
+                                          // FittedBox(
+                                          //   child: ElevatedButtonCustom(
+                                          //     text: 'ReOrder',
+                                          //     size: const Size(100, 15),
+                                          //     onTap: () {},
+                                          //     radiusBorder: 8,
+                                          //   ),
+                                          // ),
                                         ],
                                       )
                                     ],
