@@ -1,17 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '../Utils/API.dart';
 import 'package:get/get.dart';
 import '../Models/Model_Faq.dart';
-import 'dart:convert';
-import '../Utils/API.dart';
 
 class FaqController extends GetxController {
   RxList<ModelFaq> faqData = <ModelFaq>[].obs;
   final currentid = 0.obs;
 
   initMethod() {
-    Future.delayed(Duration(milliseconds: 1), () {
+    Future.delayed(const Duration(milliseconds: 1), () {
       fetchFaqData();
     });
   }

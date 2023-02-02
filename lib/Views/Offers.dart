@@ -250,8 +250,11 @@ class Offers extends StatelessWidget {
                                                             actions: <Widget>[
                                                               TextButton(
                                                                 onPressed: () {
-                                                                  Get.back();
-                                                                  Get.back();
+                                                                  var nav =
+                                                                      Navigator.of(
+                                                                          context);
+                                                                  nav.pop();
+                                                                  nav.pop();
                                                                 },
                                                                 child:
                                                                     const Text(

@@ -1,12 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 import '../Utils/API.dart';
 import 'package:get/get.dart';
-import '../Utils/Global.dart';
 import '../Utils/Constant.dart';
-import './Offers_controller.dart';
 import '../Models/Model_Cart.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
@@ -15,12 +11,11 @@ class CartController extends GetxController {
   Map cart = {};
   Map tax = {};
   RxList<CartModel> cartData = <CartModel>[].obs;
-  Razorpay? _razorpay;
+
   RxDouble discount = 0.0.obs;
   RxDouble grandTotal = 0.0.obs;
   RxDouble total = 0.0.obs;
 
-  //action
   initMethod() {
     Future.delayed(const Duration(milliseconds: 1), () {
       fetchCart();
@@ -29,7 +24,6 @@ class CartController extends GetxController {
     });
   }
 
-  //get api call for cartproduct
   Future fetchCart() async {
     cart = await API.instance.get(endPoint: 'cart/cart-items/', isHeader: true);
 
@@ -40,20 +34,18 @@ class CartController extends GetxController {
   Future taxShippingCharges() async {
     tax = await API.instance
         .get(endPoint: 'order/tax-shipping-charge/', isHeader: true);
-    log('taxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx' + tax.toString());
   }
 
   cartDiscount(value) {
     discount.value = value;
     total.value - discount.value;
-    // grandTotal.value =
   }
 
   totalAmount() {
-    total.value = cart['total_rate'] +
-        (cart['total_rate'] / 100) * tax['tax'][0]['percentage'] +
-        tax['delivery'][0]['cost'] -
-        discount.value;
+    var gst = ((cart['total_rate'] - discount.value) / 100) *
+        tax['tax'][0]['percentage'];
+    total.value =
+        cart['total_rate'] + gst + tax['delivery'][0]['cost'] - discount.value;
     total.value = total.value.toPrecision(2);
     return total.value;
   }
@@ -78,7 +70,7 @@ class CartController extends GetxController {
 
   Future updateQuantity(status, id) async {
     final params = {"quantity": status};
-    print('data======== >${params}');
+
     await API.instance.patch(
         endPoint: 'cart/cart-items/$id/', params: params, isHeader: true);
     fetchCart();
@@ -86,23 +78,14 @@ class CartController extends GetxController {
 
   // <------------------- Delete item from cart ----------------->
   Future delete(id) async {
-    final res =
-        API.instance.delete(endPoint: 'cart/cart-items/$id/', isHeader: true);
-
-    print(res);
-
-    print('payload datqa >>>>>>>>>>>' + id.toString());
+    API.instance.delete(endPoint: 'cart/cart-items/$id/', isHeader: true);
 
     fetchCart();
   }
 
   List isInCart(id) {
     List data = cartData;
-
-    print("sa" + id.toString());
-    print("data is here" + data.toString());
     var b = data.where((e) => e.itemDetail!.id == id).toList();
-    print("dasdadas" + b.toString());
     return b;
   }
 }
