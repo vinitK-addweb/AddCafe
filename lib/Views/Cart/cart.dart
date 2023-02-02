@@ -60,12 +60,10 @@ class _CartState extends State<Cart> {
     Fluttertoast.showToast(
         msg: "Error here : ${response.code} - ${response.message}",
         timeInSecForIosWeb: 4);
-    log('${userOrder['payload']['id']}');
+
     var del = API.instance.delete(
         endPoint: 'order/user-order/${userOrder['payload']['id']}/',
         isHeader: true);
-
-    log('delete item ===================>>>>>>>>>>>>>>>' + del.toString());
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
@@ -99,7 +97,6 @@ class _CartState extends State<Cart> {
     checkout = await API.instance
         .post(endPoint: 'cart/checkout/', params: param, isHeader: true) as Map;
 
-    // log(checkout.toString());
     submitRequest(addressid, price);
   }
 
@@ -126,9 +123,6 @@ class _CartState extends State<Cart> {
 
       var response = await http.post(url, headers: header, body: paramJSON);
 
-      log('Order Id=====================================================>>>>>>>>>>>>>>>>>>>');
-      log(response.body.toString());
-      // log(response.body);
       hideLoader();
       if (response.statusCode == 200) {
         userOrder = json.decode(response.body);
@@ -176,8 +170,8 @@ class _CartState extends State<Cart> {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
-    final homPageController = Get.put(HomeBannerController());
     final userProfile = Get.put(UserProfileController());
 
     return GetBuilder(

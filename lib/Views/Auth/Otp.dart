@@ -1,19 +1,17 @@
-import '../../Styles/ColorStyle.dart';
-import '../../Views/MyHomePage.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import './Signup.dart';
 import 'package:get/get.dart';
-import 'package:addcafe/GetxController/UserAuth_controller.dart';
-import '../../Components/IndicatorSlider.dart';
+import '../../Views/MyHomePage.dart';
+import '../../Styles/ColorStyle.dart';
 import '../../Styles/TextStyles.dart';
-import '../../Components/ElevatedButtonCustom.dart';
-import '../../Components/TextFieldCustom.dart';
-import '../../Components/TextRichCustom.dart';
 import '../../Styles/ImageStyle.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../Components/logoCustom.dart';
+import '../../Components/TextRichCustom.dart';
+import '../../Components/IndicatorSlider.dart';
+import '../../Components/ElevatedButtonCustom.dart';
+import 'package:addcafe/GetxController/UserAuth_controller.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
-// import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class Otp extends StatelessWidget {
   Otp({super.key});
@@ -31,14 +29,14 @@ class Otp extends StatelessWidget {
           ),
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              LogoCustom(),
-              SizedBox(
+              const LogoCustom(),
+              const SizedBox(
                 height: 10,
               ),
               Stack(children: <Widget>[
@@ -72,7 +70,7 @@ class Otp extends StatelessWidget {
                       style: TextStylesCustom.textStyles_40
                           .apply(fontWeightDelta: 5)),
 
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text('Please Sign In to your account',
@@ -83,21 +81,15 @@ class Otp extends StatelessWidget {
 
                   Form(
                     child: OtpTextField(
-                      // fieldWidth: 30,
-                      // handleControllers: controller.otp.value,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       numberOfFields: 6,
                       borderColor: Color.fromARGB(255, 207, 34, 34),
-                      //set to true to show as box or false to show as dash
+
                       showFieldAsBox: false,
-                      //runs when a code is typed in
-                      onCodeChanged: (String code) {
-                        //handle validation or checks here
-                      },
-                      //runs when every textfield is filled
-                      onSubmit: (String verificationCode) {
-                        // otpcode = verificationCode;
-                      }, // end onSubmit
+
+                      onCodeChanged: (String code) {},
+
+                      onSubmit: (String verificationCode) {}, // end onSubmit
                     ),
                   ),
                   const SizedBox(
@@ -121,7 +113,7 @@ class Otp extends StatelessWidget {
                       controller.continueToPasswordOrOtp();
                     }),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 42,
                   ),
 
@@ -132,14 +124,14 @@ class Otp extends StatelessWidget {
                         height: 1,
                         color: Colors.grey,
                       )),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Text(
                         'Or',
                         style: TextStylesCustom.textStyles_17,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Expanded(
@@ -149,7 +141,7 @@ class Otp extends StatelessWidget {
                       )),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 24,
                   ),
                   Row(
@@ -181,16 +173,12 @@ class Otp extends StatelessWidget {
                           height: 44,
                           width: 44,
                           padding: const EdgeInsets.all(10),
-                          // alignment: Alignment.center,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(6),
                               border:
                                   Border.all(color: Colors.grey, width: 0.5)),
                           child: Image.asset(
                             ImageStyle.google,
-                            // fit: BoxFit.cover,
-                            // height: 10,
-                            // width: 10,
                           ),
                         ),
                       ),

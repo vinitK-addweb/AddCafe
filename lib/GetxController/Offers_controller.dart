@@ -28,8 +28,6 @@ class OffersController extends GetxController {
     var data = (await API.instance.post(
         endPoint: "promotion/apply-coupon/", params: params, isHeader: true))!;
 
-    data['status'].toString().showSuccess();
-
     couponData.value = data;
   }
 

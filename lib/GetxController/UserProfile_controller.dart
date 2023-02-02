@@ -1,19 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:get/get.dart';
 import 'dart:io';
 import 'dart:async';
-import '../GetxController/UserAuth_controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../Utils/API.dart';
+import 'package:get/get.dart';
 import '../Utils/Global.dart';
-import '../Models/Model_UserDetails.dart';
-import '../Models/Model_AddAddress.dart';
-import 'package:http/http.dart' as http;
-
-import '../Views/AddNewAddress.dart';
 import '../Views/userProfile.dart';
+import '../Views/AddNewAddress.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import '../Models/Model_AddAddress.dart';
+import '../Models/Model_UserDetails.dart';
+import 'package:image_picker/image_picker.dart';
+import '../GetxController/UserAuth_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfileController extends GetxController {
   Rx<UserDetailsModel> userdetails = UserDetailsModel().obs;
@@ -151,11 +150,9 @@ class UserProfileController extends GetxController {
     var response = API.instance
         .post(endPoint: 'order/address/', params: addressData, isHeader: true);
 
-    // var data = response;
-
     getAddress();
     update();
-    // await Get.to(UserProfile());
+
     Get.back();
   }
 
@@ -179,8 +176,6 @@ class UserProfileController extends GetxController {
 
   // --------------------------- fetch Address By id  ------------------------->
   fetchAddressByid(idx) async {
-    // print(addAddress[id].buildingNumName);
-
     phoneNumber.value.text = addAddress[idx].phoneNum!;
 
     buildingNameNo.value.text = addAddress[idx].buildingNumName!;
@@ -191,7 +186,6 @@ class UserProfileController extends GetxController {
     state.value.text = addAddress[idx].state!;
     addressType.value.text = addAddress[idx].addressType!;
 
-    print(addressType.value);
     Get.to(AddNewAddress(
       isAddress: false,
     ));
@@ -201,8 +195,7 @@ class UserProfileController extends GetxController {
 
   updateAddress() {
     "hello".showSuccess();
-    // phoneNumber.value =
-    print("object = = = = = = == = == = = == == = = =>");
+
     final addressData = {
       "user": "1",
       "phone_num": phoneNumber.value.text,
@@ -215,7 +208,7 @@ class UserProfileController extends GetxController {
       "address_type": addressType.value.text
     };
 
-    var response = API.instance.patch(
+    API.instance.patch(
         endPoint: '/order/address/$AddUpdateid/',
         params: addressData,
         isHeader: true);
@@ -240,24 +233,24 @@ class UserProfileController extends GetxController {
   changePasswordValidation() {
     RegExp regex =
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-    if (newPassword.value.text.isEmpty || currentPassword.value.text.isEmpty)
+    if (newPassword.value.text.isEmpty || currentPassword.value.text.isEmpty) {
       'All Fields are Required'.showError();
-    else if (newPassword.value.text.length < 8)
+    } else if (newPassword.value.text.length < 8) {
       'Password should have atleast 8 characters'.showError();
-    else if (!regex.hasMatch(newPassword.value.text))
+    } else if (!regex.hasMatch(newPassword.value.text)) {
       'Enter a stronger password'.showError();
-    else
+    } else {
       changePassword();
+    }
   }
 
   changePassword() async {
     final mapedData = {
       "email": userprofile.value['email'],
-      // userdetails.value.email,
       "old_password": currentPassword.value.text,
       "new_password": newPassword.value.text
     };
-    print(mapedData);
+
     _changePass = await API.instance.post(
         endPoint: 'accounts/change-password/',
         params: mapedData,
@@ -266,10 +259,8 @@ class UserProfileController extends GetxController {
       '${_changePass['message']}'.showSuccess();
     }
 
-    if (_changePass != null) {
-      currentPassword.value.text = '';
-      newPassword.value.text = '';
-    }
+    currentPassword.value.text = '';
+    newPassword.value.text = '';
   }
 
   addAddressValidation(value) {

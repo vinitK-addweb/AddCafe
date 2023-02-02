@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
-import '../../GetxController/UserProfile_controller.dart';
+import '../AddNewAddress.dart';
 import '../../Styles/ColorStyle.dart';
 import '../../Styles/TextStyles.dart';
-import '../AddNewAddress.dart';
+import 'package:flutter/material.dart';
+import '../../GetxController/UserProfile_controller.dart';
 
 class Address extends StatelessWidget {
   Address({super.key});
@@ -58,7 +56,8 @@ class Address extends StatelessWidget {
                             return InkWell(
                               onTap: () {
                                 userProfile.address.value = index;
-                                Future.delayed(Duration(milliseconds: 10), () {
+                                Future.delayed(const Duration(milliseconds: 10),
+                                    () {
                                   userProfile.update();
                                   Get.back();
                                 });
@@ -68,8 +67,6 @@ class Address extends StatelessWidget {
                                 children: [
                                   Text(
                                     "DELIVERS TO ",
-                                    //  +
-                                    //     userProfile.address.value.toString(),
                                     style: TextStylesCustom.textStyles_13
                                         .apply(color: Colors.blueAccent),
                                   ),
@@ -152,7 +149,6 @@ class Address extends StatelessWidget {
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
-                                      // crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         TextButton(
                                           child: Text(
@@ -172,9 +168,6 @@ class Address extends StatelessWidget {
                                             ));
                                           },
                                         ),
-                                        // const SizedBox(
-                                        //   width: 10,
-                                        // ),
                                         Text(
                                           '|',
                                           style: TextStylesCustom.textStyles_20,

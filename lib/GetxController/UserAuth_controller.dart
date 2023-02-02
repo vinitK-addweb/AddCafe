@@ -1,21 +1,16 @@
 import 'dart:io';
-import 'package:addcafe/Models/Model_Cart.dart';
-import 'package:addcafe/Views/Auth/ForgetPassword.dart';
-import 'package:addcafe/Views/Auth/Signin.dart';
-import 'package:addcafe/Utils/API.dart';
-import '../Views/Auth/Password.dart';
-import 'package:addcafe/Views/MyHomePage.dart';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import '../Utils/API.dart';
 import 'package:get/get.dart';
-import 'package:addcafe/Views/Auth/Otp.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:addcafe/Utils/Global.dart';
-import 'package:addcafe/Utils/Constant.dart';
 import '../BottomNavBar.dart';
 import 'Cart_controller.dart';
+import '../Utils/Global.dart';
+import '../Utils/Constant.dart';
+import '../Views/Auth/Otp.dart';
+import '../Views/Auth/Signin.dart';
+import '../Views/Auth/Password.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserAuth extends GetxController {
   Rx<TextEditingController> textController = TextEditingController().obs;
@@ -26,7 +21,6 @@ class UserAuth extends GetxController {
   Rx<TextEditingController> email = TextEditingController().obs;
   Rx<TextEditingController> cPassword = TextEditingController().obs;
   Rx<TextEditingController> phone = TextEditingController().obs;
-  // Rx<TextEditingController> forgetPass = TextEditingController().obs;
   RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
 
   Map<String, dynamic> _UserLogin = {};
@@ -36,7 +30,6 @@ class UserAuth extends GetxController {
     {"id": "3", "image": "assets/images/google.webp", "name": "Cake"},
   ];
   final cartApi = Get.put(CartController());
-  // late final _token;
 
   initCustom() {
     Future.delayed(const Duration(microseconds: 1), () {
@@ -51,23 +44,19 @@ class UserAuth extends GetxController {
     RegExp regex =
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     if (email.value.text.isEmpty ||
-            phone.value.text.isEmpty ||
-            firstName.value.text.isEmpty ||
-            password.value.text.isEmpty
-        // ||cPassword.value.text.isEmpty
-        )
+        phone.value.text.isEmpty ||
+        firstName.value.text.isEmpty ||
+        password.value.text.isEmpty) {
       'All Fields are Required'.showError();
-    else if (password.value.text.length < 8)
+    } else if (password.value.text.length < 8) {
       'Password should have atleast 8 characters'.showError();
-    else if (!regex.hasMatch(password.value.text))
+    } else if (!regex.hasMatch(password.value.text)) {
       'Enter a stronger password'.showError();
-    else if (!GetUtils.isEmail(email.value.text))
+    } else if (!GetUtils.isEmail(email.value.text)) {
       'Enter a Valid Email Address'.showError();
-    // else if (password.value.text != cPassword.value.text)
-    //   'Confimation password does not match the entered password'.showError();
-    else if (phone.value.text.length < 10)
+    } else if (phone.value.text.length < 10) {
       'Plase Enter a Valid Mobile Number'.showError();
-    else {
+    } else {
       'You Registered Successfully'.showSuccess();
       signUp();
     }
@@ -79,28 +68,26 @@ class UserAuth extends GetxController {
 
     if (textController.value.text.isNotEmpty) {
       if (double.tryParse(textController.value.text) != null) {
-        // this.mobile = textController.text;
-        if (textController.value.text.length != 10)
+        if (textController.value.text.length != 10) {
           'Enter a Valid Mobile No.'.showError();
-        else
+        } else {
           Get.to(Otp());
+        }
       } else {
-        if (!GetUtils.isEmail(textController.value.text))
+        if (!GetUtils.isEmail(textController.value.text)) {
           'Enter a Valid Email Address'.showError();
-        else {
-          // this.email = textController.text;
+        } else {
           Get.to(Password());
-          print("string");
         }
       }
-    } else
+    } else {
       'Please Enter mobile No. Or Email'.showError();
+    }
   }
 
 // <--------------------- User Sign Up Functionality --------------------->
 
   Future signUp() async {
-    // final headers = {"Content-type": "multipart/form-data"};
     final mapedData = {
       "email": email.value.text,
       "password": password.value.text,
@@ -114,10 +101,11 @@ class UserAuth extends GetxController {
         params: mapedData,
         isHeader: false) as Map<String, dynamic>;
 
-    if (_UserLogin['status'] == 401)
+    if (_UserLogin['status'] == 401) {
       '${_UserLogin['message']}'.showError();
-    else
+    } else {
       Get.to(Mylogin());
+    }
   }
 
 // <-----------------  User SignIn Functionality ------------------>
@@ -136,9 +124,9 @@ class UserAuth extends GetxController {
           params: mapedData,
           isHeader: false) as Map<String, dynamic>;
 
-      if (_UserLogin['status'] == 401)
+      if (_UserLogin['status'] == 401) {
         '${_UserLogin['message']}'.showError();
-      else {
+      } else {
         // -------------------- Save data to the local storage------------------------
 
         final strPayLoad = jsonEncode(_UserLogin['payload']);
@@ -152,7 +140,7 @@ class UserAuth extends GetxController {
 
   // ---------------------- get data from local storage function---------------------
   getlocaStorage() async {
-    Future.delayed(Duration(milliseconds: 1), () async {
+    Future.delayed(const Duration(milliseconds: 1), () async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       var userDataPref = prefs.getString('userData');
@@ -161,11 +149,8 @@ class UserAuth extends GetxController {
         try {
           kTOKENSAVED = prefs.getString('token') as String;
 
-          userprofile =
-              await RxMap<dynamic, dynamic>.from(jsonDecode(userDataPref));
-        } catch (error) {
-          print(error);
-        }
+          userprofile = RxMap<dynamic, dynamic>.from(jsonDecode(userDataPref));
+        } catch (error) {}
       } else {
         userprofile = {}.obs;
       }
@@ -177,8 +162,7 @@ class UserAuth extends GetxController {
 
   Future logOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    // await storage.deleteItem('userData');
-    // userprofile = null;
+
     password.value.text = '';
     textController.value.text = '';
     kTOKENSAVED = '';
@@ -197,10 +181,6 @@ class UserAuth extends GetxController {
     isObscure.value = !isObscure.value;
   }
 
-  // String get token {
-  //   return _token;
-  // }
-
   Future forgetPassword() async {
     final mapedData = {"email": textController.value.text};
     final resposne = await API.instance.post(
@@ -212,7 +192,6 @@ class UserAuth extends GetxController {
       Get.to(Mylogin());
       textController.value.text = '';
     }
-    // print("data ============>>>>>>>>>" + resposne.toString());
   }
 
   get userProfile {
@@ -220,7 +199,6 @@ class UserAuth extends GetxController {
   }
 
   Map get userData {
-    // signIn();
     return _UserLogin;
   }
 }

@@ -1,6 +1,5 @@
 import '../Utils/API.dart';
 import 'package:get/get.dart';
-
 import '../Models/Model_PrivacyPolicy.dart';
 import '../Models/Model_Terms&Conditions.dart';
 

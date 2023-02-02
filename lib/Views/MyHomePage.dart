@@ -1,23 +1,20 @@
-import 'package:flutter/material.dart';
-import '../GetxController/Cart_controller.dart';
-
-import '../GetxController/UserProfile_controller.dart';
-import '../GetxController/Wishlist_controller.dart';
-import '../Styles/TextStyles.dart';
+import 'MyLoader.dart';
 import 'Cart/cart.dart';
 import 'HomeBanner.dart';
 import 'HomeCategory.dart';
-import '../Drawer/drawerHeader.dart';
-import '../Drawer/drawerList.dart';
-
-import 'MyLoader.dart';
-
 import 'package:get/get.dart';
-import '../GetxController/MyHomePage_controller.dart';
-import '../GetxController/UserAuth_controller.dart';
+import '../Styles/TextStyles.dart';
+import '../Drawer/drawerList.dart';
 import '../Styles/ColorStyle.dart';
-import '../Components/logoCustom.dart';
 import '../Views/SearchResult.dart';
+import '../Drawer/drawerHeader.dart';
+import 'package:flutter/material.dart';
+import '../Components/logoCustom.dart';
+import '../GetxController/Cart_controller.dart';
+import '../GetxController/Wishlist_controller.dart';
+import '../GetxController/UserAuth_controller.dart';
+import '../GetxController/MyHomePage_controller.dart';
+import '../GetxController/UserProfile_controller.dart';
 import '../GetxController/searchResult_controller.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -27,7 +24,7 @@ class MyHomePage extends StatelessWidget {
   final cart = Get.put(CartController());
   final userProfile = Get.put(UserProfileController());
   final myFavouritesApi = Get.put(MyFavouritesApi());
-  // final userProfile = Get.put(UserProfileController());
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -55,12 +52,11 @@ class MyHomePage extends StatelessWidget {
                         ]),
                       ),
                       MyDrowerList(),
-                      // userAuth.userprofile.isNotEmpty
                     ],
                   ),
                 ),
               ),
-              // bottomNavigationBar: TheFooter(),
+
               appBar: AppBar(
                 elevation: 0,
                 title: const LogoCustomWhite(),
@@ -77,9 +73,7 @@ class MyHomePage extends StatelessWidget {
                               search.searchResult.value = [];
                             },
                             icon: const Icon(Icons.close),
-                          )
-                          // : const Icon(Icons.notifications),
-                          )
+                          ))
                       : const SizedBox(
                           height: 0,
                           width: 50,
@@ -160,7 +154,6 @@ class MyHomePage extends StatelessWidget {
                             child: TextField(
                                 controller: search.itemName.value,
                                 onChanged: (value) {
-                                  // search.itemName.value.text = value;
                                   search.initfunction();
                                 },
                                 onTap: (() {
@@ -200,8 +193,6 @@ class MyHomePage extends StatelessWidget {
                         ],
                       ),
               ),
-
-              // This trailing comma makes auto-formatting nicer for build methods.
             )));
       },
     );

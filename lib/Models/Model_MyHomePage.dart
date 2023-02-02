@@ -2,8 +2,6 @@
 //
 //     final homeCategory = homeCategoryFromJson(jsonString);
 
-import 'package:addcafe/Views/CustomerReviews.dart';
-
 class ModelHomeCategory {
   ModelHomeCategory({
     this.id,

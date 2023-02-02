@@ -1,18 +1,12 @@
-import 'Cart/cart.dart';
 import 'package:get/get.dart';
 import '../Styles/ColorStyle.dart';
 import '../Styles/TextStyles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../Components/AppBarStyle.dart';
-import '../Components/TextRichCustom.dart';
 import '../GetxController/Cart_controller.dart';
 import '../Components/ElevatedButtonCustom.dart';
 import '../GetxController/Offers_controller.dart';
 import '../GetxController/MyHomePage_controller.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-
-// import '../Views/HomeBanner.dart';
 
 class Offers extends StatelessWidget {
   Offers({super.key});
@@ -20,15 +14,10 @@ class Offers extends StatelessWidget {
   final homPageController = Get.put(HomeBannerController());
 
   final cart = Get.put(CartController());
-  // final coupon = Get.put(CouponController());
+
   var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    // final homeBanner = Get.put(HomeBannerController());
-
-    // controller.fetchOffers();
-
-    // debugPrint('data===========>${controller.offers[1].couponBanner!}');
     return GetBuilder(
         init: OffersController(),
         initState: controller.initCustom(),
@@ -95,32 +84,8 @@ class Offers extends StatelessWidget {
                             cart.taxShippingCharges();
                             controller
                                 .applyCoupon(controller.coupon.value.text);
-                            // FocusScopeNode currentFocus =
-                            //     FocusScope.of(context);
-                            // if (!currentFocus.hasPrimaryFocus &&
-                            //     currentFocus.focusedChild != null) {
-                            //   currentFocus.focusedChild?.unfocus();
-                            // }
                           },
-                        )
-                            // ElevatedButtonCustom(
-                            //   BgColor: Colors.transparent,
-                            //   radiusBorder: 5,
-                            //   size: const Size(90, 40),
-
-                            //   text: 'Apply',
-                            //   onTap: () {
-                            //     cart.taxShippingCharges();
-                            //     couponApply.applyCoupon();
-                            //     FocusScopeNode currentFocus =
-                            //         FocusScope.of(context);
-                            //     if (!currentFocus.hasPrimaryFocus &&
-                            //         currentFocus.focusedChild != null) {
-                            //       currentFocus.focusedChild?.unfocus();
-                            //     }
-                            //   },
-                            // ),
-                            ),
+                        )),
                       ],
                     ),
                   ),
@@ -145,7 +110,6 @@ class Offers extends StatelessWidget {
                           itemCount: controller.offers.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Container(
-                                // height: 100,
                                 margin: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 8),
                                 padding: const EdgeInsets.symmetric(
@@ -239,8 +203,6 @@ class Offers extends StatelessWidget {
                                                                       .couponData[
                                                                           'message']
                                                                       .toString(),
-
-                                                              // couponApply.message.value,
                                                               style: TextStylesCustom
                                                                   .textStyles_13
                                                                   .apply(

@@ -1,26 +1,26 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import '../../Views/MyHomePage.dart';
-// import 'package:provider/provider.dart';
 import 'dart:io';
-// import 'package:addcafe/Components/PasswordFieldCustom.dart';
 import './Signin.dart';
 import 'package:get/get.dart';
-import '../../GetxController/UserAuth_controller.dart';
-import 'package:flutter/foundation.dart';
-import '../../Components/IndicatorSlider.dart';
+import '../../Views/MyHomePage.dart';
 import '../../Styles/TextStyles.dart';
-import '../../Components/ElevatedButtonCustom.dart';
-import '../../Components/TextFieldCustom.dart';
-import '../../Components/TextRichCustom.dart';
 import '../../Views/Auth/Signin.dart';
 import '../../Styles/ImageStyle.dart';
 import '../../Styles/ColorStyle.dart';
 import '../../Views/Auth/Signup.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart';
 import '../../Components/logoCustom.dart';
+import '../../Components/TextRichCustom.dart';
+import '../../Components/IndicatorSlider.dart';
+import '../../Components/TextFieldCustom.dart';
+import '../../Components/ElevatedButtonCustom.dart';
+import '../../GetxController/UserAuth_controller.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
+// import 'package:provider/provider.dart';
+// import 'package:addcafe/Components/PasswordFieldCustom.dart';
 
 class Signup extends StatelessWidget {
   final controller = Get.put(UserAuth());
@@ -33,249 +33,201 @@ class Signup extends StatelessWidget {
     return GetBuilder(
         init: UserAuth(),
         builder: (_) {
-          return
-              // Obx(
-              //   () =>
-              Scaffold(
-                  appBar: PreferredSize(
-                    preferredSize: const Size.fromHeight(0),
-                    child: AppBar(
-                      elevation: 0,
-                      backgroundColor: Colors.transparent,
-                      systemOverlayStyle: SystemUiOverlayStyle.dark,
+          return Scaffold(
+              appBar: PreferredSize(
+                preferredSize: const Size.fromHeight(0),
+                child: AppBar(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  systemOverlayStyle: SystemUiOverlayStyle.dark,
+                ),
+              ),
+              body: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  body: SingleChildScrollView(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
+                    LogoCustom(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Stack(children: <Widget>[
+                      CustomIndicator(),
+                      Positioned(
+                          top: 10,
+                          right: 20,
+                          child: MaterialButton(
+                            color: ColorStyle.secondryColorRed,
+                            minWidth: 70,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(55)),
+                            onPressed: () {
+                              Get.to(MyHomePage());
+                            },
+                            child: Text(
+                              'Skip',
+                              style: TextStylesCustom.textStyles_16
+                                  .apply(color: Colors.white),
+                            ),
+                          )),
+                    ]),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        Text('Hola Foodies!',
+                            style: TextStylesCustom.textStyles_30
+                                .apply(fontWeightDelta: 5)),
+
                         SizedBox(
+                          height: 5,
+                        ),
+                        Text('Register to get the best benefits!',
+                            style: TextStylesCustom.textStyles_16
+                                .apply(color: ColorStyle.secondaryColorgrey)),
+                        const SizedBox(
                           height: 10,
                         ),
-                        LogoCustom(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Stack(children: <Widget>[
-                          CustomIndicator(),
-                          Positioned(
-                              top: 10,
-                              right: 20,
-                              child: MaterialButton(
-                                color: ColorStyle.secondryColorRed,
-                                minWidth: 70,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(55)),
-                                onPressed: () {
-                                  Get.to(MyHomePage());
-                                },
-                                child: Text(
-                                  'Skip',
-                                  style: TextStylesCustom.textStyles_16
-                                      .apply(color: Colors.white),
-                                ),
-                              )),
-                        ]),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Text('Hola Foodies!',
-                                style: TextStylesCustom.textStyles_30
-                                    .apply(fontWeightDelta: 5)),
 
-                            SizedBox(
-                              height: 5,
-                            ),
-                            Text('Register to get the best benefits!',
-                                style: TextStylesCustom.textStyles_16.apply(
-                                    color: ColorStyle.secondaryColorgrey)),
-                            const SizedBox(
-                              height: 10,
-                            ),
-
-                            Form(
-                              child: Column(
+                        Form(
+                          child: Column(
+                            children: [
+                              Row(
                                 children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: TextFieldUnderline(
-                                          padding: EdgeInsets.all(10),
-                                          labelText: 'First Name',
-                                          controller:
-                                              controller.firstName.value,
-                                          hintText: 'Joh',
-                                          textStyle:
-                                              TextStylesCustom.textStyles_20,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Expanded(
-                                        child: TextFieldUnderline(
-                                          padding: EdgeInsets.all(10),
-                                          labelText: 'Last Name',
-                                          controller: controller.lastName.value,
-                                          hintText: 'Joh',
-                                          textStyle:
-                                              TextStylesCustom.textStyles_20,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  // --------------- Email field ---------------------->
-                                  TextFieldUnderline(
-                                    padding: EdgeInsets.all(10),
-                                    labelText: 'Email Address',
-                                    controller: controller.email.value,
-                                    hintText: 'Johndo@mail.com',
-                                    textStyle: TextStylesCustom.textStyles_20,
+                                  Expanded(
+                                    child: TextFieldUnderline(
+                                      padding: EdgeInsets.all(10),
+                                      labelText: 'First Name',
+                                      controller: controller.firstName.value,
+                                      hintText: 'Joh',
+                                      textStyle: TextStylesCustom.textStyles_20,
+                                    ),
                                   ),
                                   SizedBox(
-                                    height: 15,
+                                    width: 10,
                                   ),
-                                  //       // .....................Mobile field ..........................
-
-                                  IntlPhoneField(
-                                    style: TextStylesCustom.textStyles_20,
-                                    decoration: InputDecoration(
-                                      focusColor: ColorStyle.secondaryColorgrey,
-                                      labelText: 'Phone Number',
-                                      border: UnderlineInputBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                        borderSide: BorderSide(),
-                                      ),
+                                  Expanded(
+                                    child: TextFieldUnderline(
+                                      padding: EdgeInsets.all(10),
+                                      labelText: 'Last Name',
+                                      controller: controller.lastName.value,
+                                      hintText: 'Joh',
+                                      textStyle: TextStylesCustom.textStyles_20,
                                     ),
-                                    initialCountryCode: 'IN',
-                                    onChanged: (phone) {
-                                      var mob = phone.completeNumber;
-                                      controller.phone.value.text =
-                                          mob.toString();
-                                      print(phone.completeNumber);
-                                    },
-                                  ),
-                                  // --------------- password field ---------------------->
-                                  TextFieldUnderline(
-                                    padding: EdgeInsets.all(10),
-                                    labelText: 'Password',
-                                    controller: controller.password.value,
-                                    hintText: '*********',
-                                    textStyle: TextStylesCustom.textStyles_20,
                                   ),
                                 ],
                               ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
+                              // --------------- Email field ---------------------->
+                              TextFieldUnderline(
+                                padding: EdgeInsets.all(10),
+                                labelText: 'Email Address',
+                                controller: controller.email.value,
+                                hintText: 'Johndo@mail.com',
+                                textStyle: TextStylesCustom.textStyles_20,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              //       // .....................Mobile field ..........................
 
-                            // <-----------------------Submit Button ------------------------------>
-
-                            ElevatedButtonCustom(
-                              BgColor: ColorStyle.primaryColorRed,
-                              text: 'Continue',
-                              size: Size(MediaQuery.of(context).size.width, 50),
-                              onTap: (() {
-                                controller.SignUpValidation();
-                              }),
-                            ),
-                            SizedBox(
-                              height: 42,
-                            ),
-
-                            Row(
-                              children: [
-                                Expanded(
-                                    child: Container(
-                                  height: 1,
-                                  color: Colors.grey,
-                                )),
-                                SizedBox(
-                                  width: 10,
+                              IntlPhoneField(
+                                style: TextStylesCustom.textStyles_20,
+                                decoration: InputDecoration(
+                                  focusColor: ColorStyle.secondaryColorgrey,
+                                  labelText: 'Phone Number',
+                                  border: UnderlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                    borderSide: BorderSide(),
+                                  ),
                                 ),
-                                Text(
-                                  'Or',
-                                  style: TextStylesCustom.textStyles_17,
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Expanded(
-                                    child: Container(
-                                  height: 1,
-                                  color: Colors.grey,
-                                )),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 24,
-                            ),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     InkWell(
-                            //       onTap: () {},
-                            //       child: Container(
-                            //         height: 44,
-                            //         width: 44,
-                            //         padding: const EdgeInsets.all(10),
-
-                            //         // alignment: Alignment.center,
-                            //         decoration: BoxDecoration(
-                            //             borderRadius: BorderRadius.circular(6),
-                            //             border: Border.all(
-                            //                 color: Colors.grey, width: 0.5)),
-                            //         child: Image.asset(
-                            //           ImageStyle.facebook,
-                            //         ),
-                            //       ),
-                            //     ),
-                            //     const SizedBox(
-                            //       width: 20,
-                            //     ),
-                            //     InkWell(
-                            //       onTap: () {},
-                            //       child: Container(
-                            //         height: 44,
-                            //         width: 44,
-                            //         padding: const EdgeInsets.all(10),
-                            //         // alignment: Alignment.center,
-                            //         decoration: BoxDecoration(
-                            //             borderRadius: BorderRadius.circular(6),
-                            //             border: Border.all(
-                            //                 color: Colors.grey, width: 0.5)),
-                            //         child: Image.asset(
-                            //           ImageStyle.google,
-
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            Center(
-                              child: TextRichCustom(
-                                textFirst: 'Already have an account? ',
-                                textSecond: 'SIGNIN',
-                                onTap: () {
-                                  Get.to(Mylogin());
+                                initialCountryCode: 'IN',
+                                onChanged: (phone) {
+                                  var mob = phone.completeNumber;
+                                  controller.phone.value.text = mob.toString();
+                                  print(phone.completeNumber);
                                 },
                               ),
+                              // --------------- password field ---------------------->
+                              TextFieldUnderline(
+                                padding: EdgeInsets.all(10),
+                                labelText: 'Password',
+                                controller: controller.password.value,
+                                hintText: '*********',
+                                textStyle: TextStylesCustom.textStyles_20,
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+
+                        // <-----------------------Submit Button ------------------------------>
+
+                        ElevatedButtonCustom(
+                          BgColor: ColorStyle.primaryColorRed,
+                          text: 'Continue',
+                          size: Size(MediaQuery.of(context).size.width, 50),
+                          onTap: (() {
+                            controller.SignUpValidation();
+                          }),
+                        ),
+                        SizedBox(
+                          height: 42,
+                        ),
+
+                        Row(
+                          children: [
+                            Expanded(
+                                child: Container(
+                              height: 1,
+                              color: Colors.grey,
+                            )),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              'Or',
+                              style: TextStylesCustom.textStyles_17,
                             ),
                             SizedBox(
-                              height: 20,
-                            )
+                              width: 10,
+                            ),
+                            Expanded(
+                                child: Container(
+                              height: 1,
+                              color: Colors.grey,
+                            )),
                           ],
                         ),
+                        SizedBox(
+                          height: 24,
+                        ),
+
+                        const SizedBox(
+                          height: 24,
+                        ),
+                        Center(
+                          child: TextRichCustom(
+                            textFirst: 'Already have an account? ',
+                            textSecond: 'SIGNIN',
+                            onTap: () {
+                              Get.to(Mylogin());
+                            },
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        )
                       ],
                     ),
-                  ));
+                  ],
+                ),
+              ));
         });
   }
 }

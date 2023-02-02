@@ -1,19 +1,17 @@
-import 'package:addcafe/Styles/ColorStyle.dart';
-import 'package:addcafe/Views/MyHomePage.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import '../../BottomNavBar.dart';
-import '../../Utils/Global.dart';
 import './Signup.dart';
 import 'package:get/get.dart';
-import 'package:addcafe/GetxController/UserAuth_controller.dart';
-import '../../Components/IndicatorSlider.dart';
 import '../../Styles/TextStyles.dart';
-import '../../Components/ElevatedButtonCustom.dart';
-import '../../Components/TextFieldCustom.dart';
-import '../../Components/TextRichCustom.dart';
-import '../../Styles/ImageStyle.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../Components/logoCustom.dart';
+import '../../Components/TextRichCustom.dart';
+import 'package:addcafe/Views/MyHomePage.dart';
+import '../../Components/IndicatorSlider.dart';
+import '../../Components/TextFieldCustom.dart';
+import 'package:addcafe/Styles/ColorStyle.dart';
+import '../../Components/ElevatedButtonCustom.dart';
+import 'package:addcafe/GetxController/UserAuth_controller.dart';
+
 // import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class Mylogin extends StatefulWidget {
@@ -81,8 +79,6 @@ class _MyloginState extends State<Mylogin> {
                                   borderRadius: BorderRadius.circular(55)),
                               onPressed: () {
                                 Get.to(MyHomePage());
-                                // navigateMultiBottom(
-                                //     context, BottomNavBarCustom());
                               },
                               child: Text(
                                 'Skip',
@@ -95,12 +91,9 @@ class _MyloginState extends State<Mylogin> {
                         height: 40,
                       ),
                       Text('Welcome',
-                          style:
-                              // TextStyle(fontWeight: FontWeight.w900, fontSize: 30)
-                              TextStylesCustom.textStyles_40
-                                  .apply(fontWeightDelta: 5)),
+                          style: TextStylesCustom.textStyles_40
+                              .apply(fontWeightDelta: 5)),
 
-                      // margin: EdgeInsets.symmetric(vertical: 20),
                       const SizedBox(
                         height: 5,
                       ),
@@ -177,50 +170,7 @@ class _MyloginState extends State<Mylogin> {
                           )),
                         ],
                       ),
-                      // const SizedBox(
-                      //   height: 24,
-                      // ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.center,
-                      //   children: [
-                      //     InkWell(
-                      //       onTap: () {},
-                      //       child: Container(
-                      //         height: 44,
-                      //         width: 44,
-                      //         padding: const EdgeInsets.all(10),
 
-                      //         decoration: BoxDecoration(
-                      //             borderRadius: BorderRadius.circular(6),
-                      //             border: Border.all(
-                      //                 color: Colors.grey, width: 0.5)),
-                      //         child: Image.asset(
-                      //           ImageStyle.facebook,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //     const SizedBox(
-                      //       width: 20,
-                      //     ),
-                      //     InkWell(
-                      //       onTap: () {},
-                      //       child: Container(
-                      //         height: 44,
-                      //         width: 44,
-                      //         padding: const EdgeInsets.all(10),
-
-                      //         decoration: BoxDecoration(
-                      //             borderRadius: BorderRadius.circular(6),
-                      //             border: Border.all(
-                      //                 color: Colors.grey, width: 0.5)),
-                      //         child: Image.asset(
-                      //           ImageStyle.google,
-
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
                       const SizedBox(
                         height: 24,
                       ),

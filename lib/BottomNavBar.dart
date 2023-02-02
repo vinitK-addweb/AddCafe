@@ -1,44 +1,28 @@
-import 'package:addcafe/Styles/ColorStyle.dart';
-import 'package:addcafe/Views/MyHomePage.dart';
-import 'package:addcafe/Views/userProfile.dart';
-import 'package:flutter/material.dart';
+import 'Views/Wishlist.dart';
 import 'package:get/get.dart';
-import 'GetxController/Cart_controller.dart';
-import 'GetxController/MyHomePage_controller.dart';
-import './Styles/TextStyles.dart';
 import '../Views/Offers.dart';
 import '../Views/Cart/cart.dart';
 import 'Views/OrderHistory.dart';
-import 'Views/Wishlist.dart';
+import './Styles/TextStyles.dart';
+import 'package:flutter/material.dart';
+import 'GetxController/Cart_controller.dart';
+import 'package:addcafe/Views/MyHomePage.dart';
+import 'package:addcafe/Styles/ColorStyle.dart';
+import 'package:addcafe/Views/userProfile.dart';
+import 'GetxController/MyHomePage_controller.dart';
 
 class BottamNavigationBar extends StatelessWidget {
   final controller = Get.put(HomeBannerController());
 
   double iconSize = 24;
 
-  final arrBody = [
-    MyHomePage(),
-    // Offers(),
-    OrderHistory(),
-    UserProfile(), Myfavourits()
-  ];
+  final arrBody = [MyHomePage(), OrderHistory(), UserProfile(), Myfavourits()];
   final cart = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         return false;
-        // final isFirstRouteInCurrentTab =
-        //     !await _navigatorKeys[_currentPage]!.currentState!.maybePop();
-        // if (isFirstRouteInCurrentTab) {
-        //   if (_currentPage != "Page1") {
-        //     _selectTab("Page1", 1);
-
-        //     return false;
-        //   }
-        // }
-        // // let system handle back button if we're on the first route
-        // return isFirstRouteInCurrentTab;
       },
       child: GetBuilder(
           init: HomeBannerController(),
@@ -82,14 +66,9 @@ class BottamNavigationBar extends StatelessWidget {
                           icon: Icon(Icons.shopping_cart),
                           label: 'Wishlist',
                         ),
-
-                        // BottomNavigationBarItem(icon: Icon(Icons.point_of_sale), label: 'Cart')
                       ],
                       onTap: (index) {
-                        // controller.setCurrentIndex(index);
                         controller.currentIndex.value = index;
-                        // if (index == 0) Get.to(MyHomePage());
-                        // if (index == 2) Get.to(Offers());
                       },
                     ),
                   ),
@@ -98,47 +77,3 @@ class BottamNavigationBar extends StatelessWidget {
     );
   }
 }
-
-// class theFooter extends StatefulWidget {
-//   @override
-//   State<theFooter> createState() => _theFooterState();
-// }
-
-// class _theFooterState extends State<theFooter> {
-//   // int _currentIndex = 0;
-//   @override
-//   Widget build(BuildContext context) => BottomNavigationBar(
-//         // currentIndex: _currentIndex,
-//         type: BottomNavigationBarType.fixed,
-//         iconSize: 35,
-//         items: [
-//           BottomNavigationBarItem(
-//               icon: Icon(Icons.menu_open_outlined),
-//               label: 'Menu',
-//               backgroundColor: Colors.blue),
-//           BottomNavigationBarItem(
-//               icon: Icon(Icons.wallet_giftcard_outlined),
-//               label: 'Rewards',
-//               backgroundColor: Colors.blue),
-//           BottomNavigationBarItem(
-//               icon: Icon(Icons.shopping_bag_outlined),
-//               label: 'Offers',
-//               backgroundColor: Colors.blue),
-//           BottomNavigationBarItem(
-//               icon: Icon(Icons.shopping_cart),
-//               label: 'Cart',
-//               backgroundColor: Colors.blue),
-
-//           // BottomNavigationBarItem(icon: Icon(Icons.point_of_sale), label: 'Cart')
-//         ],
-//         onTap: (index) {
-//           setState(() {
-//             controller.
-//             _currentIndex = index;
-//             if (index == 0) Get.to(MyHomePage());
-//             if (index == 2) Get.to(Offers());
-//             // if (index == 3) Navigator.of(context).pushNamed('/cart');
-//           });
-//         },
-//       );
-// }

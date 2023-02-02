@@ -6,7 +6,6 @@ import 'package:addcafe/Styles/ColorStyle.dart';
 import 'package:addcafe/Styles/TextStyles.dart';
 import '../GetxController/MyHomePage_controller.dart';
 import '../GetxController/OrderHistory_controller.dart';
-import 'package:addcafe/Components/ElevatedButtonCustom.dart';
 
 class OrderHistory extends StatelessWidget {
   OrderHistory({super.key});
@@ -172,14 +171,6 @@ class OrderHistory extends StatelessWidget {
                                             style:
                                                 TextStylesCustom.textStyles_14,
                                           ),
-                                          // FittedBox(
-                                          //   child: ElevatedButtonCustom(
-                                          //     text: 'ReOrder',
-                                          //     size: const Size(100, 15),
-                                          //     onTap: () {},
-                                          //     radiusBorder: 8,
-                                          //   ),
-                                          // ),
                                         ],
                                       )
                                     ],

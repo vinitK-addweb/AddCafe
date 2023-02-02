@@ -1,33 +1,26 @@
-import 'package:addcafe/Styles/TextStyles.dart';
-import 'package:addcafe/Views/Cart/cart.dart';
-import 'package:addcafe/Views/MyHomePage.dart';
-import 'package:flutter/material.dart';
-import '../Components/ElevatedButtonCustom.dart';
 import 'package:get/get.dart';
-import 'package:addcafe/Views/EmptyWishlist.dart';
-import 'package:addcafe/GetxController/Wishlist_controller.dart';
-
+import '../Utils/Global.dart';
 import '../Utils/Constant.dart';
 import '../Styles/ColorStyle.dart';
+import 'package:flutter/material.dart';
 import '../Components/AppBarStyle.dart';
-import '../GetxController/MyHomePage_controller.dart';
-import '../BottomNavBar.dart';
-import '../Utils/Global.dart';
 import '../Views/Categories/addons.dart';
-
+import 'package:addcafe/Views/Cart/cart.dart';
+import 'package:addcafe/Views/MyHomePage.dart';
+import 'package:addcafe/Styles/TextStyles.dart';
+import '../Components/ElevatedButtonCustom.dart';
+import 'package:addcafe/Views/EmptyWishlist.dart';
 import './../GetxController/Cart_controller.dart';
+import '../GetxController/MyHomePage_controller.dart';
+import 'package:addcafe/GetxController/Wishlist_controller.dart';
 
 class Myfavourits extends StatelessWidget {
   Myfavourits({super.key});
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    // final userAuth = Provider.of<UserAuth>(context);
-    // List<Wishlist> myFavouritesApi =
-    //     Get.put(MyFavouritesApi().myFavourites.value);
     final myfavapi = Get.put(MyFavouritesApi());
-    // final cartApi = Provider.of<CartApi>(context);
-    // final cartData = Get.put(CartController());
+
     final homPageController = Get.put(HomeBannerController());
     final cartApi = Get.put(CartController());
     return GetBuilder(
@@ -52,7 +45,6 @@ class Myfavourits extends StatelessWidget {
                   styleTitle: TextStylesCustom.textStyles_20,
                   title: 'Wishlist',
                 ),
-                // drawer: const MainDrawer(),
                 bottomNavigationBar: cartApi.cartData.isNotEmpty
                     ? Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -66,10 +58,6 @@ class Myfavourits extends StatelessWidget {
                                     topLeft: Radius.circular(15),
                                     topRight: Radius.circular(15))),
                             height: 60,
-                            // child: ElevatedButton(
-                            //   onPressed: () {
-                            //     Navigator.of(context).pushNamed('/cart');
-                            //   },
                             child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -127,7 +115,6 @@ class Myfavourits extends StatelessWidget {
                         child: Column(
                           children: myfavapi.myFavourites.isNotEmpty
                               ? myfavapi.myFavourites.value.map((e) {
-                                  //  List thisCartData = cartApi.isInCart(categoryItems[index]['id']);
                                   List thisCartData =
                                       cartApi.isInCart(e.product);
                                   return Container(
@@ -163,7 +150,6 @@ class Myfavourits extends StatelessWidget {
                                               ),
                                               Row(
                                                 children: [
-                                                  // Rating(3),
                                                   Text(
                                                     '345 reviews',
                                                     style: TextStylesCustom
@@ -214,16 +200,6 @@ class Myfavourits extends StatelessWidget {
                                                       ),
                                                     ),
                                                   ),
-
-                                                  // Container(
-                                                  //   margin: const EdgeInsets
-                                                  //           .symmetric(
-                                                  //       horizontal: 10),
-                                                  //   child: const Icon(
-                                                  //     Icons.share,
-                                                  //     color: Colors.blueAccent,
-                                                  //   ),
-                                                  // ),
                                                 ],
                                               )
                                             ],
@@ -362,83 +338,6 @@ class Myfavourits extends StatelessWidget {
                                                           ),
                                                         ],
                                                       ),
-
-                                                // Container(
-                                                //     width: 70,
-                                                //     padding: EdgeInsets
-                                                //         .symmetric(
-                                                //             horizontal: 8,
-                                                //             vertical: 8),
-                                                //     decoration: BoxDecoration(
-                                                //         color: Colors.red,
-                                                //         border: Border.all(
-                                                //             color:
-                                                //                 Colors.red),
-                                                //         borderRadius:
-                                                //             BorderRadius
-                                                //                 .all((Radius
-                                                //                     .circular(
-                                                //                         4)))),
-                                                //     child: Row(
-                                                //       mainAxisAlignment:
-                                                //           MainAxisAlignment
-                                                //               .spaceAround,
-                                                //       children: [
-                                                //         InkWell(
-                                                //           onTap: () {
-                                                //             if (e['item_count'] ==
-                                                //                 1) {
-                                                //               cartData
-                                                //                   .delete(
-                                                //                       e.id);
-                                                //               return;
-                                                //             }
-                                                //             cartData.updateQuantity(
-                                                //                 'minus',
-                                                //                 thisCartData[
-                                                //                         0]
-                                                //                     ['id']);
-                                                //           },
-                                                //           child: Container(
-                                                //             width: 20,
-                                                //             child: Center(
-                                                //               child: Text(
-                                                //                 '-',
-                                                //                 style: TextStyle(
-                                                //                     color: Colors
-                                                //                         .white),
-                                                //               ),
-                                                //             ),
-                                                //           ),
-                                                //         ),
-                                                //         Text(
-                                                //             '${thisCartData[0]['item_count']}',
-                                                //             style: TextStyle(
-                                                //                 color: Colors
-                                                //                     .white)),
-                                                //         InkWell(
-                                                //           onTap: () {
-                                                //             cartData.updateQuantity(
-                                                //                 'plus',
-                                                //                 thisCartData[
-                                                //                         0]
-                                                //                     ['id']);
-                                                //           },
-                                                //           child: Container(
-                                                //             width: 20,
-                                                //             child: Center(
-                                                //               child: Text(
-                                                //                 '+',
-                                                //                 style: TextStyle(
-                                                //                     color: Colors
-                                                //                         .white),
-                                                //               ),
-                                                //             ),
-                                                //           ),
-                                                //         ),
-                                                //       ],
-                                                //     ),
-                                                //   ),
                                               ),
                                             ],
                                           )

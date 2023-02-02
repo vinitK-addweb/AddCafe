@@ -1,17 +1,13 @@
-import 'package:addcafe/Styles/ColorStyle.dart';
-import 'package:addcafe/Views/MyHomePage.dart';
+import 'package:get/get.dart';
+import '../../Styles/TextStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import './Signup.dart';
-import 'package:get/get.dart';
-import 'package:addcafe/GetxController/UserAuth_controller.dart';
-import '../../Components/IndicatorSlider.dart';
-import '../../Styles/TextStyles.dart';
-import '../../Components/ElevatedButtonCustom.dart';
-import '../../Components/TextFieldCustom.dart';
-import '../../Components/TextRichCustom.dart';
-import '../../Styles/ImageStyle.dart';
 import '../../Components/logoCustom.dart';
+import '../../Components/IndicatorSlider.dart';
+import '../../Components/TextFieldCustom.dart';
+import 'package:addcafe/Styles/ColorStyle.dart';
+import '../../Components/ElevatedButtonCustom.dart';
+import 'package:addcafe/GetxController/UserAuth_controller.dart';
 
 class ForgetPassword extends StatelessWidget {
   final controller = Get.put(UserAuth());
@@ -28,7 +24,7 @@ class ForgetPassword extends StatelessWidget {
           ),
         ),
         body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
               const SizedBox(
@@ -49,12 +45,9 @@ class ForgetPassword extends StatelessWidget {
                     height: 40,
                   ),
                   Text('Don’t Worry',
-                      style:
-                          // TextStyle(fontWeight: FontWeight.w900, fontSize: 30)
-                          TextStylesCustom.textStyles_40
-                              .apply(fontWeightDelta: 5)),
+                      style: TextStylesCustom.textStyles_40
+                          .apply(fontWeightDelta: 5)),
 
-                  // margin: EdgeInsets.symmetric(vertical: 20),
                   const SizedBox(
                     height: 5,
                   ),

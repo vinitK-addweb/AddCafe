@@ -1,20 +1,11 @@
 import 'dart:async';
-
-import 'package:flutter/material.dart';
 import 'shimmer.dart';
+import 'package:flutter/material.dart';
 
 class Mysearch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // bool Loading = false;
-    // return ListView.builder(
-    //     itemCount: 1,
-    //     itemBuilder: (context, index) {
-    return
-
-        // });
-        //
-        Container(
+    return Container(
       margin: EdgeInsets.fromLTRB(16, 16, 10, 15),
       child: TextField(
         decoration: InputDecoration(

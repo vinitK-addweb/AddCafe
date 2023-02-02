@@ -1,18 +1,14 @@
-import '../Models/Model_MyHomePage.dart';
-import '../Models/Model_Categories.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../Views/Categories/categoryItems.dart';
-import '../Models/Model_Banner.dart';
-import '../Models/Model_Categories.dart';
 import '../Styles/TextStyles.dart';
-import '../Styles/ColorStyle.dart';
+import '../Models/Model_Banner.dart';
+import 'package:flutter/material.dart';
+import '../Models/Model_Categories.dart';
+import '../Views/Categories/categoryItems.dart';
 import '../GetxController/ActiveProducts_controller.dart';
 
 class HomeCategory extends StatelessWidget {
   HomeCategory(this.categoriesImage, this.bannerData);
-  // final List<ModelHomeCategory> CategoryImages;
+
   final List<ModelCategories> categoriesImage;
   final List<ModelBanner> bannerData;
   final ActiveProductsController productController =
@@ -20,8 +16,6 @@ class HomeCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final controller = ActiveProductsController();
-    // controller.fetchAllProducts();
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -42,18 +36,10 @@ class HomeCategory extends StatelessWidget {
                     width: 100,
                     child: InkWell(
                       onTap: (() {
-    //                     print(
-    //                         'select category${productController.selectedCategory}');
-    //                     productController.selectedCategory.value ==
-    //                         item.name;
-    //                     productController.getFilteredProducts(item.name);
-    // Future.delayed(const Duration(milliseconds: 10), () {
-    //                     productController.update();});
-    //                     print(
-    //                         'selected category${productController.selectedCategory.value}');
                         productController.slectCategory(item.name);
                         Future.delayed(const Duration(milliseconds: 10), () {
-                          Get.to(CategoryItems(item.name!, bannerData, categoriesImage));
+                          Get.to(CategoryItems(
+                              item.name!, bannerData, categoriesImage));
                         });
                       }),
                       child: Column(

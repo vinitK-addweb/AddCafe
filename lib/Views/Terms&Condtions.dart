@@ -1,16 +1,13 @@
-import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-
-import '../Models/Model_Terms&Conditions.dart';
-
 import '../Styles/TextStyles.dart';
+import 'package:flutter/material.dart';
+import '../Models/Model_Terms&Conditions.dart';
 
 class TermsConditions extends StatelessWidget {
   TermsConditions(this.termsCondtions, {super.key});
 
   RxList<TermsCondtionsModel> termsCondtions = <TermsCondtionsModel>[].obs;
-  // final controller = Get.put(TermsCondtionsController());
+
   @override
   Widget build(BuildContext context) {
     return termsCondtions.isEmpty

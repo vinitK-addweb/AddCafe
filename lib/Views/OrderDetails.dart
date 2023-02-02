@@ -11,10 +11,10 @@ import 'package:fdottedline_nullsafety/fdottedline__nullsafety.dart';
 class OrderDetails extends StatelessWidget {
   OrderDetails({super.key});
 
-  @override
   final controller = Get.put(CartController());
+  @override
   Widget build(BuildContext context) {
-    // controller.fetchCart();
+    ;
 
     return Scaffold(
         appBar: AppBarStyle(
@@ -68,7 +68,6 @@ class OrderDetails extends StatelessWidget {
                   ),
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    // margin: const EdgeInsets.symmetric(horizontal: 10),
                     padding: const EdgeInsets.only(bottom: 5),
                     decoration: BoxDecoration(
                         border: Border(
@@ -83,45 +82,6 @@ class OrderDetails extends StatelessWidget {
                   ),
                   FittedBox(
                     child: Row(children: [
-                      // GridView.builder(
-                      //   itemCount: 4,
-                      //   shrinkWrap: true,
-                      //   itemBuilder: (context, index) {
-                      //     return Column(
-                      //       children: [
-                      //         CircleAvatar(
-                      //           radius: 30,
-                      //           backgroundColor: ColorStyle.primaryColorRed,
-                      //           child: ImageIcon(
-                      //               const AssetImage('assets/images/orderAccepted.png'),
-                      //               size: 40,
-                      //               color: ColorStyle.white),
-                      //         ),
-                      //         Text(data[index]['name'], textAlign: TextAlign.center),
-                      //       ],
-                      //     );
-                      //   },
-                      //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      //     crossAxisCount: 4,
-                      //   ),
-                      // )
-
-                      // Container(
-                      //   height: 50,
-                      //   alignment: Alignment.centerLeft,
-                      //   child: ListView.separated(
-                      //       separatorBuilder: (BuildContext context, int index) {
-                      //         return SizedBox(width: 3);
-                      //       },
-                      //       shrinkWrap: true,
-                      //       itemCount: 4,
-                      //       scrollDirection: Axis.horizontal,
-                      //       itemBuilder: (BuildContext context, index) {
-                      //         return Text(data[index]['name'],st);
-                      //       }),
-                      // )
-                      // ])
-
                       CircleAvatar(
                         radius: 30,
                         backgroundColor: ColorStyle.primaryColorRed,
@@ -200,54 +160,6 @@ class OrderDetails extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       )
-                      //   ],
-                      // ),
-                      // ),
-                      // CircleAvatar(
-                      //   radius: 25,
-                      //   backgroundColor: ColorStyle.primaryColorRed,
-                      //   child: ImageIcon(AssetImage('assets/images/orderAccepted.png'),
-                      //       size: 30, color: ColorStyle.white),
-                      // ),
-                      // FDottedLine(
-                      //   color: ColorStyle.primaryColorRed,
-                      //   height: 60.0,
-                      //   strokeWidth: 2.0,
-                      //   dottedLength: 10.0,
-                      //   space: 5.0,
-                      // ),
-                      // CircleAvatar(
-                      //   radius: 25,
-                      //   backgroundColor: ColorStyle.primaryColorRed,
-                      //   child: ImageIcon(AssetImage('assets/images/orderAccepted.png'),
-                      //       size: 30, color: ColorStyle.white),
-                      // ),
-                      // FDottedLine(
-                      //   color: ColorStyle.primaryColorRed,
-                      //   height: 65.0,
-                      //   strokeWidth: 2.0,
-                      //   dottedLength: 8.0,
-                      //   space: 8.0,
-                      // ),
-                      // CircleAvatar(
-                      //   radius: 25,
-                      //   backgroundColor: ColorStyle.primaryColorRed,
-                      //   child: ImageIcon(AssetImage('assets/images/orderAccepted.png'),
-                      //       size: 30, color: ColorStyle.white),
-                      // ),
-                      // FDottedLine(
-                      //   color: ColorStyle.primaryColorRed,
-                      //   height: 75.0,
-                      //   strokeWidth: 2.0,
-                      //   dottedLength: 10.0,
-                      //   space: 8.0,
-                      // ),
-                      // CircleAvatar(
-                      //   radius: 25,
-                      //   backgroundColor: ColorStyle.primaryColorRed,
-                      //   child: ImageIcon(AssetImage('assets/images/orderAccepted.png'),
-                      //       size: 30, color: ColorStyle.white),
-                      // ),
                     ]),
                   ),
                   const SizedBox(
@@ -313,18 +225,15 @@ class OrderDetails extends StatelessWidget {
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
                                 ColorStyle.primaryColorGreen)),
-
                         onPressed: () {},
                         icon: const Icon(
-                          // <-- Icon
                           Icons.download,
                           size: 20.0,
                         ),
-                        // : ColorStyle.secondryColorGreen,
                         label: Text(
                           'Download Invoice',
                           style: TextStylesCustom.textStyles_13,
-                        ), // <-- Text
+                        ),
                       ),
                       ElevatedButtonCustom(
                         onTap: (() {}),

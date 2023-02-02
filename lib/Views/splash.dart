@@ -1,14 +1,17 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:get/get.dart';
-import 'MyHomePage.dart';
-import 'Auth/Signin.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:addcafe/Providers/apis/UserAuth.dart';
 import 'dart:convert';
 import '../main.dart';
+import 'dart:developer';
+import 'MyHomePage.dart';
+import 'Auth/Signin.dart';
+import 'package:get/get.dart';
 import '../BottomNavBar.dart';
+import 'package:flutter/material.dart';
+import 'package:addcafe/Utils/Global.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
+// import 'package:addcafe/Providers/apis/UserAuth.dart';
 // import 'package:provider/provider.dart';
 
 class Splash extends StatefulWidget {
@@ -64,8 +67,6 @@ class _SplashState extends State<Splash> {
       }
     });
     getlocaStorage();
-
-    // _navigatetohome();
   }
 
   Map<String, dynamic> userprofile = {};
@@ -81,13 +82,9 @@ class _SplashState extends State<Splash> {
           userprofile =
               await Map<String, dynamic>.from(jsonDecode(userDataPref));
 
-          Get.to(() => BottamNavigationBar()
-              // MyHomePage()
-
-              );
-          // });
+          Get.to(() => BottamNavigationBar());
         } catch (error) {
-          print(error);
+          log(error.toString());
         }
       } else {
         userprofile = {};
@@ -97,37 +94,18 @@ class _SplashState extends State<Splash> {
     });
   }
 
-  // _navigatetohome() async {
-  //   await Future.delayed(Duration(milliseconds: 5500), () {
-  //     Navigator.pushReplacement(
-  //         context, MaterialPageRoute(builder: (context) => Mylogin()));
-  //   });
-  // Navigator.pushReplacement(
-  //     context, MaterialPageRoute(builder: (context) => Mylogin()));
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // final userAuth = Provider.of<UserAuth>(context);
-
     return Scaffold(
       body: Column(
         children: [
           Container(
-              margin: EdgeInsets.fromLTRB(40, 200, 40, 100),
+              margin: const EdgeInsets.fromLTRB(40, 200, 40, 100),
               child: Image.asset(
                 'assets/images/addweb.gif',
               )),
-          Container(
-            child: Image.asset(
-              'assets/images/delivery.gif',
-              // ),
-              //
-              // Text(
-              //   'Splash Screen',
-              //   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-              // ),
-            ),
+          Image.asset(
+            'assets/images/delivery.gif',
           ),
         ],
       ),

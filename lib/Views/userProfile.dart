@@ -1,23 +1,20 @@
 import 'dart:convert';
-// import '../Components/MainDrawer.dart';
-import '../GetxController/MyHomePage_controller.dart';
-import '../Views/AddNewAddress.dart';
-import 'package:addcafe/Components/AppBarStyle.dart';
-import 'package:addcafe/Views/Auth/Signin.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:get/get.dart';
-import 'package:addcafe/GetxController/UserAuth_controller.dart';
-import '../GetxController/UserProfile_controller.dart';
 import 'package:intl/intl.dart';
 import '../Utils/Constant.dart';
 import '../Styles/TextStyles.dart';
 import '../Styles/ColorStyle.dart';
-import '../Components/ElevatedButtonCustom.dart';
 import '../Styles/EffectStyle.dart';
-import '../Components/TextFieldCustom.dart';
-
+import '../Views/AddNewAddress.dart';
+import 'package:flutter/material.dart';
 import '../Components/PickerCustom.dart';
+import '../Components/TextFieldCustom.dart';
+import 'package:addcafe/Views/Auth/Signin.dart';
+import '../Components/ElevatedButtonCustom.dart';
+import 'package:addcafe/Components/AppBarStyle.dart';
+import '../GetxController/MyHomePage_controller.dart';
+import '../GetxController/UserProfile_controller.dart';
+import 'package:addcafe/GetxController/UserAuth_controller.dart';
 
 class UserProfile extends StatelessWidget {
   final userAuth = Get.put(UserAuth());
@@ -30,15 +27,12 @@ class UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         key: scaffoldKey,
-        // drawer: const MainDrawer(),
         appBar: AppBarStyle(
           styleTitle: TextStylesCustom.textStyles_20,
           title: 'Profile',
           backgroundColor: ColorStyle.primaryColorRed,
           leading: IconButton(
             onPressed: () => homPageController.currentIndex.value = 0,
-            // scaffoldKey.currentState!.openDrawer(),
-            // currentIndex.value = 0,
             icon: const Icon(
               Icons.arrow_back,
               size: 24,
@@ -488,7 +482,6 @@ class UserProfile extends StatelessWidget {
                                                       const EdgeInsets.all(10),
                                                   labelText:
                                                       'Enter New Password',
-                                                  // controller: controller.textController.value,
                                                   hintText: '*********',
                                                   textStyle: TextStylesCustom
                                                       .textStyles_16,
@@ -520,7 +513,6 @@ class UserProfile extends StatelessWidget {
                                                       const EdgeInsets.all(10),
                                                   labelText:
                                                       'Confirm New Password',
-                                                  // controller: controller.textController.value,
                                                   hintText: '*********',
                                                   textStyle: TextStylesCustom
                                                       .textStyles_16,
