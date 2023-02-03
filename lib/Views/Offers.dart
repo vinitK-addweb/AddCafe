@@ -142,8 +142,8 @@ class Offers extends StatelessWidget {
                                                       Radius.circular(8)),
                                             ),
                                             child: Text(
-                                                controller.offers[index]['code']
-                                                    .toString(),
+                                                controller.offers[index]
+                                                    ['code'],
                                                 style: TextStylesCustom
                                                     .textStyles_14)),
                                         Text(
@@ -172,6 +172,11 @@ class Offers extends StatelessWidget {
                                           ),
                                         ),
                                         ElevatedButtonCustom(
+                                          BgColor: controller.offers[index]
+                                                      ['code'] ==
+                                                  controller.CouponName.value
+                                              ? ColorStyle.primaryColorRed
+                                              : ColorStyle.secondryColorGreen,
                                           onTap: () async {
                                             await controller.applyCoupon(
                                                 controller.offers[index]
@@ -212,6 +217,12 @@ class Offers extends StatelessWidget {
                                                             actions: <Widget>[
                                                               TextButton(
                                                                 onPressed: () {
+                                                                  controller
+                                                                      .CouponName
+                                                                      .value = controller
+                                                                              .offers[
+                                                                          index]
+                                                                      ['code'];
                                                                   var nav =
                                                                       Navigator.of(
                                                                           context);
@@ -226,7 +237,11 @@ class Offers extends StatelessWidget {
                                                           );
                                                         })));
                                           },
-                                          text: 'Apply',
+                                          text: controller.offers[index]
+                                                      ['code'] ==
+                                                  controller.CouponName.value
+                                              ? 'Remove'
+                                              : 'Apply',
                                           size: const Size(100, 20),
                                           radiusBorder: 10,
                                         )

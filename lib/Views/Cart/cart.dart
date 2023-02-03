@@ -245,7 +245,7 @@ class _CartState extends State<Cart> {
                                             ),
                                             RichText(
                                               text: TextSpan(
-                                                  text: 'Delviery at ',
+                                                  text: 'Delivery at ',
                                                   style: TextStylesCustom
                                                       .textStyles_18
                                                       .apply(

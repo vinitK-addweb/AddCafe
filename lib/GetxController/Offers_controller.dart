@@ -6,10 +6,12 @@ import 'package:addcafe/Utils/Global.dart';
 
 class OffersController extends GetxController {
   RxList offers = [].obs;
-  RxInt idx = 0.obs;
+  RxString CouponName = ''.obs;
+
   Map checkout = {};
   Rx<TextEditingController> coupon = TextEditingController().obs;
   RxString message = "".obs;
+
   var couponData = {}.obs;
 
   initCustom() {
@@ -44,8 +46,8 @@ class OffersController extends GetxController {
     log(checkout.toString());
   }
 
-  bannerIdx(id) {
-    debugPrint(id.toString());
-    idx.value = id;
-  }
+  // bannerIdx(id) {
+  //   debugPrint(id.toString());
+  //   idx.value = id;
+  // }
 }
