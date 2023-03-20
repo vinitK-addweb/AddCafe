@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'dart:developer';
 import '../Utils/API.dart';
 import 'package:get/get.dart';
 import '../BottomNavBar.dart';
@@ -16,6 +17,7 @@ class UserAuth extends GetxController {
   Rx<TextEditingController> textController = TextEditingController().obs;
   Rx<TextEditingController> otp = TextEditingController().obs;
   Rx<TextEditingController> password = TextEditingController().obs;
+  Rx<TextEditingController> cassword = TextEditingController().obs;
   Rx<TextEditingController> firstName = TextEditingController().obs;
   Rx<TextEditingController> lastName = TextEditingController().obs;
   Rx<TextEditingController> email = TextEditingController().obs;
@@ -77,7 +79,9 @@ class UserAuth extends GetxController {
         if (!GetUtils.isEmail(textController.value.text)) {
           'Enter a Valid Email Address'.showError();
         } else {
-          Get.to(Password());
+          Get.to(Password(
+            type: 'loginPass',
+          ));
         }
       }
     } else {
@@ -104,6 +108,7 @@ class UserAuth extends GetxController {
     if (_UserLogin['status'] == 401) {
       '${_UserLogin['message']}'.showError();
     } else {
+      resetFunction();
       Get.to(Mylogin());
     }
   }
@@ -167,11 +172,24 @@ class UserAuth extends GetxController {
     textController.value.text = '';
     kTOKENSAVED = '';
     userprofile = {}.obs;
+    resetFunction();
     prefs.remove('userData');
     prefs.remove('token');
     cartApi.cartData.value = [];
     getlocaStorage();
     await Get.to(Mylogin());
+  }
+
+  // reset the variables
+  resetFunction() {
+    textController.value.text = '';
+    firstName.value.text = '';
+    lastName.value.text = '';
+    password.value.text = '';
+    cPassword.value.text = '';
+
+    email.value.text = '';
+    phone.value.text = '';
   }
 
   //  <-----------------  User Otp verification Functionality ------------------>
@@ -189,9 +207,46 @@ class UserAuth extends GetxController {
         isHeader: false) as Map<String, dynamic>;
     if (resposne['status'] == 202) {
       '${resposne['message']}'.showSuccess();
-      Get.to(Mylogin());
-      textController.value.text = '';
+      Get.to(Otp());
+      // textController.value.text = '';
     }
+  }
+
+  verifyOtp() async {
+    final params = {'email': textController.value.text, 'code': otp.value.text};
+
+    log(params.toString());
+    final otpData = await API.instance.post(
+        endPoint: 'accounts/verify-reset-code/',
+        params: params,
+        isHeader: false);
+
+    if (otpData!['status'] == 200) {
+      Get.to(Password(
+        type: 'resetPass',
+      ));
+    }
+  }
+
+  verifyPasswordReset() async {
+    log("verifyPasswordReset runs");
+    final param = {
+      "email": 'vinit@addwebsolution.in',
+      "code": otp.value.text,
+      "password": password.value.text
+    };
+    log(param.toString());
+    final data = await API.instance.post(
+        endPoint: 'accounts/verify-password-reset/',
+        params: param,
+        isHeader: false);
+
+    if (data == null) {
+      'Somthing went wrong'.showError();
+    }
+    // log('reset pass data=========>>> ${data}');
+
+    // Get.to(Mylogin());
   }
 
   get userProfile {

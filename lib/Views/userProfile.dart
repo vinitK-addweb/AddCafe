@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../Utils/Constant.dart';
@@ -220,187 +221,232 @@ class UserProfile extends StatelessWidget {
                             ),
                             controller.showEditProfile.value
                                 ? Form(
-                                    // key: formKey,
+                                    key: formKey,
                                     child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      TextFieldUnderline(
-                                        controller: controller.fname.value,
-                                        padding: const EdgeInsets.all(10),
-                                        labelText: 'Your Name',
-                                        textStyle:
-                                            TextStylesCustom.textStyles_16,
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      TextFieldUnderline(
-                                        controller: controller.lname.value,
-                                        padding: const EdgeInsets.all(10),
-                                        labelText: 'Your Last Name',
-                                        textStyle:
-                                            TextStylesCustom.textStyles_16,
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      TextFieldUnderline(
-                                        controller: controller.email.value,
-                                        padding: const EdgeInsets.all(10),
-                                        labelText: 'Your Email',
-                                        textStyle:
-                                            TextStylesCustom.textStyles_16,
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      TextFieldUnderline(
-                                        keyboardType: TextInputType.number,
-                                        controller: controller.mobile.value,
-                                        padding: const EdgeInsets.all(10),
-                                        labelText: 'Your Mobile No.',
-                                        textStyle:
-                                            TextStylesCustom.textStyles_16,
-                                      ),
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextFormFieldUnderline(
+                                          controller: controller.fname.value,
+                                          padding: const EdgeInsets.all(10),
+                                          labelText: 'Your Name',
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'Enter Your First Name';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          textStyle:
+                                              TextStylesCustom.textStyles_16,
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        TextFormFieldUnderline(
+                                          controller: controller.lname.value,
+                                          padding: const EdgeInsets.all(10),
+                                          labelText: 'Your Last Name',
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'Enter Your Last Name';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          textStyle:
+                                              TextStylesCustom.textStyles_16,
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        TextFormFieldUnderline(
+                                          controller: controller.email.value,
+                                          padding: const EdgeInsets.all(10),
+                                          labelText: 'Your Email',
+                                          validator: (value) {
+                                            if (!GetUtils.isEmail(value!)) {
+                                              return 'Enter a Valid Email Address ';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          textStyle:
+                                              TextStylesCustom.textStyles_16,
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        TextFormFieldUnderline(
+                                          keyboardType: TextInputType.number,
+                                          controller: controller.mobile.value,
+                                          padding: const EdgeInsets.all(10),
+                                          labelText: 'Your Mobile No.',
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return "Please Enter your Mobile Number";
+                                            } else if (value.length != 10) {
+                                              return 'Mobile Number Should Be 10 Digits';
+                                            } else {
+                                              log("hello");
+                                              return null;
+                                            }
+                                          },
+                                          textStyle:
+                                              TextStylesCustom.textStyles_16,
+                                        ),
 
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      Text(
-                                        "Gender*",
-                                        style: TextStylesCustom.textStyles_18,
-                                      ),
-                                      const SizedBox(
-                                        height: 10,
-                                      ),
-                                      Text(controller
-                                              .selectedgender.value.isNotEmpty
-                                          ? ''
-                                          : ''),
-                                      Obx(() {
-                                        return SizedBox(
-                                            height: 80,
-                                            child: ListView.builder(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                shrinkWrap: true,
-                                                itemCount:
-                                                    controller.genders.length,
-                                                itemBuilder: (context, index) {
-                                                  return InkWell(
-                                                    splashColor: ColorStyle
-                                                        .secondryColorRed,
-                                                    onTap: () {
-                                                      controller.selectedgender
-                                                              .value =
-                                                          controller.genders[
-                                                              index][2];
-                                                    },
-                                                    child: Card(
-                                                        color: controller
-                                                                    .selectedgender
-                                                                    .value ==
-                                                                controller
-                                                                        .genders[
-                                                                    index][2]
-                                                            ? Color(0xFF3B4257)
-                                                            : Colors.white,
-                                                        child: Container(
-                                                          height: 40,
-                                                          width: 50,
-                                                          alignment:
-                                                              Alignment.center,
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .all(12.0),
-                                                          child: Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: <Widget>[
-                                                              Icon(
-                                                                controller
-                                                                        .genders[
-                                                                    index][1],
-                                                                color: controller
-                                                                            .selectedgender
-                                                                            .value ==
-                                                                        controller.genders[index]
-                                                                            [2]
-                                                                    ? Colors
-                                                                        .white
-                                                                    : Colors
-                                                                        .grey,
-                                                                size: 16,
-                                                              ),
-                                                              const SizedBox(
-                                                                  height: 10),
-                                                              Text(
-                                                                controller
-                                                                        .genders[
-                                                                    index][0],
-                                                                style: TextStylesCustom.textStyles_12.apply(
-                                                                    color: controller.selectedgender.value ==
-                                                                            controller.genders[index][
-                                                                                2]
-                                                                        ? Colors
-                                                                            .white
-                                                                        : Colors
-                                                                            .grey),
-                                                              )
-                                                            ],
-                                                          ),
-                                                        )),
-                                                  );
-                                                }));
-                                      }),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      TextField(
-                                          controller: controller.dob.value,
-                                          decoration: const InputDecoration(
-                                              prefixIcon: Icon(Icons
-                                                  .calendar_today), //icon of text field
-                                              labelText:
-                                                  "D.O.B" //label text of field
-                                              ),
-                                          readOnly:
-                                              true, // when true user cannot edit text
-                                          onTap: () async {
-                                            final dob =
-                                                await PickerCustom.datePicker(
-                                                    'yyyy-MM-dd');
-                                            controller.dob.value.text =
-                                                dob == null
-                                                    ? controller.dob.value.text
-                                                    : dob.toString();
-                                            // print(dob.toString());
-                                            //when click we have to show the datepicker
-                                          }),
-                                      const SizedBox(
-                                        height: 15,
-                                      ),
-                                      ElevatedButtonCustom(
-                                        BgColor: ColorStyle.primaryColorRed,
-                                        text: 'Edit Profile',
-                                        radiusBorder: 5,
-                                        size: Size(
-                                            MediaQuery.of(context).size.width /
-                                                2.2,
-                                            40),
-                                        onTap: (() {
-                                          controller.editProfile();
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text(
+                                          "Gender*",
+                                          style: TextStylesCustom.textStyles_18,
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(controller
+                                                .selectedgender.value.isNotEmpty
+                                            ? ''
+                                            : ''),
+                                        Obx(() {
+                                          return SizedBox(
+                                              height: 80,
+                                              child: ListView.builder(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  shrinkWrap: true,
+                                                  itemCount:
+                                                      controller.genders.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return InkWell(
+                                                      splashColor: ColorStyle
+                                                          .secondryColorRed,
+                                                      onTap: () {
+                                                        controller
+                                                                .selectedgender
+                                                                .value =
+                                                            controller.genders[
+                                                                index][2];
+                                                      },
+                                                      child: Card(
+                                                          color: controller
+                                                                      .selectedgender
+                                                                      .value ==
+                                                                  controller
+                                                                          .genders[
+                                                                      index][2]
+                                                              ? Color(
+                                                                  0xFF3B4257)
+                                                              : Colors.white,
+                                                          child: Container(
+                                                            height: 40,
+                                                            width: 50,
+                                                            alignment: Alignment
+                                                                .center,
+                                                            margin:
+                                                                const EdgeInsets
+                                                                    .all(12.0),
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              children: <
+                                                                  Widget>[
+                                                                Icon(
+                                                                  controller
+                                                                          .genders[
+                                                                      index][1],
+                                                                  color: controller
+                                                                              .selectedgender.value ==
+                                                                          controller.genders[index]
+                                                                              [
+                                                                              2]
+                                                                      ? Colors
+                                                                          .white
+                                                                      : Colors
+                                                                          .grey,
+                                                                  size: 16,
+                                                                ),
+                                                                const SizedBox(
+                                                                    height: 10),
+                                                                Text(
+                                                                  controller
+                                                                          .genders[
+                                                                      index][0],
+                                                                  style: TextStylesCustom
+                                                                      .textStyles_12
+                                                                      .apply(
+                                                                          color: controller.selectedgender.value == controller.genders[index][2]
+                                                                              ? Colors.white
+                                                                              : Colors.grey),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          )),
+                                                    );
+                                                  }));
                                         }),
-                                      )
-                                      //   ],
-                                      // )
-                                    ],
-                                  ))
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        TextFormField(
+                                            controller: controller.dob.value,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Field is required';
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                            decoration: const InputDecoration(
+                                                prefixIcon: Icon(Icons
+                                                    .calendar_today), //icon of text field
+                                                labelText:
+                                                    "D.O.B" //label text of field
+                                                ),
+                                            readOnly:
+                                                true, // when true user cannot edit text
+                                            onTap: () async {
+                                              final dob =
+                                                  await PickerCustom.datePicker(
+                                                      'yyyy-MM-dd');
+                                              controller.dob.value.text = dob ==
+                                                      null
+                                                  ? controller.dob.value.text
+                                                  : dob.toString();
+                                              // print(dob.toString());
+                                              //when click we have to show the datepicker
+                                            }),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        ElevatedButtonCustom(
+                                          BgColor: ColorStyle.primaryColorRed,
+                                          text: 'Edit Profile',
+                                          radiusBorder: 5,
+                                          size: Size(
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.2,
+                                              40),
+                                          onTap: (() {
+                                            if (formKey.currentState!
+                                                .validate()) {
+                                              controller.editProfile();
+                                            }
+                                          }),
+                                        )
+                                        //   ],
+                                        // )
+                                      ],
+                                    ))
                                 : const SizedBox(
                                     height: 0,
                                   ),
@@ -521,7 +567,7 @@ class UserProfile extends StatelessWidget {
                                                             .value.text !=
                                                         controller.newPassword
                                                             .value.text) {
-                                                      return ("Yor New Password & Current Password is Mismatch");
+                                                      return ("Your New Password & Current Password is Mismatch");
                                                     }
 
                                                     return null;

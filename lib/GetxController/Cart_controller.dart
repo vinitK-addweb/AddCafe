@@ -29,6 +29,7 @@ class CartController extends GetxController {
 
     cartData.value =
         List<CartModel>.from(cart['payload'].map((x) => CartModel.fromJson(x)));
+    update();
   }
 
   Future taxShippingCharges() async {

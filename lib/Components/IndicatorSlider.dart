@@ -1,6 +1,6 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
 import '../Styles/ColorStyle.dart';
+import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class CustomIndicator extends StatefulWidget {
   @override
@@ -39,7 +39,7 @@ class CustomIndicatorState extends State<CustomIndicator> {
             int index = listPaths.indexOf(url);
             return Container(
               width: 10.0,
-              height: 12.0,
+              height: 5.0,
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,

@@ -1,3 +1,5 @@
+import 'Signin.dart';
+import 'dart:developer';
 import 'package:get/get.dart';
 import '../../BottomNavBar.dart';
 import '../../Utils/Global.dart';
@@ -16,6 +18,8 @@ import '../../Components/ElevatedButtonCustom.dart';
 import '../../GetxController/UserAuth_controller.dart';
 
 class Password extends StatelessWidget {
+  Password({super.key, required this.type});
+  String type;
   var formKey = GlobalKey<FormState>();
   Widget build(BuildContext context) {
     final controller = Get.put(UserAuth());
@@ -78,7 +82,10 @@ class Password extends StatelessWidget {
                         const SizedBox(
                           height: 5,
                         ),
-                        Text('Please Sign In to your account',
+                        Text(
+                            type == 'loginPass'
+                                ? 'Please Sign In to your account'
+                                : 'Please Set Your New Password !',
                             style: TextStylesCustom.textStyles_16
                                 .apply(color: ColorStyle.secondaryColorgrey)),
                         const SizedBox(
@@ -87,19 +94,48 @@ class Password extends StatelessWidget {
 
                         Form(
                           key: formKey,
-                          child: PasswordFieldUnderline(
-                            controller: controller.password.value,
-                            padding: const EdgeInsets.all(10),
-                            labelText: 'Enter Your Password',
-                            hintText: '*********',
-                            textStyle: TextStylesCustom.textStyles_20,
-                            validator: (value) {
-                              if (value!.isEmpty) {
-                                return "Please Enter your Password";
-                              } else {
-                                return null;
-                              }
-                            },
+                          child: Column(
+                            children: [
+                              PasswordFieldUnderline(
+                                  controller: controller.password.value,
+                                  padding: const EdgeInsets.all(10),
+                                  labelText: 'Enter Your Password',
+                                  hintText: '*********',
+                                  textStyle: TextStylesCustom.textStyles_20,
+                                  validator: (value) {
+                                    RegExp regex = RegExp(
+                                        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                                    var passNonNullValue = value ?? "";
+                                    if (passNonNullValue.isEmpty) {
+                                      return ("Password is required");
+                                    } else if (passNonNullValue.length < 6) {
+                                      return ("Password Must be more than 5 characters");
+                                    } else if (!regex
+                                        .hasMatch(passNonNullValue)) {
+                                      return ("Password Must upper,lower,digit & Special character ");
+                                    }
+                                    return null;
+                                  }),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              if (type == 'resetPass')
+                                PasswordFieldUnderline(
+                                  controller: controller.cPassword.value,
+                                  padding: const EdgeInsets.all(10),
+                                  labelText: 'Enter Your Confirm Password',
+                                  hintText: '*********',
+                                  textStyle: TextStylesCustom.textStyles_20,
+                                  validator: (value) {
+                                    if (controller.cPassword.value.text !=
+                                        controller.password.value.text) {
+                                      return "New password & Confirm password must be same";
+                                    } else {
+                                      return null;
+                                    }
+                                  },
+                                ),
+                            ],
                           ),
                         ),
                         const SizedBox(
@@ -109,7 +145,8 @@ class Password extends StatelessWidget {
                             onPressed: () {
                               Get.to(ForgetPassword());
                             },
-                            child: Text('Forget Password ?',
+                            child: Text(
+                                type == 'loginPass' ? 'Forget Password ?' : '',
                                 style: TextStylesCustom.textStyles_14)),
 
                         const SizedBox(
@@ -123,7 +160,12 @@ class Password extends StatelessWidget {
                           size: Size(MediaQuery.of(context).size.width, 50),
                           onTap: (() {
                             if (formKey.currentState!.validate()) {
-                              controller.signIn();
+                              if (type == 'loginPass') {
+                                controller.signIn();
+                              } else {
+                                log('else run');
+                                controller.verifyPasswordReset();
+                              }
                             }
                           }),
                         ),

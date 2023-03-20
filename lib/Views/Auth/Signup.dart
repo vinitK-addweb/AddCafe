@@ -25,7 +25,7 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 class Signup extends StatelessWidget {
   final controller = Get.put(UserAuth());
 
-  @override
+  var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(UserAuth());
@@ -94,16 +94,24 @@ class Signup extends StatelessWidget {
                         ),
 
                         Form(
+                          key: formKey,
                           child: Column(
                             children: [
                               Row(
                                 children: [
                                   Expanded(
-                                    child: TextFieldUnderline(
+                                    child: TextFormFieldUnderline(
                                       padding: EdgeInsets.all(10),
                                       labelText: 'First Name',
                                       controller: controller.firstName.value,
                                       hintText: 'Joh',
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Enter Your First Name';
+                                        } else {
+                                          return null;
+                                        }
+                                      },
                                       textStyle: TextStylesCustom.textStyles_20,
                                     ),
                                   ),
@@ -111,9 +119,16 @@ class Signup extends StatelessWidget {
                                     width: 10,
                                   ),
                                   Expanded(
-                                    child: TextFieldUnderline(
+                                    child: TextFormFieldUnderline(
                                       padding: EdgeInsets.all(10),
                                       labelText: 'Last Name',
+                                      validator: (value) {
+                                        if (value!.isEmpty) {
+                                          return 'Enter Your Last Name';
+                                        } else {
+                                          return null;
+                                        }
+                                      },
                                       controller: controller.lastName.value,
                                       hintText: 'Joh',
                                       textStyle: TextStylesCustom.textStyles_20,
@@ -122,13 +137,31 @@ class Signup extends StatelessWidget {
                                 ],
                               ),
                               // --------------- Email field ---------------------->
-                              TextFieldUnderline(
-                                padding: EdgeInsets.all(10),
-                                labelText: 'Email Address',
+                              TextFormFieldUnderline(
+                                padding: const EdgeInsets.all(10),
+                                validator: (value) {
+                                  if (double.tryParse(value!) != null) {
+                                    if (value.length != 10) {
+                                      return 'Enter a Valid Mobile No. Or Email Address';
+                                    } else {
+                                      return null;
+                                    }
+                                  } else {
+                                    if (!GetUtils.isEmail(value)) {
+                                      return 'Enter a Valid Email Address Or Mobile No.';
+                                    } else {
+                                      return null;
+                                    }
+                                  }
+                                },
                                 controller: controller.email.value,
-                                hintText: 'Johndo@mail.com',
+                                labelText: 'Phone Number or Email',
+                                colorHint: ColorStyle.secondryColorBlack
+                                    .withOpacity(0.4),
+                                hintText: 'John@mail.com',
                                 textStyle: TextStylesCustom.textStyles_20,
                               ),
+
                               SizedBox(
                                 height: 15,
                               ),
@@ -152,13 +185,43 @@ class Signup extends StatelessWidget {
                                 },
                               ),
                               // --------------- password field ---------------------->
-                              TextFieldUnderline(
-                                padding: EdgeInsets.all(10),
-                                labelText: 'Password',
-                                controller: controller.password.value,
-                                hintText: '*********',
-                                textStyle: TextStylesCustom.textStyles_20,
+                              PasswordFieldUnderline(
+                                  controller: controller.password.value,
+                                  padding: const EdgeInsets.all(10),
+                                  labelText: 'Enter New Password',
+                                  hintText: '*********',
+                                  textStyle: TextStylesCustom.textStyles_16,
+                                  validator: (value) {
+                                    RegExp regex = RegExp(
+                                        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                                    var passNonNullValue = value ?? "";
+                                    if (passNonNullValue.isEmpty) {
+                                      return ("Password is required");
+                                    } else if (passNonNullValue.length < 6) {
+                                      return ("Password Must be more than 5 characters");
+                                    } else if (!regex
+                                        .hasMatch(passNonNullValue)) {
+                                      return ("Password Must upper,lower,digit & Special character ");
+                                    }
+                                    return null;
+                                  }),
+                              const SizedBox(
+                                height: 10,
                               ),
+                              PasswordFieldUnderline(
+                                  controller: controller.cPassword.value,
+                                  padding: const EdgeInsets.all(10),
+                                  labelText: 'Confirm New Password',
+                                  hintText: '*********',
+                                  textStyle: TextStylesCustom.textStyles_16,
+                                  validator: (value) {
+                                    if (controller.password.value.text !=
+                                        controller.cPassword.value.text) {
+                                      return ("Your New Password & Current Password is Mismatch");
+                                    }
+
+                                    return null;
+                                  }),
                             ],
                           ),
                         ),
@@ -173,7 +236,9 @@ class Signup extends StatelessWidget {
                           text: 'Continue',
                           size: Size(MediaQuery.of(context).size.width, 50),
                           onTap: (() {
-                            controller.SignUpValidation();
+                            if (formKey.currentState!.validate()) {
+                              controller.SignUpValidation();
+                            }
                           }),
                         ),
                         SizedBox(
@@ -216,6 +281,7 @@ class Signup extends StatelessWidget {
                             textFirst: 'Already have an account? ',
                             textSecond: 'SIGNIN',
                             onTap: () {
+                              controller.resetFunction();
                               Get.to(Mylogin());
                             },
                           ),

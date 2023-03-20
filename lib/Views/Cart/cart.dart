@@ -341,18 +341,25 @@ class _CartState extends State<Cart> {
                                   size: Size(
                                       MediaQuery.of(context).size.width / 1.6,
                                       40),
-                                  text: 'Proceed to checkout',
+                                  text: userProfile.addAddress.isEmpty
+                                      ? 'Add Delivery Address'
+                                      : 'Proceed to checkout',
                                   onTap: () {
                                     // total = controller.cart['total_rate'];
                                     // +
                                     // 20 +
                                     // 27.00;
-                                    checkOut(
-                                        userProfile
-                                            .addAddress[
-                                                userProfile.address.value]
-                                            .id,
-                                        controller.total.value);
+                                    if (userProfile.addAddress.isEmpty) {
+                                      'Please Add Delivery Address'.showError();
+                                      Get.to(AddNewAddress());
+                                    } else {
+                                      checkOut(
+                                          userProfile
+                                              .addAddress[
+                                                  userProfile.address.value]
+                                              .id,
+                                          controller.total.value);
+                                    }
                                   },
                                 ),
                               ],

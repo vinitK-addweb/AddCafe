@@ -179,6 +179,7 @@ class _MyloginState extends State<Mylogin> {
                           textFirst: 'Don\'t have an account? ',
                           textSecond: 'SIGNUP',
                           onTap: () {
+                            controller.resetFunction();
                             Get.to(Signup());
                           },
                         ),

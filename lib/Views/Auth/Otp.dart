@@ -73,7 +73,7 @@ class Otp extends StatelessWidget {
                   const SizedBox(
                     height: 5,
                   ),
-                  Text('Please Sign In to your account',
+                  Text('Please Verify Your OTP',
                       style: TextStylesCustom.textStyles_16),
                   const SizedBox(
                     height: 10,
@@ -87,9 +87,13 @@ class Otp extends StatelessWidget {
 
                       showFieldAsBox: false,
 
-                      onCodeChanged: (String code) {},
+                      onCodeChanged: (String code) {
+                        controller.otp.value.text = code;
+                      },
 
-                      onSubmit: (String verificationCode) {}, // end onSubmit
+                      onSubmit: (String verificationCode) {
+                        controller.otp.value.text = verificationCode;
+                      }, // end onSubmit
                     ),
                   ),
                   const SizedBox(
@@ -110,7 +114,7 @@ class Otp extends StatelessWidget {
                     text: 'Continue',
                     size: Size(MediaQuery.of(context).size.width, 50),
                     onTap: (() {
-                      controller.continueToPasswordOrOtp();
+                      controller.verifyOtp();
                     }),
                   ),
                   const SizedBox(
@@ -144,46 +148,47 @@ class Otp extends StatelessWidget {
                   const SizedBox(
                     height: 24,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          height: 44,
-                          width: 44,
-                          padding: const EdgeInsets.all(10),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     InkWell(
+                  //       onTap: () {},
+                  //       child: Container(
+                  //         height: 44,
+                  //         width: 44,
+                  //         padding: const EdgeInsets.all(10),
 
-                          // alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              border:
-                                  Border.all(color: Colors.grey, width: 0.5)),
-                          child: Image.asset(
-                            ImageStyle.facebook,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          height: 44,
-                          width: 44,
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(6),
-                              border:
-                                  Border.all(color: Colors.grey, width: 0.5)),
-                          child: Image.asset(
-                            ImageStyle.google,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  //         // alignment: Alignment.center,
+                  //         decoration: BoxDecoration(
+                  //             borderRadius: BorderRadius.circular(6),
+                  //             border:
+                  //                 Border.all(color: Colors.grey, width: 0.5)),
+                  //         child: Image.asset(
+                  //           ImageStyle.facebook,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     const SizedBox(
+                  //       width: 20,
+                  //     ),
+                  //     InkWell(
+                  //       onTap: () {},
+                  //       child: Container(
+                  //         height: 44,
+                  //         width: 44,
+                  //         padding: const EdgeInsets.all(10),
+                  //         decoration: BoxDecoration(
+                  //             borderRadius: BorderRadius.circular(6),
+                  //             border:
+                  //                 Border.all(color: Colors.grey, width: 0.5)),
+                  //         child: Image.asset(
+                  //           ImageStyle.google,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+
                   const SizedBox(
                     height: 24,
                   ),

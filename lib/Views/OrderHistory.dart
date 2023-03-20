@@ -33,7 +33,7 @@ class OrderHistory extends StatelessWidget {
                 body: controller.orderHistory.isEmpty
                     ? Center(
                         child: Text(
-                        " ",
+                        " You Did't Order Something yet.. ",
                         style: TextStylesCustom.textStyles_20.apply(
                             fontWeightDelta: 3,
                             color: ColorStyle.secondryColorRed),
