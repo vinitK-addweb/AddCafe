@@ -242,6 +242,7 @@ class UserAuth extends GetxController {
         isHeader: false);
 
     if (data == null) {
+      resetFunction();
       'Somthing went wrong'.showError();
     }
     // log('reset pass data=========>>> ${data}');

@@ -200,49 +200,49 @@ class Password extends StatelessWidget {
                         const SizedBox(
                           height: 24,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              onTap: () {},
-                              child: Container(
-                                height: 44,
-                                width: 44,
-                                padding: const EdgeInsets.all(10),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     InkWell(
+                        //       onTap: () {},
+                        //       child: Container(
+                        //         height: 44,
+                        //         width: 44,
+                        //         padding: const EdgeInsets.all(10),
 
-                                // alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(6),
-                                    border: Border.all(
-                                        color: Colors.grey, width: 0.5)),
-                                child: Image.asset(
-                                  ImageStyle.facebook,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            InkWell(
-                              onTap: () {},
-                              child: Container(
-                                height: 44,
-                                width: 44,
-                                padding: const EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(6),
-                                    border: Border.all(
-                                        color: Colors.grey, width: 0.5)),
-                                child: Image.asset(
-                                  ImageStyle.google,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 24,
-                        ),
+                        //         // alignment: Alignment.center,
+                        //         decoration: BoxDecoration(
+                        //             borderRadius: BorderRadius.circular(6),
+                        //             border: Border.all(
+                        //                 color: Colors.grey, width: 0.5)),
+                        //         child: Image.asset(
+                        //           ImageStyle.facebook,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     const SizedBox(
+                        //       width: 20,
+                        //     ),
+                        //     InkWell(
+                        //       onTap: () {},
+                        //       child: Container(
+                        //         height: 44,
+                        //         width: 44,
+                        //         padding: const EdgeInsets.all(10),
+                        //         decoration: BoxDecoration(
+                        //             borderRadius: BorderRadius.circular(6),
+                        //             border: Border.all(
+                        //                 color: Colors.grey, width: 0.5)),
+                        //         child: Image.asset(
+                        //           ImageStyle.google,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // const SizedBox(
+                        //   height: 24,
+                        // ),
                         Center(
                           child: TextRichCustom(
                             textFirst: 'Don\'t have an account? ',
