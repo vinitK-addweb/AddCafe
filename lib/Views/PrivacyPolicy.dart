@@ -29,8 +29,6 @@ class PrivacyPolicy extends StatelessWidget {
               backgroundColor: ColorStyle.primaryColorRed,
               leading: IconButton(
                 onPressed: () => Get.back(),
-                // scaffoldKey.currentState!.openDrawer(),
-                // currentIndex.value = 0,
                 icon: const Icon(
                   Icons.arrow_back,
                   size: 34,
@@ -71,11 +69,13 @@ class PrivacyPolicy extends StatelessWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                          Text(controller.privacyPolicy[0].pAndP.toString(),
-                              style: TextStylesCustom.textStyles_13),
+                          if (controller.privacyPolicy.isNotEmpty)
+                            Text(controller.privacyPolicy[0].pAndP.toString(),
+                                style: TextStylesCustom.textStyles_13),
                         ],
                       )),
-                  TermsConditions(controller.termsCondtions),
+                  if (controller.termsCondtions.isNotEmpty)
+                    TermsConditions(controller.termsCondtions),
                   const SizedBox(
                     height: 10,
                   ),

@@ -1,19 +1,17 @@
-import 'package:addcafe/Styles/ColorStyle.dart';
-import 'package:addcafe/Views/MyHomePage.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import '../../BottomNavBar.dart';
-import '../../Utils/Global.dart';
 import './Signup.dart';
 import 'package:get/get.dart';
-import 'package:addcafe/GetxController/UserAuth_controller.dart';
-import '../../Components/IndicatorSlider.dart';
 import '../../Styles/TextStyles.dart';
-import '../../Components/ElevatedButtonCustom.dart';
-import '../../Components/TextFieldCustom.dart';
-import '../../Components/TextRichCustom.dart';
-import '../../Styles/ImageStyle.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../Components/logoCustom.dart';
+import '../../Components/TextRichCustom.dart';
+import 'package:addcafe/Views/MyHomePage.dart';
+import '../../Components/IndicatorSlider.dart';
+import '../../Components/TextFieldCustom.dart';
+import 'package:addcafe/Styles/ColorStyle.dart';
+import '../../Components/ElevatedButtonCustom.dart';
+import 'package:addcafe/GetxController/UserAuth_controller.dart';
+
 // import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
 class Mylogin extends StatefulWidget {
@@ -35,11 +33,9 @@ class _MyloginState extends State<Mylogin> {
     Future _singin(text) async {
       setState(() {
         if (double.tryParse(text) != null) {
-          this.mobile = text;
-          print("number");
+          mobile = text;
         } else {
-          this.email = text;
-          print("string");
+          email = text;
         }
         ;
       });
@@ -83,8 +79,6 @@ class _MyloginState extends State<Mylogin> {
                                   borderRadius: BorderRadius.circular(55)),
                               onPressed: () {
                                 Get.to(MyHomePage());
-                                // navigateMultiBottom(
-                                //     context, BottomNavBarCustom());
                               },
                               child: Text(
                                 'Skip',
@@ -97,12 +91,9 @@ class _MyloginState extends State<Mylogin> {
                         height: 40,
                       ),
                       Text('Welcome',
-                          style:
-                              // TextStyle(fontWeight: FontWeight.w900, fontSize: 30)
-                              TextStylesCustom.textStyles_40
-                                  .apply(fontWeightDelta: 5)),
+                          style: TextStylesCustom.textStyles_40
+                              .apply(fontWeightDelta: 5)),
 
-                      // margin: EdgeInsets.symmetric(vertical: 20),
                       const SizedBox(
                         height: 5,
                       ),
@@ -113,7 +104,6 @@ class _MyloginState extends State<Mylogin> {
                       ),
                       TextFormFieldUnderline(
                         padding: const EdgeInsets.all(10),
-
                         validator: (value) {
                           if (double.tryParse(value!) != null) {
                             if (value.length != 10) {
@@ -130,23 +120,12 @@ class _MyloginState extends State<Mylogin> {
                           }
                         },
                         controller: controller.textController.value,
-                        // keyboardType: TextInputType.number,
                         labelText: 'Phone Number or Email',
-                        // readOnly: true,
-                        // controller: controller.textController.value,
                         colorHint:
                             ColorStyle.secondryColorBlack.withOpacity(0.4),
                         hintText: 'John@mail.com',
-
                         textStyle: TextStylesCustom.textStyles_20,
                       ),
-                      // TextFieldUnderline(
-                      //   padding: const EdgeInsets.all(10),
-                      //   labelText: 'Phone Number or Email',
-                      //   controller: controller.textController.value,
-                      //   hintText: 'John',
-                      //   textStyle: TextStylesCustom.textStyles_20,
-                      // ),
 
                       const SizedBox(
                         height: 25,
@@ -191,53 +170,7 @@ class _MyloginState extends State<Mylogin> {
                           )),
                         ],
                       ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              height: 44,
-                              width: 44,
-                              padding: const EdgeInsets.all(10),
 
-                              // alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  border: Border.all(
-                                      color: Colors.grey, width: 0.5)),
-                              child: Image.asset(
-                                ImageStyle.facebook,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          InkWell(
-                            onTap: () {},
-                            child: Container(
-                              height: 44,
-                              width: 44,
-                              padding: const EdgeInsets.all(10),
-                              // alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(6),
-                                  border: Border.all(
-                                      color: Colors.grey, width: 0.5)),
-                              child: Image.asset(
-                                ImageStyle.google,
-                                // fit: BoxFit.cover,
-                                // height: 10,
-                                // width: 10,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
                       const SizedBox(
                         height: 24,
                       ),
@@ -246,6 +179,7 @@ class _MyloginState extends State<Mylogin> {
                           textFirst: 'Don\'t have an account? ',
                           textSecond: 'SIGNUP',
                           onTap: () {
+                            controller.resetFunction();
                             Get.to(Signup());
                           },
                         ),

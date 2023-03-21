@@ -1,25 +1,25 @@
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:get/get.dart';
 import 'dart:io';
 import 'dart:async';
-import '../GetxController/UserAuth_controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import '../Utils/API.dart';
+import 'package:get/get.dart';
 import '../Utils/Global.dart';
-import '../Models/Model_UserDetails.dart';
-import '../Models/Model_AddAddress.dart';
-import 'package:http/http.dart' as http;
-
-import '../Views/AddNewAddress.dart';
 import '../Views/userProfile.dart';
+import '../Views/AddNewAddress.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import '../Models/Model_AddAddress.dart';
+import '../Models/Model_UserDetails.dart';
+import 'package:image_picker/image_picker.dart';
+import '../GetxController/UserAuth_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfileController extends GetxController {
   Rx<UserDetailsModel> userdetails = UserDetailsModel().obs;
   RxList<UserAddressModel> addAddress = <UserAddressModel>[].obs;
   Rx<TextEditingController> currentPassword = TextEditingController().obs;
   Rx<TextEditingController> newPassword = TextEditingController().obs;
+  Rx<TextEditingController> cnewPassword = TextEditingController().obs;
   Rx<TextEditingController> phoneNumber = TextEditingController().obs;
   Rx<TextEditingController> textController = TextEditingController().obs;
   Rx<TextEditingController> buildingNameNo = TextEditingController().obs;
@@ -29,11 +29,25 @@ class UserProfileController extends GetxController {
   Rx<TextEditingController> state = TextEditingController().obs;
   Rx<TextEditingController> pinCode = TextEditingController().obs;
   Rx<TextEditingController> addressType = TextEditingController().obs;
+
+// ----------------------- Edit profile details -------------------->
+  Rx<TextEditingController> fname = TextEditingController().obs;
+  Rx<TextEditingController> lname = TextEditingController().obs;
+  Rx<TextEditingController> email = TextEditingController().obs;
+  Rx<TextEditingController> mobile = TextEditingController().obs;
+  Rx<TextEditingController> dob = TextEditingController().obs;
+  List genders = [
+    ["Male", Icons.male, 'M'],
+    ["Female", Icons.female, 'F'],
+    ["Others", Icons.transgender, 'O'],
+  ].obs;
+  RxString selectedgender = ''.obs;
+
   RxInt address = 0.obs;
   RxInt AddUpdateid = 0.obs;
   RxBool showPassField = false.obs;
   RxBool showAddress = false.obs;
-
+  RxBool showEditProfile = false.obs;
   Map<String, dynamic> _changePass = {};
 
   RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
@@ -65,7 +79,7 @@ class UserProfileController extends GetxController {
 
     if (response!.isNotEmpty) {
       profile.signIn();
-      // getUserDetails();
+
       "Profile picture uploaded".showSuccess();
     }
   }
@@ -78,11 +92,15 @@ class UserProfileController extends GetxController {
 
       userprofile.value = await API.instance
           .get(endPoint: 'accounts/customer-profile/', isHeader: true);
-      print("runing=========>>>>>>>>>>>>>>>>>> ${userprofile.value}");
-      //  RxMap<dynamic, dynamic>.from(
-      //     jsonDecode(prefs.getString('userData').toString()));
+
+      print(userprofile);
+      fname.value.text = userprofile['first_name'];
+      lname.value.text = userprofile['last_name'];
+      email.value.text = userprofile['email'];
+      mobile.value.text = userprofile['mobile_number'].toString();
+      dob.value.text = userprofile['dob'];
+      selectedgender.value = userprofile['gender'];
       getAddress();
-      // update();
     });
   }
 
@@ -94,11 +112,30 @@ class UserProfileController extends GetxController {
     addAddress.value = List<UserAddressModel>.from(
         response['payload'].map((x) => UserAddressModel.fromJson(x)));
   }
+
   // --------------------------- Add New Address ------------------------->
+  editProfile() async {
+    final data = {
+      "email": email.value.text,
+      "first_name": fname.value.text,
+      "last_name": lname.value.text,
+      "mobile_number": mobile.value.text,
+      "gender": selectedgender.value,
+      "dob": dob.value.text
+    };
+
+    debugPrint(data.toString());
+    var response = API.instance.post(
+        endPoint: 'accounts/customer-profile/', params: data, isHeader: true);
+
+    getUserDetails();
+    update();
+  }
+  // ------------------ Edit Profile ------------------------------------>
 
   addNewAddress() async {
     final addressData = {
-      "user": "1",
+      "user": userprofile['id'].toString(),
       "phone_num": phoneNumber.value.text,
       "building_num_name": buildingNameNo.value.text,
       "area_colony": area.value.text,
@@ -113,11 +150,9 @@ class UserProfileController extends GetxController {
     var response = API.instance
         .post(endPoint: 'order/address/', params: addressData, isHeader: true);
 
-    // var data = response;
-
     getAddress();
     update();
-    // await Get.to(UserProfile());
+
     Get.back();
   }
 
@@ -141,8 +176,6 @@ class UserProfileController extends GetxController {
 
   // --------------------------- fetch Address By id  ------------------------->
   fetchAddressByid(idx) async {
-    // print(addAddress[id].buildingNumName);
-
     phoneNumber.value.text = addAddress[idx].phoneNum!;
 
     buildingNameNo.value.text = addAddress[idx].buildingNumName!;
@@ -153,7 +186,6 @@ class UserProfileController extends GetxController {
     state.value.text = addAddress[idx].state!;
     addressType.value.text = addAddress[idx].addressType!;
 
-    print(addressType.value);
     Get.to(AddNewAddress(
       isAddress: false,
     ));
@@ -163,8 +195,7 @@ class UserProfileController extends GetxController {
 
   updateAddress() {
     "hello".showSuccess();
-    // phoneNumber.value =
-    print("object = = = = = = == = == = = == == = = =>");
+
     final addressData = {
       "user": "1",
       "phone_num": phoneNumber.value.text,
@@ -177,7 +208,7 @@ class UserProfileController extends GetxController {
       "address_type": addressType.value.text
     };
 
-    var response = API.instance.patch(
+    API.instance.patch(
         endPoint: '/order/address/$AddUpdateid/',
         params: addressData,
         isHeader: true);
@@ -202,24 +233,24 @@ class UserProfileController extends GetxController {
   changePasswordValidation() {
     RegExp regex =
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-    if (newPassword.value.text.isEmpty || currentPassword.value.text.isEmpty)
+    if (newPassword.value.text.isEmpty || currentPassword.value.text.isEmpty) {
       'All Fields are Required'.showError();
-    else if (newPassword.value.text.length < 8)
+    } else if (newPassword.value.text.length < 8) {
       'Password should have atleast 8 characters'.showError();
-    else if (!regex.hasMatch(newPassword.value.text))
+    } else if (!regex.hasMatch(newPassword.value.text)) {
       'Enter a stronger password'.showError();
-    else
+    } else {
       changePassword();
+    }
   }
 
   changePassword() async {
     final mapedData = {
       "email": userprofile.value['email'],
-      // userdetails.value.email,
       "old_password": currentPassword.value.text,
       "new_password": newPassword.value.text
     };
-    print(mapedData);
+
     _changePass = await API.instance.post(
         endPoint: 'accounts/change-password/',
         params: mapedData,
@@ -228,10 +259,8 @@ class UserProfileController extends GetxController {
       '${_changePass['message']}'.showSuccess();
     }
 
-    if (_changePass != null) {
-      currentPassword.value.text = '';
-      newPassword.value.text = '';
-    }
+    currentPassword.value.text = '';
+    newPassword.value.text = '';
   }
 
   addAddressValidation(value) {

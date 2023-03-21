@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "358803788208",
+    "project_id": "addcafe-1491e",
+    "storage_bucket": "addcafe-1491e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358803788208:android:6e124a1c52ede8b73ac675",
+        "android_client_info": {
+          "package_name": "com.example.addcafe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358803788208-hkv2gr46qcjeto99j961598bh1i3ct5f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6vzzaS-YyGiKCE3I86QlhpNNPowenFSs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "358803788208-hkv2gr46qcjeto99j961598bh1i3ct5f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

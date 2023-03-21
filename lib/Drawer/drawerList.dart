@@ -22,7 +22,7 @@ class MyDrowerList extends StatelessWidget {
     // {'name': 'Wishlist ', 'tap': Myfavourits(), 'icon': Icons.person_outline},
     // {'name': 'Cart', 'tap': Cart(), 'icon': Icons.shopping_cart},
     {'name': 'FAQs', 'tap': Faq(), 'icon': Icons.discount_outlined},
-    {'name': 'Order History', 'tap': OrderHistory(), 'icon': Icons.history},
+    // {'name': 'Order History', 'tap': OrderHistory(), 'icon': Icons.history},
     {
       'name': 'Help & Support',
       'tap': "UserProfile()",

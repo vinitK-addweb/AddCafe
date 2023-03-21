@@ -22,12 +22,7 @@ class Addon extends StatefulWidget {
 class _AddonState extends State<Addon> {
   _AddonState(this.productData);
   final productData;
-  // get product {
-  //   return productData;
-  // }
-  // List checkboxValues = product['add_on_data'].map(e => {
 
-  // });
   List productAddOn = [];
   double total = 0;
 
@@ -48,22 +43,6 @@ class _AddonState extends State<Addon> {
     });
   }
 
-//productdat price
-  // get total {
-  //   var price = 0;
-  //   var count = 0;
-  //   values.forEach((key, value) {
-  //     (values as List).indexOf(value);
-  //     if(value){
-  //       price += productData['']
-  //     }
-  //   });
-  // }
-
-  // addAddon(){
-
-  // }
-
 // add the item in cart
   void _removeQuantity(int index) {
     setState(() {
@@ -72,7 +51,6 @@ class _AddonState extends State<Addon> {
       } else {
         quantity = 0;
       }
-      //  _quantityController[index].text = '$quantity';
     });
   }
 
@@ -80,7 +58,6 @@ class _AddonState extends State<Addon> {
   Widget build(BuildContext context) {
     final cartApi = Get.put(CartController());
 
-    // Provider.of<CartApi>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.transparent,
       // ----------bottom bar---------------------
@@ -94,7 +71,6 @@ class _AddonState extends State<Addon> {
             children: [
               Center(
                 child: SizedBox(
-                  // width: 1,
                   height: 50,
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -166,52 +142,50 @@ class _AddonState extends State<Addon> {
                               Container(
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 10),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      productData['item_name'],
-                                      style: TextStylesCustom.textStyles_20
-                                          .apply(fontSizeDelta: 4),
-                                    ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Colors.grey,
+                                child: FittedBox(
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        productData['item_name'],
+                                        style: TextStylesCustom.textStyles_20
+                                            .apply(fontSizeDelta: 4),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Colors.grey,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(20))),
+                                      ),
+                                      Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Colors.grey,
+                                            ),
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(20))),
+                                        child: const Padding(
+                                          padding: EdgeInsets.all(5.0),
+                                          child: Icon(
+                                            Icons.share_outlined,
+                                            color: Colors.red,
                                           ),
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(20))),
-                                      child: const Padding(
-                                        padding: EdgeInsets.all(5.0),
-                                        child: Icon(
-                                          Icons.favorite_border_outlined,
-                                          color: Colors.red,
                                         ),
                                       ),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          horizontal: 10),
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: Colors.grey,
-                                          ),
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(20))),
-                                      child: const Padding(
-                                        padding: EdgeInsets.all(5.0),
-                                        child: Icon(
-                                          Icons.share_outlined,
-                                          color: Colors.red,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                              //------------- product reatings--------------------
+
+                              //------------- product ratings--------------------
                               Container(
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 10),
@@ -237,6 +211,7 @@ class _AddonState extends State<Addon> {
                                   ],
                                 ),
                               ),
+
                               Container(
                                 margin: const EdgeInsets.symmetric(
                                     horizontal: 10, vertical: 10),
@@ -320,8 +295,8 @@ class _AddonState extends State<Addon> {
                                                     },
                                                   ),
                                                 ],
-                                              ), ////Checkbox
-                                            ], //<Widget>[]
+                                              ),
+                                            ],
                                           );
                                         })
                                       ],
@@ -342,7 +317,7 @@ class _AddonState extends State<Addon> {
 //  add on wishlist
 class AddonWishlist extends StatefulWidget {
   AddonWishlist(this.productData);
-  // Rx<Wishlist> myFavourites = Wishlist().obs;
+
   final productData;
 
   @override
@@ -352,14 +327,7 @@ class AddonWishlist extends StatefulWidget {
 class _AddonWishlist extends State<AddonWishlist> {
   _AddonWishlist(this.productData);
   final productData;
-  // Rx<Wishlist> myFavourites = Wishlist().obs;
-  // final productData;
-  // get product {
-  //   return productData;
-  // }
-  // List checkboxValues = product['add_on_data'].map(e => {
 
-  // });
   List productAddOn = [];
   double total = 0;
 
@@ -371,30 +339,12 @@ class _AddonWishlist extends State<AddonWishlist> {
     'value5': false,
   };
   var quantity = 1;
-// decrease the item from cart
 
   void _addQuantity(int index) {
     setState(() {
       quantity++;
-      //  _quantityController[index].text = '$quantity';
     });
   }
-
-//productdat price
-  // get total {
-  //   var price = 0;
-  //   var count = 0;
-  //   values.forEach((key, value) {
-  //     (values as List).indexOf(value);
-  //     if(value){
-  //       price += productData['']
-  //     }
-  //   });
-  // }
-
-  // addAddon(){
-
-  // }
 
 // add the item in cart
   void _removeQuantity(int index) {
@@ -404,7 +354,6 @@ class _AddonWishlist extends State<AddonWishlist> {
       } else {
         quantity = 0;
       }
-      //  _quantityController[index].text = '$quantity';
     });
   }
 
@@ -412,7 +361,6 @@ class _AddonWishlist extends State<AddonWishlist> {
   Widget build(BuildContext context) {
     final cartApi = Get.put(CartController());
 
-    // Provider.of<CartApi>(context, listen: false);
     return Scaffold(
       backgroundColor: Colors.transparent,
       // ----------bottom bar---------------------
@@ -426,7 +374,6 @@ class _AddonWishlist extends State<AddonWishlist> {
             children: [
               Center(
                 child: SizedBox(
-                  // width: 1,
                   height: 50,
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 10),
@@ -513,13 +460,7 @@ class _AddonWishlist extends State<AddonWishlist> {
                                           ),
                                           borderRadius: const BorderRadius.all(
                                               Radius.circular(20))),
-                                      child: const Padding(
-                                        padding: EdgeInsets.all(5.0),
-                                        child: Icon(
-                                          Icons.favorite_border_outlined,
-                                          color: Colors.red,
-                                        ),
-                                      ),
+                                      //
                                     ),
                                     Container(
                                       margin: const EdgeInsets.symmetric(

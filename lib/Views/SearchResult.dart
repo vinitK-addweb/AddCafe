@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../GetxController/Cart_controller.dart';
-import '../GetxController/searchResult_controller.dart';
-import '../Styles/ColorStyle.dart';
-import '../Styles/TextStyles.dart';
 import 'Categories/addons.dart';
 import 'Categories/rating.dart';
+import '../Styles/ColorStyle.dart';
+import '../Styles/TextStyles.dart';
+import 'package:flutter/material.dart';
+import '../GetxController/Cart_controller.dart';
+import '../GetxController/searchResult_controller.dart';
 
 class SearchResult extends StatelessWidget {
   SearchResult({super.key});
@@ -37,7 +37,6 @@ class SearchResult extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Text(categoryItems.toString()),
                               const SizedBox(
                                   width: 20,
                                   child: Image(
@@ -78,51 +77,6 @@ class SearchResult extends StatelessWidget {
                               const SizedBox(
                                 height: 10,
                               ),
-                              // Text(myFavouritesApi
-                              //     .isInMyFavorites(categoryItems[index]['id'])
-                              //     .toString()),
-                              // Row(
-                              //   children: [
-                              //     myFavouritesApi
-                              //             .isInMyFavorites(
-                              //                 categoryItems[index]['id'])
-                              //             .isNotEmpty
-                              //         ? IconButton(
-                              //             onPressed: () {
-                              //               myFavouritesApi.deleteMyFavourites(
-                              //                   categoryItems[index]['id']
-                              //                   // myFavouritesApi.isInMyFavorites(
-                              //                   //         categoryItems[index]['id'])[0]
-                              //                   //     ['id'],
-                              //                   );
-                              //             },
-                              //             icon: const Icon(
-                              //               Icons.favorite,
-                              //               color: Colors.red,
-                              //             ),
-                              //           )
-                              //         : IconButton(
-                              //             onPressed: () {
-                              //               myFavouritesApi.addToMyFavorites({
-                              //                 "user": 1,
-                              //                 "product": categoryItems[index]['id']
-                              //               });
-                              //             },
-                              //             icon: const Icon(
-                              //               Icons.favorite_border,
-                              //               color: Colors.red,
-                              //             ),
-                              //           ),
-                              //     Container(
-                              //       margin:
-                              //           const EdgeInsets.symmetric(horizontal: 10),
-                              //       child: const Icon(
-                              //         Icons.share,
-                              //         color: Colors.blueAccent,
-                              //       ),
-                              //     ),
-                              //   ],
-                              // )
                             ],
                           ),
                         ),
@@ -131,8 +85,6 @@ class SearchResult extends StatelessWidget {
                             SizedBox(
                               width: 150,
                               child: Column(
-                                // mainAxisAlignment: MainAxisAlignment.center,
-                                // crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SizedBox(
                                     width: 150,
@@ -192,107 +144,7 @@ class SearchResult extends StatelessWidget {
                                       },
                                       child: Text('Add'),
                                     )
-                                  :
-                                  //  Container(
-                                  //     height: 50,
-                                  //     width: 70,
-                                  //     padding: EdgeInsets.symmetric(
-                                  //         horizontal: 8, vertical: 8),
-                                  //     decoration: BoxDecoration(
-                                  //         color: Colors.red,
-                                  //         border: Border.all(color: Colors.red),
-                                  //         borderRadius:
-                                  //             BorderRadius.all((Radius.circular(4)))),
-                                  //     child:
-                                  // Row(
-                                  //     mainAxisAlignment:
-                                  //         MainAxisAlignment.center,
-                                  //     children: [
-                                  //       // if (e['item_count'] == 1) {
-                                  //       //   cartApi.delete(e['id']);
-                                  //       //   return;
-                                  //       // }
-                                  //       // cartApi.updateQuantity('minus',
-                                  //       //     thisCartData[0]['id']);
-
-                                  //       // child: Container(
-                                  //       //   width: 20,
-                                  //       // child: Center(
-
-                                  //       IconButton(
-                                  //         style: IconButton.styleFrom(
-                                  //             backgroundColor:
-                                  //                 ColorStyle.primaryColorRed),
-                                  //         // iconSize: 26,
-                                  //         color: Colors.white,
-                                  //         icon: const CircleAvatar(
-                                  //             radius: 14,
-                                  //             child: Icon(
-                                  //               Icons.remove,
-                                  //               size: 20,
-                                  //             )),
-                                  //         onPressed: () {},
-                                  //       ),
-
-                                  //       //  Text(
-                                  //       //   '-',
-                                  //       //   style: TextStyle(
-                                  //       //       color: Colors.white),
-                                  //       // ),
-                                  //       //       ),
-                                  //       // ),
-
-                                  //       Text(
-                                  //           // '${thisCartData[0]['item_count']}',
-                                  //           '2',
-                                  //           style: TextStylesCustom
-                                  //               .textStyles_22
-                                  //               .apply(
-                                  //                   color: ColorStyle
-                                  //                       .secondryColorBlack,
-                                  //                   fontWeightDelta: 4)),
-                                  //       IconButton(
-                                  //         style: IconButton.styleFrom(
-                                  //             backgroundColor:
-                                  //                 ColorStyle.primaryColorRed),
-                                  //         // iconSize: 26,
-                                  //         color: Colors.white,
-                                  //         icon: const CircleAvatar(
-                                  //             radius: 14,
-                                  //             child: Icon(
-                                  //               Icons.add,
-                                  //               size: 20,
-                                  //             )),
-                                  //         onPressed: () {},
-                                  //       ),
-                                  //       // InkWell(
-                                  //       //     onTap: () {
-                                  //       //       // cartApi.updateQuantity('plus',
-                                  //       //       //     thisCartData[0]['id']);
-                                  //       //     },
-                                  //       //     // child: Container(
-                                  //       //     //   width: 20,
-                                  //       //     //   child: Center(
-                                  //       //     child: SizedBox(
-                                  //       //       width: 20,
-                                  //       //       child: IconButton(
-                                  //       //         iconSize: 12,
-                                  //       //         color: Colors.white,
-                                  //       //         icon: Icon(Icons.add),
-                                  //       //         onPressed: () {},
-                                  //       //       ),
-                                  //       //     )
-                                  //       //     // Text(
-                                  //       //     //   '+',
-                                  //       //     //   style: TextStyle(
-                                  //       //     //       color: Colors.white),
-                                  //       //     // ),
-                                  //       //     //       ),
-                                  //       //     // ),
-                                  //       //     ),
-                                  //     ],
-                                  //   ),
-                                  Row(
+                                  : Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
@@ -328,7 +180,6 @@ class SearchResult extends StatelessWidget {
                                           style: IconButton.styleFrom(
                                               backgroundColor:
                                                   ColorStyle.primaryColorRed),
-                                          // iconSize: 26,
                                           color: Colors.white,
                                           icon: const CircleAvatar(
                                               radius: 14,
@@ -345,7 +196,6 @@ class SearchResult extends StatelessWidget {
                                       ],
                                     ),
                             ),
-                            // ),
                           ],
                         )
                       ],

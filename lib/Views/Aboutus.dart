@@ -1,11 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-
-import 'package:get/get.dart';
-import '../Models/Model_Terms&Conditions.dart';
-
 import '../Styles/ImageStyle.dart';
 import '../Styles/TextStyles.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:flutter/material.dart';
 
 class AboutUs extends StatelessWidget {
   AboutUs({super.key});
@@ -34,7 +30,6 @@ class AboutUs extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            // Image.asset('')
             SizedBox(
               height: 150,
               width: 300,
@@ -54,7 +49,6 @@ class AboutUs extends StatelessWidget {
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.",
               style: TextStylesCustom.textStyles_17,
             ),
-
             const SizedBox(
               height: 10,
             ),

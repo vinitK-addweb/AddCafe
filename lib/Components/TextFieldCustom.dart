@@ -1,11 +1,10 @@
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-
+import 'dart:async';
 import '../Styles/ColorStyle.dart';
 import '../Styles/TextStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../GetxController/UserAuth_controller.dart';
-import 'dart:async';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 class TextFieldUnderline extends StatelessWidget {
   final TextEditingController? controller;

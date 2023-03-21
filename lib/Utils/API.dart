@@ -1,11 +1,12 @@
-import 'dart:convert';
 import 'dart:io';
+import 'dart:convert';
+import 'dart:developer';
+import 'dart:typed_data';
+import '../Utils/Global.dart';
+import '../Utils/Constant.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:connectivity/connectivity.dart';
-import '../Utils/Constant.dart';
-import '../Utils/Global.dart';
-import 'dart:typed_data';
 
 class API {
   API._privateConstructor();
@@ -54,7 +55,7 @@ class API {
     try {
       showLoaderGetX();
       final response = await http.get(url, headers: header);
-      // print("resddd" + response.body.toString());
+      // log("resddd" + response.body.toString());
       hideLoader();
       final parsed = jsonDecode(response.body);
       // print("resddd" + parsed.toString());
@@ -112,13 +113,14 @@ class API {
     }
 
     final url = Uri.parse('$_kBaseURL$endPoint');
-
+    log("delte url" + url.toString());
     Map<String, String> header = {};
     if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
 
     try {
       showLoaderGetX();
       final response = await http.delete(url, headers: header);
+      log(response.toString());
       hideLoader();
 
       final Map parsed = json.decode(response.body);
@@ -184,16 +186,16 @@ class API {
 
     Map<String, String> header = {};
     if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
-
+    print(url);
     try {
       showLoaderGetX();
       final response = await http.post(url, headers: header, body: params);
       hideLoader();
-      debugPrint('Response status: ${response}');
+      debugPrint('Response status: ${response.body}');
 
       final Map<String, dynamic> parsed = json.decode(response.body);
 
-      print('userprofile===========$kTOKENSAVED ${parsed}');
+      // print('userprofile===========$kTOKENSAVED ${parsed}');
       return parsed;
     } on Exception {
       // hideLoader();

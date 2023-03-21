@@ -1,23 +1,20 @@
-import 'package:flutter/material.dart';
-import '../GetxController/Cart_controller.dart';
-
-import '../GetxController/UserProfile_controller.dart';
-import '../GetxController/Wishlist_controller.dart';
-import '../Styles/TextStyles.dart';
+import 'MyLoader.dart';
 import 'Cart/cart.dart';
 import 'HomeBanner.dart';
 import 'HomeCategory.dart';
-import '../Drawer/drawerHeader.dart';
-import '../Drawer/drawerList.dart';
-
-import 'MyLoader.dart';
-
 import 'package:get/get.dart';
-import '../GetxController/MyHomePage_controller.dart';
-import '../GetxController/UserAuth_controller.dart';
+import '../Styles/TextStyles.dart';
+import '../Drawer/drawerList.dart';
 import '../Styles/ColorStyle.dart';
-import '../Components/logoCustom.dart';
 import '../Views/SearchResult.dart';
+import '../Drawer/drawerHeader.dart';
+import 'package:flutter/material.dart';
+import '../Components/logoCustom.dart';
+import '../GetxController/Cart_controller.dart';
+import '../GetxController/Wishlist_controller.dart';
+import '../GetxController/UserAuth_controller.dart';
+import '../GetxController/MyHomePage_controller.dart';
+import '../GetxController/UserProfile_controller.dart';
 import '../GetxController/searchResult_controller.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -27,7 +24,7 @@ class MyHomePage extends StatelessWidget {
   final cart = Get.put(CartController());
   final userProfile = Get.put(UserProfileController());
   final myFavouritesApi = Get.put(MyFavouritesApi());
-  // final userProfile = Get.put(UserProfileController());
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder(
@@ -55,12 +52,11 @@ class MyHomePage extends StatelessWidget {
                         ]),
                       ),
                       MyDrowerList(),
-                      // userAuth.userprofile.isNotEmpty
                     ],
                   ),
                 ),
               ),
-              // bottomNavigationBar: TheFooter(),
+
               appBar: AppBar(
                 elevation: 0,
                 title: const LogoCustomWhite(),
@@ -71,14 +67,13 @@ class MyHomePage extends StatelessWidget {
                           icon: IconButton(
                             iconSize: 30,
                             onPressed: () {
+                              search.itemName.value.text = '';
+
                               controller.search.value = false;
                               search.searchResult.value = [];
-                              search.itemName.value.text = '';
                             },
                             icon: const Icon(Icons.close),
-                          )
-                          // : const Icon(Icons.notifications),
-                          )
+                          ))
                       : const SizedBox(
                           height: 0,
                           width: 50,
@@ -86,6 +81,7 @@ class MyHomePage extends StatelessWidget {
                 ],
               ),
 
+// <------------------------------------ cart item ------------------------------------------>
               bottomNavigationBar: cart.cartData.isNotEmpty
                   ? Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -99,10 +95,6 @@ class MyHomePage extends StatelessWidget {
                                   topLeft: Radius.circular(15),
                                   topRight: Radius.circular(15))),
                           height: 60,
-                          // child: ElevatedButton(
-                          //   onPressed: () {
-                          //     Navigator.of(context).pushNamed('/cart');
-                          //   },
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -144,7 +136,7 @@ class MyHomePage extends StatelessWidget {
                   : const SizedBox(
                       height: 0,
                     ),
-
+// <-----------------------------------cart item end------------------------------------------>
               body: SingleChildScrollView(
                 child: !(controller.bannerData.isNotEmpty ||
                         controller.categoriesData.isNotEmpty)
@@ -160,11 +152,10 @@ class MyHomePage extends StatelessWidget {
                           Container(
                             margin: const EdgeInsets.symmetric(horizontal: 20),
                             child: TextField(
+                                controller: search.itemName.value,
                                 onChanged: (value) {
-                                  search.itemName.value.text = value;
                                   search.initfunction();
                                 },
-                                // controller: search.itemName.value,
                                 onTap: (() {
                                   controller.search.value = true;
                                 }),
@@ -202,8 +193,6 @@ class MyHomePage extends StatelessWidget {
                         ],
                       ),
               ),
-
-              // This trailing comma makes auto-formatting nicer for build methods.
             )));
       },
     );

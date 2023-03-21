@@ -1,52 +1,18 @@
-import 'package:addcafe/Styles/ColorStyle.dart';
-import 'package:flutter/material.dart';
-// import 'package:flutter_share/flutter_share.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:addcafe/Styles/ColorStyle.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-// import '../Styles/ColorStyle.dart';
-// import '../Styles/TextStyles.dart';
 
 showLoaderGetX() {
   Get.dialog(
     Material(
       color: Colors.transparent,
       child: Center(
-        child:
-            // ListTile(
-            //   leading:
-            LoadingAnimationWidget.newtonCradle(
+        child: LoadingAnimationWidget.newtonCradle(
           color: ColorStyle.primaryColorRed,
           size: 125,
         ),
-        // title: Text(
-        //   'staggered dots wave',
-        //   textScaleFactor: 1.5,
-        // ),
-        // ),
-        // Container(
-        //   height: 60,
-        //   margin: const EdgeInsets.only(left: 40, right: 40),
-        //   decoration: BoxDecoration(
-        //       color: Colors.red, borderRadius: BorderRadius.circular(4)),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.center,
-        //     children: [
-        //       const SizedBox(
-        //         height: 30,
-        //         width: 30,
-        //         child: CircularProgressIndicator(
-        //           strokeWidth: 3,
-        //           valueColor: AlwaysStoppedAnimation<Color>(Colors.yellow),
-        //         ),
-        //       ),
-        //       Container(
-        //         width: 16,
-        //       ),
-        //       const Text("Loading ...", style: TextStyle(color: Colors.white)),
-        //     ],
-        //   ),
-        // ),
       ),
     ),
     barrierDismissible: false,
@@ -91,4 +57,8 @@ goToAnotherScreen(Widget page) {
 navigateMultiBottom(context, Widget child) {
   Navigator.push(
       context, MaterialPageRoute(builder: (BuildContext context) => child));
+}
+
+spinkitLoader() {
+  return const Center(child: SpinKitCircle(color: Colors.grey, size: 60.0));
 }

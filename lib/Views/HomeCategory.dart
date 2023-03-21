@@ -1,26 +1,21 @@
-import '../Models/Model_MyHomePage.dart';
-import '../Models/Model_Categories.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../Views/Categories/categoryItems.dart';
-import '../Models/Model_Banner.dart';
-import '../Models/Model_Categories.dart';
 import '../Styles/TextStyles.dart';
-import '../Styles/ColorStyle.dart';
+import '../Models/Model_Banner.dart';
+import 'package:flutter/material.dart';
+import '../Models/Model_Categories.dart';
+import '../Views/Categories/categoryItems.dart';
 import '../GetxController/ActiveProducts_controller.dart';
 
 class HomeCategory extends StatelessWidget {
   HomeCategory(this.categoriesImage, this.bannerData);
-  // final List<ModelHomeCategory> CategoryImages;
+
   final List<ModelCategories> categoriesImage;
   final List<ModelBanner> bannerData;
   final ActiveProductsController productController =
       Get.put(ActiveProductsController());
+
   @override
   Widget build(BuildContext context) {
-    // final controller = ActiveProductsController();
-    // controller.fetchAllProducts();
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -41,19 +36,13 @@ class HomeCategory extends StatelessWidget {
                     width: 100,
                     child: InkWell(
                       onTap: (() {
-                        print("valueeeeeeeeeeeee before" +
-                            productController.selectedCategory.value);
-                        productController.selectedCategory.value = item.name!;
-                        print("valueeeeeeeeeeeee" +
-                            productController.selectedCategory.value);
-                        Get.to(CategoryItems(
-                            item.name!, bannerData, categoriesImage));
+                        productController.slectCategory(item.name);
+                        Future.delayed(const Duration(milliseconds: 10), () {
+                          Get.to(CategoryItems(
+                              item.name!, bannerData, categoriesImage));
+                        });
                       }),
-                      child:
-                          //  Card(
-                          //   elevation: 0,
-                          //   child:
-                          Column(
+                      child: Column(
                         children: [
                           CircleAvatar(
                             backgroundImage: NetworkImage(item.image!),

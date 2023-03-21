@@ -1,22 +1,21 @@
 import 'dart:convert';
-// import '../Components/MainDrawer.dart';
-import '../GetxController/MyHomePage_controller.dart';
-import '../Views/AddNewAddress.dart';
-import 'package:addcafe/Components/AppBarStyle.dart';
-import 'package:addcafe/Views/Auth/Signin.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:developer';
 import 'package:get/get.dart';
-import 'package:addcafe/GetxController/UserAuth_controller.dart';
-import '../GetxController/UserProfile_controller.dart';
+import 'package:intl/intl.dart';
 import '../Utils/Constant.dart';
 import '../Styles/TextStyles.dart';
 import '../Styles/ColorStyle.dart';
-import '../Components/ElevatedButtonCustom.dart';
 import '../Styles/EffectStyle.dart';
-import '../Components/TextFieldCustom.dart';
-import '../Components/ElevatedButtonCustom.dart';
+import '../Views/AddNewAddress.dart';
+import 'package:flutter/material.dart';
 import '../Components/PickerCustom.dart';
+import '../Components/TextFieldCustom.dart';
+import 'package:addcafe/Views/Auth/Signin.dart';
+import '../Components/ElevatedButtonCustom.dart';
+import 'package:addcafe/Components/AppBarStyle.dart';
+import '../GetxController/MyHomePage_controller.dart';
+import '../GetxController/UserProfile_controller.dart';
+import 'package:addcafe/GetxController/UserAuth_controller.dart';
 
 class UserProfile extends StatelessWidget {
   final userAuth = Get.put(UserAuth());
@@ -24,19 +23,17 @@ class UserProfile extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
   final homPageController = Get.put(HomeBannerController());
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         key: scaffoldKey,
-        // drawer: const MainDrawer(),
         appBar: AppBarStyle(
           styleTitle: TextStylesCustom.textStyles_20,
           title: 'Profile',
           backgroundColor: ColorStyle.primaryColorRed,
           leading: IconButton(
             onPressed: () => homPageController.currentIndex.value = 0,
-            // scaffoldKey.currentState!.openDrawer(),
-            // currentIndex.value = 0,
             icon: const Icon(
               Icons.arrow_back,
               size: 24,
@@ -61,7 +58,7 @@ class UserProfile extends StatelessWidget {
                             const SizedBox(
                               height: 40,
                             ),
-                            // Text(controller.addAddress[0].toString()),
+
                             Container(
                               padding: const EdgeInsets.only(
                                   left: 20, right: 20, bottom: 30, top: 30),
@@ -79,12 +76,12 @@ class UserProfile extends StatelessWidget {
                                     },
                                     child: Stack(children: [
                                       CircleAvatar(
-                                        backgroundColor:
-                                            ColorStyle.primaryColorGreen,
-                                        radius: 72,
-                                        child: ClipRRect(
+                                          backgroundColor:
+                                              ColorStyle.primaryColorGreen,
+                                          radius: 72,
+                                          child: ClipRRect(
                                             borderRadius:
-                                                BorderRadius.circular(60),
+                                                BorderRadius.circular(70),
                                             child: CircleAvatar(
                                               radius: 65,
                                               child: controller.image.value.path
@@ -92,21 +89,19 @@ class UserProfile extends StatelessWidget {
                                                   ? Image.file(
                                                       controller.image.value,
                                                       fit: BoxFit.cover,
-                                                      height: 65 * 2,
-                                                      width: 65 * 2,
+                                                      width: double.infinity,
                                                     )
                                                   : Image.network(
+                                                      fit: BoxFit.cover,
+                                                      height: double.infinity,
+                                                      width: double.infinity,
                                                       userAuth.userprofile
                                                               .isEmpty
-                                                          ? 'https://mir-s3-cdn-cf.behance.net/user/276/462829507061295.5f9717443f152.png'
-                                                          : userAuth.userprofile[
-                                                                      'profile_picture'] ==
-                                                                  null
-                                                              ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi6mIqR-61xHjJUEMUfzQvP_ZeVtRZ-Hh_B9OQIh5hLjVH1ZO5U23ZehKJMmIsZkMF5Ew&usqp=CAU'
-                                                              : '${kImgUrl}${userAuth.userprofile['profile_picture']}',
+                                                          ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSi6mIqR-61xHjJUEMUfzQvP_ZeVtRZ-Hh_B9OQIh5hLjVH1ZO5U23ZehKJMmIsZkMF5Ew&usqp=CAU'
+                                                          : '$kImgUrl${userAuth.userprofile['profile_picture']}',
                                                     ),
-                                            )),
-                                      ),
+                                            ),
+                                          )),
                                       Positioned(
                                           bottom: 0,
                                           right: -25,
@@ -120,9 +115,8 @@ class UserProfile extends StatelessWidget {
                                                 },
                                               );
                                             },
-                                            // controller.getImage(),
                                             elevation: 2,
-                                            fillColor: Color(0xFFF5F6F9),
+                                            fillColor: const Color(0xFFF5F6F9),
                                             padding: const EdgeInsets.all(8.0),
                                             shape: const CircleBorder(),
                                             child: Icon(
@@ -132,11 +126,9 @@ class UserProfile extends StatelessWidget {
                                           )),
                                     ]),
                                   ),
-
                                   const SizedBox(
                                     height: 10,
                                   ),
-
                                   userAuth.userprofile.isEmpty
                                       ? const SizedBox(
                                           height: 15,
@@ -145,27 +137,27 @@ class UserProfile extends StatelessWidget {
                                       // <-------------------user profile details -------------------->
 
                                       const SizedBox(
-                                          height: 15,
+                                          height: 10,
                                         ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      userAuth.userprofile['first_name'] == null
+                                      controller.fname.value.text.isEmpty
                                           ? const SizedBox(
                                               height: 0,
                                             )
                                           : Text(
-                                              '${userAuth.userprofile['first_name']} ${userAuth.userprofile['last_name']}',
+                                              '${controller.fname.value.text} ${controller.lname.value.text}',
                                               style: TextStylesCustom
-                                                  .textStyles_26
+                                                  .textStyles_20
                                                   .apply(
                                                       fontWeightDelta: 2,
                                                       fontSizeDelta: 4,
                                                       color: ColorStyle
                                                           .primaryColorGreen),
                                             ),
-                                      userAuth.userprofile['first_name'] != null
-                                          ? userAuth.userprofile['is_verify']
+                                      controller.fname.value.text.isNotEmpty
+                                          ? controller.userprofile['is_verify']
                                               ? Icon(
                                                   Icons.verified,
                                                   color: ColorStyle
@@ -183,36 +175,282 @@ class UserProfile extends StatelessWidget {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  // ),
-
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                          userAuth.userprofile.isEmpty
-                                              ? '${userAuth.userprofile}'
-                                              : userAuth.userprofile['email'] ??
-                                                  '',
-                                          style: TextStylesCustom.textStyles_22
-                                              .apply(
-                                                  fontWeightDelta: 2,
-                                                  color: ColorStyle
-                                                      .primaryColorGreen)),
-                                      userAuth.userprofile['is_email_verify']
-                                          ? Icon(
-                                              Icons.verified,
-                                              color:
-                                                  ColorStyle.primaryColorGreen,
-                                            )
-                                          : const Icon(
-                                              Icons.verified,
-                                              color: Colors.grey,
-                                            )
-                                    ],
-                                  ),
                                 ],
                               ),
                             ),
+
+                            // ------------------------ Edit Profile------------------------------>
+                            const SizedBox(
+                              height: 20,
+                            ),
+
+                            InkWell(
+                              onTap: () {
+                                controller.showEditProfile.value =
+                                    !controller.showEditProfile.value;
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                padding: const EdgeInsets.only(bottom: 5),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            width: 3,
+                                            color:
+                                                ColorStyle.primaryColorRed))),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Edit Profile',
+                                      style: TextStylesCustom.textStyles_20
+                                          .apply(fontWeightDelta: 3),
+                                    ),
+                                    Icon(controller.showEditProfile.value
+                                        ? Icons.keyboard_arrow_up
+                                        : Icons.keyboard_arrow_down)
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            controller.showEditProfile.value
+                                ? Form(
+                                    key: formKey,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextFormFieldUnderline(
+                                          controller: controller.fname.value,
+                                          padding: const EdgeInsets.all(10),
+                                          labelText: 'Your Name',
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'Enter Your First Name';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          textStyle:
+                                              TextStylesCustom.textStyles_16,
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        TextFormFieldUnderline(
+                                          controller: controller.lname.value,
+                                          padding: const EdgeInsets.all(10),
+                                          labelText: 'Your Last Name',
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return 'Enter Your Last Name';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          textStyle:
+                                              TextStylesCustom.textStyles_16,
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        TextFormFieldUnderline(
+                                          controller: controller.email.value,
+                                          padding: const EdgeInsets.all(10),
+                                          labelText: 'Your Email',
+                                          validator: (value) {
+                                            if (!GetUtils.isEmail(value!)) {
+                                              return 'Enter a Valid Email Address ';
+                                            } else {
+                                              return null;
+                                            }
+                                          },
+                                          textStyle:
+                                              TextStylesCustom.textStyles_16,
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        TextFormFieldUnderline(
+                                          keyboardType: TextInputType.number,
+                                          controller: controller.mobile.value,
+                                          padding: const EdgeInsets.all(10),
+                                          labelText: 'Your Mobile No.',
+                                          validator: (value) {
+                                            if (value!.isEmpty) {
+                                              return "Please Enter your Mobile Number";
+                                            } else if (value.length != 10) {
+                                              return 'Mobile Number Should Be 10 Digits';
+                                            } else {
+                                              log("hello");
+                                              return null;
+                                            }
+                                          },
+                                          textStyle:
+                                              TextStylesCustom.textStyles_16,
+                                        ),
+
+                                        const SizedBox(
+                                          height: 20,
+                                        ),
+                                        Text(
+                                          "Gender*",
+                                          style: TextStylesCustom.textStyles_18,
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(controller
+                                                .selectedgender.value.isNotEmpty
+                                            ? ''
+                                            : ''),
+                                        Obx(() {
+                                          return SizedBox(
+                                              height: 80,
+                                              child: ListView.builder(
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  shrinkWrap: true,
+                                                  itemCount:
+                                                      controller.genders.length,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return InkWell(
+                                                      splashColor: ColorStyle
+                                                          .secondryColorRed,
+                                                      onTap: () {
+                                                        controller
+                                                                .selectedgender
+                                                                .value =
+                                                            controller.genders[
+                                                                index][2];
+                                                      },
+                                                      child: Card(
+                                                          color: controller
+                                                                      .selectedgender
+                                                                      .value ==
+                                                                  controller
+                                                                          .genders[
+                                                                      index][2]
+                                                              ? Color(
+                                                                  0xFF3B4257)
+                                                              : Colors.white,
+                                                          child: Container(
+                                                            height: 40,
+                                                            width: 50,
+                                                            alignment: Alignment
+                                                                .center,
+                                                            margin:
+                                                                const EdgeInsets
+                                                                    .all(12.0),
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              children: <
+                                                                  Widget>[
+                                                                Icon(
+                                                                  controller
+                                                                          .genders[
+                                                                      index][1],
+                                                                  color: controller
+                                                                              .selectedgender.value ==
+                                                                          controller.genders[index]
+                                                                              [
+                                                                              2]
+                                                                      ? Colors
+                                                                          .white
+                                                                      : Colors
+                                                                          .grey,
+                                                                  size: 16,
+                                                                ),
+                                                                const SizedBox(
+                                                                    height: 10),
+                                                                Text(
+                                                                  controller
+                                                                          .genders[
+                                                                      index][0],
+                                                                  style: TextStylesCustom
+                                                                      .textStyles_12
+                                                                      .apply(
+                                                                          color: controller.selectedgender.value == controller.genders[index][2]
+                                                                              ? Colors.white
+                                                                              : Colors.grey),
+                                                                )
+                                                              ],
+                                                            ),
+                                                          )),
+                                                    );
+                                                  }));
+                                        }),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        TextFormField(
+                                            controller: controller.dob.value,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'Field is required';
+                                              } else {
+                                                return null;
+                                              }
+                                            },
+                                            decoration: const InputDecoration(
+                                                prefixIcon: Icon(Icons
+                                                    .calendar_today), //icon of text field
+                                                labelText:
+                                                    "D.O.B" //label text of field
+                                                ),
+                                            readOnly:
+                                                true, // when true user cannot edit text
+                                            onTap: () async {
+                                              final dob =
+                                                  await PickerCustom.datePicker(
+                                                      'yyyy-MM-dd');
+                                              controller.dob.value.text = dob ==
+                                                      null
+                                                  ? controller.dob.value.text
+                                                  : dob.toString();
+                                              // print(dob.toString());
+                                              //when click we have to show the datepicker
+                                            }),
+                                        const SizedBox(
+                                          height: 15,
+                                        ),
+                                        ElevatedButtonCustom(
+                                          BgColor: ColorStyle.primaryColorRed,
+                                          text: 'Edit Profile',
+                                          radiusBorder: 5,
+                                          size: Size(
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2.2,
+                                              40),
+                                          onTap: (() {
+                                            if (formKey.currentState!
+                                                .validate()) {
+                                              controller.editProfile();
+                                            }
+                                          }),
+                                        )
+                                        //   ],
+                                        // )
+                                      ],
+                                    ))
+                                : const SizedBox(
+                                    height: 0,
+                                  ),
+
 // ------------------------ Changed password ------------------------------>
                             const SizedBox(
                               height: 20,
@@ -224,6 +462,7 @@ class UserProfile extends StatelessWidget {
                                     !controller.showPassField.value;
                               },
                               child: Container(
+                                width: MediaQuery.of(context).size.width,
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 padding: const EdgeInsets.only(bottom: 5),
@@ -233,10 +472,19 @@ class UserProfile extends StatelessWidget {
                                             width: 3,
                                             color:
                                                 ColorStyle.primaryColorRed))),
-                                child: Text(
-                                  'Change Password',
-                                  style: TextStylesCustom.textStyles_20
-                                      .apply(fontWeightDelta: 3),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Change Password',
+                                      style: TextStylesCustom.textStyles_20
+                                          .apply(fontWeightDelta: 3),
+                                    ),
+                                    Icon(controller.showPassField.value
+                                        ? Icons.keyboard_arrow_up
+                                        : Icons.keyboard_arrow_down)
+                                  ],
                                 ),
                               ),
                             ),
@@ -259,7 +507,6 @@ class UserProfile extends StatelessWidget {
                                                     const EdgeInsets.all(10),
                                                 labelText:
                                                     'Enter Current Password',
-                                                // controller: controller.textController.value,
                                                 hintText: '*********',
                                                 textStyle: TextStylesCustom
                                                     .textStyles_16,
@@ -281,7 +528,6 @@ class UserProfile extends StatelessWidget {
                                                       const EdgeInsets.all(10),
                                                   labelText:
                                                       'Enter New Password',
-                                                  // controller: controller.textController.value,
                                                   hintText: '*********',
                                                   textStyle: TextStylesCustom
                                                       .textStyles_16,
@@ -308,31 +554,22 @@ class UserProfile extends StatelessWidget {
                                               ),
                                               PasswordFieldUnderline(
                                                   controller: controller
-                                                      .newPassword.value,
+                                                      .cnewPassword.value,
                                                   padding:
                                                       const EdgeInsets.all(10),
                                                   labelText:
                                                       'Confirm New Password',
-                                                  // controller: controller.textController.value,
                                                   hintText: '*********',
                                                   textStyle: TextStylesCustom
                                                       .textStyles_16,
                                                   validator: (value) {
-                                                    RegExp regex = RegExp(
-                                                        r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-                                                    var passNonNullValue =
-                                                        value ?? "";
-                                                    if (passNonNullValue
-                                                        .isEmpty) {
-                                                      return ("Password is required");
-                                                    } else if (passNonNullValue
-                                                            .length <
-                                                        6) {
-                                                      return ("Password Must be more than 5 characters");
-                                                    } else if (!regex.hasMatch(
-                                                        passNonNullValue)) {
-                                                      return ("Password Must upper,lower,digit & Special character ");
+                                                    if (controller.cnewPassword
+                                                            .value.text !=
+                                                        controller.newPassword
+                                                            .value.text) {
+                                                      return ("Your New Password & Current Password is Mismatch");
                                                     }
+
                                                     return null;
                                                   }),
                                             ],
@@ -372,6 +609,7 @@ class UserProfile extends StatelessWidget {
                                     !controller.showAddress.value;
                               },
                               child: Container(
+                                width: MediaQuery.of(context).size.width,
                                 margin:
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 padding: const EdgeInsets.only(bottom: 5),
@@ -381,10 +619,19 @@ class UserProfile extends StatelessWidget {
                                             width: 3,
                                             color:
                                                 ColorStyle.primaryColorRed))),
-                                child: Text(
-                                  'Address',
-                                  style: TextStylesCustom.textStyles_20
-                                      .apply(fontWeightDelta: 3),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Address',
+                                      style: TextStylesCustom.textStyles_20
+                                          .apply(fontWeightDelta: 3),
+                                    ),
+                                    Icon(controller.showAddress.value
+                                        ? Icons.keyboard_arrow_up
+                                        : Icons.keyboard_arrow_down)
+                                  ],
                                 ),
                               ),
                             ),
@@ -509,14 +756,8 @@ class UserProfile extends StatelessWidget {
                                                           controller
                                                               .fetchAddressByid(
                                                                   index);
-                                                          // Get.to(AddNewAddress(
-                                                          //   isAddress: false,
-                                                          // ));
                                                         },
                                                       ),
-                                                      // const SizedBox(
-                                                      //   width: 10,
-                                                      // ),
                                                       Text(
                                                         '|',
                                                         style: TextStylesCustom
@@ -551,9 +792,6 @@ class UserProfile extends StatelessWidget {
                                           );
                                         },
                                       ),
-                                      // const SizedBox(
-                                      //   height: 10,
-                                      // ),
                                       ElevatedButtonCustom(
                                         BgColor: ColorStyle.primaryColorRed,
                                         text: '+ Add Address',
@@ -565,14 +803,6 @@ class UserProfile extends StatelessWidget {
                                         onTap: () {
                                           controller.clearEdit();
                                           Get.to(AddNewAddress());
-                                          // showModalBottomSheet(
-                                          //     isScrollControlled: true,
-                                          //     backgroundColor: Colors.transparent,
-                                          //     shape: RoundedRectangleBorder(
-                                          //         borderRadius: BorderRadius.vertical(
-                                          //             top: Radius.circular(20))),
-                                          //     context: context,
-                                          //     builder: (context) => AddNewAddress());
                                         },
                                       ),
                                       const SizedBox(

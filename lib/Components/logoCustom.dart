@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../Styles/ImageStyle.dart';
 import '../Styles/TextStyles.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class LogoCustom extends StatelessWidget {
   const LogoCustom({super.key});
@@ -14,7 +14,7 @@ class LogoCustom extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SizedBox(
-          height: 60,
+          height: 50,
           width: 60,
           child: SvgPicture.asset(ImageStyle.logo),
         ),
