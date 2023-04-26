@@ -30,37 +30,70 @@ class HomeCategory extends StatelessWidget {
           Center(
             child: Wrap(
                 spacing: 10,
-                children: categoriesImage.map((item) {
-                  return Container(
-                    margin: const EdgeInsets.all(10),
-                    width: 100,
-                    child: InkWell(
-                      onTap: (() {
-                        productController.slectCategory(item.name);
-                        Future.delayed(const Duration(milliseconds: 10), () {
-                          Get.to(CategoryItems(
-                              item.name!, bannerData, categoriesImage));
-                        });
-                      }),
+                children:[
+                  ...List.generate(5, (index) => Container(
+        margin: const EdgeInsets.all(10),
+        width: 100,
+        child:
+
+        InkWell(
+          onTap: (() {
+            productController.slectCategory(categoriesImage[index].name);
+            Future.delayed(const Duration(milliseconds: 10), () {
+              Get.to(CategoryItems(
+              categoriesImage[index].name!, bannerData, categoriesImage));
+            });
+          }),
+          child: Column(
+            children: [
+              CircleAvatar(
+                backgroundImage: NetworkImage(categoriesImage[index].image!),
+                radius: 40,
+              ),
+              Container(
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  child: Text(
+    categoriesImage[index].name!,
+                    style: TextStylesCustom.textStyles_12
+                        .apply(fontWeightDelta: 2),
+                  ))
+            ],
+          ),
+          // ),
+        ),
+      ),),
+                  InkWell(
+                    // onTap: (() {
+                    //   productController.slectCategory(categoriesImage[index].name);
+                    //   Future.delayed(const Duration(milliseconds: 10), () {
+                    //     Get.to(CategoryItems(
+                    //         categoriesImage[index].name!, bannerData, categoriesImage));
+                    //   });
+                    // }),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
                       child: Column(
                         children: [
                           CircleAvatar(
-                            backgroundImage: NetworkImage(item.image!),
+                            backgroundImage: NetworkImage(categoriesImage[0].image!),
                             radius: 40,
                           ),
                           Container(
                               margin: const EdgeInsets.symmetric(vertical: 10),
                               child: Text(
-                                item.name!,
+                                "View More",
                                 style: TextStylesCustom.textStyles_12
                                     .apply(fontWeightDelta: 2),
                               ))
                         ],
                       ),
-                      // ),
                     ),
-                  );
-                }).toList()),
+                    // ),
+                  ),
+                ]
+
+
+    ),
           )
         ],
       ),

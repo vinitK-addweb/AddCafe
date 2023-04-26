@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import '../BottomNavBar.dart';
 import '../Utils/Global.dart';
 import '../Utils/Constant.dart';
 import '../Styles/ColorStyle.dart';
@@ -106,7 +107,7 @@ class Myfavourits extends StatelessWidget {
                           size: const Size(50, 50),
                           text: 'Add Products',
                           onTap: () {
-                            navigateMultiBottom(context, MyHomePage());
+                            homPageController.currentIndex.value = 0;
                           },
                         ),
                       ),
