@@ -1,3 +1,4 @@
+import 'Views/ViewMore.dart';
 import 'Views/Wishlist.dart';
 import 'package:get/get.dart';
 import '../Views/Offers.dart';
@@ -20,13 +21,17 @@ class BottamNavigationBar extends StatelessWidget {
   final cart = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
+
+
     return WillPopScope(
       onWillPop: () async {
         return false;
       },
       child: GetBuilder(
           init: HomeBannerController(),
-          initState: cart.initMethod(),
+          initState:
+
+          cart.initMethod(),
           builder: (_) {
             return Obx(() => WillPopScope(
                   onWillPop: () async {

@@ -33,7 +33,8 @@ class Myfavourits extends StatelessWidget {
           return Obx(() {
             return Scaffold(
                 key: _scaffoldKey,
-                appBar: AppBarStyle(
+                appBar:
+                AppBarStyle(
                   backgroundColor: ColorStyle.primaryColorRed,
                   leading: IconButton(
                     onPressed: () => homPageController.currentIndex.value = 0,

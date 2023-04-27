@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import '../Models/Model_Categories.dart';
 import '../Views/Categories/categoryItems.dart';
 import '../GetxController/ActiveProducts_controller.dart';
+import '../GetxController/MyHomePage_controller.dart';
+import 'ViewMore.dart';
 
 class HomeCategory extends StatelessWidget {
   HomeCategory(this.categoriesImage, this.bannerData);
@@ -63,6 +65,13 @@ class HomeCategory extends StatelessWidget {
         ),
       ),),
                   InkWell(
+                    onTap: ((){
+                      Get.to(ViewMore());
+                      // if(Get.isRegistered<HomeBannerController>() !=false){
+                      //   Get.find<HomeBannerController>().currentIndex.value =4;
+                      // }
+                      // homPageController.currentIndex.value = 0;
+                    }),
                     // onTap: (() {
                     //   productController.slectCategory(categoriesImage[index].name);
                     //   Future.delayed(const Duration(milliseconds: 10), () {

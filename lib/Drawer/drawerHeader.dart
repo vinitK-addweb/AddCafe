@@ -12,7 +12,7 @@ import '../Utils/Constant.dart';
 import '../Styles/TextStyles.dart';
 import '../Styles/ColorStyle.dart';
 import '../Components/ElevatedButtonCustom.dart';
-
+import 'package:fancy_switch/fancy_switch.dart';
 class DrowerHeader extends StatelessWidget {
   const DrowerHeader({super.key});
 
@@ -29,7 +29,7 @@ class DrowerHeader extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.only(top: 35),
                 width: double.infinity,
-                height: 200,
+                height: 260,
                 padding: const EdgeInsets.only(top: 20.0),
                 child: SingleChildScrollView(
                   child: Column(
@@ -77,6 +77,24 @@ class DrowerHeader extends StatelessWidget {
                                           : controller.email.value.text ?? '',
                                       style: TextStylesCustom.textStyles_20
                                           .apply(color: Colors.white)),
+                                 // const  SizedBox(height: 5,),
+                                  Center(
+                                    child:
+                                    Switch(
+                                      value: isSwitched.value,
+                                      onChanged: (value) {
+                                       isSwitched.value = value;
+                                      },
+                                     inactiveThumbImage : AssetImage(
+                                      'assets/images/DineIn.png'),
+                                    activeThumbImage:AssetImage(
+                                          'assets/images/DinOut.png') ,
+                                      activeTrackColor: Colors.white,
+                                      activeColor: ColorStyle.secondryColorGreen,
+                                    ),
+
+                                  ),
+                                  Text(isSwitched.value?'Dine Out':'Dine In',style: TextStylesCustom.textStyles_16.apply(color: Colors.white),)
                                 ],
                               ),
                         // Obx(() =>

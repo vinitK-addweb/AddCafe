@@ -50,6 +50,7 @@ class HomeBannerController extends GetxController {
   }
 
   setCurrentIndex(index) {
+    debugPrint("index value is=========>>>>>>>>>>>>>>>>>>>>>>>>>>>"+index.toString());
     currentIndex.value = index;
   }
 }

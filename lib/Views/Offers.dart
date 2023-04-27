@@ -18,7 +18,8 @@ class Offers extends StatelessWidget {
   var formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
+    return
+      GetBuilder(
         init: OffersController(),
         initState: controller.initCustom(),
         builder: (_) {
