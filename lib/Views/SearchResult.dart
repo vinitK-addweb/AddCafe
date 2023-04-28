@@ -20,7 +20,9 @@ class SearchResult extends StatelessWidget {
               "No Result Found",
               style: TextStylesCustom.textStyles_20,
             )
-          : ListView.builder(
+          :
+
+      ListView.builder(
               itemCount: searchController.searchResult.length,
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,

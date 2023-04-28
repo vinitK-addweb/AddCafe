@@ -15,7 +15,7 @@ RxList cuisineFilter = [].obs;
     Future.delayed(Duration(milliseconds: 200),(){getCuisine();
       if(cuisineFilter.isEmpty)
     getCuisineFilter(0);
-    print(cuisineData);
+    // print(cuisineData);
     });
 
   }
@@ -28,8 +28,9 @@ RxList cuisineFilter = [].obs;
 
   }
   getCuisineFilter(index) async{
-cuisineFilter.value = await API.instance.get(endPoint: "catalogue/active-category/?cuisine=${index}", isHeader: true);
 
-  print(cuisineFilter);
+cuisineFilter.value = await API.instance.get(endPoint: "catalogue/active-category/?cuisine=${index}", isHeader: true);
+update();
+  print("filter============>>>"+cuisineFilter.toString());
   }
 }

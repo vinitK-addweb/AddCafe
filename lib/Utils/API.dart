@@ -46,7 +46,7 @@ class API {
     }
 
     final url = Uri.parse('$_kBaseURL$endPoint');
-    // print("url sdfd============>>>>>>$url");
+    print("url sdfd============>>>>>>$url");
     // final headers = {'Authorization': 'Bearer $kTOKENSAVED'};
     Map<String, String> header = {};
 

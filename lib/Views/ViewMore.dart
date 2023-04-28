@@ -17,39 +17,36 @@ import 'MenuItem.dart';
 
 class ViewMore extends StatelessWidget {
   ViewMore({Key? key}) : super(key: key);
-final cart = Get.find<CartController >();
-final controller = Get.put(ViewMoreController());
+  final cart = Get.find<CartController>();
+  final controller = Get.put(ViewMoreController());
   @override
   Widget build(BuildContext context) {
-    return
-      GetBuilder(
-        init: ViewMoreController(),
-        initState: controller.initFunction(),
-        builder: (_) {
-          return
-            Obx(() {
-              return
-                Scaffold(
-                    appBar: AppBarStyle(
-                      backgroundColor: ColorStyle.primaryColorRed,
-                      leading: IconButton(
-                        onPressed: () {
-                          // if(Get.isRegistered<HomeBannerController>() !=false){
-                          //   Get.find<HomeBannerController>().currentIndex.value =0;
-                          // }
-                          Get.back();
-                        },
-                        icon: const Icon(
-                          Icons.arrow_back,
-                          size: 25,
-                          color: Colors.white,
-                        ),
-                      ),
-                      styleTitle: TextStylesCustom.textStyles_20,
-                      title: 'Menu',
-                    ),
-                    bottomNavigationBar: cart.cartData.isNotEmpty
-                        ? Padding(
+    return GetBuilder(
+      init: ViewMoreController(),
+      initState: controller.initFunction(),
+      builder: (_) {
+        return Obx(() {
+          return Scaffold(
+              appBar: AppBarStyle(
+                backgroundColor: ColorStyle.primaryColorRed,
+                leading: IconButton(
+                  onPressed: () {
+                    // if(Get.isRegistered<HomeBannerController>() !=false){
+                    //   Get.find<HomeBannerController>().currentIndex.value =0;
+                    // }
+                    Get.back();
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+                ),
+                styleTitle: TextStylesCustom.textStyles_20,
+                title: 'Menu',
+              ),
+              bottomNavigationBar: cart.cartData.isNotEmpty
+                  ? Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: InkWell(
                         onTap: (() => Get.to(Cart())),
@@ -80,8 +77,8 @@ final controller = Get.put(ViewMoreController());
                                       '₹ ${cart.cart['total_rate']}',
                                       style: TextStylesCustom.textStyles_14
                                           .apply(
-                                          fontWeightDelta: 2,
-                                          color: ColorStyle.white),
+                                              fontWeightDelta: 2,
+                                              color: ColorStyle.white),
                                     )
                                   ],
                                 ),
@@ -99,100 +96,106 @@ final controller = Get.put(ViewMoreController());
                         ),
                       ),
                     )
-                        : const SizedBox(
+                  : const SizedBox(
                       height: 0,
                     ),
-                    body:
-                    Container(child: Column(
+              body: Container(
+                child: Column(
+                  children: [
+                    Wrap(
+                      direction: Axis.horizontal,
+                      spacing: 10,
                       children: [
-                        Wrap(
-                          direction: Axis.horizontal,
-                          spacing: 10,
-
-                          children: [
-
-
-                            InkWell(
-                              onTap: () {
-                                controller.currentIndex.value = 0;
-                                controller.getCuisineFilter('');
-                              },
-                              child: Container(
-                                  height: 30,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    border: Border(
-
-                                      bottom: BorderSide(width: 3.0,
-                                        color: controller.currentIndex == 0
-                                            ? Colors.greenAccent
-                                            : Colors.transparent,),
-                                    ),
-
+                        InkWell(
+                          onTap: () {
+                            controller.currentIndex.value = 0;
+                            controller.getCuisineFilter('');
+                          },
+                          child: Container(
+                              height: 30,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    width: 3.0,
+                                    color: controller.currentIndex == 0
+                                        ? Colors.greenAccent
+                                        : Colors.transparent,
                                   ),
-                                  child: Align(alignment: Alignment.center,
-                                      child: Text(
-                                        'View All', textAlign: TextAlign.center,
-                                        style: TextStylesCustom.textStyles_14
-                                            .apply(fontWeightDelta: 3),))),
-                            ),
-                            // ),
-                            ... List.generate(controller.cuisineData.length, (
-                                index) =>
-
-
-                            controller.cuisineData.isNotEmpty ?
-                            InkWell(
-                              onTap: () {
-                                controller.currentIndex.value =
-                                controller.cuisineData[index]['id'];
-                                controller.getCuisineFilter(
-                                    controller.cuisineData[index]['id']);
-                              },
-                              child: Container(
-                                  height: 35,
-                                  width: 80,
-                                  decoration: BoxDecoration(
-                                    border: Border(
-
-                                      bottom: BorderSide(width: 3.0,
-                                        color: controller.currentIndex ==
-                                            controller.cuisineData[index]['id']
-                                            ? Colors.greenAccent
-                                            : Colors.transparent,),
-                                    ),
-
-                                  ),
-                                  child: Align(alignment: Alignment.center,
-                                      child: Text(
-                                        controller.cuisineData[index]['name'],
-                                        textAlign: TextAlign.center,
-                                        style: TextStylesCustom.textStyles_14
-                                            .apply(fontWeightDelta: 3),))),
-                            ) : Text(""),
-                            )
-                            // )
-                          ],),
-                        controller.cuisineFilter.isNotEmpty ?
-                        Expanded(
-                          child: ListView.builder(
-                              itemCount: controller.cuisineFilter.length,
-                              shrinkWrap: true,
-                              itemBuilder: (BuildContext context, int index) {
-                                return
+                                ),
+                              ),
+                              child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    'View All',
+                                    textAlign: TextAlign.center,
+                                    style: TextStylesCustom.textStyles_14
+                                        .apply(fontWeightDelta: 3),
+                                  ))),
+                        ),
+                        // ),
+                        ...List.generate(
+                          controller.cuisineData.length,
+                          (index) => controller.cuisineData.isNotEmpty
+                              ? InkWell(
+                                  onTap: () {
+                                    controller.currentIndex.value =
+                                        controller.cuisineData[index]['id'];
+                                    controller.getCuisineFilter(
+                                        controller.cuisineData[index]['id']);
+                                  },
+                                  child: Container(
+                                      height: 35,
+                                      width: 80,
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            width: 3.0,
+                                            color: controller.currentIndex ==
+                                                    controller
+                                                            .cuisineData[index]
+                                                        ['id']
+                                                ? Colors.greenAccent
+                                                : Colors.transparent,
+                                          ),
+                                        ),
+                                      ),
+                                      child: Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            controller.cuisineData[index]
+                                                ['name'],
+                                            textAlign: TextAlign.center,
+                                            style: TextStylesCustom
+                                                .textStyles_14
+                                                .apply(fontWeightDelta: 3),
+                                          ))),
+                                )
+                              : Text(""),
+                        )
+                        // )
+                      ],
+                    ),
+                    controller.cuisineFilter.isNotEmpty
+                        ? Expanded(
+                            child: ListView.builder(
+                                itemCount: controller.cuisineFilter.length,
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return
 //
-                                  InkWell(
-                                    onTap:(){ Get.to(MenuItems(category: controller.cuisineFilter[index]["cuisin"]));
-
-
-                                      }  ,
-    child: Container(
-                                        margin: EdgeInsets.symmetric(
-                                            vertical: 20),
-                                        width: MediaQuery
-                                            .of(context)
-                                            .size
-                                            .width,
+                                      InkWell(
+                                    onTap: () {
+                                      Get.to(MenuItems(categoryId:controller
+                                          .cuisineFilter[index]["id"],
+                                          cuisineId: controller
+                                              .cuisineFilter[index]["cuisine"]));
+                                    },
+                                    child: Container(
+                                        margin:
+                                            EdgeInsets.symmetric(vertical: 20),
+                                        width:
+                                            MediaQuery.of(context).size.width,
                                         height: 220,
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
@@ -207,40 +210,41 @@ final controller = Get.put(ViewMoreController());
                                         alignment: Alignment.bottomCenter,
                                         // This aligns the child of the container
                                         child: Padding(
-                                            padding: EdgeInsets.only(
-                                                bottom: 10.0),
+                                            padding:
+                                                EdgeInsets.only(bottom: 10.0),
                                             //some spacing to the child from bottom
                                             child: Container(
                                                 decoration: BoxDecoration(
                                                   color: Colors.white,
-                                                  borderRadius: BorderRadius
-                                                      .circular(8),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
                                                 ),
-
                                                 padding: EdgeInsets.all(5),
-
-                                                child: Text(controller
-                                                    .cuisineFilter[index]['name']
-                                                    .toString(), style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold)))
-                                        )
-                                    ),
+                                                child: Text(
+                                                    controller
+                                                        .cuisineFilter[index]
+                                                            ['name']
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight: FontWeight
+                                                            .bold))))),
                                   );
-                              }),
-                        ) : Center(child: Text("No Item Found",style: TextStylesCustom.textStyles_26,)),
-                        //   ],),
-                        // ),
-                        // Text(controller.cuisineFilter .toString())
-
-
-                      ],
-                    ),));
-            }
-
-            );
-        },
-      );
+                                }),
+                          )
+                        : Center(
+                            child: Text(
+                            "No Item Found",
+                            style: TextStylesCustom.textStyles_26,
+                          )),
+                    //   ],),
+                    // ),
+                    // Text(controller.cuisineFilter .toString())
+                  ],
+                ),
+              ));
+        });
+      },
+    );
   }
-
 }
