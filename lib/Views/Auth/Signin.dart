@@ -11,6 +11,7 @@ import '../../Components/TextFieldCustom.dart';
 import 'package:addcafe/Styles/ColorStyle.dart';
 import '../../Components/ElevatedButtonCustom.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
+import '../../Views/Auth/ForgetPassword.dart';
 
 // import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 
@@ -127,6 +128,14 @@ class _MyloginState extends State<Mylogin> {
                         textStyle: TextStylesCustom.textStyles_20,
                       ),
 
+
+                      TextButton(
+                          onPressed: () {
+                            Get.to(ForgetPassword());
+                          },
+                          child: Text(
+                               'Forget Password ?' ,
+                              style: TextStylesCustom.textStyles_14)),
                       const SizedBox(
                         height: 25,
                       ),

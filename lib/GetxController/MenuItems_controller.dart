@@ -28,6 +28,7 @@ class MenuItemsController extends GetxController{
       }
       getMenuItems();
       getProducts(categoryId);
+      getCategoryData(categoryId.value);
     });
   }
   getMenuItems() async{
@@ -42,7 +43,7 @@ class MenuItemsController extends GetxController{
     getCategoryData(idx)async{
       // menuItems.value = [];
 viewMoreController. cuisineFilter.value = [];
- viewMoreController.getCuisineFilter(idx);
+ await viewMoreController.getCuisineFilter(idx);
 
  menuItems.value = await viewMoreController.cuisineFilter;
  log("menu itemsss==>>"+menuItems.toString());

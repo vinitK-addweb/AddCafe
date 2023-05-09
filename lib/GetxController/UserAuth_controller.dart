@@ -12,6 +12,7 @@ import '../Views/Auth/Signin.dart';
 import '../Views/Auth/Password.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class UserAuth extends GetxController {
   Rx<TextEditingController> textController = TextEditingController().obs;
@@ -26,6 +27,7 @@ class UserAuth extends GetxController {
   RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
 
   Map<String, dynamic> _UserLogin = {};
+  Map<String, dynamic> signupOtp = {};
   RxBool isObscure = true.obs;
   final data = [
     {"id": "2", "image": "assets/images/facebook.png", "name": "Burger"},
@@ -42,6 +44,13 @@ class UserAuth extends GetxController {
   // ---------------------------------Form Validation-------------------------------
   SignUpValidation() {
     Get.focusScope!.unfocus();
+    // final mapedData = {
+    //   "email": email.value.text,
+    //   "password": password.value.text,
+    //   "first_name": firstName.value.text,
+    //   "last_name": lastName.value.text,
+    //   "mobile_number": phone.value.text
+    // };
 
     RegExp regex =
         RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
@@ -92,6 +101,7 @@ class UserAuth extends GetxController {
 // <--------------------- User Sign Up Functionality --------------------->
 
   Future signUp() async {
+    log("sign up works=");
     final mapedData = {
       "email": email.value.text,
       "password": password.value.text,
@@ -99,20 +109,50 @@ class UserAuth extends GetxController {
       "last_name": lastName.value.text,
       "mobile_number": phone.value.text
     };
-
+    log(mapedData.toString());
     _UserLogin = await API.instance.post(
         endPoint: APIEndPoints.instance.kSignup,
         params: mapedData,
         isHeader: false) as Map<String, dynamic>;
+    log(_UserLogin.toString());
+    // if (_UserLogin['status'] == 401) {
+    //   '${_UserLogin['message']}'.showError();
+    // }
+    if(_UserLogin.isNotEmpty) {
 
-    if (_UserLogin['status'] == 401) {
-      '${_UserLogin['message']}'.showError();
-    } else {
-      resetFunction();
-      Get.to(Mylogin());
-    }
+      // Get.to(Mylogin());
+      log("singhup data======>"+_UserLogin.toString());
+      Get.to(Otp(type:"isSignup"));
+    }else{'${_UserLogin['message']}'.showError();}
   }
+  
+  
+//  <----------------- Sign up otp verfication ------------------->
 
+  getSignupOtp()async{
+    final mapedData = {
+      "phone":phone.value.text,"code":otp.value.text
+    };
+    log(mapedData.toString());
+//     http.Response response;
+//
+//     response = await http.post(Uri.parse('${kBaseUrl}accounts/verify-mail/'),
+//         // headers: {
+//         //   "Content-Type": "multipart/form-data",
+//         //   "Authorization": 'Bearer $kTOKENSAVED'
+//         // },
+//         body: jsonEncode(mapedData));
+// log("response data===>"+response.body);
+//     if (response.statusCode == 200) {
+//       // fetchMyFavourites();
+//       // log()
+//     } else {}
+
+    signupOtp =  await API.instance.post(endPoint: "accounts/verify-mobile/", params:mapedData , isHeader: false) as Map<String, dynamic>;
+    log("works");
+    log("SIng up data ${ signupOtp}");
+    resetFunction();
+  }
 // <-----------------  User SignIn Functionality ------------------>
 
   Future signIn() async {
@@ -129,8 +169,9 @@ class UserAuth extends GetxController {
           params: mapedData,
           isHeader: false) as Map<String, dynamic>;
 
-      if (_UserLogin['status'] == 401) {
+      if (_UserLogin['status'] == 403) {
         '${_UserLogin['message']}'.showError();
+        log("data--------->>> "+_UserLogin['status']);
       } else {
         // -------------------- Save data to the local storage------------------------
 
@@ -187,7 +228,6 @@ class UserAuth extends GetxController {
     lastName.value.text = '';
     password.value.text = '';
     cPassword.value.text = '';
-
     email.value.text = '';
     phone.value.text = '';
   }

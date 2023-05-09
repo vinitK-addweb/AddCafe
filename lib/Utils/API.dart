@@ -182,8 +182,9 @@ class API {
       return null;
     }
 
-    final url = Uri.parse('$_kBaseURL$endPoint');
 
+    final url = Uri.parse('$_kBaseURL$endPoint');
+    log(url.toString());
     Map<String, String> header = {};
     if (isHeader) header = {'Authorization': 'Bearer $kTOKENSAVED'};
     print(url);
@@ -191,15 +192,16 @@ class API {
       showLoaderGetX();
       final response = await http.post(url, headers: header, body: params);
       hideLoader();
-      debugPrint('Response status: ${response.body}');
+      log('Response status: ${response.body}');
 
       final Map<String, dynamic> parsed = json.decode(response.body);
 
       // print('userprofile===========$kTOKENSAVED ${parsed}');
       return parsed;
-    } on Exception {
+    // }
+    // on Exception {
       // hideLoader();
-      // debugPrint('Exception is:-' + exception.toString());
+      // debugPrint('Exception is:-' );
       // return null;
     } catch (error) {
       hideLoader();

@@ -257,10 +257,12 @@ class UserProfileController extends GetxController {
         isHeader: true) as Map<String, dynamic>;
     if (_changePass['status'] == 202) {
       '${_changePass['message']}'.showSuccess();
+      currentPassword.value.text = '';
+      newPassword.value.text = '';
+      cnewPassword.value.text ="";
     }
 
-    currentPassword.value.text = '';
-    newPassword.value.text = '';
+
   }
 
   addAddressValidation(value) {

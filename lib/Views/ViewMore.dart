@@ -51,7 +51,7 @@ class ViewMore extends StatelessWidget {
                       child: InkWell(
                         onTap: (() => Get.to(Cart())),
                         child: Container(
-                          padding: const EdgeInsets.all(10),
+                          // padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                               color: ColorStyle.primaryColorRed,
                               borderRadius: const BorderRadius.only(
@@ -99,7 +99,9 @@ class ViewMore extends StatelessWidget {
                   : const SizedBox(
                       height: 0,
                     ),
-              body: Container(
+              body:
+
+              Container(
                 child: Column(
                   children: [
                     Wrap(
@@ -177,13 +179,22 @@ class ViewMore extends StatelessWidget {
                       ],
                     ),
                     controller.cuisineFilter.isNotEmpty
-                        ? Expanded(
-                            child: ListView.builder(
-                                itemCount: controller.cuisineFilter.length,
-                                shrinkWrap: true,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return
-//
+                        ?
+                    Wrap(
+                      direction: Axis.horizontal,
+                      spacing: 25,
+                      children: [
+                    // Expanded(
+                    //         child:
+                        ...List.generate(
+                    controller.cuisineFilter.length,
+                            (index) => controller.cuisineFilter.isNotEmpty?
+
+//                                 itemCount: controller.cuisineFilter.length,
+//                                 shrinkWrap: true,
+//                                 itemBuilder: (BuildContext context, int index) {
+//                                   return
+// //
                                       InkWell(
                                     onTap: () {
                                       Get.to(MenuItems(categoryId:controller
@@ -193,10 +204,11 @@ class ViewMore extends StatelessWidget {
                                     },
                                     child: Container(
                                         margin:
-                                            EdgeInsets.symmetric(vertical: 20),
+                                            EdgeInsets.symmetric(vertical: 10),
                                         width:
-                                            MediaQuery.of(context).size.width,
-                                        height: 220,
+                                            150,
+                                        height: 150,
+
                                         decoration: BoxDecoration(
                                           image: DecorationImage(
                                             colorFilter: new ColorFilter.mode(
@@ -229,8 +241,8 @@ class ViewMore extends StatelessWidget {
                                                         color: Colors.black,
                                                         fontWeight: FontWeight
                                                             .bold))))),
-                                  );
-                                }),
+                                  ):Text("No Data Found"),
+                                ),]
                           )
                         : Center(
                             child: Text(

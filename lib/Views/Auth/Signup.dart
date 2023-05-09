@@ -140,19 +140,21 @@ class Signup extends StatelessWidget {
                               TextFormFieldUnderline(
                                 padding: const EdgeInsets.all(10),
                                 validator: (value) {
-                                  if (double.tryParse(value!) != null) {
-                                    if (value.length != 10) {
-                                      return 'Enter a Valid Mobile No. Or Email Address';
+                                  // if (double.tryParse(value!) != null) {
+                                  //   if (value.length != 10) {
+                                  //     return 'Enter a Valid Mobile No. Or Email Address';
+                                  //   } else {
+                                  //     return null;
+                                  //   }
+                                  // }
+
+                                  // else {
+                                    if (!GetUtils.isEmail(value!)) {
+                                      return 'Enter a Valid Email Address';
                                     } else {
                                       return null;
                                     }
-                                  } else {
-                                    if (!GetUtils.isEmail(value)) {
-                                      return 'Enter a Valid Email Address Or Mobile No.';
-                                    } else {
-                                      return null;
-                                    }
-                                  }
+                                  // }
                                 },
                                 controller: controller.email.value,
                                 labelText: 'Phone Number or Email',
@@ -178,9 +180,11 @@ class Signup extends StatelessWidget {
                                   ),
                                 ),
                                 initialCountryCode: 'IN',
+// controller:controller.phone.value ,
                                 onChanged: (phone) {
                                   var mob = phone.completeNumber;
                                   controller.phone.value.text = mob.toString();
+
                                   print(phone.completeNumber);
                                 },
                               ),
@@ -237,6 +241,7 @@ class Signup extends StatelessWidget {
                           size: Size(MediaQuery.of(context).size.width, 50),
                           onTap: (() {
                             if (formKey.currentState!.validate()) {
+
                               controller.SignUpValidation();
                             }
                           }),

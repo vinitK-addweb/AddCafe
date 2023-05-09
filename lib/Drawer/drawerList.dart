@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
 import '../Utils/Global.dart';
 import '../Views/Cart/cart.dart';
+import '../Views/InformativeScreen.dart';
 import '../Views/OrderHistory.dart';
 import '../Views/PrivacyPolicy.dart';
 import '../Views/Wishlist.dart';
@@ -29,6 +30,7 @@ class MyDrowerList extends StatelessWidget {
       'icon': Icons.question_answer_outlined
     },
     {'name': 'Privacy Policy', 'tap': PrivacyPolicy(), 'icon': Icons.settings},
+    {'name': 'informative Screen', 'tap': InformativeScreen(), 'icon': Icons.perm_device_information},
   ];
   // toggleDrawer() async {
   //   if (scaffoldKey.currentState!.isDrawerOpen) {

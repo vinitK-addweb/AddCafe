@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import './Signup.dart';
 import 'package:get/get.dart';
 import '../../Views/MyHomePage.dart';
@@ -14,8 +16,8 @@ import 'package:addcafe/GetxController/UserAuth_controller.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 
 class Otp extends StatelessWidget {
-  Otp({super.key});
-
+  Otp({super.key,this.type});
+  final type;
   final controller = Get.put(UserAuth());
   @override
   Widget build(BuildContext context) {
@@ -116,7 +118,12 @@ class Otp extends StatelessWidget {
                         text: 'Continue',
                         size: Size(MediaQuery.of(context).size.width, 50),
                         onTap: (() {
-                          controller.verifyOtp();
+                          if(type=="isSignup"){
+                          log("isSignup");
+                            controller.getSignupOtp();
+
+                          }
+                          // controller.verifyOtp();
                         }),
                       ),
                       const SizedBox(
