@@ -12,3 +12,5 @@ String kTOKENSAVED = '';
 const kUSERID = '_id';
 String kUSERIDSAVED = '';
 RxBool isSwitched = true.obs;
+
+bool islogin = false;

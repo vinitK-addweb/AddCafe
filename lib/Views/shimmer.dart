@@ -22,6 +22,6 @@ class Myshimmer extends StatelessWidget {
       child: Container(
         width: width,
         height: height,
-        decoration: ShapeDecoration(color: Colors.grey, shape: shapeBorder),
+        decoration: ShapeDecoration(color: Colors.white60, shape: shapeBorder),
       ));
 }

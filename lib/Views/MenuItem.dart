@@ -138,8 +138,8 @@ class MenuItems extends StatelessWidget {
             body: Column(
               children: [
                 //test=====
-                Text("sub cat id"+controller.categoryId.value),
-                Text("cat id"+controller.cuisineId.value),
+                // Text("sub cat id"+controller.categoryId.value),
+                // Text("cat id"+controller.cuisineId.value),
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
@@ -357,8 +357,7 @@ class MenuItems extends StatelessWidget {
                                                           Text(
                                                             controller
                                                                     .menuCategory[
-                                                                index]['name'] + controller
-                                                                .menuItems.length.toString(),
+                                                                index]['name'] ,
                                                             style: TextStylesCustom
                                                                 .textStyles_15
                                                                 .apply(

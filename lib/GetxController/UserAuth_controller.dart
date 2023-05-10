@@ -194,7 +194,7 @@ class UserAuth extends GetxController {
       if (userDataPref != null) {
         try {
           kTOKENSAVED = prefs.getString('token') as String;
-
+          islogin = true;
           userprofile = RxMap<dynamic, dynamic>.from(jsonDecode(userDataPref));
         } catch (error) {}
       } else {
@@ -212,6 +212,7 @@ class UserAuth extends GetxController {
     password.value.text = '';
     textController.value.text = '';
     kTOKENSAVED = '';
+    islogin = false;
     userprofile = {}.obs;
     resetFunction();
     prefs.remove('userData');

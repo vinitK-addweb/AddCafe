@@ -29,7 +29,7 @@ class MyDrowerList extends StatelessWidget {
       'tap': "UserProfile()",
       'icon': Icons.question_answer_outlined
     },
-    {'name': 'Privacy Policy', 'tap': PrivacyPolicy(), 'icon': Icons.settings},
+    {'name': 'Information-Review', 'tap': PrivacyPolicy(), 'icon': Icons.reviews_outlined},
     {'name': 'informative Screen', 'tap': InformativeScreen(), 'icon': Icons.perm_device_information},
   ];
   // toggleDrawer() async {

@@ -108,12 +108,15 @@ class Password extends StatelessWidget {
                                     var passNonNullValue = value ?? "";
                                     if (passNonNullValue.isEmpty) {
                                       return ("Password is required");
-                                    } else if (passNonNullValue.length < 6) {
-                                      return ("Password Must be more than 5 characters");
-                                    } else if (!regex
-                                        .hasMatch(passNonNullValue)) {
-                                      return ("Password Must upper,lower,digit & Special character ");
                                     }
+
+                                    // else if (passNonNullValue.length < 6) {
+                                    //   return ("Password Must be more than 5 characters");
+                                    // }
+                                    // else if (!regex
+                                    //     .hasMatch(passNonNullValue)) {
+                                    //   return ("Password Must upper,lower,digit & Special character ");
+                                    // }
                                     return null;
                                   }),
                               const SizedBox(

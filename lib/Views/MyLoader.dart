@@ -11,37 +11,60 @@ class MyLoader extends StatelessWidget {
 
   Widget buildFoodShimmer() => Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: const [
+        children:  [
           ListTile(
             title: Myshimmer.rectangular(height: 60),
           ),
+          // ListTile(
+          //   title: Myshimmer.rectangular(height: 150),
+          // ),
+
           ListTile(
             title: Myshimmer.rectangular(height: 150),
           ),
-          ListTile(
-            leading: Myshimmer.Circular(
+          SizedBox(height: 30,),
+          Row(children: [
+            SizedBox(width: 20,),
+            Myshimmer.Circular(
+              height: 74,
+              width: 74,
+            ),SizedBox(width: 20,),
+            Myshimmer.Circular(
               height: 74,
               width: 74,
             ),
-            // title: Myshimmer.rectangular(height: 150),
-          ),
-          ListTile(
-            leading: Myshimmer.Circular(
+            SizedBox(width: 10,),
+            Myshimmer.Circular(
+              height: 74,
+              width: 74,
+            ),SizedBox(width: 20,),
+            Myshimmer.Circular(
+              height: 74,
+              width: 74,
+            )
+          ],),
+          SizedBox(height: 30,),
+          Row(children: [
+            SizedBox(width: 20,),
+            Myshimmer.Circular(
+              height: 74,
+              width: 74,
+            ),SizedBox(width: 20,),
+            Myshimmer.Circular(
               height: 74,
               width: 74,
             ),
-            title: Myshimmer.rectangular(
-              height: 10,
-              width: 10,
-            ),
-            subtitle: Myshimmer.rectangular(
-              height: 5,
-              width: 10,
-            ),
-          ),
-          ListTile(
-            title: Myshimmer.rectangular(height: 150),
-          ),
+            SizedBox(width: 10,),
+            Myshimmer.Circular(
+              height: 74,
+              width: 74,
+            ),SizedBox(width: 20,),
+            Myshimmer.Circular(
+              height: 74,
+              width: 74,
+            )
+          ],),
+          SizedBox(height: 30,),
           ListTile(
             leading: Myshimmer.Circular(
               height: 74,

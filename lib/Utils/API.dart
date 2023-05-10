@@ -206,7 +206,7 @@ class API {
     } catch (error) {
       hideLoader();
 
-      debugPrint('Error is:-' + error.toString());
+      log('Error is:-' + error.toString());
       return null;
     }
   }

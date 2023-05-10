@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flutter/scheduler.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../Utils/Constant.dart';
 import '../Styles/TextStyles.dart';
 import '../Styles/ColorStyle.dart';
 import '../Styles/EffectStyle.dart';
+import '../Utils/Global.dart';
 import '../Views/AddNewAddress.dart';
 import 'package:flutter/material.dart';
 import '../Components/PickerCustom.dart';
@@ -43,10 +45,13 @@ class UserProfile extends StatelessWidget {
         ),
         body: GetBuilder(
             init: UserAuth(),
-            initState: ((_) {
-              userAuth.getlocaStorage();
-              controller.getUserDetails();
-            }),
+            initState: (state) {
+              SchedulerBinding.instance.scheduleFrameCallback((timeStamp) {
+                userAuth.getlocaStorage();
+                // controller.getUserDetails();
+                controller.initprofile();
+              });
+            },
             builder: (_) {
               return Obx(() {
                 return SingleChildScrollView(
@@ -149,14 +154,51 @@ class UserProfile extends StatelessWidget {
                                           : Text(
                                               '${controller.fname.value.text} ${controller.lname.value.text}',
                                               style: TextStylesCustom
-                                                  .textStyles_20
+                                                  .textStyles_13
                                                   .apply(
                                                       fontWeightDelta: 2,
                                                       fontSizeDelta: 4,
                                                       color: ColorStyle
                                                           .primaryColorGreen),
                                             ),
-                                      controller.fname.value.text.isNotEmpty
+                                      SizedBox(
+                                        width: 2,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          controller.showEditProfile.value =
+                                              !controller.showEditProfile.value;
+                                        },
+                                        child: Icon(
+                                          Icons.edit,
+                                          size: 20,
+                                          color: ColorStyle.secondryColorRed,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 2,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      controller.mobile.value.text.isEmpty
+                                          ? const SizedBox(
+                                              height: 0,
+                                            )
+                                          : Text(
+                                              '${controller.mobile.value.text} ',
+                                              style: TextStylesCustom
+                                                  .textStyles_13
+                                                  .apply(
+                                                      fontWeightDelta: 2,
+                                                      fontSizeDelta: 4,
+                                                      color: ColorStyle
+                                                          .primaryColorGreen),
+                                            ),
+                                      controller.userprofile['is_verify'] !=
+                                              null
                                           ? controller.userprofile['is_verify']
                                               ? Icon(
                                                   Icons.verified,
@@ -173,12 +215,72 @@ class UserProfile extends StatelessWidget {
                                     ],
                                   ),
                                   const SizedBox(
+                                    height: 2,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      controller.fname.value.text.isEmpty
+                                          ? const SizedBox(
+                                              height: 0,
+                                            )
+                                          : Text(
+                                              '${controller.email.value.text} ',
+                                              style: TextStylesCustom
+                                                  .textStyles_13
+                                                  .apply(
+                                                      fontWeightDelta: 2,
+                                                      fontSizeDelta: 4,
+                                                      color: ColorStyle
+                                                          .primaryColorGreen),
+                                            ),
+                                      controller.userprofile[
+                                                  'is_email_verify'] !=
+                                              null
+                                          ? controller.userprofile[
+                                                  'is_email_verify']
+                                              ? Icon(
+                                                  Icons.verified,
+                                                  color: ColorStyle
+                                                      .primaryColorGreen,
+                                                )
+                                              : const Icon(
+                                                  Icons.verified,
+                                                  color: Colors.grey,
+                                                )
+                                          : const SizedBox(
+                                              height: 0,
+                                            )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Icon(
+                                        Icons.wallet,
+                                        size: 25,
+                                        color: ColorStyle.secondryColorRed,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        controller.wallet.value + " ₹",
+                                        style: TextStylesCustom.textStyles_15
+                                            .apply(fontWeightDelta: 3),
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
                                     height: 10,
                                   ),
                                 ],
                               ),
                             ),
-
                             // ------------------------ Edit Profile------------------------------>
                             const SizedBox(
                               height: 20,
@@ -451,6 +553,338 @@ class UserProfile extends StatelessWidget {
                                     height: 0,
                                   ),
 
+                            // ------------------------ Order History ------------------------------>
+                            const SizedBox(
+                              height: 20,
+                            ),
+
+                            InkWell(
+                              onTap: () {
+                                controller.showOrderHistory.value =
+                                    !controller.showOrderHistory.value;
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                padding: const EdgeInsets.only(bottom: 5),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            width: 3,
+                                            color:
+                                                ColorStyle.primaryColorRed))),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Order History',
+                                      style: TextStylesCustom.textStyles_20
+                                          .apply(fontWeightDelta: 3),
+                                    ),
+                                    Icon(controller.showOrderHistory.value
+                                        ? Icons.keyboard_arrow_up
+                                        : Icons.keyboard_arrow_down)
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            ...controller.orderHistory.map(
+                              (e) {
+                                return controller.showOrderHistory.value
+                                    ? Container(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                              child: Image.network(
+                                                "$kImgUrl${e["product"][0]['product_detail']['featured_image']}",
+                                                // kImgUrl +
+                                                //     e.itemDetail!
+                                                //         .featuredImage
+                                                //         .toString(),
+                                                height: 90.0,
+                                                width: 90.0,
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
+                                            Expanded(
+                                              child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    // Text("$kImgUrl${ e["product"][0]['product_detail']['featured_image']}"),
+                                                    Text(
+                                                      "Order Number -",
+                                                      style: TextStylesCustom
+                                                          .textStyles_14
+                                                          .apply(
+                                                              fontWeightDelta:
+                                                                  3),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Text(
+                                                      e['order_number']
+                                                          .toString(),
+                                                      style: TextStylesCustom
+                                                          .textStyles_12,
+                                                    ),
+
+                                                    const SizedBox(
+                                                      height: 7,
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        Text(
+                                                          'Order Items - ${e["product"].length}',
+                                                          style: TextStylesCustom
+                                                              .textStyles_12
+                                                              .apply(
+                                                                  fontWeightDelta:
+                                                                      2),
+                                                        ),
+                                                        Text(
+                                                          '₹ ${e["order_total_cost"]}',
+                                                          style: TextStylesCustom
+                                                              .textStyles_12
+                                                              .apply(
+                                                                  fontWeightDelta:
+                                                                      2,
+                                                                  color: ColorStyle
+                                                                      .primaryColorGreen),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceAround,
+                                                      children: [
+                                                        ElevatedButton.icon(
+                                                          onPressed: () {},
+
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                                  // padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10.0)),
+                                                                  primary:
+                                                                      ColorStyle
+                                                                          .secondryColorRed),
+                                                          icon: Icon(
+                                                            // <-- Icon
+                                                            Icons
+                                                                .repeat_outlined,
+                                                            size: 12.0,
+                                                          ),
+                                                          label: Text('Repeat',
+                                                              style: TextStylesCustom
+                                                                  .textStyles_9), // <-- Text
+                                                        ),
+                                                        ElevatedButton.icon(
+                                                          onPressed: () {},
+
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                                  side:
+                                                                      BorderSide(
+                                                                    width: 2.0,
+                                                                    color: ColorStyle
+                                                                        .primaryColorGreen,
+                                                                  ),
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              10.0)),
+                                                                  primary: Colors
+                                                                      .white),
+
+                                                          icon: Icon(
+                                                            // <-- Icon
+                                                            Icons
+                                                                .remove_red_eye_outlined,
+                                                            color: ColorStyle
+                                                                .secondryColorGreen,
+                                                            size: 12.0,
+                                                          ),
+                                                          label: Text(
+                                                            'Details',
+                                                            style: TextStylesCustom
+                                                                .textStyles_9
+                                                                .apply(
+                                                                    color: ColorStyle
+                                                                        .primaryColorGreen),
+                                                          ), // <-- Text
+                                                        ),
+                                                      ],
+                                                    )
+                                                  ]),
+                                            ),
+                                            // Column(
+                                            //   crossAxisAlignment:
+                                            //   CrossAxisAlignment.end,
+                                            //   children: [
+                                            //     Container(
+                                            //       width: 70,
+                                            //       padding:
+                                            //       const EdgeInsets
+                                            //           .all(4),
+                                            //       decoration: BoxDecoration(
+                                            //           border: Border.all(
+                                            //               color:
+                                            //               Colors.red),
+                                            //           borderRadius:
+                                            //           const BorderRadius
+                                            //               .all(
+                                            //               (Radius
+                                            //                   .circular(
+                                            //                   8)))),
+                                            //       child: Row(
+                                            //         mainAxisAlignment:
+                                            //         MainAxisAlignment
+                                            //             .spaceAround,
+                                            //         children: [
+                                            //           InkWell(
+                                            //             // onTap: () {
+                                            //             //   e.itemCount == 1
+                                            //             //       ? controller
+                                            //             //       .delete(e
+                                            //             //       .id)
+                                            //             //       : controller
+                                            //             //       .updateQuantity(
+                                            //             //       'minus',
+                                            //             //       e.id);
+                                            //             // },
+                                            //             child: SizedBox(
+                                            //               width: 20,
+                                            //               child: Center(
+                                            //                   child: Text(
+                                            //                       '-',
+                                            //                       style: TextStylesCustom
+                                            //                           .textStyles_20
+                                            //                           .apply(color: ColorStyle.primaryColorRed))),
+                                            //             ),
+                                            //           ),
+                                            //           Text(
+                                            //               '${e.itemCount}'),
+                                            //           InkWell(
+                                            //               // onTap: () {
+                                            //               //   controller
+                                            //               //       .updateQuantity(
+                                            //               //       'plus',
+                                            //               //       e.id);
+                                            //               // },
+                                            //               child: SizedBox(
+                                            //                 width: 20,
+                                            //                 child: Center(
+                                            //                   child: Text(
+                                            //                       '+',
+                                            //                       style: TextStylesCustom
+                                            //                           .textStyles_20
+                                            //                           .apply(color: ColorStyle.primaryColorRed)),
+                                            //                 ),
+                                            //               )),
+                                            //         ],
+                                            //       ),
+                                            //     ),
+                                            //     const SizedBox(
+                                            //       height: 8,
+                                            //     ),
+                                            //     Text('₹ ${e.totalPrice}')
+                                            //   ],
+                                            // )
+                                          ],
+                                        ),
+                                      )
+                                    : SizedBox(
+                                        height: 0,
+                                      );
+                              },
+                            ),
+
+                            // ------------------------ Order History ------------------------------>
+SizedBox(height: 10,),
+                            InkWell(
+                              onTap: () {
+                                controller.showWalletTransaction.value =
+                                    !controller.showWalletTransaction.value;
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                padding: const EdgeInsets.only(bottom: 5),
+                                decoration: BoxDecoration(
+                                    border: Border(
+                                        bottom: BorderSide(
+                                            width: 3,
+                                            color:
+                                                ColorStyle.primaryColorRed))),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Wallet Transition History',
+                                      style: TextStylesCustom.textStyles_20
+                                          .apply(fontWeightDelta: 3),
+                                    ),
+                                    Icon(controller.showWalletTransaction.value
+                                        ? Icons.keyboard_arrow_up
+                                        : Icons.keyboard_arrow_down)
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            SizedBox(
+                              height: controller.showWalletTransaction.value ? controller.WalletHistory.length*controller.WalletHistory.length*80:0,
+                              child: controller.showWalletTransaction.value
+                                  ?
+                                      ListView.builder(
+                                        shrinkWrap: true,
+                                        itemCount: controller.WalletHistory.length,
+                                        itemBuilder: (context, index) {
+                                          return ListTile(
+                                            leading: CircleAvatar(
+                                              backgroundColor:Colors.grey[300],
+                                              // child: Text(index.toString()),
+                                            ),
+                                            title: Text(chnageDateINMMMdyyyyFormat(controller.WalletHistory[index]["created_at"].toString()),style: TextStylesCustom.textStyles_14),
+                                            subtitle: Text('${controller.WalletHistory[index]["message"]}',style: TextStylesCustom.textStyles_12),
+                                            trailing: Column(children: [
+                                              SizedBox(height: 10,),
+                                              Text(" ₹ ${controller.WalletHistory[index]["amount"]}",style: TextStylesCustom.textStyles_12.apply(color: ColorStyle.secondryColorRed),),
+                                              SizedBox(height: 5,),
+                                              Text("Wallet",style: TextStylesCustom.textStyles_12.apply(color:ColorStyle.secondaryColorgrey))
+                                            ],),
+                                          );
+                                        },
+                                      )
+
+                                  : SizedBox(),
+                            ),
 // ------------------------ Changed password ------------------------------>
                             const SizedBox(
                               height: 20,

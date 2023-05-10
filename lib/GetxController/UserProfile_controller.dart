@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
@@ -47,8 +48,14 @@ class UserProfileController extends GetxController {
   RxInt AddUpdateid = 0.obs;
   RxBool showPassField = false.obs;
   RxBool showAddress = false.obs;
+  RxBool showWalletTransaction = false.obs;
+
   RxBool showEditProfile = false.obs;
+  RxBool showOrderHistory = true.obs;
+  RxString wallet = "0".obs;
   Map<String, dynamic> _changePass = {};
+  RxList orderHistory = [].obs;
+  RxList WalletHistory = [].obs;
 
   RxMap<dynamic, dynamic> userprofile = <dynamic, dynamic>{}.obs;
   Rx<File> image = File("").obs;
@@ -58,6 +65,8 @@ class UserProfileController extends GetxController {
   initprofile() {
     Future.delayed(Duration(milliseconds: 10), () {
       getUserDetails();
+      fetchOrderHistory();
+      fetchOrderTransaction();
       getAddress();
     });
   }
@@ -100,6 +109,9 @@ class UserProfileController extends GetxController {
       mobile.value.text = userprofile['mobile_number'].toString();
       dob.value.text = userprofile['dob'];
       selectedgender.value = userprofile['gender'];
+      wallet.value = userprofile['wallet'].toString()??"0.0";
+ log("wallet ===>$userprofile['wallet']");
+      log("user data========>>> ${userprofile.value }");
       getAddress();
     });
   }
@@ -271,5 +283,19 @@ class UserProfileController extends GetxController {
     } else {
       return null;
     }
+  }
+//  <---------------------------------- order history ------------------------------------>
+  Future fetchOrderHistory() async {
+    orderHistory.value =
+    await API.instance.get(endPoint: "order/user-order/", isHeader: true);
+    log("order details =====>> ${orderHistory[0]['product']}");
+  }
+
+  // <--------------------------------- Wallet History ----------------------------------->
+
+  Future fetchOrderTransaction() async {
+    WalletHistory.value =
+    await API.instance.get(endPoint: "order/transaction/", isHeader: true);
+    log("Wallet order =====>> ${WalletHistory}");
   }
 }

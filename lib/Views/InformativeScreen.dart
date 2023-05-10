@@ -2,7 +2,8 @@ import 'package:addcafe/Components/AppBarStyle.dart';
 import 'package:addcafe/Views/Aboutus.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-
+import 'package:flutter_html/flutter_html.dart';
+import 'package:html/dom.dart' as dom;
 import '../GetxController/InformativeScreen_controller.dart';
 import 'package:get/get.dart';
 
@@ -37,14 +38,18 @@ class InformativeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              body: Container(
+              body:
+
+              Container(
                   child: Column(children: [
+                    if(controller.informativeData.isNotEmpty)
                 Wrap(
                   direction: Axis.horizontal,
                   spacing: 20,
                   children: [
 
                     // ),
+
                     ...List.generate(
                       controller.informativeData.length,
                       (index) => controller.informativeData.isNotEmpty
@@ -57,7 +62,7 @@ class InformativeScreen extends StatelessWidget {
                               },
                               child: Container(
                                   height: 50,
-                                  width: 80,
+                                  width: 100,
                                   decoration: BoxDecoration(
                                     border: Border(
                                       bottom: BorderSide(
@@ -77,7 +82,7 @@ class InformativeScreen extends StatelessWidget {
                                         controller.informativeData[index]
                                             ['screen_value'],
                                         textAlign: TextAlign.center,
-                                        style: TextStylesCustom.textStyles_14
+                                        style: TextStylesCustom.textStyles_15
                                             .apply(fontWeightDelta: 3),
                                       ))),
                             )
@@ -86,8 +91,43 @@ class InformativeScreen extends StatelessWidget {
                     // )
                   ],
                 ),
+                    controller.informativeData[controller.currentIndex.value-1] != null|| controller.informativeData[controller.currentIndex.value-1]['description'] != null
+                        ? Container(
+                      // color: Colors.red,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10),
+                      width: Get.size.width,
+                      child: Container(
+                        // color: Colors.green,
+                        child: Html(
+                          data:
+                         controller.informativeData[controller.currentIndex.value-1]['description'],
+                          // onLinkTap: (String? url,
+                          //     RenderContext context,
+                          //     Map<String, String> attributes,
+                          //     dom.Element? element) async {
+                          //   await launchUrl(Uri.parse(url!)
+            // );
+          // },
+          //                 style: {
+          //                   'p': Style(
+          //                     fontFamily: kFontFamily,
+          //                     // fontSize: FontSize(10),
+          //
+          //                     fontWeight: FontWeight.w500,
+          //                     color: ColorStyle.greyColor_606060,
+          //                   )
+          //                 },
+                        ),
+                      ),
+                    ):Text("No data")
 
-                // Text("dsadasd"+controller.currentid.toString())
+
+                    // Html(
+                    //   data: controller.informativeData[controller.currentIndex.value-1]['description'],
+                    // ),
+                    // Text(
+                    //     controller.informativeData[controller.currentIndex.value-1]['description'].toString())
               ])));
         });
       },
