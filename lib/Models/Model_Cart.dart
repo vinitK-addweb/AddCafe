@@ -57,25 +57,32 @@ class CartModel {
 
 class AddedAddon {
   AddedAddon({
+    this.id,
     this.itemAddon,
     this.addonName,
     this.addonPrice,
+    this.quantity,
   });
-
+  int? id;
   int? itemAddon;
   String? addonName;
   double? addonPrice;
+  int? quantity;
 
   factory AddedAddon.fromJson(Map<String, dynamic> json) => AddedAddon(
+        id:json["id"],
         itemAddon: json["item_addon"],
         addonName: json["addon_name"],
         addonPrice: json["addon_price"],
+      quantity:json["quantity"]
       );
 
   Map<String, dynamic> toJson() => {
+         "id":id,
         "item_addon": itemAddon,
         "addon_name": addonName,
         "addon_price": addonPrice,
+    "quantity":quantity
       };
 }
 

@@ -11,6 +11,7 @@ String kTOKENSAVED = '';
 
 const kUSERID = '_id';
 String kUSERIDSAVED = '';
-RxBool isSwitched = true.obs;
+
+RxBool isSwitched = true.obs;  // Dine in condition
 
 bool islogin = false;

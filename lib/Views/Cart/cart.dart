@@ -1,4 +1,5 @@
 import 'dart:convert';
+import '../../Components/TextRichCustom.dart';
 import 'address.dart';
 import 'dart:developer';
 import '../Offers.dart';
@@ -35,6 +36,7 @@ class _CartState extends State<Cart> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final controller = Get.put(CartController());
   final offer = Get.put(OffersController());
+
   String dropdownValue = 'Cash';
   Razorpay? _razorpay;
 
@@ -88,6 +90,8 @@ class _CartState extends State<Cart> {
 
   // ---------------------------coupon checkout function-------------------->>>>>
   checkOut(addressid, double price) async {
+    log("checkout calls");
+    log(offer.couponData['payload'].toString());
     final param = {
       "coupon_id": offer.couponData['payload'] == null
           ? ''
@@ -102,14 +106,21 @@ class _CartState extends State<Cart> {
 
 // <------------------------- order create functionality --------------------->>>
   submitRequest(addressid, double price) async {
+
+    log("sumut request runs------------?");
     final orderCreate = '${kBaseUrl}order/order-create/';
     final param = {
       "address": addressid,
       "order_notes": "(This is Optional Field)",
+      "discount": 2,
+      "payment_mode": dropdownValue == 'Cash' ?"cash":"online",
       "rate_after_discount":
           checkout['total_rate_after_discount'] ?? checkout['total_rate'],
+      "is_dine": isSwitched.value,
+      "is_wallet":controller.useWallet.value
     };
 
+log(param.toString());
     final url = Uri.parse(orderCreate);
 
     var paramJSON = jsonEncode(param);
@@ -122,7 +133,7 @@ class _CartState extends State<Cart> {
       showLoaderGetX();
 
       var response = await http.post(url, headers: header, body: paramJSON);
-
+ log(response.body.toString());
       hideLoader();
       if (response.statusCode == 200) {
         userOrder = json.decode(response.body);
@@ -133,7 +144,7 @@ class _CartState extends State<Cart> {
         'Somthing went wrong'.showError();
       }
     } catch (error) {
-      debugPrint('Error is:-$error');
+      log('Error is:-$error');
       hideLoader();
       return null;
     }
@@ -418,138 +429,228 @@ class _CartState extends State<Cart> {
                                           (e) {
                                             return Container(
                                               padding: const EdgeInsets.all(10),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                    child: Image.network(
-                                                      kImgUrl +
-                                                          e.itemDetail!
-                                                              .featuredImage
-                                                              .toString(),
-                                                      height: 90.0,
-                                                      width: 90.0,
-                                                      fit: BoxFit.fill,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Expanded(
-                                                    child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            e.itemDetail!
-                                                                .itemName
-                                                                .toString(),
-                                                            style: TextStylesCustom
-                                                                .textStyles_15
-                                                                .apply(
-                                                                    fontWeightDelta:
-                                                                        1),
-                                                          ),
-                                                          ...e.addedAddon!
-                                                              .map((addon) =>
-                                                                  Text(
-                                                                    '${addon.addonName}  ${addon.addonPrice}',
-                                                                    style: TextStylesCustom
-                                                                        .textStyles_15,
-                                                                  ))
-                                                              .toList(),
-                                                          const SizedBox(
-                                                            height: 7,
-                                                          ),
-                                                          Text(
-                                                            '₹ ${e.itemDetail!.price}',
-                                                            style: TextStylesCustom
-                                                                .textStyles_15
-                                                                .apply(
-                                                                    fontWeightDelta:
-                                                                        2),
-                                                          )
-                                                        ]),
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
-                                                      Container(
-                                                        width: 70,
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(4),
-                                                        decoration: BoxDecoration(
-                                                            border: Border.all(
-                                                                color:
-                                                                    Colors.red),
-                                                            borderRadius:
-                                                                const BorderRadius
-                                                                        .all(
-                                                                    (Radius
-                                                                        .circular(
-                                                                            8)))),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceAround,
-                                                          children: [
-                                                            InkWell(
-                                                              onTap: () {
-                                                                e.itemCount == 1
-                                                                    ? controller
-                                                                        .delete(e
-                                                                            .id)
-                                                                    : controller
-                                                                        .updateQuantity(
-                                                                            'minus',
-                                                                            e.id);
-                                                              },
-                                                              child: SizedBox(
-                                                                width: 20,
-                                                                child: Center(
-                                                                    child: Text(
-                                                                        '-',
-                                                                        style: TextStylesCustom
-                                                                            .textStyles_20
-                                                                            .apply(color: ColorStyle.primaryColorRed))),
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                                '${e.itemCount}'),
-                                                            InkWell(
-                                                                onTap: () {
-                                                                  controller
-                                                                      .updateQuantity(
-                                                                          'plus',
-                                                                          e.id);
-                                                                },
-                                                                child: SizedBox(
-                                                                  width: 20,
-                                                                  child: Center(
-                                                                    child: Text(
-                                                                        '+',
-                                                                        style: TextStylesCustom
-                                                                            .textStyles_20
-                                                                            .apply(color: ColorStyle.primaryColorRed)),
-                                                                  ),
-                                                                )),
-                                                          ],
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                8.0),
+                                                        child: Image.network(
+                                                          kImgUrl +
+                                                              e.itemDetail!
+                                                                  .featuredImage
+                                                                  .toString(),
+                                                          height: 90.0,
+                                                          width: 90.0,
+                                                          fit: BoxFit.fill,
                                                         ),
                                                       ),
                                                       const SizedBox(
-                                                        height: 8,
+                                                        width: 10,
                                                       ),
-                                                      Text('₹ ${e.totalPrice}')
+                                                      Expanded(
+                                                        child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                e.itemDetail!
+                                                                    .itemName
+                                                                    .toString(),
+                                                                style: TextStylesCustom
+                                                                    .textStyles_15
+                                                                    .apply(
+                                                                        fontWeightDelta:
+                                                                            1),
+                                                              ),
+
+                                                              const SizedBox(
+                                                                height: 7,
+                                                              ),
+                                                              Text(
+                                                                '₹ ${e.itemDetail!.price}',
+                                                                style: TextStylesCustom
+                                                                    .textStyles_15
+                                                                    .apply(
+                                                                        fontWeightDelta:
+                                                                            2),
+                                                              )
+                                                            ]),
+                                                      ),
+                                                      Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment.end,
+                                                        children: [
+                                                          Container(
+                                                            width: 70,
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(4),
+                                                            decoration: BoxDecoration(
+                                                                border: Border.all(
+                                                                    color:
+                                                                        Colors.red),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                            .all(
+                                                                        (Radius
+                                                                            .circular(
+                                                                                8)))),
+                                                            child:
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceAround,
+                                                              children: [
+                                                                InkWell(
+                                                                  onTap: () {
+                                                                    e.itemCount == 1
+                                                                        ? controller
+                                                                            .delete(e
+                                                                                .id)
+                                                                        : controller
+                                                                            .updateQuantity(
+                                                                                'minus',
+                                                                                e.id);
+                                                                  },
+                                                                  child: SizedBox(
+                                                                    width: 20,
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                            '-',
+                                                                            style: TextStylesCustom
+                                                                                .textStyles_20
+                                                                                .apply(color: ColorStyle.primaryColorRed))),
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                    '${e.itemCount}'),
+                                                                InkWell(
+                                                                    onTap: () {
+                                                                      controller
+                                                                          .updateQuantity(
+                                                                              'plus',
+                                                                              e.id);
+                                                                    },
+                                                                    child: SizedBox(
+                                                                      width: 20,
+                                                                      child: Center(
+                                                                        child: Text(
+                                                                            '+',
+                                                                            style: TextStylesCustom
+                                                                                .textStyles_20
+                                                                                .apply(color: ColorStyle.primaryColorRed)),
+                                                                      ),
+                                                                    )),
+
+
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          const SizedBox(
+                                                            height: 8,
+                                                          ),
+                                                          Text('₹ ${e.totalPrice}')
+                                                        ],
+                                                      ),
+                                                      InkWell(
+                                                        onTap:(){
+                                                          controller.deleteItem (e.id);
+                                                        },
+                                                        child: Icon(Icons.delete,color: ColorStyle.secondryColorRed,),)
                                                     ],
-                                                  )
+                                                  ),
+                                                  SizedBox(height: 5,),
+                                                  ...e.addedAddon!
+                                                      .map((addon) =>
+                                                      Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        children: [
+                                                          SizedBox(height: 10,),
+                                                          Text(
+                                                            'Addon Name : ${addon.addonName}  ${addon.addonPrice}',
+                                                            style: TextStylesCustom
+                                                                .textStyles_15,
+                                                          ),
+                                                          SizedBox(height: 5,),
+                                                          Container(
+                                                            width: 70,
+                                                            padding:
+                                                            const EdgeInsets
+                                                                .all(4),
+                                                            decoration: BoxDecoration(
+                                                                border: Border.all(
+                                                                    color:
+                                                                    Colors.red),
+                                                                borderRadius:
+                                                                const BorderRadius
+                                                                    .all(
+                                                                    (Radius
+                                                                        .circular(
+                                                                        8)))),
+                                                            child:
+                                                            Row(
+                                                              mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceAround,
+                                                              children: [
+                                                                SizedBox(height: 10,),
+                                                                InkWell(
+                                                                  onTap: () {
+                                                                    addon.quantity == 1
+                                                                        ? controller
+                                                                        .deleteAddon(addon
+                                                                        .id)
+                                                                        : controller
+                                                                        .updateQuantity(
+                                                                        'minus',
+                                                                        e.id);
+                                                                  },
+                                                                  child: SizedBox(
+                                                                    width: 20,
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                            '-',
+                                                                            style: TextStylesCustom
+                                                                                .textStyles_20
+                                                                                .apply(color: ColorStyle.primaryColorRed))),
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                    '${addon.quantity}'),
+                                                                InkWell(
+                                                                    onTap: () {
+                                                                      controller
+                                                                          .updateAddons(
+                                                                          'plus',
+                                                                          addon.id);
+                                                                    },
+                                                                    child: SizedBox(
+                                                                      width: 20,
+                                                                      child: Center(
+                                                                        child: Text(
+                                                                            '+',
+                                                                            style: TextStylesCustom
+                                                                                .textStyles_20
+                                                                                .apply(color: ColorStyle.primaryColorRed)),
+                                                                      ),
+                                                                    )),
+
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ))
+                                                      .toList(),
+
                                                 ],
                                               ),
                                             );
@@ -676,50 +777,102 @@ class _CartState extends State<Cart> {
                                       ),
                                       Container(
                                         padding: const EdgeInsets.all(5),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              controller.tax['delivery'][0]
-                                                  ['label'],
-                                              style: TextStylesCustom
-                                                  .textStyles_14
-                                                  .apply(
-                                                      fontWeightDelta: 3,
-                                                      color: Colors.blue),
-                                            ),
-                                            Text(
-                                              '₹ ${controller.tax['delivery'][0]['cost']}',
-                                              style: TextStylesCustom
-                                                  .textStyles_14
-                                                  .apply(
-                                                      fontWeightDelta: 3,
-                                                      color: Colors.blue),
-                                            )
-                                          ],
-                                        ),
+                                        // child: Row(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.spaceBetween,
+                                        //   children: [
+                                        //     Text(
+                                        //       controller.tax['delivery'][0]
+                                        //           ['label'],
+                                        //       style: TextStylesCustom
+                                        //           .textStyles_14
+                                        //           .apply(
+                                        //               fontWeightDelta: 3,
+                                        //               color: Colors.blue),
+                                        //     ),
+                                        //     Text(
+                                        //       '₹ ${controller.tax['delivery'][0]['cost']}',
+                                        //       style: TextStylesCustom
+                                        //           .textStyles_14
+                                        //           .apply(
+                                        //               fontWeightDelta: 3,
+                                        //               color: Colors.blue),
+                                        //     )
+                                        //   ],
+                                        // ),
                                       ),
-                                      Container(
-                                        padding: const EdgeInsets.all(5),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              controller.tax['tax'][0]
-                                                  ['tax_name'],
+                                      // Container(
+                                      //   padding: const EdgeInsets.all(5),
+                                      //   child:
+                                      //
+                                      //   ...List.generate( controller.tax['tax'].length, (index) => Row(children: [
+                                      //     Container(
+                                      //       padding: const EdgeInsets.all(5),
+                                      //       child:
+                                      //       Row(
+                                      //         mainAxisAlignment:
+                                      //             MainAxisAlignment.spaceAround,
+                                      //         children: [
+                                      //
+                                      //
+                                      //           Text(
+                                      //             controller.tax['tax'][index]
+                                      //                 ['tax_name'],
+                                      //             style: TextStylesCustom
+                                      //                 .textStyles_14
+                                      //                 .apply(color: Colors.grey),
+                                      //           ),
+                                      //           Text(
+                                      //               ' ${controller.tax['tax'][index]['percentage']} %',
+                                      //               style: TextStylesCustom
+                                      //                   .textStyles_14
+                                      //                   .apply(color: Colors.grey))
+                                      //         ],
+                                      //       ),
+                                      //       ),
+                                      //   ],)),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("Tax",
                                               style: TextStylesCustom
                                                   .textStyles_14
-                                                  .apply(color: Colors.grey),
-                                            ),
-                                            Text(
-                                                ' ${controller.tax['tax'][0]['percentage']} %',
+                                                  .apply(fontWeightDelta: 3)),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.end,
+                                            children: [
+                                              Text(
+                                                "₹ " +
+                                                    controller
+                                                        .taxCount(controller
+                                                            .cart['total_rate'])
+                                                        .toString(),
                                                 style: TextStylesCustom
-                                                    .textStyles_14
-                                                    .apply(color: Colors.grey))
-                                          ],
-                                        ),
+                                                    .textStyles_14,
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              ...List.generate(
+                                                  controller.tax['tax'].length,
+                                                  (idx) {
+                                                // controller.taxAmount.value +=  controller.tax['tax'][idx]['percentage'].toDouble();
+                                                return TextRichCustoms(
+                                                  textFirst:
+                                                      "${controller.tax['tax'][idx]['tax_name']} - ",
+                                                  textSecond:
+                                                      "${controller.tax['tax'][idx]['percentage']} % ",
+                                                  color: ColorStyle
+                                                      .secondryColorBlack,
+                                                );
+                                              }),
+                                            ],
+                                          )
+                                        ],
                                       ),
                                       const SizedBox(
                                         height: 10,
@@ -768,6 +921,30 @@ class _CartState extends State<Cart> {
                                           ],
                                         ),
                                       ),
+                                      // SizedBox(height: 20,),
+
+                                      if (controller.walletAmount.value != "" && controller.walletAmount.value != "0.0" )
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            IconButton(
+                                                onPressed: () {
+                                                  controller.useWallet.value =
+                                                      !controller
+                                                          .useWallet.value;
+                                                },
+                                                icon: controller.useWallet.value
+                                                    ? Icon(Icons.check_box)
+                                                    : Icon(Icons
+                                                        .check_box_outline_blank)),
+                                            Text(
+                                              "Wallet (${controller.walletAmount.value})",
+                                              style: TextStylesCustom
+                                                  .textStyles_18,
+                                            )
+                                          ],
+                                        ),
                                     ],
                                   ),
                                   // ),

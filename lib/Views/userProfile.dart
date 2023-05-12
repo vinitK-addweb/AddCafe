@@ -19,6 +19,8 @@ import '../GetxController/MyHomePage_controller.dart';
 import '../GetxController/UserProfile_controller.dart';
 import 'package:addcafe/GetxController/UserAuth_controller.dart';
 
+import 'OrderHistoryDetails.dart';
+
 class UserProfile extends StatelessWidget {
   final userAuth = Get.put(UserAuth());
   final controller = Get.put(UserProfileController());
@@ -594,8 +596,11 @@ class UserProfile extends StatelessWidget {
                             const SizedBox(
                               height: 30,
                             ),
+
                             ...controller.orderHistory.map(
-                              (e) {
+                              (
+                                e,
+                              ) {
                                 return controller.showOrderHistory.value
                                     ? Container(
                                         padding: const EdgeInsets.all(10),
@@ -701,7 +706,12 @@ class UserProfile extends StatelessWidget {
                                                                   .textStyles_9), // <-- Text
                                                         ),
                                                         ElevatedButton.icon(
-                                                          onPressed: () {},
+                                                          onPressed: () {
+                                                            log("tapping----------");
+                                                            Get.to(OrderHistoryDetails(
+                                                                orderDetailData:
+                                                                    e));
+                                                          },
 
                                                           style: ElevatedButton
                                                               .styleFrom(
@@ -739,79 +749,6 @@ class UserProfile extends StatelessWidget {
                                                     )
                                                   ]),
                                             ),
-                                            // Column(
-                                            //   crossAxisAlignment:
-                                            //   CrossAxisAlignment.end,
-                                            //   children: [
-                                            //     Container(
-                                            //       width: 70,
-                                            //       padding:
-                                            //       const EdgeInsets
-                                            //           .all(4),
-                                            //       decoration: BoxDecoration(
-                                            //           border: Border.all(
-                                            //               color:
-                                            //               Colors.red),
-                                            //           borderRadius:
-                                            //           const BorderRadius
-                                            //               .all(
-                                            //               (Radius
-                                            //                   .circular(
-                                            //                   8)))),
-                                            //       child: Row(
-                                            //         mainAxisAlignment:
-                                            //         MainAxisAlignment
-                                            //             .spaceAround,
-                                            //         children: [
-                                            //           InkWell(
-                                            //             // onTap: () {
-                                            //             //   e.itemCount == 1
-                                            //             //       ? controller
-                                            //             //       .delete(e
-                                            //             //       .id)
-                                            //             //       : controller
-                                            //             //       .updateQuantity(
-                                            //             //       'minus',
-                                            //             //       e.id);
-                                            //             // },
-                                            //             child: SizedBox(
-                                            //               width: 20,
-                                            //               child: Center(
-                                            //                   child: Text(
-                                            //                       '-',
-                                            //                       style: TextStylesCustom
-                                            //                           .textStyles_20
-                                            //                           .apply(color: ColorStyle.primaryColorRed))),
-                                            //             ),
-                                            //           ),
-                                            //           Text(
-                                            //               '${e.itemCount}'),
-                                            //           InkWell(
-                                            //               // onTap: () {
-                                            //               //   controller
-                                            //               //       .updateQuantity(
-                                            //               //       'plus',
-                                            //               //       e.id);
-                                            //               // },
-                                            //               child: SizedBox(
-                                            //                 width: 20,
-                                            //                 child: Center(
-                                            //                   child: Text(
-                                            //                       '+',
-                                            //                       style: TextStylesCustom
-                                            //                           .textStyles_20
-                                            //                           .apply(color: ColorStyle.primaryColorRed)),
-                                            //                 ),
-                                            //               )),
-                                            //         ],
-                                            //       ),
-                                            //     ),
-                                            //     const SizedBox(
-                                            //       height: 8,
-                                            //     ),
-                                            //     Text('₹ ${e.totalPrice}')
-                                            //   ],
-                                            // )
                                           ],
                                         ),
                                       )
@@ -820,9 +757,17 @@ class UserProfile extends StatelessWidget {
                                       );
                               },
                             ),
-
-                            // ------------------------ Order History ------------------------------>
-SizedBox(height: 10,),
+                            if (controller.orderHistory.isEmpty &&
+                                controller.showOrderHistory.value)
+                              Center(
+                                  child: Text(
+                                "No Data Found",
+                                style: TextStylesCustom.textStyles_20,
+                              )),
+                            // ------------------------ Wallet History ------------------------------>
+                            SizedBox(
+                              height: 10,
+                            ),
                             InkWell(
                               onTap: () {
                                 controller.showWalletTransaction.value =
@@ -859,32 +804,70 @@ SizedBox(height: 10,),
                               height: 30,
                             ),
                             SizedBox(
-                              height: controller.showWalletTransaction.value ? controller.WalletHistory.length*controller.WalletHistory.length*80:0,
+                              height: controller.showWalletTransaction.value
+                                  ? controller.WalletHistory.length *
+                                      controller.WalletHistory.length *
+                                      80
+                                  : 0,
                               child: controller.showWalletTransaction.value
-                                  ?
-                                      ListView.builder(
-                                        shrinkWrap: true,
-                                        itemCount: controller.WalletHistory.length,
-                                        itemBuilder: (context, index) {
-                                          return ListTile(
-                                            leading: CircleAvatar(
-                                              backgroundColor:Colors.grey[300],
-                                              // child: Text(index.toString()),
-                                            ),
-                                            title: Text(chnageDateINMMMdyyyyFormat(controller.WalletHistory[index]["created_at"].toString()),style: TextStylesCustom.textStyles_14),
-                                            subtitle: Text('${controller.WalletHistory[index]["message"]}',style: TextStylesCustom.textStyles_12),
-                                            trailing: Column(children: [
-                                              SizedBox(height: 10,),
-                                              Text(" ₹ ${controller.WalletHistory[index]["amount"]}",style: TextStylesCustom.textStyles_12.apply(color: ColorStyle.secondryColorRed),),
-                                              SizedBox(height: 5,),
-                                              Text("Wallet",style: TextStylesCustom.textStyles_12.apply(color:ColorStyle.secondaryColorgrey))
-                                            ],),
-                                          );
-                                        },
-                                      )
-
+                                  ? ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount:
+                                          controller.WalletHistory.length,
+                                      itemBuilder: (context, index) {
+                                        return ListTile(
+                                          leading: CircleAvatar(
+                                            backgroundColor: Colors.grey[300],
+                                            // child: Text(index.toString()),
+                                          ),
+                                          title: Text(
+                                              chnageDateINMMMdyyyyFormat(
+                                                  controller
+                                                      .WalletHistory[index]
+                                                          ["created_at"]
+                                                      .toString()),
+                                              style: TextStylesCustom
+                                                  .textStyles_14),
+                                          subtitle: Text(
+                                              '${controller.WalletHistory[index]["message"]}',
+                                              style: TextStylesCustom
+                                                  .textStyles_12),
+                                          trailing: Column(
+                                            children: [
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Text(
+                                                " ₹ ${controller.WalletHistory[index]["amount"]}",
+                                                style: TextStylesCustom
+                                                    .textStyles_12
+                                                    .apply(
+                                                        color: ColorStyle
+                                                            .secondryColorRed),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              Text("Wallet",
+                                                  style: TextStylesCustom
+                                                      .textStyles_12
+                                                      .apply(
+                                                          color: ColorStyle
+                                                              .secondaryColorgrey))
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    )
                                   : SizedBox(),
                             ),
+                            if (controller.WalletHistory.isEmpty &&
+                                controller.showWalletTransaction.value)
+                              Center(
+                                  child: Text(
+                                "No Data Found",
+                                style: TextStylesCustom.textStyles_20,
+                              )),
 // ------------------------ Changed password ------------------------------>
                             const SizedBox(
                               height: 20,

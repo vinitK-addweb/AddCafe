@@ -26,6 +26,7 @@ class OffersController extends GetxController {
   }
 
   Future applyCoupon(value) async {
+    log("applycoupon works-------->>");
     final params = {"code": value};
     var data = (await API.instance.post(
         endPoint: "promotion/apply-coupon/", params: params, isHeader: true))!;
@@ -34,6 +35,7 @@ class OffersController extends GetxController {
   }
 
   checkOut() async {
+    log("check out works-------->>>");
     final param = {
       "coupon_id": couponData['payload'] == null
           ? ''
@@ -42,6 +44,8 @@ class OffersController extends GetxController {
 
     checkout = await API.instance
         .post(endPoint: 'cart/checkout/', params: param, isHeader: true) as Map;
+
+
     update();
     log(checkout.toString());
   }

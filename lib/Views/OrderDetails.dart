@@ -8,10 +8,16 @@ import '../GetxController/Cart_controller.dart';
 import '../Components/ElevatedButtonCustom.dart';
 import 'package:fdottedline_nullsafety/fdottedline__nullsafety.dart';
 
-class OrderDetails extends StatelessWidget {
+class OrderDetails extends StatefulWidget {
   OrderDetails({super.key});
 
+  @override
+  State<OrderDetails> createState() => _OrderDetailsState();
+}
+
+class _OrderDetailsState extends State<OrderDetails> {
   final controller = Get.put(CartController());
+
   @override
   Widget build(BuildContext context) {
     ;

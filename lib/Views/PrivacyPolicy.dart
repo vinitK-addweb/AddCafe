@@ -163,7 +163,8 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                         controller.starRating.value =rating.toInt();
                         print(rating);
                       },
-                    )),
+                    )
+            ),
           ),
 
                   const SizedBox(

@@ -151,6 +151,14 @@ class UserAuth extends GetxController {
     signupOtp =  await API.instance.post(endPoint: "accounts/verify-mobile/", params:mapedData , isHeader: false) as Map<String, dynamic>;
     log("works");
     log("SIng up data ${ signupOtp}");
+    if(signupOtp['status']==200){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      final strPayLoad = jsonEncode(signupOtp['payload']);
+      prefs.setString('userData', strPayLoad);
+      prefs.setString('token', await signupOtp['access']);
+      getlocaStorage();
+      await Get.to(BottamNavigationBar());
+    }
     resetFunction();
   }
 // <-----------------  User SignIn Functionality ------------------>
